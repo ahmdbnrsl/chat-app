@@ -1,7 +1,5 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
-const URI: string = process.env.MONGODB_URI || '';
-
 interface User extends Document {
     user_id: string;
     wa_number: string;

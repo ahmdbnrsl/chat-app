@@ -1,8 +1,6 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
-const URI: string = process.env.MONGODB_URI || '';
-
-interface OTP extends Document {
+export interface OTP extends Document {
     wa_number: string;
     otp_code: string;
     created_at: string;

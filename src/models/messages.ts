@@ -1,7 +1,5 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
-const URI: string = process.env.MONGODB_URI || '';
-
 interface Message extends Document {
     message_id: string;
     sender_id: string;
