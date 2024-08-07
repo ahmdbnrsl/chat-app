@@ -30,6 +30,9 @@ export const authOTP = async ({
                 );
                 if (compareOTP) {
                     const user_id: string = uuid();
+                    await otps.deleteOne({
+                        wa_number
+                    });
                     const storeUser: User = await users.create({
                         user_id,
                         wa_number,
