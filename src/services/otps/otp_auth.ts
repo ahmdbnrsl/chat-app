@@ -22,7 +22,7 @@ export const authOTP = async ({
         await mongoose.connect(URI);
         const checkExistingOTP: OTP | null = await otps.findOne({ wa_number });
         if (checkExistingOTP) {
-            const checkExpireOTP = checkExistingOTP?.expired_at <= timestamp;
+            const checkExpireOTP = checkExistingOTP?.expired_at >= timestamp;
             if (checkExpireOTP) {
                 const compareOTP = await compare(
                     otp_code,
