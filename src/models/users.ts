@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
-interface User extends Document {
+export interface User extends Document {
     user_id: string;
     wa_number: string;
     name: string;
