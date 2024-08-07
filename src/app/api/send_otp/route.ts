@@ -22,7 +22,8 @@ export async function POST(req: NextRequest) {
         );
     }
     try {
-        const res: OTP = await storeOTP(body);
+        const res: { result: OTP; status: boolean } | boolean =
+            await storeOTP(body);
         if (!res) {
             return NextResponse.json(
                 {
