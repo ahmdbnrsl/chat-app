@@ -11,7 +11,7 @@ export const storeOTP = async ({
     expired_at
 }: {
     wa_number: string;
-    otp_code: string;
+    otp_code?: string | undefined;
     created_at: string;
     expired_at: string;
 }): Promise<{ result: OTP; status: boolean } | boolean> => {
@@ -32,7 +32,7 @@ export const storeOTP = async ({
             await otps.deleteOne({ wa_number });
             const result: OTP = await otps.create({
                 wa_number,
-                otp_code: await bcrypt.hash(otp_code, 10),
+                otp_code: await bcrypt.hash(otp_code || '', 10),
                 created_at,
                 expired_at
             });

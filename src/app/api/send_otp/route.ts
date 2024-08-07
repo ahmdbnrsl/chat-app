@@ -3,7 +3,7 @@ import { OTP } from '@/models/otps';
 import { storeOTP } from '@/services/otps/otp_store';
 interface BodyRequest {
     wa_number: string;
-    otp_code?: string;
+    otp_code?: string | undefined;
     created_at: string;
     expired_at: string;
     secret: string;
