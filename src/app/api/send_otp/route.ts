@@ -3,15 +3,24 @@ import { OTP } from '@/models/otps';
 import { storeOTP } from '@/services/otps/otp_store';
 interface BodyRequest {
     wa_number: string;
-    otp_code: string;
+    otp_code?: string;
     created_at: string;
     expired_at: string;
     secret: string;
 }
 
+function generateOTP(): string {
+    let digits: string = '0123456789';
+    let otp: string = '';
+    let len: number = digits.length;
+    for (let i = 0; i < 6; i++) {
+        otp += digits[Math.floor(Math.random() * len)];
+    }
+    return otp;
+}
+
 export async function POST(req: NextRequest) {
     const body: BodyRequest = await req.json();
-    const { wa_number, otp_code, secret } = body;
     if (secret !== process.env.NEXT_PUBLIC_SECRET) {
         return NextResponse.json(
             {
@@ -22,6 +31,8 @@ export async function POST(req: NextRequest) {
         );
     }
     try {
+        body?.otp_code = generateOTP();
+        const { wa_number, otp_code, secret } = body;
         const res: { result: OTP; status: boolean } | boolean =
             await storeOTP(body);
         if (!res) {
@@ -33,12 +44,12 @@ export async function POST(req: NextRequest) {
                 { status: 500 }
             );
         } else {
-            const mess: string = `Your OTP code is : ${otp_code}\ndon't share this to other people.`;
+            const mess: string = `Your OTP code is : *${otp_code}*\ndon't share this to other people.`;
             const buttons: Array<object> = [
                 {
                     name: 'cta_copy',
                     buttonParamsJson: JSON.stringify({
-                        display_text: 'Copy Your Code',
+                        display_text: 'Copy Your OTP',
                         copy_code: otp_code
                     })
                 }
