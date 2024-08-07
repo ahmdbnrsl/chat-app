@@ -12,6 +12,7 @@ interface BodyRequest {
 
 export async function POST(req: NextRequest) {
     const body: BodyRequest = await req.json();
+    const { secret } = body;
     if (secret !== process.env.NEXT_PUBLIC_SECRET) {
         return NextResponse.json(
             {
