@@ -21,6 +21,7 @@ function generateOTP(): string {
 
 export async function POST(req: NextRequest) {
     const body: BodyRequest = await req.json();
+    const { wa_number, otp_code, secret } = body;
     if (secret !== process.env.NEXT_PUBLIC_SECRET) {
         return NextResponse.json(
             {
@@ -32,7 +33,6 @@ export async function POST(req: NextRequest) {
     }
     try {
         body.otp_code = generateOTP();
-        const { wa_number, otp_code, secret } = body;
         const res: { result: OTP; status: boolean } | boolean =
             await storeOTP(body);
         if (!res) {
