@@ -3,7 +3,6 @@ import { OTP } from '@/models/otps';
 import { storeOTP } from '@/services/otps/otp_store';
 interface BodyRequest {
     wa_number: string;
-    otp_code?: string | undefined;
     created_at: string;
     expired_at: string;
     secret: string;
@@ -21,7 +20,7 @@ function generateOTP(): string {
 
 export async function POST(req: NextRequest) {
     const body: BodyRequest = await req.json();
-    const { wa_number, otp_code, secret } = body;
+    const { wa_number, created_at, expired_at, secret } = body;
     if (secret !== process.env.NEXT_PUBLIC_SECRET) {
         return NextResponse.json(
             {
@@ -32,9 +31,14 @@ export async function POST(req: NextRequest) {
         );
     }
     try {
-        body.otp_code = generateOTP();
-        const res: { result: OTP; status: boolean } | boolean =
-            await storeOTP(body);
+        const otp_code: string = generateOTP();
+        const res: { result: OTP; status: boolean } | boolean = await storeOTP({
+            wa_number,
+            otp_code,
+            created_at,
+            expired_at,
+            secret
+        });
         if (!res) {
             return NextResponse.json(
                 {
