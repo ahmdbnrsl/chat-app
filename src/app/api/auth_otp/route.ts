@@ -10,6 +10,12 @@ interface BodyRequest {
     secret: string;
 }
 
+interface Result {
+    result?: User;
+    status: boolean;
+    message: string;
+}
+
 export async function POST(req: NextRequest) {
     const body: BodyRequest = await req.json();
     const { secret } = body;
@@ -23,10 +29,8 @@ export async function POST(req: NextRequest) {
         );
     }
     try {
-        const result:
-            | { result?: User; status: boolean; message: string }
-            | boolean = await authOTP(body);
-        if (!result) {
+        const res: Result | boolean = await authOTP(body);
+        if (!res) {
             return NextResponse.json(
                 {
                     status: false,
@@ -37,11 +41,11 @@ export async function POST(req: NextRequest) {
                 }
             );
         } else {
-            if (result?.status) {
+            if (res?.status) {
                 return NextResponse.json(
                     {
                         status: true,
-                        message: result?.message
+                        message: res?.message
                     },
                     { status: 200 }
                 );
@@ -49,7 +53,7 @@ export async function POST(req: NextRequest) {
                 return NextResponse.json(
                     {
                         status: false,
-                        message: result?.message
+                        message: res?.message
                     },
                     { status: 500 }
                 );
