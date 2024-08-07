@@ -35,7 +35,7 @@ export const authOTP = async ({
                         wa_number,
                         name,
                         created_at: timestamp,
-                        update_at: ''
+                        update_at: 'no_update'
                     });
                     return {
                         result: storeUser,
