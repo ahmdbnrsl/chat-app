@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { User } from '@/models/users';
-import { authOTP } from '@/services/otp_auth';
+import { authOTP } from '@/services/otps/otp_auth';
 
 interface BodyRequest {
     name: string;
