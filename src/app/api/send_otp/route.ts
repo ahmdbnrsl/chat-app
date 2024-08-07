@@ -10,7 +10,7 @@ interface BodyRequest {
 }
 
 export async function POST(req: NextRequest) {
-    const body: BodyRequest = req.json();
+    const body: BodyRequest = await req.json();
     const { wa_number, otp_code, secret } = body;
     if (secret !== process.env.NEXT_PUBLIC_SECRET) {
         return NextResponse.json(
