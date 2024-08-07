@@ -36,8 +36,7 @@ export async function POST(req: NextRequest) {
             wa_number,
             otp_code,
             created_at,
-            expired_at,
-            secret
+            expired_at
         });
         if (!res) {
             return NextResponse.json(
