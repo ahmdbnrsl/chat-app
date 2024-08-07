@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
         );
     }
     try {
-        body?.otp_code = generateOTP();
+        body.otp_code = generateOTP();
         const { wa_number, otp_code, secret } = body;
         const res: { result: OTP; status: boolean } | boolean =
             await storeOTP(body);
