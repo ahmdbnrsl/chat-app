@@ -52,8 +52,8 @@ export async function POST(req: NextRequest) {
                     secret: process.env.NEXT_PUBLIC_SECRET,
                     number: wa_number,
                     mess,
-                    rep: '',
-                    quoted: 'benChat verify',
+                    rep: 'benChat verify',
+                    quoted: '',
                     buttons: JSON.stringify(buttons)
                 })
             };
