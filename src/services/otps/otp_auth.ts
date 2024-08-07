@@ -17,7 +17,7 @@ export const authOTP = async ({
     wa_number: string;
     otp_code: string;
     timestamp: string;
-}): Promise<{ result?: User; status: boolean; message: string } | boolean> => {
+}): Promise<{ result?: User; status: boolean; message: string } | false> => {
     try {
         await mongoose.connect(URI);
         const checkExistingOTP: OTP | null = await otps.findOne({ wa_number });

@@ -29,18 +29,8 @@ export async function POST(req: NextRequest) {
         );
     }
     try {
-        const res: Result | boolean = await authOTP(body);
-        if (!res) {
-            return NextResponse.json(
-                {
-                    status: false,
-                    message: 'Server error'
-                },
-                {
-                    status: 500
-                }
-            );
-        } else {
+        const res: Result | false = await authOTP(body);
+        if (res) {
             if (res?.status) {
                 return NextResponse.json(
                     {
@@ -58,6 +48,16 @@ export async function POST(req: NextRequest) {
                     { status: 500 }
                 );
             }
+        } else {
+            return NextResponse.json(
+                {
+                    status: false,
+                    message: 'Server error'
+                },
+                {
+                    status: 500
+                }
+            );
         }
     } catch (error) {
         return NextResponse.json(
