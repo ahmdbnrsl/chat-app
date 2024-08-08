@@ -1,17 +1,13 @@
 import { NextResponse, NextRequest } from 'next/server';
-import { authOTP } from '@/services/otps/otp_auth';
+import { User } from '@/models/users';
+import { storeUser } from '@/services/users/user_register';
 
 interface BodyRequest {
-    name: string;
     wa_number: string;
-    otp_code: string;
-    timestamp: string;
+    name: string;
+    created_at: string;
+    update_at: string;
     secret: string;
-}
-
-interface Result {
-    status: boolean;
-    message: string;
 }
 
 export async function POST(req: NextRequest) {
@@ -27,13 +23,15 @@ export async function POST(req: NextRequest) {
         );
     }
     try {
-        const res: Result | false = await authOTP(body);
-        if (res) {
-            if (res?.status) {
+        const result:
+            | { result?: User; status: boolean; message: string }
+            | false = await storeUser(body);
+        if (result) {
+            if (result?.status) {
                 return NextResponse.json(
                     {
                         status: true,
-                        message: res?.message
+                        message: result?.message
                     },
                     { status: 200 }
                 );
@@ -41,31 +39,19 @@ export async function POST(req: NextRequest) {
                 return NextResponse.json(
                     {
                         status: false,
-                        message: res?.message
+                        message: result?.message
                     },
-                    { status: 500 }
+                    { status: 400 }
                 );
             }
-        } else {
-            return NextResponse.json(
-                {
-                    status: false,
-                    message: 'Server error'
-                },
-                {
-                    status: 500
-                }
-            );
         }
     } catch (error) {
         return NextResponse.json(
             {
                 status: false,
-                message: 'Server error'
+                message: 'Server Error!'
             },
-            {
-                status: 500
-            }
+            { status: 500 }
         );
     }
 }
