@@ -63,6 +63,8 @@ export const storeUser = async ({
                         message: `${wa_number} is not registered on WhatsApp`
                     };
                 }
+            } else {
+                return false;
             }
         } else {
             return {
