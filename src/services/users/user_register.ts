@@ -17,34 +17,34 @@ export const storeUser = async ({
 }): Promise<{ result?: User; status: boolean; message: string } | false> => {
     try {
         await mongoose.connect(URI);
+        wa_number = wa_number?.startsWith('0')
+            ? wa_number?.replace(/\D/g, '').replace('0', '62')
+            : wa_number?.replace(/\D/g, '');
         const checkExistingUser: User | null = await users.findOne({
             wa_number
         });
 
-        const options: RequestInit = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                secret: process.env.NEXT_PUBLIC_SECRET,
-                num: wa_number
-            }),
-            cache: 'no-store'
-        };
-        const res: Response = await fetch(
-            process.env.NEXT_PUBLIC_BASE_URL + '/check',
-            options
-        );
         if (!checkExistingUser) {
+            const options: RequestInit = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    secret: process.env.NEXT_PUBLIC_SECRET,
+                    num: wa_number
+                }),
+                cache: 'no-store'
+            };
+            const res: Response = await fetch(
+                process.env.NEXT_PUBLIC_BASE_URL + '/check',
+                options
+            );
             if (res?.ok) {
                 const checkExistingWANumber: { result: boolean } =
                     await res?.json();
                 if (checkExistingWANumber?.result) {
                     const user_id: string = uuid();
-                    wa_number = wa_number?.startsWith('0')
-                        ? wa_number?.replace(/\D/g, '').replace('0', '62')
-                        : wa_number?.replace(/\D/g, '');
                     const saveUser: User = await users.create({
                         user_id,
                         wa_number,
