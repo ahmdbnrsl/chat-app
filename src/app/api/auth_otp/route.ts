@@ -2,7 +2,6 @@ import { NextResponse, NextRequest } from 'next/server';
 import { authOTP } from '@/services/otps/otp_auth';
 
 interface BodyRequest {
-    name: string;
     wa_number: string;
     otp_code: string;
     timestamp: string;

@@ -6,7 +6,6 @@ interface BodyRequest {
     wa_number: string;
     name: string;
     created_at: string;
-    update_at: string;
     secret: string;
 }
 

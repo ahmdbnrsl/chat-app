@@ -6,12 +6,10 @@ import { otps, OTP } from '@/models/otps';
 const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
 
 export const authOTP = async ({
-    name,
     wa_number,
     otp_code,
     timestamp
 }: {
-    name: string;
     wa_number: string;
     otp_code: string;
     timestamp: string;

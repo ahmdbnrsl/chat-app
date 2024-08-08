@@ -7,13 +7,11 @@ const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
 export const storeUser = async ({
     wa_number,
     name,
-    created_at,
-    update_at
+    created_at
 }: {
     wa_number: string;
     name: string;
     created_at: string;
-    update_at: string;
 }): Promise<{ result?: User; status: boolean; message: string } | false> => {
     try {
         await mongoose.connect(URI);
