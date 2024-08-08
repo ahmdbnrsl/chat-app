@@ -32,12 +32,13 @@ export async function POST(req: NextRequest) {
     }
     try {
         const otp_code: string = generateOTP();
-        const res: { result: OTP; status: boolean } | boolean = await storeOTP({
-            wa_number,
-            otp_code,
-            created_at,
-            expired_at
-        });
+        const res: { result?: OTP; status: boolean; message?: string } | false =
+            await storeOTP({
+                wa_number,
+                otp_code,
+                created_at,
+                expired_at
+            });
         if (res) {
             if (res?.status) {
                 const mess: string = `Your OTP code is : *${otp_code}*\ndon't share this to other people.`;
