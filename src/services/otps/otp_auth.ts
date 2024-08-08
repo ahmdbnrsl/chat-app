@@ -16,6 +16,9 @@ export const authOTP = async ({
 }): Promise<{ status: boolean; message: string } | false> => {
     try {
         await mongoose.connect(URI);
+        wa_number = wa_number?.startsWith('0')
+            ? wa_number?.replace(/\D/g, '').replace('0', '62')
+            : wa_number?.replace(/\D/g, '');
         const checkExistingOTP: OTP | null = await otps.findOne({ wa_number });
         if (checkExistingOTP) {
             const checkExpireOTP = checkExistingOTP?.expired_at >= timestamp;
