@@ -75,6 +75,7 @@ export default function LoginPage({ searchParams }: any) {
                 redirect: false,
                 wa_number: e.target.phone.value,
                 OTP: otp.join(''),
+                timestamp: Date.now(),
                 callbackUrl
             });
             if (!res?.error) {
