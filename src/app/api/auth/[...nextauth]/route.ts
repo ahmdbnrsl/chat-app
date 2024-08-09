@@ -4,74 +4,11 @@ import NextAuth from 'next-auth/next';
 import { authOTP } from '@/services/otps/otp_auth';
 import { User } from '@/models/users';
 
-/*interface BodyRequest {
-    wa_number: string;
-    otp_code: string;
-    timestamp: string;
-    secret: string;
-}*/
-
 interface Result {
     user?: User | null;
     status: boolean;
     message: string;
 }
-
-/*export async function POST(req: NextRequest) {
-    const body: BodyRequest = await req.json();
-    const { secret } = body;
-    if (secret !== process.env.NEXT_PUBLIC_SECRET) {
-        return NextResponse.json(
-            {
-                status: false,
-                message: 'token is invalid'
-            },
-            { status: 400 }
-        );
-    }
-    try {
-        const res: Result | false = await authOTP(body);
-        if (res) {
-            if (res?.status) {
-                return NextResponse.json(
-                    {
-                        status: true,
-                        message: res?.message
-                    },
-                    { status: 200 }
-                );
-            } else {
-                return NextResponse.json(
-                    {
-                        status: false,
-                        message: res?.message
-                    },
-                    { status: 500 }
-                );
-            }
-        } else {
-            return NextResponse.json(
-                {
-                    status: false,
-                    message: 'Server error'
-                },
-                {
-                    status: 500
-                }
-            );
-        }
-    } catch (error) {
-        return NextResponse.json(
-            {
-                status: false,
-                message: 'Server error'
-            },
-            {
-                status: 500
-            }
-        );
-    }
-}*/
 
 const authOptions: NextAuthOptions = {
     session: {
@@ -109,20 +46,8 @@ const authOptions: NextAuthOptions = {
                 });
                 if (user) {
                     if (user.status && user.user) {
-                        const {
-                            user_id,
-                            wa_number,
-                            name,
-                            created_at,
-                            update_at
-                        } = user.user;
-                        const isUser = {
-                            id: user_id,
-                            wa_number,
-                            name,
-                            created_at,
-                            update_at
-                        } as NextAuthUser;
+                        let isUser = user.user as NextAuthUser;
+                        isUser.id = user.user.user_id;
                         return isUser;
                     } else {
                         return null;
@@ -138,8 +63,8 @@ const authOptions: NextAuthOptions = {
             if (account?.provider === 'credentials') {
                 token.name = user.name;
                 token.wa_number = user.wa_number;
+                token.user_id = user.user_id;
             }
-
             return token;
         },
 
@@ -150,7 +75,9 @@ const authOptions: NextAuthOptions = {
             if ('wa_number' in token) {
                 session.user.wa_number = token.wa_number;
             }
-
+            if ('user_id' in token) {
+                session.user.user_id = token.user_id;
+            }
             return session;
         }
     },
