@@ -14,7 +14,9 @@ export const authOTP = async ({
     wa_number: string;
     otp_code: string;
     timestamp: string;
-}): Promise<{ user?: User; status: boolean; message: string } | false> => {
+}): Promise<
+    { user?: User | null; status: boolean; message: string } | false
+> => {
     try {
         await mongoose.connect(URI);
         wa_number = wa_number?.startsWith('0')

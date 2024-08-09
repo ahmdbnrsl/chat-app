@@ -12,7 +12,7 @@ import { User } from '@/models/users';
 }*/
 
 interface Result {
-    user?: User;
+    user?: User | null;
     status: boolean;
     message: string;
 }
