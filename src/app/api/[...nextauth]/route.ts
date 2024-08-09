@@ -1,4 +1,4 @@
-import { NextAuthOptions } from 'next-auth';
+import { NextAuthOptions, User as NextAuthUser } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import NextAuth from 'next-auth/next';
 import { authOTP } from '@/services/otps/otp_auth';
@@ -109,6 +109,20 @@ const authOptions: NextAuthOptions = {
                 });
                 if (user) {
                     if (user.status && user.user) {
+                        const {
+                            user_id,
+                            wa_number,
+                            name,
+                            created_at,
+                            update_at
+                        } = user.user;
+                        const isUser: NextAuthUser = {
+                            id: user_id,
+                            wa_number,
+                            name,
+                            created_at,
+                            update_at
+                        };
                         return user.user;
                     } else {
                         return null;
@@ -124,7 +138,6 @@ const authOptions: NextAuthOptions = {
             if (account?.provider === 'credentials') {
                 token.name = user.name;
                 token.wa_number = user.wa_number;
-                token.timestamp = user.timestamp;
             }
 
             return token;
@@ -137,9 +150,7 @@ const authOptions: NextAuthOptions = {
             if ('wa_number' in token) {
                 session.user.wa_number = token.wa_number;
             }
-            if ('timestamp' in token) {
-                session.user.timestamp = token.timestamp;
-            }
+
             return session;
         }
     },
