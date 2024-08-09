@@ -123,7 +123,7 @@ const authOptions: NextAuthOptions = {
                             created_at,
                             update_at
                         };
-                        return user.user;
+                        return isUser;
                     } else {
                         return null;
                     }
