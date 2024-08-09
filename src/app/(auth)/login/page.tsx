@@ -7,7 +7,7 @@ import { signIn } from 'next-auth/react';
 
 export default function LoginPage({ searchParams }: any) {
     const { push } = useRouter();
-    const [error, setError] = useState<string>('');
+
     const [Header, setHeader] = useState<string>(
         'Enter your valid WhatsApp number'
     );
@@ -84,7 +84,7 @@ export default function LoginPage({ searchParams }: any) {
                 push(callbackUrl);
             } else {
                 if (res.status === 401) {
-                    setError('otp is incorrect');
+                    console.error(res);
                 }
             }
         } catch (err) {
