@@ -61,17 +61,17 @@ export default function LoginPage({ searchParams }: any) {
     };
     const HandleSubmit = async (e: any) => {
         e.preventDefault();
+        const otp: Array<string> = Array(6)
+            .fill(0)
+            .map((item: any, index: number): string => {
+                const char: string = (
+                    document.querySelector(
+                        `.otp_${item}${index}`
+                    ) as HTMLInputElement
+                ).value;
+                return char;
+            });
         try {
-            const otp: Array<string> = Array(6)
-                .fill(0)
-                .map((item: any, index: number): string => {
-                    const char: string = (
-                        document.querySelector(
-                            `.otp_${item}${index}`
-                        ) as HTMLInputElement
-                    ).value;
-                    return char;
-                });
             const res = await signIn('credentials', {
                 redirect: false,
                 wa_number: wa,
@@ -91,6 +91,14 @@ export default function LoginPage({ searchParams }: any) {
         } catch (err) {
             console.error(err);
         }
+        fetch('/api/auth/login', {
+            method: 'POST',
+            body: JSON.stringify({
+                wa_number: wa,
+                OTP: otp.join(''),
+                timestamp: Date.now()
+            })
+        });
     };
 
     return (
