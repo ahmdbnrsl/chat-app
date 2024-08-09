@@ -91,14 +91,6 @@ export default function LoginPage({ searchParams }: any) {
         } catch (err) {
             console.error(err);
         }
-        fetch('/api/auth/login', {
-            method: 'POST',
-            body: JSON.stringify({
-                wa_number: wa,
-                OTP: otp.join(''),
-                timestamp: Date.now()
-            })
-        });
     };
 
     return (
