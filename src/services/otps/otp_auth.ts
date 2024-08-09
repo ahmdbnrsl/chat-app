@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import { compare } from 'bcrypt';
 import { DeleteResult } from 'mongodb';
 import { otps, OTP } from '@/models/otps';
+import { User, users } from '@/models/users';
 
 const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
 
@@ -13,7 +14,7 @@ export const authOTP = async ({
     wa_number: string;
     otp_code: string;
     timestamp: string;
-}): Promise<{ status: boolean; message: string } | false> => {
+}): Promise<{ user?: User; status: boolean; message: string } | false> => {
     try {
         await mongoose.connect(URI);
         wa_number = wa_number?.startsWith('0')
@@ -31,8 +32,11 @@ export const authOTP = async ({
                     await otps.deleteOne({
                         wa_number
                     });
-
+                    const user: Users | null = await users.findOne({
+                        wa_number
+                    });
                     return {
+                        user,
                         status: true,
                         message: 'OTP is Valid'
                     };

@@ -1,19 +1,23 @@
-import { NextResponse, NextRequest } from 'next/server';
+import { NextAuthOptions } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import NextAuth from 'next-auth/next';
 import { authOTP } from '@/services/otps/otp_auth';
+import { User } from '@/models/users';
 
-interface BodyRequest {
+/*interface BodyRequest {
     wa_number: string;
     otp_code: string;
     timestamp: string;
     secret: string;
-}
+}*/
 
 interface Result {
+    user?: User;
     status: boolean;
     message: string;
 }
 
-export async function POST(req: NextRequest) {
+/*export async function POST(req: NextRequest) {
     const body: BodyRequest = await req.json();
     const { secret } = body;
     if (secret !== process.env.NEXT_PUBLIC_SECRET) {
@@ -67,4 +71,81 @@ export async function POST(req: NextRequest) {
             }
         );
     }
-}
+}*/
+
+const authOptions: NextAuthOptions = {
+    session: {
+        strategy: 'jwt'
+    },
+    secret: process.env.NEXT_PUBLIC_SECRET,
+    providers: [
+        CredentialsProvider({
+            type: 'credentials',
+            name: 'credentials',
+            credentials: {
+                wa_number: {
+                    label: 'wa_number',
+                    type: 'text'
+                },
+                OTP: {
+                    label: 'OTP',
+                    type: 'password'
+                },
+                timestamp: {
+                    label: 'timestamp',
+                    type: 'text'
+                }
+            },
+            async authorize(credentials) {
+                const { wa_number, OTP, timestamp } = credentials as {
+                    wa_number: string;
+                    OTP: string;
+                    timestamp: string;
+                };
+                const user: Result | false = await authOTP({
+                    wa_number,
+                    otp_code: OTP,
+                    timestamp
+                });
+                if (user) {
+                    if (user?.status) {
+                        return user?.user;
+                    }
+                    return null;
+                } else {
+                    return null;
+                }
+            }
+        })
+    ],
+    callbacks: {
+        async jwt({ token, account, profile, user }: any) {
+            if (account?.provider === 'credentials') {
+                token.name = user.name;
+                token.wa_number = user.wa_number;
+                token.timestamp = user.timestamp;
+            }
+
+            return token;
+        },
+
+        async session({ session, token }: any) {
+            if ('name' in token) {
+                session.user.name = token.name;
+            }
+            if ('wa_number' in token) {
+                session.user.wa_number = token.wa_number;
+            }
+            if ('timestamp' in token) {
+                session.user.timestamp = token.timestamp;
+            }
+            return session;
+        }
+    },
+    pages: {
+        signIn: '/login'
+    }
+};
+
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };

@@ -15,7 +15,9 @@
         "mongodb": "latest",
         "mongoose": "latest",
         "bcrypt": "latest",
-        "uuid": "latest"
+        "uuid": "latest",
+        "next-auth": "latest",
+        "react-icons": "latest"
     },
     "devDependencies": {
         "typescript": "^5",
