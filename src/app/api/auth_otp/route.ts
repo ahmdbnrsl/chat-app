@@ -108,7 +108,7 @@ const authOptions: NextAuthOptions = {
                     timestamp
                 });
                 if (user) {
-                    if (user?.status) {
+                    if (user.status && user.user) {
                         return user.user;
                     } else {
                         return null;
