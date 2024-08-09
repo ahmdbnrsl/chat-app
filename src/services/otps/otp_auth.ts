@@ -32,7 +32,7 @@ export const authOTP = async ({
                     await otps.deleteOne({
                         wa_number
                     });
-                    const user: Users | null = await users.findOne({
+                    const user: User | null = await users.findOne({
                         wa_number
                     });
                     return {
