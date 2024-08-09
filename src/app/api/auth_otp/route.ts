@@ -109,9 +109,10 @@ const authOptions: NextAuthOptions = {
                 });
                 if (user) {
                     if (user?.status) {
-                        return user?.user;
+                        return user.user;
+                    } else {
+                        return null;
                     }
-                    return null;
                 } else {
                     return null;
                 }
