@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { signIn, signOut, useSession } from 'next-auth/react';
 
@@ -45,13 +44,6 @@ export default function Navbar() {
             </ul>
             {status === 'authenticated' ? (
                 <div className='flex gap-3 justify-center items-center'>
-                    <Image
-                        className='rounded-full w-10 h-10'
-                        src='/profile/profile.png'
-                        alt='profile'
-                        width={200}
-                        height={400}
-                    />
                     <h4 className='text-white'>{session?.user?.name}</h4>
                     <button
                         className='cursor-pointer bg-white text-gray-800 px-5 py-2 rounded hover:bg-gray-100 hover:border hover:border-gray-400 active:border active:border-gray-400'
