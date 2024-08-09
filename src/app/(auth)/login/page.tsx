@@ -7,7 +7,7 @@ import { signIn } from 'next-auth/react';
 
 export default function LoginPage({ searchParams }: any) {
     const { push } = useRouter();
-
+    const [wa, setWa] = useState<string>('');
     const [Header, setHeader] = useState<string>(
         'Enter your valid WhatsApp number'
     );
@@ -50,6 +50,7 @@ export default function LoginPage({ searchParams }: any) {
                     );
                     setHiddenForm(true);
                     setLoad(false);
+                    setWa(wa_number);
                 } else {
                     setLoad(false);
                 }
@@ -73,7 +74,7 @@ export default function LoginPage({ searchParams }: any) {
                 });
             const res = await signIn('credentials', {
                 redirect: false,
-                wa_number: e.target.phone.value,
+                wa_number: wa,
                 OTP: otp.join(''),
                 timestamp: Date.now(),
                 callbackUrl
