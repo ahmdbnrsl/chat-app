@@ -116,13 +116,13 @@ const authOptions: NextAuthOptions = {
                             created_at,
                             update_at
                         } = user.user;
-                        const isUser: NextAuthUser = {
+                        const isUser = {
                             id: user_id,
                             wa_number,
                             name,
                             created_at,
                             update_at
-                        };
+                        } as NextAuthUser;
                         return isUser;
                     } else {
                         return null;
