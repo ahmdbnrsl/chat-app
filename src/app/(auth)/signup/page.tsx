@@ -4,6 +4,7 @@ import { FaUserPlus } from 'react-icons/fa6';
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { userSignUp } from './fetcher';
+import Link from 'next/link';
 import Loading from './loading';
 
 export default function SignUpPage() {
@@ -145,7 +146,7 @@ export default function SignUpPage() {
                                 name='name'
                                 maxLength={25}
                                 placeholder='...'
-                                className='name peer w-full bg-zinc-950 outline-0 text-lg font-normal text-zinc-200 tracking-wider rounded-xl px-4 py-2 border-4 border-zinc-900 placeholder:text-transparent focus:border-zinc-500'
+                                className='name peer w-full bg-zinc-950 outline-0 text-lg font-normal text-zinc-200 tracking-wider rounded-xl px-4 py-2 border-4 border-zinc-900 placeholder:text-transparent focus:border-zinc-500 cursor-text'
                             />
                             <label
                                 htmlFor='name'
@@ -162,7 +163,7 @@ export default function SignUpPage() {
                                 name='wa'
                                 maxLength={20}
                                 placeholder='...'
-                                className='wa peer w-full bg-zinc-950 outline-0 text-lg font-normal text-zinc-200 tracking-widest rounded-xl px-4 py-2 border-4 border-zinc-900 placeholder:text-transparent focus:border-zinc-500'
+                                className='wa peer w-full bg-zinc-950 outline-0 text-lg font-normal text-zinc-200 tracking-widest rounded-xl px-4 py-2 border-4 border-zinc-900 placeholder:text-transparent focus:border-zinc-500 cursor-text'
                             />
                             <label
                                 htmlFor='wa'
@@ -174,7 +175,7 @@ export default function SignUpPage() {
                         <button
                             disabled={load ? true : false}
                             type='submit'
-                            className={`flex gap-2 justify-center items-center py-2 mt-2 w-full ${
+                            className={`flex gap-2 justify-center items-center py-2 mt-2 w-full cursor-pointer ${
                                 load
                                     ? 'bg-zinc-900 text-zinc-500'
                                     : 'bg-gradient-to-br from-zinc-200 to-zinc-400 text-zinc-950'
@@ -189,9 +190,14 @@ export default function SignUpPage() {
                             )}
                         </button>
                     </form>
-                    <p className='px-4 text-center w-full text-zinc-400 text-sm mt-2 mb-7 font-normal'>
+                    <p className='px-4 text-center w-full text-zinc-400 text-sm mt-2 mb-7 font-normal flex justify-center'>
                         Already have an account?{' '}
-                        <span className='text-zinc-200 font-medium'>Login</span>
+                        <Link
+                            href='/login'
+                            className='text-zinc-200 font-medium cursor-pointer visited:underline'
+                        >
+                            Login
+                        </Link>
                     </p>
                 </div>
             </section>
