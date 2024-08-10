@@ -64,6 +64,7 @@ const authOptions: NextAuthOptions = {
                 token.name = user.name;
                 token.wa_number = user.wa_number;
                 token.user_id = user.user_id;
+                token.role = user.role;
             }
             return token;
         },
@@ -77,6 +78,9 @@ const authOptions: NextAuthOptions = {
             }
             if ('user_id' in token) {
                 session.user.user_id = token.user_id;
+            }
+            if ('role' in token) {
+                session.user.role = token.role;
             }
             return session;
         }

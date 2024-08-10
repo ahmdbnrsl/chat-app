@@ -48,12 +48,13 @@ export const storeUser = async ({
                         wa_number,
                         name,
                         created_at,
-                        update_at: 'no_update'
+                        update_at: 'no_update',
+                        role: 'member'
                     });
                     return {
                         result: saveUser,
                         status: true,
-                        message: 'success save user'
+                        message: 'Success Sign Up'
                     };
                 } else {
                     return {
@@ -67,7 +68,7 @@ export const storeUser = async ({
         } else {
             return {
                 status: false,
-                message: 'wa number is already registered'
+                message: 'Whatsapp number is already registered'
             };
         }
     } catch (error) {

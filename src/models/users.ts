@@ -6,6 +6,7 @@ export interface User extends Document {
     name: string;
     created_at: string;
     update_at: string;
+    role: string;
 }
 const UserSchema: Schema<User> = new Schema({
     user_id: {
@@ -25,6 +26,10 @@ const UserSchema: Schema<User> = new Schema({
         required: true
     },
     update_at: {
+        type: String,
+        required: true
+    },
+    role: {
         type: String,
         required: true
     }

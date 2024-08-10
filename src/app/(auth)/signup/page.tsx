@@ -2,16 +2,23 @@
 
 import { FaUserPlus } from 'react-icons/fa6';
 import { useState, ChangeEvent, FormEvent } from 'react';
+import { useRouter } from 'next/navigation';
+import { userSignUp } from './fetcher';
 import Loading from './loading';
 
 export default function SignUpPage() {
+    const { push } = useRouter();
     const [load, setLoad] = useState<boolean>(false);
     const [labelName, setLabelName] = useState<string>('Enter your fullname');
     const [labelWaNumber, setLabelWaNumber] = useState<string>(
         'Enter your WhatsApp number (e.g, 08212345)'
     );
+    const [err, setErr] = useState<{ status: boolean; message: string }>({
+        status: false,
+        message: ''
+    });
 
-    const SignUp = (e: FormEvent<HTMLFormElement>) => {
+    const SignUp = async (e: FormEvent<HTMLFormElement>) => {
         interface Data extends EventTarget {
             name: HTMLInputElement;
             wa: HTMLInputElement;
@@ -47,6 +54,31 @@ export default function SignUpPage() {
             ev.wa.focus();
         } else {
             setLoad(true);
+            const user: { status: boolean; message: string } | false =
+                await userSignUp({
+                    wa_number: waNumber,
+                    name: nameUser,
+                    created_at: Date.now()
+                });
+            if (user) {
+                if (user?.status) {
+                    setLoad(false);
+                    e.target.reset();
+                    push('/login');
+                } else {
+                    setLoad(false);
+                    setErr({
+                        status: true,
+                        message: user?.message
+                    });
+                }
+            } else {
+                setLoad(false);
+                setErr({
+                    status: true,
+                    message: 'Something went wrong!'
+                });
+            }
         }
     };
 
@@ -88,8 +120,16 @@ export default function SignUpPage() {
                             <h1 className='flex items-center gap-2 text-xl font-bold text-zinc-300'>
                                 <FaUserPlus /> Sign Up
                             </h1>
-                            <p className='mt-3 text-base font-normal text-zinc-400'>
-                                Welcome back!, please enter your detail below
+                            <p
+                                className={`mt-3 text-base font-normal ${
+                                    err.status
+                                        ? 'text-red-500'
+                                        : 'text-zinc-400'
+                                }`}
+                            >
+                                {err.status
+                                    ? err.message
+                                    : 'Welcome back!, please enter your detail below'}
                             </p>
                         </div>
                     </div>
