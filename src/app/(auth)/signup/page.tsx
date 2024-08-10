@@ -63,7 +63,7 @@ export default function SignUpPage() {
             if (user) {
                 if (user?.status) {
                     setLoad(false);
-                    e.target.reset();
+                    (e.target as HTMLFormElement).reset();
                     push('/login');
                 } else {
                     setLoad(false);
