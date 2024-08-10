@@ -24,7 +24,7 @@ export const userSignUp = async ({
         };
         const response: Response = await fetch(
             'https://chat-app-rouge-alpha.vercel.app/api/register',
-            otpions
+            options
         );
         const res: { status: boolean; message: string } = await response.json();
         if (response?.ok) {
