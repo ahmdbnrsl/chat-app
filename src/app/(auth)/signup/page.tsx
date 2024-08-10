@@ -190,7 +190,7 @@ export default function SignUpPage() {
                             )}
                         </button>
                     </form>
-                    <p className='px-4 text-center w-full text-zinc-400 text-sm mt-2 mb-7 font-normal flex justify-center'>
+                    <p className='px-4 text-center w-full text-zinc-400 text-sm mt-2 mb-7 font-normal flex justify-center gap-1'>
                         Already have an account?{' '}
                         <Link
                             href='/login'
