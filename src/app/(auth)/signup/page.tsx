@@ -58,7 +58,7 @@ export default function SignUpPage() {
                 await userSignUp({
                     wa_number: waNumber,
                     name: nameUser,
-                    created_at: Date.now()
+                    created_at: Date.now().toString()
                 });
             if (user) {
                 if (user?.status) {
