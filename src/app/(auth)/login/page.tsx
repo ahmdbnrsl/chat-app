@@ -1,167 +1,274 @@
 'use client';
+
+import { FaUserLock } from 'react-icons/fa';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { FaArrowRight } from 'react-icons/fa6';
-import { HiOutlineDotsVertical } from 'react-icons/hi';
-import { useState } from 'react';
+import { sendOTPCode } from './send_otp';
 import { signIn } from 'next-auth/react';
+import Link from 'next/link';
+import Loading from '@/components/loading';
 
 export default function LoginPage({ searchParams }: any) {
     const { push } = useRouter();
-    const [wa, setWa] = useState<string>('');
-    const [Header, setHeader] = useState<string>(
-        'Enter your valid WhatsApp number'
-    );
-    const [subHeader, setSubHeader] = useState<string>(
-        'benChat will send OTP verification to your WhatsApp number'
-    );
-    const [hiddenForm, setHiddenForm] = useState<boolean>(false);
-    const [load, setLoad] = useState<boolean>(false);
     const callbackUrl = searchParams.callbackUrl || '/';
+    const [load, setLoad] = useState<boolean>(false);
+    const [labelWaNumber, setLabelWaNumber] = useState<string>(
+        'Enter your WhatsApp number (e.g, 08212345)'
+    );
+    const [labelOTP, setLabelOTP] = useState<string>('Enter your OTP code');
+    const [formHidden, setFormHidden] = useState<boolean>(true);
+    const [waNumber, setWaNumber] = useState<string>('');
+    const [otpErr, setOTPErr] = useState<{ status: boolean; message: string }>({
+        status: false,
+        message: ''
+    });
+    const [loginErr, setLoginErr] = useState<{
+        status: boolean;
+        message: string;
+    }>({
+        status: false,
+        message: ''
+    });
 
-    const SendOTP = async (e: any) => {
+    const SendOTP = async (e: FormEvent<HTMLFormElement>) => {
+        interface Data extends EventTarget {
+            wa: HTMLInputElement;
+        }
         e.preventDefault();
-
-        const wa_number = (document.querySelector('.phone') as HTMLInputElement)
-            .value;
-        if (wa_number.length > 9) {
+        const ev: Data = e.target as Data;
+        const waNumber = ev.wa.value;
+        const validate = (data: string): boolean => {
+            if (
+                data === '' ||
+                !Number(data) ||
+                data.length < 9 ||
+                data.length > 20
+            ) {
+                return false;
+            } else return true;
+        };
+        if (!validate(waNumber)) {
+            ev.wa.focus();
+        } else {
             setLoad(true);
-            const options = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    wa_number,
-                    secret: process.env.NEXT_PUBLIC_SECRET,
-                    created_at: Date.now(),
-                    expired_at: Date.now() + 1000 * 60 * 60 * 24
-                })
-            };
-            const res: Response = await fetch(
-                'https://chat-app-rouge-alpha.vercel.app/api/send_otp',
-                options
-            );
-            if (res?.ok) {
-                const statusRes: any = await res.json();
-                if (statusRes?.status) {
-                    setHeader('Enter the OTP code');
-                    setSubHeader(
-                        'benChat has sent an OTP code to your WhatsApp number'
-                    );
-                    setHiddenForm(true);
+            const otpCode: { status: boolean; message: string } | false =
+                await sendOTPCode({
+                    wa_number: waNumber,
+                    created_at: Date.now().toString(),
+                    expired_at: (Date.now() + 1000 * 60 * 60).toString()
+                });
+            if (otpCode) {
+                if (otpCode?.status) {
                     setLoad(false);
-                    setWa(wa_number);
+                    setWaNumber(waNumber);
+                    setFormHidden(false);
                 } else {
                     setLoad(false);
+                    setOTPErr({
+                        status: true,
+                        message: otpCode?.message
+                    });
                 }
+            } else {
+                setLoad(false);
+                setOTPErr({
+                    status: true,
+                    message: 'Something went wrong!'
+                });
             }
-        } else {
-            (document.querySelector('.phone') as HTMLInputElement).focus();
         }
     };
-    const HandleSubmit = async (e: any) => {
-        e.preventDefault();
-        const otp: Array<string> = Array(6)
-            .fill(0)
-            .map((item: any, index: number): string => {
-                const char: string = (
-                    document.querySelector(
-                        `.otp_${item}${index}`
-                    ) as HTMLInputElement
-                ).value;
-                return char;
-            });
-        try {
-            const res = await signIn('credentials', {
-                redirect: false,
-                wa_number: wa,
-                OTP: otp.join(''),
-                timestamp: Date.now(),
-                callbackUrl
-            });
-            if (!res?.error) {
-                e.target.reset();
 
-                push(callbackUrl);
-            } else {
-                if (res.status === 401) {
-                    console.error(res);
+    const Login = async (e: FormEvent<HTMLFormElement>) => {
+        interface Data extends EventTarget {
+            otp: HTMLInputElement;
+        }
+        e.preventDefault();
+        const ev: Data = e.target as Data;
+        const OTP = ev.otp.value;
+        const validate = (data: string): boolean => {
+            if (
+                data === '' ||
+                !Number(data) ||
+                data.length < 6 ||
+                data.length > 6
+            ) {
+                return false;
+            } else return true;
+        };
+        if (!validate(OTP)) {
+            ev.otp.focus();
+        } else {
+            setLoad(true);
+            try {
+                const res = await signIn('credentials', {
+                    redirect: false,
+                    wa_number: waNumber,
+                    OTP,
+                    timestamp: Date.now(),
+                    callbackUrl
+                });
+                if (!res?.error) {
+                    setLoad(false);
+                    push(callbackUrl);
+                } else {
+                    if (res.status === 401) {
+                        setLoad(false);
+                        setLoginErr({
+                            status: true,
+                            message: 'OTP is not valid'
+                        });
+                    }
                 }
+            } catch (err) {
+                setLoad(false);
+                setLoginErr({
+                    status: true,
+                    message: 'Something went wrong!'
+                });
             }
-        } catch (err) {
-            console.error(err);
+        }
+    };
+
+    const InputChangeValidate = (e: ChangeEvent<HTMLInputElement>) => {
+        const data = e.target.value;
+
+        if (e.target.className.startsWith('wa')) {
+            if (!Number(data)) setLabelWaNumber('Enter number only');
+            if (data.length < 9) setLabelWaNumber('Enter at least 9 digits');
+            if (data.length > 20)
+                setLabelWaNumber('WhatsApp number must not exceed 20 numbers');
+            if (
+                data === '' ||
+                (data.length >= 9 && data.length < 21 && Number(data))
+            )
+                setLabelWaNumber('Enter your WhatsApp number (e.g, 08212345)');
+        } else {
+            if (!Number(data)) setLabelOTP('Enter number only');
+            if (data.length < 6) setLabelOTP('Enter 6 digits of OTP code');
+            if (data.length > 6) setLabelOTP('Only 6 digits');
+            if (data === '' || (data.length === 6 && Number(data)))
+                setLabelOTP('Enter your OTP code');
         }
     };
 
     return (
-        <main className='transition-all bg-zinc-950 w-full min-h-screen font-inter'>
-            <nav className='px-3 sm:px-4 md:px-5 lg:px-6 pt-8 flex justify-between gap-3'>
-                <p className='tracking-wider text-sky-500 font-bold text-lg sm:text-xl'>
-                    ⟨
-                </p>
-                <h1 className='tracking-wider text-zinc-200 font-medium text-lg sm:text-xl'>
-                    {Header}
-                </h1>
-                <p className='tracking-wider text-sky-500 font-bold text-lg sm:text-xl'>
-                    <HiOutlineDotsVertical />
-                </p>
-            </nav>
-            <section className='px-3 sm:px-4 md:px-5 lg:px-6 flex flex-col items-center'>
-                <p className='mt-5 text-base text-zinc-400 font-medium tracking-wide'>
-                    {subHeader}
-                </p>
-                <form
-                    onSubmit={HandleSubmit}
-                    className='mt-8 flex flex-col items-center'
-                >
-                    {!hiddenForm ? (
-                        <>
+        <main className='transition-all w-full min-h-screen bg-zinc-950 bg-ornament bg-[length:500px]'>
+            <section className='w-full min-h-screen p-5 flex flex-col justify-center items-center'>
+                <div className='w-full max-w-md bg-zinc-950 rounded-xl shadow shadow-xl shadow-zinc-950 flex flex-col border-2 border-zinc-800'>
+                    <div className='scale-[1.017] bg-gradient-to-br from-zinc-400 to-zinc-950 p-[1.5px] rounded-xl hover:-translate-y-1'>
+                        <div className='w-full rounded-xl p-4 bg-zinc-900 flex flex-col'>
+                            <h1 className='flex items-center gap-2 text-xl font-bold text-zinc-300'>
+                                <FaUserLock /> Login
+                            </h1>
+                            <p
+                                className={`mt-3 text-base font-normal ${
+                                    otpErr.status || loginErr.status
+                                        ? 'text-red-500'
+                                        : 'text-zinc-400'
+                                }`}
+                            >
+                                {formHidden
+                                    ? otpErr.status
+                                        ? otpErr.message
+                                        : 'Enter your WhatsApp Number'
+                                    : loginErr.status
+                                    ? loginErr.message
+                                    : 'Verify your OTP code below'}
+                            </p>
+                        </div>
+                    </div>
+                    <form
+                        onSubmit={SendOTP}
+                        className={`${
+                            formHidden ? 'flex' : 'hidden'
+                        } p-4 mt-3 w-full flex-col gap-4`}
+                    >
+                        <div className='w-full flex flex-col gap-1'>
                             <input
-                                name='phone'
+                                onChange={InputChangeValidate}
                                 type='text'
-                                className='phone text-sky-500 text-lg sm:text-xl font-semibold tracking-widest px-3 py-1 bg-transparent outline-0 border-b-4 border-zinc-700 focus:border-zinc-500 placeholder:text-base placeholder:tracking-wider placeholder:text-zinc-600 placeholder:font-medium text-center w-auto max-w-xs'
-                                placeholder='Paste or type WhatsApp number'
+                                id='wa'
+                                name='wa'
+                                maxLength={20}
+                                placeholder='...'
+                                className='wa peer w-full bg-zinc-950 outline-0 text-lg font-normal text-zinc-200 tracking-widest rounded-xl px-4 py-2 border-4 border-zinc-800 placeholder:text-transparent focus:border-zinc-500'
                             />
-                            <button
-                                type='submit'
-                                onClick={SendOTP}
-                                className='box-border flex justify-center items-center gap-2 mt-8 outline-0 bg-zinc-900 rounded-full px-5 py-1.5 w-full text-sky-500 text-lg font-medium tracking-widest hover:bg-zinc-800'
+                            <label
+                                htmlFor='wa'
+                                className='absolute -translate-y-3 peer-placeholder-shown:translate-y-3 ml-3 text-sm font-normal text-zinc-500 peer-focus:-translate-y-3 bg-zinc-950 w-auto px-2 py-1 peer-focus:text-zinc-300'
                             >
-                                {load ? 'Sending OTP...' : 'Send OTP'}
-                            </button>
-                        </>
-                    ) : (
-                        <>
-                            <div className='flex gap-2 items-center'>
-                                {Array(6)
-                                    .fill(0)
-                                    .map((item: any, index: number) => (
-                                        <>
-                                            <input
-                                                type='text'
-                                                maxLength={1}
-                                                name={`otp_${item}${index}`}
-                                                className={`otp_${item}${index} p-1 text-center rounded-lg border-4 border-zinc-700 bg-zinc-900 outline-0 text-xl font-semibold text-sky-500 w-12 focus:border-zinc-500`}
-                                            />
-                                            {index === 2 ? (
-                                                <div className='px-3 py-0.5 mx-1 bg-zinc-700 rounded'></div>
-                                            ) : (
-                                                ''
-                                            )}
-                                        </>
-                                    ))}
-                            </div>
-
-                            <button
-                                type='submit'
-                                onSubmit={HandleSubmit}
-                                className='box-border flex justify-center items-center gap-2 mt-8 outline-0 bg-zinc-900 rounded-full px-5 py-1.5 w-full text-sky-500 text-lg font-medium tracking-widest hover:bg-zinc-800'
+                                {labelWaNumber}
+                            </label>
+                        </div>
+                        <button
+                            disabled={load ? true : false}
+                            type='submit'
+                            className={`flex gap-2 justify-center items-center py-2 mt-2 w-full ${
+                                load
+                                    ? 'bg-zinc-900 text-zinc-500'
+                                    : 'bg-gradient-to-br from-zinc-200 to-zinc-400 text-zinc-950'
+                            } text-lg rounded-xl outline-0 font-medium`}
+                        >
+                            {load ? (
+                                <>
+                                    <Loading /> {'Sending OTP...'}
+                                </>
+                            ) : (
+                                'Send OTP'
+                            )}
+                        </button>
+                    </form>
+                    <form
+                        onSubmit={Login}
+                        className={`${
+                            formHidden ? 'hidden' : 'flex'
+                        } p-4 mt-3 w-full flex-col sm:flex-row items-center gap-4 mb-3`}
+                    >
+                        <div className='w-full flex flex-col gap-1'>
+                            <input
+                                onChange={InputChangeValidate}
+                                type='text'
+                                id='otp'
+                                name='otp'
+                                maxLength={6}
+                                placeholder='...'
+                                className='otp peer w-full bg-zinc-950 outline-0 text-lg font-normal text-zinc-200 tracking-widest rounded-xl px-4 py-2 border-4 border-zinc-800 placeholder:text-transparent focus:border-zinc-500 text-center'
+                            />
+                            <label
+                                htmlFor='otp'
+                                className='absolute -translate-y-3 peer-placeholder-shown:translate-y-3 ml-3 text-sm font-normal text-zinc-500 peer-focus:-translate-y-3 bg-zinc-950 w-auto px-2 py-1 peer-focus:text-zinc-300'
                             >
-                                Verify OTP
-                            </button>
-                        </>
+                                {labelOTP}
+                            </label>
+                        </div>
+                        <button
+                            disabled={load ? true : false}
+                            type='submit'
+                            className={`flex gap-2 justify-center items-center py-2 mt-2 sm:mt-0 w-full ${
+                                load
+                                    ? 'bg-zinc-900 text-zinc-500'
+                                    : 'bg-gradient-to-br from-zinc-200 to-zinc-400 text-zinc-950'
+                            } text-lg rounded-xl outline-0 font-medium`}
+                        >
+                            {load ? (
+                                <>
+                                    <Loading /> {'Verifying OTP...'}
+                                </>
+                            ) : (
+                                'Verify OTP'
+                            )}
+                        </button>
+                    </form>
+                    {formHidden && (
+                        <p className='px-4 text-center w-full text-zinc-400 text-sm mt-2 mb-7 font-normal'>
+                            Don't have an account?{' '}
+                            <span className='text-zinc-200 font-medium'>
+                                Sign Up
+                            </span>
+                        </p>
                     )}
-                </form>
+                </div>
             </section>
         </main>
     );
