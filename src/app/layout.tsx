@@ -7,7 +7,7 @@ import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
-const disableNavbar: Array<string> = ['/login', '/register'];
+const disableNavbar: Array<string> = ['/login', '/signup'];
 
 export default function RootLayout({
     children

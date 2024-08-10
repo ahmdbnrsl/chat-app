@@ -1,0 +1,16 @@
+{
+    "mainStyle": "transition-all w-full min-h-screen bg-zinc-950 bg-ornament bg-[length:500px]",
+    "sectionStyle": "w-full min-h-screen p-5 flex flex-col justify-center items-center",
+    "rootBoxStyle": "w-full max-w-md bg-zinc-950 rounded-xl shadow shadow-xl shadow-zinc-950 flex flex-col border-2 border-zinc-800",
+    "headerBorderStyle": "scale-[1.017] bg-gradient-to-br from-zinc-400 to-zinc-950 p-[1.5px] rounded-xl hover:-translate-y-1",
+    "headerStyle": "w-full rounded-xl p-4 bg-zinc-900 flex flex-col",
+    "headerTitleStyle": "flex items-center gap-2 text-xl font-bold text-zinc-300",
+    "headerSubtitleStyle": "mt-3 text-base font-normal text-zinc-400",
+    "formStyle": "p-4 mt-3 w-full flex flex-col gap-4",
+    "inputBoxStyle": "w-full flex flex-col items-start",
+    "inputNameStyle": "name peer w-full bg-zinc-950 outline-0 text-lg font-normal text-zinc-200 tracking-wider rounded-xl px-4 py-2 border-4 border-zinc-900 placeholder:text-transparent focus:border-zinc-500",
+    "inputWAStyle": "wa peer w-full bg-zinc-950 outline-0 text-lg font-normal text-zinc-200 tracking-widest rounded-xl px-4 py-2 border-4 border-zinc-900 placeholder:text-transparent focus:border-zinc-500",
+    "labelStyle": "absolute -translate-y-3 peer-placeholder-shown:translate-y-3 ml-3 text-sm font-normal text-zinc-500 peer-focus:-translate-y-3 bg-zinc-950 w-auto px-2 py-1 peer-focus:text-zinc-300",
+    "footerStyle": "px-4 text-center w-full text-zinc-400 text-sm mt-2 mb-7 font-normal",
+    "buttonStyle": "flex gap-2 justify-center items-center py-2 mt-2 w-full text-lg rounded-xl outline-0 font-medium"
+}
