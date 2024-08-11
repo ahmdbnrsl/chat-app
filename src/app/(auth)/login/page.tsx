@@ -153,130 +153,124 @@ export default function LoginPage({ searchParams }: any) {
     };
 
     return (
-        <main className='transition-all w-full min-h-screen bg-zinc-950 bg-ornament bg-[length:500px]'>
-            <section className='w-full min-h-screen p-5 flex flex-col justify-center items-center'>
-                <div className='w-full max-w-md bg-zinc-950 rounded-xl shadow shadow-xl shadow-zinc-950 flex flex-col border-2 border-zinc-800'>
-                    <div className='scale-[1.017] bg-gradient-to-br from-zinc-400 to-zinc-950 p-[1.5px] rounded-xl hover:-translate-y-1'>
-                        <div className='w-full rounded-xl p-4 bg-zinc-900 flex flex-col'>
-                            <h1 className='flex items-center gap-2 text-xl font-bold text-zinc-300'>
-                                <FaUserLock /> Login
-                            </h1>
-                            <p
-                                className={`mt-3 text-base font-normal ${
-                                    formHidden
-                                        ? otpErr.status
-                                            ? 'text-red-500'
-                                            : 'text-zinc-400'
-                                        : loginErr.status
-                                        ? 'text-red-500'
-                                        : 'text-zinc-400'
-                                }`}
-                            >
-                                {formHidden
-                                    ? otpErr.status
-                                        ? otpErr.message
-                                        : 'Enter your WhatsApp Number'
-                                    : loginErr.status
-                                    ? loginErr.message
-                                    : 'Verify your OTP code below'}
-                            </p>
-                        </div>
-                    </div>
-                    <form
-                        onSubmit={SendOTP}
-                        className={`${
-                            formHidden ? 'flex' : 'hidden'
-                        } p-4 mt-3 w-full flex-col gap-4`}
+        <>
+            <div className='w-full mt-2 p-4 flex flex-col items-center'>
+                <h1 className='flex items-center gap-2 text-2xl font-bold text-zinc-300 text-center'>
+                    <FaUserLock /> Login
+                </h1>
+                <p
+                    className={`mt-3 text-base font-normal text-center ${
+                        formHidden
+                            ? otpErr.status
+                                ? 'text-red-500'
+                                : 'text-zinc-400'
+                            : loginErr.status
+                            ? 'text-red-500'
+                            : 'text-zinc-400'
+                    }`}
+                >
+                    {formHidden
+                        ? otpErr.status
+                            ? otpErr.message
+                            : 'Enter your WhatsApp Number'
+                        : loginErr.status
+                        ? loginErr.message
+                        : 'Verify your OTP code below'}
+                </p>
+            </div>
+            <form
+                onSubmit={SendOTP}
+                className={`${
+                    formHidden ? 'flex' : 'hidden'
+                } p-4 w-full flex-col gap-4`}
+            >
+                <div className='w-full flex flex-col gap-1'>
+                    <input
+                        onChange={InputChangeValidate}
+                        type='text'
+                        id='wa'
+                        name='wa'
+                        maxLength={20}
+                        placeholder='...'
+                        className='wa peer w-full bg-zinc-900 outline-0 text-lg font-normal text-zinc-200 tracking-widest rounded-xl px-4 py-2 border-4 border-zinc-600 placeholder:text-transparent focus:border-zinc-400 cursor-text'
+                    />
+                    <label
+                        htmlFor='wa'
+                        className='absolute -translate-y-3 peer-placeholder-shown:translate-y-3 ml-3 text-sm font-normal text-zinc-500 peer-focus:-translate-y-3 bg-zinc-900 w-auto px-2 py-1 peer-focus:text-zinc-300'
                     >
-                        <div className='w-full flex flex-col gap-1'>
-                            <input
-                                onChange={InputChangeValidate}
-                                type='text'
-                                id='wa'
-                                name='wa'
-                                maxLength={20}
-                                placeholder='...'
-                                className='wa peer w-full bg-zinc-950 outline-0 text-lg font-normal text-zinc-200 tracking-widest rounded-xl px-4 py-2 border-4 border-zinc-800 placeholder:text-transparent focus:border-zinc-500 cursor-text'
-                            />
-                            <label
-                                htmlFor='wa'
-                                className='absolute -translate-y-3 peer-placeholder-shown:translate-y-3 ml-3 text-sm font-normal text-zinc-500 peer-focus:-translate-y-3 bg-zinc-950 w-auto px-2 py-1 peer-focus:text-zinc-300'
-                            >
-                                {labelWaNumber}
-                            </label>
-                        </div>
-                        <button
-                            disabled={load ? true : false}
-                            type='submit'
-                            className={`flex gap-2 justify-center items-center py-2 mt-2 w-full cursor-pointer ${
-                                load
-                                    ? 'bg-zinc-900 text-zinc-500'
-                                    : 'bg-gradient-to-br from-zinc-200 to-zinc-400 text-zinc-950'
-                            } text-lg rounded-xl outline-0 font-medium`}
-                        >
-                            {load ? (
-                                <>
-                                    <Loading /> {'Sending OTP...'}
-                                </>
-                            ) : (
-                                'Send OTP'
-                            )}
-                        </button>
-                    </form>
-                    <form
-                        onSubmit={Login}
-                        className={`${
-                            formHidden ? 'hidden' : 'flex'
-                        } p-4 mt-3 w-full flex-col sm:flex-row items-center gap-4 mb-3`}
-                    >
-                        <div className='w-full flex flex-col gap-1'>
-                            <input
-                                onChange={InputChangeValidate}
-                                type='text'
-                                id='otp'
-                                name='otp'
-                                maxLength={6}
-                                placeholder='...'
-                                className='otp peer w-full bg-zinc-950 outline-0 text-lg font-normal text-zinc-200 tracking-widest rounded-xl px-4 py-2 border-4 border-zinc-800 placeholder:text-transparent focus:border-zinc-500 text-center cursor-text'
-                            />
-                            <label
-                                htmlFor='otp'
-                                className='absolute -translate-y-3 peer-placeholder-shown:translate-y-3 ml-3 text-sm font-normal text-zinc-500 peer-focus:-translate-y-3 bg-zinc-950 w-auto px-2 py-1 peer-focus:text-zinc-300'
-                            >
-                                {labelOTP}
-                            </label>
-                        </div>
-                        <button
-                            disabled={load ? true : false}
-                            type='submit'
-                            className={`flex gap-2 justify-center items-center py-2 mt-2 sm:mt-0 w-full cursor-pointer ${
-                                load
-                                    ? 'bg-zinc-900 text-zinc-500'
-                                    : 'bg-gradient-to-br from-zinc-200 to-zinc-400 text-zinc-950'
-                            } text-lg rounded-xl outline-0 font-medium`}
-                        >
-                            {load ? (
-                                <>
-                                    <Loading /> {'Verifying OTP...'}
-                                </>
-                            ) : (
-                                'Verify OTP'
-                            )}
-                        </button>
-                    </form>
-                    {formHidden && (
-                        <p className='px-4 text-center w-full text-zinc-400 text-sm mt-2 mb-7 font-normal flex justify-center gap-1'>
-                            Don&apos; t have an account?{' '}
-                            <Link
-                                href='/signup'
-                                className='text-zinc-200 font-medium cursor-pointer visited:underline'
-                            >
-                                Sign Up
-                            </Link>
-                        </p>
-                    )}
+                        {labelWaNumber}
+                    </label>
                 </div>
-            </section>
-        </main>
+                <button
+                    disabled={load ? true : false}
+                    type='submit'
+                    className={`flex gap-2 justify-center items-center py-2 mt-2 w-full cursor-pointer ${
+                        load
+                            ? 'bg-zinc-800 text-zinc-500'
+                            : 'bg-gradient-to-br from-zinc-200 to-zinc-400 text-zinc-950'
+                    } text-lg rounded-xl outline-0 font-medium`}
+                >
+                    {load ? (
+                        <>
+                            <Loading /> {'Sending OTP...'}
+                        </>
+                    ) : (
+                        'Send OTP'
+                    )}
+                </button>
+            </form>
+            <form
+                onSubmit={Login}
+                className={`${
+                    formHidden ? 'hidden' : 'flex'
+                } p-4 w-full flex-col sm:flex-row items-center gap-4 mb-3`}
+            >
+                <div className='w-full flex flex-col gap-1'>
+                    <input
+                        onChange={InputChangeValidate}
+                        type='text'
+                        id='otp'
+                        name='otp'
+                        maxLength={6}
+                        placeholder='...'
+                        className='otp peer w-full bg-zinc-900 outline-0 text-lg font-normal text-zinc-200 tracking-widest rounded-xl px-4 py-2 border-4 border-zinc-600 placeholder:text-transparent focus:border-zinc-400 text-center cursor-text'
+                    />
+                    <label
+                        htmlFor='otp'
+                        className='absolute -translate-y-3 peer-placeholder-shown:translate-y-3 ml-3 text-sm font-normal text-zinc-500 peer-focus:-translate-y-3 bg-zinc-900 w-auto px-2 py-1 peer-focus:text-zinc-300'
+                    >
+                        {labelOTP}
+                    </label>
+                </div>
+                <button
+                    disabled={load ? true : false}
+                    type='submit'
+                    className={`flex gap-2 justify-center items-center py-2 mt-2 sm:mt-0 w-full cursor-pointer ${
+                        load
+                            ? 'bg-zinc-800 text-zinc-500'
+                            : 'bg-gradient-to-br from-zinc-200 to-zinc-400 text-zinc-950'
+                    } text-lg rounded-xl outline-0 font-medium`}
+                >
+                    {load ? (
+                        <>
+                            <Loading /> {'Verifying OTP...'}
+                        </>
+                    ) : (
+                        'Verify OTP'
+                    )}
+                </button>
+            </form>
+            {formHidden && (
+                <p className='px-4 text-center w-full text-zinc-400 text-base mt-2 mb-7 font-normal flex justify-center gap-1'>
+                    Don&apos; t have an account?{' '}
+                    <Link
+                        href='/signup'
+                        className='text-zinc-200 font-medium cursor-pointer visited:underline'
+                    >
+                        Sign Up
+                    </Link>
+                </p>
+            )}
+        </>
     );
 }
