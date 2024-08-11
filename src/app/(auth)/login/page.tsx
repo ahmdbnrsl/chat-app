@@ -10,7 +10,7 @@ import Loading from '@/components/loading';
 
 export default function LoginPage({ searchParams }: any) {
     const { push } = useRouter();
-    const callbackUrl = searchParams.callbackUrl || '/';
+    const callbackUrl = searchParams.callbackUrl || '/chat';
     const [load, setLoad] = useState<boolean>(false);
     const [labelWaNumber, setLabelWaNumber] = useState<string>(
         'Enter your WhatsApp number (e.g, 08212345)'
