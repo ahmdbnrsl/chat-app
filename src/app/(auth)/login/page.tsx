@@ -163,7 +163,11 @@ export default function LoginPage({ searchParams }: any) {
                             </h1>
                             <p
                                 className={`mt-3 text-base font-normal ${
-                                    otpErr.status || loginErr.status
+                                    formHidden
+                                        ? otpErr.status
+                                            ? 'text-red-500'
+                                            : 'text-zinc-400'
+                                        : loginErr.status
                                         ? 'text-red-500'
                                         : 'text-zinc-400'
                                 }`}

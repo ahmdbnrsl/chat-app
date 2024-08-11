@@ -41,12 +41,12 @@ export async function POST(req: NextRequest) {
             });
         if (res) {
             if (res?.status) {
-                const mess: string = `Your OTP code is : *${otp_code}*\ndon't share this to other people.`;
+                const mess: string = `Copy your OTP code for your VBChat verification below.`;
                 const buttons: Array<object> = [
                     {
                         name: 'cta_copy',
                         buttonParamsJson: JSON.stringify({
-                            display_text: 'Copy Your OTP',
+                            display_text: otp_code,
                             copy_code: otp_code
                         })
                     }
@@ -60,7 +60,7 @@ export async function POST(req: NextRequest) {
                         secret: process.env.NEXT_PUBLIC_SECRET,
                         number: wa_number,
                         mess,
-                        rep: 'benChat verify',
+                        rep: 'VBChat verification',
                         quoted: '',
                         buttons: JSON.stringify(buttons)
                     })
