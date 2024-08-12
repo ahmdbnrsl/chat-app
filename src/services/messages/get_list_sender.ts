@@ -53,28 +53,30 @@ export const getListSender = async ({
             }
         );
         const userss: Array<User> = await users.find({ $or: userData });
-        const listSender = userss.map(async (user: User) => {
-            const message: Array<Message> = await messages.find({
-                $or: [
-                    { sender_id: user_id, receiver_id: user?.user_id },
-                    { sender_id: user?.user_id, receiver_id: user_id }
-                ]
-            });
-            const latestMessage: Message = message.reduce(
-                (prev: Message, current: Message) =>
-                    Number(prev.message_timestamp) >
-                    Number(current.message_timestamp)
-                        ? prev
-                        : current
-            );
-            return {
-                pp: user?.pp,
-                name: user?.name,
-                wa_number: user?.wa_number,
-                latestMessageText: latestMessage?.message_text,
-                latestMessageTimestamp: latestMessage?.message_timestamp
-            };
-        });
+        const listSender: Promise<Array<Result>> = userss.map(
+            async (user: User) => {
+                const message: Array<Message> = await messages.find({
+                    $or: [
+                        { sender_id: user_id, receiver_id: user?.user_id },
+                        { sender_id: user?.user_id, receiver_id: user_id }
+                    ]
+                });
+                const latestMessage: Message = message.reduce(
+                    (prev: Message, current: Message) =>
+                        Number(prev.message_timestamp) >
+                        Number(current.message_timestamp)
+                            ? prev
+                            : current
+                );
+                return {
+                    pp: user?.pp,
+                    name: user?.name,
+                    wa_number: user?.wa_number,
+                    latestMessageText: latestMessage?.message_text,
+                    latestMessageTimestamp: latestMessage?.message_timestamp
+                };
+            }
+        );
 
         return Promise.all(listSender);
     } catch (error) {
