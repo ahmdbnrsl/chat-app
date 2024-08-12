@@ -27,13 +27,13 @@ export const getListSender = async ({
         let receiverArray: string[] = [];
 
         list.forEach((item: Message) => {
-            if (!uniqueSenders.has(item.sender)) {
-                uniqueSenders.add(item.sender);
-                senderArray.push(item.sender);
+            if (!uniqueSenders.has(item.sender_id)) {
+                uniqueSenders.add(item.sender_id);
+                senderArray.push(item.sender_id);
             }
-            if (!uniqueReceivers.has(item.receiver)) {
-                uniqueReceivers.add(item.receiver);
-                receiverArray.push(item.receiver);
+            if (!uniqueReceivers.has(item.receiver_id)) {
+                uniqueReceivers.add(item.receiver_id);
+                receiverArray.push(item.receiver_id);
             }
         });
 
