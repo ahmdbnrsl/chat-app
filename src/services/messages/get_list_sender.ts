@@ -8,8 +8,8 @@ interface Result {
     pp: string | undefined;
     name: string | undefined;
     wa_number: string | undefined;
-    latestMessageText: string;
-    latestMessageTimestamp: string;
+    latestMessageText: string | undefined;
+    latestMessageTimestamp: string | undefined;
 }
 
 export const getListSender = async ({
@@ -42,14 +42,24 @@ export const getListSender = async ({
         if (index !== -1) {
             listData.splice(index, 1);
         }
-        const listSender = listData.map(async (item: string) => {
+        if (listData.length === 0) {
+            return [];
+        }
+        const userData: Array<{ user_id: string }> = listData.map(
+            (user_id: string) => {
+                return {
+                    user_id
+                };
+            }
+        );
+        const userss: Array<User> = await users.find({ $or: userData });
+        const listSender: Result = userss.map(async (user: User) => {
             const message: Array<Message> = await messages.find({
                 $or: [
-                    { sender_id: user_id, receiver_id: item },
-                    { sender_id: item, receiver_id: user_id }
+                    { sender_id: user_id, receiver_id: user?.user_id },
+                    { sender_id: user?.user_id, receiver_id: user_id }
                 ]
             });
-            const user: User | null = await users.findOne({ user_id: item });
             const latestMessage: Message = message.reduce(
                 (prev: Message, current: Message) =>
                     Number(prev.message_timestamp) >
@@ -65,6 +75,7 @@ export const getListSender = async ({
                 latestMessageTimestamp: latestMessage?.message_timestamp
             };
         });
+
         return Promise.all(listSender);
     } catch (error) {
         return false;
