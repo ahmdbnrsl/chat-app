@@ -53,7 +53,7 @@ export const getListSender = async ({
             }
         );
         const userss: Array<User> = await users.find({ $or: userData });
-        const listSender: Result = userss.map(async (user: User) => {
+        const listSender: Array<Result> = userss.map(async (user: User) => {
             const message: Array<Message> = await messages.find({
                 $or: [
                     { sender_id: user_id, receiver_id: user?.user_id },
