@@ -49,7 +49,8 @@ export const storeUser = async ({
                         name,
                         created_at,
                         update_at: 'no_update',
-                        role: 'member'
+                        role: 'member',
+                        pp: 'empety'
                     });
                     return {
                         result: saveUser,
