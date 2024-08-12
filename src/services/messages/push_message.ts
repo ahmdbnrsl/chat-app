@@ -18,30 +18,37 @@ export const pushMessage = async ({
 }): Promise<{ result?: Message; status: boolean; message: string } | false> => {
     try {
         await mongoose.connect(URI);
-        const checkExistingReceiver: User | null = await users.findOne({
-            user_id: receiver_id
-        });
-        const checkExistingSender: User | null = await users.findOne({
-            user_id: sender_id
-        });
-        if (checkExistingReceiver && checkExistingSender) {
-            let message_id: string = uuid();
-            const res: Message = await messages.create({
-                message_id,
-                sender_id,
-                receiver_id,
-                message_text,
-                message_timestamp
+        if (receiver_id !== sender_id) {
+            const checkExistingReceiver: User | null = await users.findOne({
+                user_id: receiver_id
             });
-            return {
-                result: res,
-                status: true,
-                message: 'success push message to database'
-            };
+            const checkExistingSender: User | null = await users.findOne({
+                user_id: sender_id
+            });
+            if (checkExistingReceiver && checkExistingSender) {
+                let message_id: string = uuid();
+                const res: Message = await messages.create({
+                    message_id,
+                    sender_id,
+                    receiver_id,
+                    message_text,
+                    message_timestamp
+                });
+                return {
+                    result: res,
+                    status: true,
+                    message: 'success push message to database'
+                };
+            } else {
+                return {
+                    status: false,
+                    message: 'Sender and receiver both must be registered'
+                };
+            }
         } else {
             return {
                 status: false,
-                message: 'Sender and receiver both must be registered'
+                message: 'Sender and receiver must not same'
             };
         }
     } catch (error) {
