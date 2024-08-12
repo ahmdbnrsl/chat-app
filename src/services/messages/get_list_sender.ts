@@ -5,9 +5,9 @@ import { users, User } from '@/models/users';
 const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
 
 interface Result {
-    pp: string;
-    name: string;
-    wa_number: string;
+    pp: string | undefined;
+    name: string | undefined;
+    wa_number: string | undefined;
     latestMessageText: string;
     latestMessageTimestamp: string;
 }
