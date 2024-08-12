@@ -87,9 +87,10 @@ export const getListSender = async ({
                     };
                 }
             );
+            const result = Promise.all(listSender);
 
             return {
-                result: Promise.all(listSender),
+                result,
                 status: true,
                 message: 'success get list sender'
             };
