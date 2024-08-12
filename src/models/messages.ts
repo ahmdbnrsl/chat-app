@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
-interface Message extends Document {
+export interface Message extends Document {
     message_id: string;
     sender_id: string;
     receiver_id: string;
