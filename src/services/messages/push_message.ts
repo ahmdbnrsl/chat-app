@@ -3,6 +3,8 @@ import { v4 as uuid } from 'uuid';
 import { Message, messages } from '@/models/messages';
 import { User, users } from '@/models/users';
 
+const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
+
 export const pushMessage = async ({
     sender_id,
     receiver_id,
@@ -15,7 +17,7 @@ export const pushMessage = async ({
     message_timestamp: string;
 }): Promise<{ result?: Message; status: boolean; message: string } | false> => {
     try {
-        await mongoose.connect();
+        await mongoose.connect(URI);
         const checkExistingReceiver: User | null = await users.findOne({
             user_id: receiver_id
         });
