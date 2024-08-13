@@ -4,7 +4,7 @@ import { users, User } from '@/models/users';
 
 const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
 
-interface Result {
+export interface Result {
     pp: string;
     name: string;
     wa_number: string;
@@ -12,11 +12,9 @@ interface Result {
     latestMessageTimestamp: string;
 }
 
-export const getListSender = async ({
-    user_id
-}: {
-    user_id: string;
-}): Promise<
+export const getListSender = async (
+    user_id: string
+): Promise<
     { result?: Array<Result>; status: boolean; message: string } | false
 > => {
     try {
