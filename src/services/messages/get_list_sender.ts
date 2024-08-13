@@ -18,6 +18,7 @@ export const getListSender = async (
     { result?: Array<Result>; status: boolean; message: string } | false
 > => {
     try {
+        await mongoose.connect(URI);
         const checkExistingUser: User | null = await users.findOne({
             user_id
         });
@@ -99,5 +100,7 @@ export const getListSender = async (
         }
     } catch (error) {
         return false;
+    } finally {
+        await mongoose.connection.close();
     }
 };
