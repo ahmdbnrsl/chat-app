@@ -54,7 +54,7 @@ export const getListSender = async (
                     message: 'no sender found'
                 };
             }
-            const userData: Array<{ id_user: string }> = listData.map(
+            const userData: Array<{ user_id: string }> = listData.map(
                 (id_user: string) => {
                     return {
                         user_id: id_user
