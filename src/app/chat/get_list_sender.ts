@@ -43,6 +43,7 @@ export const getListSender = async (
                 result: res?.result
             };
         } else if (response?.status === 400) {
+            console.error(res?.message);
             return {
                 status: false,
                 message: res?.message
@@ -51,6 +52,7 @@ export const getListSender = async (
             return false;
         }
     } catch (error) {
+        console.error(error);
         return false;
     }
 };

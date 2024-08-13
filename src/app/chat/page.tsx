@@ -22,23 +22,25 @@ export default function ChatPage() {
     const { data: session, status }: { data: any; status: string } =
         useSession();
     useEffect(() => {
-        getListSender(session?.user?.user_id).then(
-            (
-                res:
-                    | {
-                          status: boolean;
-                          message: string;
-                          result?: Array<Result>;
-                      }
-                    | false
-            ) => {
-                if (res) {
-                    if (res?.status) {
-                        setListSender(res.result);
+        if (session?.user?.user_id) {
+            getListSender(session.user.user_id).then(
+                (
+                    res:
+                        | {
+                              status: boolean;
+                              message: string;
+                              result?: Array<Result>;
+                          }
+                        | false
+                ) => {
+                    if (res) {
+                        if (res?.status) {
+                            setListSender(res.result);
+                        }
                     }
                 }
-            }
-        );
+            );
+        }
     }, [listSender]);
     return (
         <main className='bg-zinc-900 w-full min-h-screen flex'>
