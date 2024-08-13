@@ -5,20 +5,20 @@ interface ProfileAvatarProps {
     username: string;
 }
 
-const ProfileAvatar: React.FC<ProfileAvatarProps> = ({ name }) => {
+const ProfileAvatar: React.FC<ProfileAvatarProps> = ({ username }) => {
     return (
         <Avatar
-            name={name}
+            name={username}
             size='50'
             round={true}
         />
     );
 };
 
-const ProfileAvatar2: React.FC<ProfileAvatarProps> = ({ name }) => {
+const ProfileAvatar2: React.FC<ProfileAvatarProps> = ({ username }) => {
     return (
         <Avatar
-            name={name}
+            name={username}
             size='35'
             round={true}
         />

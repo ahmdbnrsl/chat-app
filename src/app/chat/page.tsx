@@ -49,7 +49,7 @@ export default function ChatPage() {
                         Chats
                     </h1>
                     <button className='p-3 text-zinc-300 font-medium text-lg sm:text-xl md:text-2xl outline-0 bg-transparent border-0 rounded-full hover:bg-zinc-800'>
-                        <ProfileAvatar2 name={session?.user?.name} />
+                        <ProfileAvatar2 username={session?.user?.name} />
                     </button>
                 </nav>
                 <div className='w-full flex flex-col gap-3 p-6'>
@@ -62,7 +62,7 @@ export default function ChatPage() {
                                 <div className='w-10/12 flex gap-3 items-center'>
                                     {sender?.pp === 'empety' ? (
                                         <h1 className='text-2xl sm:text-3xl md:text-4xl text-zinc-300'>
-                                            <ProfileAvatar name='beni' />
+                                            <ProfileAvatar username='beni' />
                                         </h1>
                                     ) : (
                                         <Image
