@@ -65,6 +65,9 @@ const authOptions: NextAuthOptions = {
                 token.wa_number = user.wa_number;
                 token.user_id = user.user_id;
                 token.role = user.role;
+                token.created_at = user.created_at;
+                token.update_at = user.update_at;
+                token.pp = user.pp;
             }
             return token;
         },
@@ -81,6 +84,15 @@ const authOptions: NextAuthOptions = {
             }
             if ('role' in token) {
                 session.user.role = token.role;
+            }
+            if ('created_at' in token) {
+                session.user.created_at = token.created_at;
+            }
+            if ('update_at' in token) {
+                session.user.update_at = token.update_at;
+            }
+            if ('pp' in token) {
+                session.user.pp = token.pp;
             }
             return session;
         }

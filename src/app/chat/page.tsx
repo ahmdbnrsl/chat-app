@@ -5,6 +5,7 @@ import { FaRegCircleUser } from 'react-icons/fa6';
 import { ProfileAvatar, ProfileAvatar2 } from './avatar';
 import { useSession } from 'next-auth/react';
 import { getListSender } from './get_list_sender';
+import Modal from './modal';
 
 interface Result {
     pp: string;
@@ -19,6 +20,7 @@ export default function ChatPage() {
     const [listSender, setListSender] = useState<
         undefined | null | Array<Result>
     >(null);
+    const [showModal, setShowModal] = useState<boolean>(false);
     const { data: session, status }: { data: any; status: string } =
         useSession();
     useEffect(() => {
@@ -42,6 +44,20 @@ export default function ChatPage() {
     }, [session?.user?.user_id]);
     return (
         <main className='bg-zinc-900 w-full min-h-screen flex'>
+            {showModal && (
+                <div className='justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-zinc-500/[0.15] backdrop-blur p-4'>
+                    <div
+                        onClick={() => setShowModal(false)}
+                        className='fixed flex justify-center items-center inset-0 z-51 overflow-x-hidden overflow-y-auto outline-none focus:outline-none'
+                    ></div>
+                    <Modal
+                        name={session?.user?.name}
+                        wa_number={session?.user?.wa_number}
+                        created_at={session?.user?.created_at}
+                        pp={session?.user?.pp}
+                    />
+                </div>
+            )}
             <section className='w-full min-h-screen lg:w-1/3'>
                 <nav className='w-full py-4 px-6 flex justify-between border-b border-zinc-800 items-center'>
                     <button className='px-3 text-zinc-300 font-medium text-base sm:text-lg md:text-xl outline-0 bg-transparent border-0 rounded-lg hover:bg-zinc-800'>
@@ -50,7 +66,10 @@ export default function ChatPage() {
                     <h1 className='text-zinc-200 text-xl sm:text-2xl md:text-3xl font-bold tracking-normal'>
                         Chats
                     </h1>
-                    <button className='p-3 text-zinc-300 font-medium text-lg sm:text-xl md:text-2xl outline-0 bg-transparent border-0 rounded-full hover:bg-zinc-800'>
+                    <button
+                        onClick={() => setShowModal(true)}
+                        className='p-3 text-zinc-300 font-medium text-lg sm:text-xl md:text-2xl outline-0 bg-transparent border-0 rounded-full hover:bg-zinc-800'
+                    >
                         <ProfileAvatar2 username={session?.user?.name} />
                     </button>
                 </nav>
