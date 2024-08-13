@@ -99,6 +99,7 @@ export const getListSender = async (
             };
         }
     } catch (error) {
+        console.error('Error in getListSender:', error);
         return false;
     } finally {
         await mongoose.connection.close();
