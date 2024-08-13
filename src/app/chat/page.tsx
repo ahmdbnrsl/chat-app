@@ -68,6 +68,7 @@ export default function ChatPage() {
                                         </h1>
                                     ) : (
                                         <Image
+                                            alt='user profile'
                                             src={sender?.pp}
                                             width={50}
                                             height={50}
