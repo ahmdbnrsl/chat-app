@@ -62,7 +62,7 @@ export const getListSender = async (
                 }
             );
             const userss: Array<User> = await users.find({ $or: userData });
-            const listSender: Array<Promise<Result>> = userss.map(
+            const listSender: Array<Promise<Result | null>> = userss.map(
                 async (user: User) => {
                     if (user.user_id === user_id) return null;
                     const message: Array<Message> = await messages.find({
