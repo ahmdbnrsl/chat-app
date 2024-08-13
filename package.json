@@ -17,7 +17,9 @@
         "bcrypt": "latest",
         "uuid": "latest",
         "next-auth": "latest",
-        "react-icons": "latest"
+        "react-icons": "latest",
+        "swr": "latest",
+        "react-avatar": "^5.0.3"
     },
     "devDependencies": {
         "typescript": "^5",
