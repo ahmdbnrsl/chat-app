@@ -67,8 +67,8 @@ export const getListSender = async (
                     if (user.user_id === user_id) return null;
                     const message: Array<Message> = await messages.find({
                         $or: [
-                            { sender_id: user_id, receiver_id: user?.user_id },
-                            { sender_id: user?.user_id, receiver_id: user_id }
+                            { sender_id: user?.user_id, receiver_id: user_id },
+                            { sender_id: user_id, receiver_id: user?.user_id }
                         ]
                     });
                     const latestMessage: Message = message.reduce(
