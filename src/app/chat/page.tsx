@@ -16,7 +16,9 @@ interface Result {
 }
 
 export default function ChatPage() {
-    const [listSender, setListSender] = useState<null | Array<Result>>(null);
+    const [listSender, setListSender] = useState<
+        undefined | null | Array<Result>
+    >(null);
     const { data: session, status }: { data: any; status: string } =
         useSession();
     useEffect(() => {
