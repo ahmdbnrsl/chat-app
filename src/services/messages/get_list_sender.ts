@@ -75,7 +75,8 @@ export const getListSender = async (
                             Number(prev.message_timestamp) >
                             Number(current.message_timestamp)
                                 ? prev
-                                : current
+                                : current,
+                        message[0] || ({} as Message)
                     );
                     return {
                         pp: user?.pp,
