@@ -33,15 +33,13 @@ export default function ChatPage() {
                           }
                         | false
                 ) => {
-                    if (res) {
-                        if (res?.status) {
-                            setListSender(res.result);
-                        }
+                    if (res && res.status) {
+                        setListSender(res.result);
                     }
                 }
             );
         }
-    }, [listSender]);
+    }, [session?.user?.user_id]);
     return (
         <main className='bg-zinc-900 w-full min-h-screen flex'>
             <section className='w-full min-h-screen lg:w-1/3'>
