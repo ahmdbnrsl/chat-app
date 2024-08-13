@@ -8,6 +8,7 @@ export interface Result {
     pp: string;
     name: string;
     wa_number: string;
+    fromMe: boolean;
     latestMessageText: string;
     latestMessageTimestamp: string;
 }
@@ -83,6 +84,7 @@ export const getListSender = async (
                         pp: user?.pp,
                         name: user?.name,
                         wa_number: user?.wa_number,
+                        fromMe: latestMessage?.sender_id !== user?.user_id,
                         latestMessageText: latestMessage?.message_text,
                         latestMessageTimestamp: latestMessage?.message_timestamp
                     };
