@@ -7,6 +7,7 @@ interface Result {
     fromMe: boolean;
     latestMessageText: string;
     latestMessageTimestamp: string;
+    id_user: string;
 }
 export const getListSender = async (
     user_id: string

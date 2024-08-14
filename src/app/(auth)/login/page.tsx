@@ -13,7 +13,7 @@ export default function LoginPage({ searchParams }: any) {
     const callbackUrl = searchParams.callbackUrl || '/chat';
     const [load, setLoad] = useState<boolean>(false);
     const [labelWaNumber, setLabelWaNumber] = useState<string>(
-        'Enter your WhatsApp number (e.g, 08212345)'
+        'Enter your WhatsApp number'
     );
     const [labelOTP, setLabelOTP] = useState<string>('Enter your OTP code');
     const [formHidden, setFormHidden] = useState<boolean>(true);
@@ -136,13 +136,12 @@ export default function LoginPage({ searchParams }: any) {
         if (e.target.className.startsWith('wa')) {
             if (!Number(data)) setLabelWaNumber('Enter number only');
             if (data.length < 9) setLabelWaNumber('Enter at least 9 digits');
-            if (data.length > 20)
-                setLabelWaNumber('WhatsApp number must not exceed 20 numbers');
+            if (data.length > 20) setLabelWaNumber('Limit 20 numbers');
             if (
                 data === '' ||
                 (data.length >= 9 && data.length < 21 && Number(data))
             )
-                setLabelWaNumber('Enter your WhatsApp number (e.g, 08212345)');
+                setLabelWaNumber('Enter your WhatsApp number');
         } else {
             if (!Number(data)) setLabelOTP('Enter number only');
             if (data.length < 6) setLabelOTP('Enter 6 digits of OTP code');

@@ -12,7 +12,7 @@ export default function SignUpPage() {
     const [load, setLoad] = useState<boolean>(false);
     const [labelName, setLabelName] = useState<string>('Enter your fullname');
     const [labelWaNumber, setLabelWaNumber] = useState<string>(
-        'Enter your WhatsApp number (e.g, 08212345)'
+        'Enter your WhatsApp number'
     );
     const [err, setErr] = useState<{ status: boolean; message: string }>({
         status: false,
@@ -89,8 +89,7 @@ export default function SignUpPage() {
             if (data !== '' && data.replace(/\s/g, '') === '')
                 setLabelName('Name must not only space!');
             if (data.length < 5) setLabelName('Enter at least 5 letters');
-            if (data.length > 25)
-                setLabelName('Name must not exceed 25 letters');
+            if (data.length > 25) setLabelName('Limit 25 letters');
             if (
                 data === '' ||
                 (data.length >= 5 &&
@@ -102,13 +101,12 @@ export default function SignUpPage() {
             const data = e.target.value;
             if (!Number(data)) setLabelWaNumber('Enter number only');
             if (data.length < 9) setLabelWaNumber('Enter at least 9 digits');
-            if (data.length > 20)
-                setLabelWaNumber('WhatsApp number must not exceed 20 numbers');
+            if (data.length > 20) setLabelWaNumber('Limit 20 numbers');
             if (
                 data === '' ||
                 (data.length >= 9 && data.length < 21 && Number(data))
             )
-                setLabelWaNumber('Enter your WhatsApp number (e.g, 08212345)');
+                setLabelWaNumber('Enter your WhatsApp number');
         }
     };
 

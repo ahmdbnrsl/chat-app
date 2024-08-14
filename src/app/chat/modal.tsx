@@ -16,6 +16,19 @@ export default function Modal({
     created_at: string;
     pp: string;
 }) {
+    const date: number = new Date(Number(created_at));
+    const timestamp: string =
+        date.getFullYear() +
+        '-' +
+        String(date.getMonth() + 1).padStart(2, '0') +
+        '-' +
+        String(date.getDate()).padStart(2, '0') +
+        ' ' +
+        String(date.getHours()).padStart(2, '0') +
+        ':' +
+        String(date.getMinutes()).padStart(2, '0') +
+        ':' +
+        String(date.getSeconds()).padStart(2, '0');
     const [load, setLoad] = useState<boolean>(false);
     const HandleLogout = () => {
         setLoad(true);
@@ -53,7 +66,7 @@ export default function Modal({
                     @6288216018165
                 </p>
                 <p className='text-xs sm:text-sm text-zinc-500 font-normal'>
-                    Created at : {created_at}
+                    Created at : {timestamp}
                 </p>
                 <button
                     onClick={HandleLogout}

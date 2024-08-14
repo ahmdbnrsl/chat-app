@@ -1,5 +1,6 @@
 'use client';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { FaRegCircleUser } from 'react-icons/fa6';
 import { ProfileAvatar, ProfileAvatar2 } from './avatar';
@@ -14,6 +15,7 @@ interface Result {
     fromMe: boolean;
     latestMessageText: string;
     latestMessageTimestamp: string;
+    id_user: string;
 }
 
 export default function ChatPage() {
@@ -76,7 +78,8 @@ export default function ChatPage() {
                 <div className='w-full flex flex-col gap-3 p-6'>
                     {listSender &&
                         listSender?.map((sender: Result, index: number) => (
-                            <div
+                            <Link
+                                href={`/chat/${sender?.id_user}`}
                                 key={index}
                                 className='w-full rounded-xl bg-zinc-800 flex justify-between items-center p-3'
                             >
@@ -107,7 +110,7 @@ export default function ChatPage() {
                                 <button className='text-2xl sm:text-3xl md:text-4xl text-zinc-500 px-3'>
                                     ⟩
                                 </button>
-                            </div>
+                            </Link>
                         ))}
                 </div>
             </section>
