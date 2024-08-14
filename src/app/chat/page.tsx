@@ -25,7 +25,7 @@ export default function ChatPage() {
     const [showModal, setShowModal] = useState<boolean>(false);
     const { data: session, status }: { data: any; status: string } =
         useSession();
-    const getTimestamp: string = (date: string): string => {
+    const getTimestamp = (date: string): string => {
         const thisDate: Date = new Date(Number(date));
         return (
             thisDate.getFullYear() +
