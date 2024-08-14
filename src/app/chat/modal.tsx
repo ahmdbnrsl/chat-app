@@ -16,7 +16,7 @@ export default function Modal({
     created_at: string;
     pp: string;
 }) {
-    const date: number = new Date(Number(created_at));
+    const date: Date = new Date(Number(created_at));
     const timestamp: string =
         date.getFullYear() +
         '-' +
