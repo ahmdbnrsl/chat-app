@@ -63,7 +63,7 @@ export default function Modal({
                     {name}
                 </h1>
                 <p className='text-xs sm:text-sm md:text-base text-zinc-400 font-normal'>
-                    @6288216018165
+                    +{wa_number}
                 </p>
                 <p className='text-xs sm:text-sm text-zinc-500 font-normal'>
                     Created at : {timestamp}

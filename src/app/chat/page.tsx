@@ -25,6 +25,22 @@ export default function ChatPage() {
     const [showModal, setShowModal] = useState<boolean>(false);
     const { data: session, status }: { data: any; status: string } =
         useSession();
+    const getTimestamp: string = (date: string): string => {
+        const thisDate: Date = new Date(Number(date));
+        return (
+            thisDate.getFullYear() +
+            '-' +
+            String(date.getMonth() + 1).padStart(2, '0') +
+            '-' +
+            String(date.getDate()).padStart(2, '0') +
+            ' ' +
+            String(date.getHours()).padStart(2, '0') +
+            ':' +
+            String(date.getMinutes()).padStart(2, '0') +
+            ':' +
+            String(date.getSeconds()).padStart(2, '0')
+        );
+    };
     useEffect(() => {
         if (session?.user?.user_id) {
             getListSender(session.user.user_id).then(
@@ -60,20 +76,24 @@ export default function ChatPage() {
                     />
                 </div>
             )}
-            <section className='w-full min-h-screen lg:w-1/3'>
-                <nav className='w-full py-4 px-6 flex justify-between border-b border-zinc-800 items-center'>
-                    <button className='px-3 text-zinc-300 font-medium text-base sm:text-lg md:text-xl outline-0 bg-transparent border-0 rounded-lg hover:bg-zinc-800'>
-                        Edit
-                    </button>
-                    <h1 className='text-zinc-200 text-xl sm:text-2xl md:text-3xl font-bold tracking-normal'>
-                        Chats
-                    </h1>
-                    <button
-                        onClick={() => setShowModal(true)}
-                        className='p-3 text-zinc-300 font-medium text-lg sm:text-xl md:text-2xl outline-0 bg-transparent border-0 rounded-full hover:bg-zinc-800'
-                    >
-                        <ProfileAvatar2 username={session?.user?.name} />
-                    </button>
+            <section className='w-full flex flex-col min-h-screen lg:w-1/3'>
+                <nav className='sticky top-0 z-20 bg-zinc-900 w-full py-4 px-6 flex flex-col border-b border-zinc-800 items-center'>
+                    <div className='flex justify-between w-full items-center'>
+                        <h1 className='text-zinc-200 text-lg sm:text-xl font-semibold tracking-normal'>
+                            Chats
+                        </h1>
+                        <button
+                            onClick={() => setShowModal(true)}
+                            className='text-zinc-300 font-medium text-lg sm:text-xl md:text-2xl outline-0 bg-transparent border-0 rounded-full'
+                        >
+                            <ProfileAvatar2 username={session?.user?.name} />
+                        </button>
+                    </div>
+                    <input
+                        type='text'
+                        placeholder='Search by name'
+                        className='w-full py-2 px-4 text-zinc-300 font-normal text-base sm:text-lg rounded-lg bg-zinc-800/[0.5] outline-0 border-2 border-zinc-800 focus:border-zinc-700 placeholder:text-zinc-400 placeholder:text-sm sm:placeholder:text-base'
+                    />
                 </nav>
                 <div className='w-full flex flex-col gap-3 p-6'>
                     {listSender &&
@@ -81,7 +101,7 @@ export default function ChatPage() {
                             <Link
                                 href={`/chat/${sender?.id_user}`}
                                 key={index}
-                                className='w-full rounded-xl bg-zinc-800 flex justify-between items-center p-3'
+                                className='w-full rounded-xl bg-zinc-800/[0.5] flex justify-between items-center p-3'
                             >
                                 <div className='w-10/12 flex gap-3 items-center'>
                                     {sender?.pp === 'empety' ? (
@@ -99,19 +119,31 @@ export default function ChatPage() {
                                         />
                                     )}
                                     <div className='flex flex-col'>
-                                        <h1 className='text-base sm:text-lg text-zinc-200 font-bold'>
+                                        <h1 className='text-base sm:text-lg text-zinc-300 font-normal'>
                                             {sender?.name}
                                         </h1>
-                                        <p className='text-xs sm:text-sm md:text-base text-zinc-400'>
+                                        <p className='w-[15ch] sm:w-[25ch] md:w-[50ch] lg:w-[15ch] text-xs sm:text-sm text-zinc-400 truncate'>
                                             {sender?.latestMessageText}
                                         </p>
                                     </div>
                                 </div>
-                                <button className='text-2xl sm:text-3xl md:text-4xl text-zinc-500 px-3'>
-                                    ⟩
-                                </button>
+                                <div className='w-1/4 flex flex-col justify-center items-end'>
+                                    <p className='text-xs sm:text-sm font-normal text-zinc-400'>
+                                        +{sender?.wa_number}
+                                    </p>
+                                    <p className='text-xs font-normal text-zinc-500'>
+                                        {getTimestamp(
+                                            sender?.latestMessageTimestamp
+                                        )}
+                                    </p>
+                                </div>
                             </Link>
                         ))}
+                </div>
+                <div className='sticky bottom-0 bg-zinc-900 w-full py-4 px-6 flex flex-col border-t border-zinc-800 items-center'>
+                    <button className='bg-zinc-200 rounded-full py-1.5 px-6 outline-0 text-zinc-950 text-center'>
+                        + Start Chat
+                    </button>
                 </div>
             </section>
             <section className='hidden lg:min-h-screen lg:flex lg:w-4/6 lg:bg-zinc-950 lg:bg-ornament'></section>
