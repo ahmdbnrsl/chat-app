@@ -38,6 +38,7 @@ export default function Modal({
                     />
                 ) : (
                     <Image
+                        src={pp}
                         alt='profile photo'
                         width={125}
                         height={125}
