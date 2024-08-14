@@ -92,10 +92,10 @@ export default function ChatPage() {
                     <input
                         type='text'
                         placeholder='Search by name'
-                        className='w-full py-2 px-4 text-zinc-300 font-normal text-base sm:text-lg rounded-lg bg-zinc-800/[0.5] outline-0 border-2 border-zinc-800 focus:border-zinc-700 placeholder:text-zinc-400 placeholder:text-sm sm:placeholder:text-base'
+                        className='mt-2 w-full py-2 px-4 text-zinc-300 font-normal text-base sm:text-lg rounded-lg bg-zinc-800/[0.5] outline-0 border-2 border-zinc-800 focus:border-zinc-700 placeholder:text-zinc-400 placeholder:text-sm sm:placeholder:text-base'
                     />
                 </nav>
-                <div className='w-full flex flex-col gap-3 p-6'>
+                <div className='w-full flex flex-col gap-3 p-6 flex-grow'>
                     {listSender &&
                         listSender?.map((sender: Result, index: number) => (
                             <Link
@@ -103,7 +103,7 @@ export default function ChatPage() {
                                 key={index}
                                 className='w-full rounded-xl bg-zinc-800/[0.5] flex justify-between items-center p-3'
                             >
-                                <div className='w-10/12 flex gap-3 items-center'>
+                                <div className='w-8/12 flex gap-3 items-center'>
                                     {sender?.pp === 'empety' ? (
                                         <h1 className='text-2xl sm:text-3xl md:text-4xl text-zinc-300'>
                                             <ProfileAvatar username='beni' />
