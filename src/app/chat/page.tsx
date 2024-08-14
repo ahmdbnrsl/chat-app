@@ -28,7 +28,7 @@ export default function ChatPage() {
     const getTimestamp = (isDate: string): string => {
         const date: Date = new Date(Number(isDate));
         return (
-            thisDate.getFullYear() +
+            date.getFullYear() +
             '-' +
             String(date.getMonth() + 1).padStart(2, '0') +
             '-' +
