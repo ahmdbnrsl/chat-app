@@ -62,15 +62,18 @@ export default function MobileView(props: any) {
             message_text: ev.message.value,
             message_timestamp: Date.now().toString()
         });
-
-        if (send?.status) {
-            (e.target as HTMLFormElement).reset();
-            const res = await getListMessage(session.user.user_id, params.id);
-            if (res && res.status) setListMessage(res.result?.reverse());
-        } else {
-            window.navigator.vibrate(200);
+        if (send) {
+            if (send?.status) {
+                (e.target as HTMLFormElement).reset();
+                const res = await getListMessage(
+                    session.user.user_id,
+                    params.id
+                );
+                if (res && res.status) setListMessage(res.result?.reverse());
+            } else {
+                window.navigator.vibrate(200);
+            }
         }
-
         setLoad(false);
     };
 
