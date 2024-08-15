@@ -50,7 +50,7 @@ export default function MobileView(props: any) {
         ).padStart(2, '0')}`;
     }, []);
 
-    const handleSendMessage = async (e: FormEvent<HTMLFormElement>) => {
+    const HandleSendMessage = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoad(true);
         setDisable(true);
@@ -77,7 +77,7 @@ export default function MobileView(props: any) {
         setLoad(false);
     };
 
-    const messageChangeValidate = (e: ChangeEvent<HTMLInputElement>) => {
+    const MessageChangeValidate = (e: ChangeEvent<HTMLInputElement>) => {
         setDisable(e.target.value.length === 0);
     };
     return (
