@@ -47,7 +47,11 @@ export default function MobileView(props: any) {
                     <div className='flex justify-between w-full items-center'>
                         <div className='flex items-center gap-3'>
                             <button className='p-3 text-zinc-300 font-medium text-lg sm:text-xl md:text-2xl outline-0 bg-transparent border-0 rounded-full hover:bg-zinc-800'>
-                                <ProfileAvatar2 name='Ahmad Beni' />
+                                <Avatar
+                                    name='Via Fitriana'
+                                    size='35'
+                                    round={true}
+                                />
                             </button>
                             <div className='flex flex-col'>
                                 <h1 className='text-zinc-200 text-lg sm:text-xl font-semibold tracking-normal'>
