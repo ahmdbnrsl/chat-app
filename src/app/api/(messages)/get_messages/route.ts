@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { getListMessage } from '@/services/messages/get_list_message';
-import { Message } from '@/model/messages';
+import { Message } from '@/models/messages';
 
 interface BodyRequest {
     sender_id: string;
