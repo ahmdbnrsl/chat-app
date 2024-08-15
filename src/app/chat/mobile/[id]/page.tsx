@@ -26,7 +26,7 @@ export default function MobileView(props: any) {
                         | false
                 ) => {
                     if (res && res.status) {
-                        setListMessage(res.result.reverse());
+                        setListMessage(res?.result?.reverse());
                     }
                 }
             );
