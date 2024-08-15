@@ -99,7 +99,7 @@ export default function ChatPage() {
                     {listSender &&
                         listSender?.map((sender: Result, index: number) => (
                             <Link
-                                href={`/chat/dekstop/${sender?.id_user}`}
+                                href={`/chat/mobile/${sender?.id_user}`}
                                 key={index}
                                 className='w-full rounded-xl bg-zinc-800/[0.5] flex justify-between items-center p-3'
                             >
