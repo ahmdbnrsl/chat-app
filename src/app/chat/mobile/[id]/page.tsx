@@ -10,7 +10,7 @@ export default function MobileView(props: any) {
     const { data: session, status }: { data: any; status: string } =
         useSession();
     const [listMessage, setListMessage] = useState<
-        undefined | null | Array<Result>
+        undefined | null | Array<Message>
     >(null);
     const { params } = props;
     useEffect(() => {
