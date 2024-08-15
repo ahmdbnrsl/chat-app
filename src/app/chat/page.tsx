@@ -123,6 +123,7 @@ export default function ChatPage() {
                                             {sender?.name}
                                         </h1>
                                         <p className='w-[15ch] sm:w-[25ch] md:w-[50ch] lg:w-[15ch] text-xs sm:text-sm text-zinc-400 truncate'>
+                                            {sender?.fromMe ? 'You : ' : ''}
                                             {sender?.latestMessageText}
                                         </p>
                                     </div>
