@@ -40,7 +40,7 @@ export default function MobileView(props: any) {
         };
 
         fetchSenderInfo();
-        fetchMessages();
+        setInterval(fetchMessages, 1000);
     }, [session?.user?.user_id, params.id]);
 
     const getTimestamp = useCallback((isDate: string): string => {
