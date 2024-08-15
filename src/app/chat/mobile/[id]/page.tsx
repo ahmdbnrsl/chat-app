@@ -87,7 +87,7 @@ export default function MobileView(props: any) {
         }
     };
     const MessageChangeValidate = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value > 0) {
+        if (e.target.value.length > 0) {
             setDisable(false);
         } else {
             setDisable(true);
