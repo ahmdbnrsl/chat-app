@@ -1,18 +1,11 @@
 'use server';
+import { Message } from '@/models/messages';
 
-interface Result {
-    pp: string;
-    name: string;
-    wa_number: string;
-    fromMe: boolean;
-    latestMessageText: string;
-    latestMessageTimestamp: string;
-    id_user: string;
-}
-export const getListSender = async (
-    user_id: string
+export const getListMessage = async (
+    sender_id: string,
+    receiver_id: string
 ): Promise<
-    { status: boolean; message: string; result?: Array<Result> } | false
+    { status: boolean; message: string; result?: Array<Message> } | false
 > => {
     try {
         const options: RequestInit = {
@@ -21,19 +14,20 @@ export const getListSender = async (
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                user_id,
+                sender_id,
+                receiver_id,
                 secret: process.env.NEXT_PUBLIC_SECRET
             }),
             next: {
-                revalidate: 5
+                revalidate: 2
             }
         };
         const response: Response = await fetch(
-            'https://chat-app-rouge-alpha.vercel.app/api/get_list_sender',
+            'https://chat-app-rouge-alpha.vercel.app/api/get_messages',
             options
         );
         const res: {
-            result?: Array<Result>;
+            result?: Array<Message>;
             status: boolean;
             message: string;
         } = await response.json();
@@ -42,12 +36,6 @@ export const getListSender = async (
                 status: true,
                 message: res?.message,
                 result: res?.result
-            };
-        } else if (response?.status === 400) {
-            console.error(res?.message);
-            return {
-                status: false,
-                message: res?.message
             };
         } else {
             return false;

@@ -16,7 +16,7 @@ export default function RootLayout({
     const pathName = usePathname();
     return (
         <html lang='en'>
-            <body className={inter.className}>
+            <body className={`${inter.className} bg-zinc-950`}>
                 <SessionProvider>{children}</SessionProvider>
             </body>
         </html>
