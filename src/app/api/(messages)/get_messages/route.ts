@@ -21,8 +21,9 @@ export async function POST(req: NextRequest) {
         );
     }
     try {
-        const result: { status: true; message: string; list: Array<Message> } =
-            await getListMessage(body);
+        const result:
+            | { status: true; message: string; list: Array<Message> }
+            | false = await getListMessage(body);
         if (result) {
             const sortedMessageByTimestamp: Array<Message> = result?.list.sort(
                 (a: Message, b: Message) => {
