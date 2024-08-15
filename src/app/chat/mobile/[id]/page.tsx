@@ -79,6 +79,23 @@ export default function MobileView(props: any) {
             if (send?.status) {
                 setLoad(false);
                 (e.target as HTMLFormElement).reset();
+                if (session?.user?.user_id) {
+                    getListMessage(session.user.user_id, params.id).then(
+                        (
+                            res:
+                                | {
+                                      status: boolean;
+                                      message: string;
+                                      result?: Array<Message>;
+                                  }
+                                | false
+                        ) => {
+                            if (res && res.status) {
+                                setListMessage(res?.result?.reverse());
+                            }
+                        }
+                    );
+                }
             } else {
                 window.navigator.vibrate(200);
             }
