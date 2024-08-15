@@ -2,19 +2,35 @@
 import Avatar from 'react-avatar';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { getListMessage } from './get_list_message';
+import { getListMessage, getSenderInfo } from './get_list_message';
 import { Message } from '@/models/messages';
+import { User } from '@/models/users';
 import { FaPaperPlane } from 'react-icons/fa';
 
 export default function MobileView(props: any) {
     const { data: session, status }: { data: any; status: string } =
         useSession();
-    const [listMessage, setListMessage] = useState<
-        undefined | null | Array<Message>
-    >(null);
+    const [listMessage, setListMessage] =
+        (useState < undefined) | null | Array<Message>;
+    const [senderInfo, setSenderInfo] = useState<undefined | null | User>(null);
     const { params } = props;
     useEffect(() => {
         if (session?.user?.user_id) {
+            getSenderInfo(params.id).then(
+                (
+                    res:
+                        | {
+                              status: boolean;
+                              message: string;
+                              result?: User;
+                          }
+                        | false
+                ) => {
+                    if (res && res.status) {
+                        setSenderInfo(res?.result);
+                    }
+                }
+            );
             getListMessage(session.user.user_id, params.id).then(
                 (
                     res:
@@ -48,17 +64,19 @@ export default function MobileView(props: any) {
                         <div className='flex items-center gap-3'>
                             <button className='p-3 text-zinc-300 font-medium text-lg sm:text-xl md:text-2xl outline-0 bg-transparent border-0 rounded-full hover:bg-zinc-800'>
                                 <Avatar
-                                    name='Via Fitriana'
+                                    name={senderInfo ? senderInfo?.name : 'U'}
                                     size='35'
                                     round={true}
                                 />
                             </button>
                             <div className='flex flex-col'>
                                 <h1 className='text-zinc-200 text-lg sm:text-xl font-semibold tracking-normal'>
-                                    Ahmad Beni Rusli
+                                    {senderInfo ? senderInfo?.name : ''}
                                 </h1>
                                 <p className='text-xs font-normal text-zinc-400'>
-                                    +6288216018165
+                                    {senderInfo
+                                        ? '+' + senderInfo?.wa_number
+                                        : ''}
                                 </p>
                             </div>
                         </div>
