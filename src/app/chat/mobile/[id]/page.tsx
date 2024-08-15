@@ -73,6 +73,7 @@ export default function MobileView(props: any) {
                     {listMessage &&
                         listMessage.map((message: Message) => (
                             <div
+                                key={message?.message_timestamp}
                                 className={`w-full flex ${
                                     message.sender_id === session?.user?.user_id
                                         ? 'justify-end'
