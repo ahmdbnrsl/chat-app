@@ -1,8 +1,9 @@
 'use client';
 import Avatar from 'react-avatar';
-import { useEffect, useState } from 'react';
+import Loading from '@/components/loading';
+import { useEffect, useState, ChangeEvent, FormEvent } from 'react';
 import { useSession } from 'next-auth/react';
-import { getListMessage, getSenderInfo } from './get_list_message';
+import { getListMessage, getSenderInfo, sendMessage } from './message_service';
 import { Message } from '@/models/messages';
 import { User } from '@/models/users';
 import { FaPaperPlane } from 'react-icons/fa';
@@ -14,6 +15,8 @@ export default function MobileView(props: any) {
         undefined | null | Array<Message>
     >(null);
     const [senderInfo, setSenderInfo] = useState<undefined | null | User>(null);
+    const [load, setLoad] = useState<boolean>(false);
+    const [disable, setDisable] = useState<boolean>(true);
     const { params } = props;
     useEffect(() => {
         if (session?.user?.user_id) {
@@ -56,6 +59,39 @@ export default function MobileView(props: any) {
             ':' +
             String(date.getMinutes()).padStart(2, '0')
         );
+    };
+    const HandleSendMessage = async (e: FormEvent<HTMLFormElement>) => {
+        interface Data extends EventTarget {
+            message: HTMLInputElement;
+        }
+        const ev: Data = e.target as Data;
+        e.preventDefault();
+        setLoad(true);
+        setDisable(true);
+        const send: { status: boolean; message: string } | false =
+            await sendMessage({
+                sender_id: session?.user?.user_id,
+                receiver_id: params.id,
+                message_text: ev.message.value,
+                message_timestamp: Date.now().toString()
+            });
+        if (send) {
+            if (send?.status) {
+                setLoad(false);
+                (e.target as HTMLFormElement).reset();
+            } else {
+                window.navigator.vibrate(200);
+            }
+        } else {
+            window.navigator.vibrate(200);
+        }
+    };
+    const MessageChangeValidate = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.value > 0) {
+            setDisable(false);
+        } else {
+            setDisable(true);
+        }
     };
     return (
         <main className='bg-zinc-950 w-full min-h-screen flex'>
@@ -117,17 +153,27 @@ export default function MobileView(props: any) {
                             </div>
                         ))}
                 </div>
-                <form className='sticky bottom-0 bg-zinc-900 w-full py-4 px-6 flex border-t gap-3 border-zinc-800 justify-center'>
+                <form
+                    onSubmit={HandleSendMessage}
+                    className='sticky bottom-0 bg-zinc-900 w-full py-4 px-6 flex border-t gap-3 border-zinc-800 justify-center'
+                >
                     <input
+                        name='message'
+                        onChange={MessageChangeValidate}
                         type='text'
                         placeholder='Type your message...'
                         className='w-full py-1 px-2.5 sm:py-2 sm:px-4 text-zinc-300 font-normal text-base sm:text-lg rounded-lg bg-zinc-800/[0.5] outline-0 border-2 border-zinc-800 focus:border-zinc-700 placeholder:text-zinc-400 placeholder:text-sm sm:placeholder:text-base'
                     />
                     <button
+                        disabled={disable}
                         type='submit'
-                        className='bg-zinc-200 rounded-lg py-1 sm:py-1.5 px-4 outline-0 text-zinc-950 text-center text-base sm:text-lg'
+                        className={`flex justify-center items-center py-1 px-4 cursor-pointer ${
+                            load
+                                ? 'bg-zinc-800 text-zinc-500'
+                                : 'bg-gradient-to-br from-zinc-200 to-zinc-400 text-zinc-950'
+                        } text-lg rounded-xl outline-0 font-medium`}
                     >
-                        <FaPaperPlane />
+                        {load ? <Loading /> : <FaPaperPlane />}
                     </button>
                 </form>
             </section>
