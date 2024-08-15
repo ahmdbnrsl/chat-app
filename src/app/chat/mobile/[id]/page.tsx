@@ -10,8 +10,9 @@ import { FaPaperPlane } from 'react-icons/fa';
 export default function MobileView(props: any) {
     const { data: session, status }: { data: any; status: string } =
         useSession();
-    const [listMessage, setListMessage] =
-        (useState < undefined) | null | Array<Message>;
+    const [listMessage, setListMessage] = useState<
+        undefined | null | Array<Message>
+    >(null);
     const [senderInfo, setSenderInfo] = useState<undefined | null | User>(null);
     const { params } = props;
     useEffect(() => {
