@@ -1,7 +1,14 @@
 'use client';
 import Avatar from 'react-avatar';
 import Loading from '@/components/loading';
-import { useEffect, useState, ChangeEvent, FormEvent } from 'react';
+import {
+    useEffect,
+    useState,
+    useCallback,
+    useMemo,
+    ChangeEvent,
+    FormEvent
+} from 'react';
 import { useSession } from 'next-auth/react';
 import { getListMessage, getSenderInfo, sendMessage } from './message_service';
 import { Message } from '@/models/messages';
@@ -18,7 +25,7 @@ export default function MobileView(props: any) {
     const [load, setLoad] = useState<boolean>(false);
     const [disable, setDisable] = useState<boolean>(true);
     const { params } = props;
-    useEffect(() => {
+    /*useEffect(() => {
         if (session?.user?.user_id) {
             getSenderInfo(params.id).then(
                 (
@@ -109,6 +116,57 @@ export default function MobileView(props: any) {
         } else {
             setDisable(true);
         }
+    };*/
+    useEffect(() => {
+        if (!session?.user?.user_id || !params.id) return;
+
+        const fetchSenderInfo = async () => {
+            const res = await getSenderInfo(params.id);
+            if (res && res.status) setSenderInfo(res.result);
+        };
+
+        const fetchMessages = async () => {
+            const res = await getListMessage(session.user.user_id, params.id);
+            if (res && res.status) setListMessage(res.result?.reverse());
+        };
+
+        fetchSenderInfo();
+        fetchMessages();
+    }, [session?.user?.user_id, params.id]);
+
+    const getTimestamp = useCallback((isDate: string): string => {
+        const date = new Date(Number(isDate));
+        return `${String(date.getHours()).padStart(2, '0')}:${String(
+            date.getMinutes()
+        ).padStart(2, '0')}`;
+    }, []);
+
+    const handleSendMessage = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setLoad(true);
+        setDisable(true);
+
+        const ev = e.target as typeof e.target & { message: { value: string } };
+        const send = await sendMessage({
+            sender_id: session?.user?.user_id,
+            receiver_id: params.id,
+            message_text: ev.message.value,
+            message_timestamp: Date.now().toString()
+        });
+
+        if (send?.status) {
+            (e.target as HTMLFormElement).reset();
+            const res = await getListMessage(session.user.user_id, params.id);
+            if (res && res.status) setListMessage(res.result?.reverse());
+        } else {
+            window.navigator.vibrate(200);
+        }
+
+        setLoad(false);
+    };
+
+    const messageChangeValidate = (e: ChangeEvent<HTMLInputElement>) => {
+        setDisable(e.target.value.length === 0);
     };
     return (
         <main className='bg-zinc-950 w-full min-h-screen flex'>
