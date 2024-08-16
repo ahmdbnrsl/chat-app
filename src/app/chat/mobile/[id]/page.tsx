@@ -1,6 +1,7 @@
 'use client';
 import Avatar from 'react-avatar';
 import Loading from '@/components/loading';
+import Link from 'next/link'
 import {
     useEffect,
     useState,
