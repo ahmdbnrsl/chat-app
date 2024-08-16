@@ -108,7 +108,7 @@ export default function ChatPage() {
                                         <h1 className='text-base sm:text-lg text-zinc-300 font-normal'>
                                             {sender?.name}
                                         </h1>
-                                        <p className='w-[15ch] sm:w-[25ch] md:w-[50ch] lg:w-[15ch] text-xs sm:text-sm text-zinc-400 truncate'>
+                                        <p className='w-[15ch] sm:w-[25ch] md:w-[50ch] xl:w-[15ch] text-xs sm:text-sm text-zinc-400 truncate'>
                                             {sender?.fromMe ? 'You : ' : ''}
                                             {sender?.latestMessageText}
                                         </p>
