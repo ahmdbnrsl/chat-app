@@ -1,5 +1,5 @@
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/lib/auth';
 import { ProfileAvatar } from './avatar';
 import Image from 'next/image';
 import Link from 'next/link';
