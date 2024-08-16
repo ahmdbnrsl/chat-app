@@ -40,7 +40,8 @@ export default function MobileView(props: any) {
         };
 
         fetchSenderInfo();
-        setInterval(fetchMessages, 5000);
+        const interval = setInterval(fetchMessages, 5000);
+        return () => clearInterval(interval);
     }, [session?.user?.user_id, params.id]);
 
     const getTimestamp = useCallback((isDate: string): string => {
@@ -65,11 +66,6 @@ export default function MobileView(props: any) {
         if (send) {
             if (send?.status) {
                 (e.target as HTMLFormElement).reset();
-                const res = await getListMessage(
-                    session.user.user_id,
-                    params.id
-                );
-                if (res && res.status) setListMessage(res.result?.reverse());
             } else {
                 window.navigator.vibrate(200);
             }

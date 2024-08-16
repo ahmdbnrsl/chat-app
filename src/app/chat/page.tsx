@@ -27,38 +27,24 @@ export default function ChatPage() {
         useSession();
     const getTimestamp = (isDate: string): string => {
         const date: Date = new Date(Number(isDate));
-        return (
-            date.getFullYear() +
-            '-' +
-            String(date.getMonth() + 1).padStart(2, '0') +
-            '-' +
-            String(date.getDate()).padStart(2, '0') +
-            ' ' +
-            String(date.getHours()).padStart(2, '0') +
-            ':' +
-            String(date.getMinutes()).padStart(2, '0') +
-            ':' +
-            String(date.getSeconds()).padStart(2, '0')
-        );
+        return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+            2,
+            '0'
+        )}-${String(date.getDate()).padStart(2, '0')} ${String(
+            date.getHours()
+        ).padStart(2, '0')}:${String(date.getMinutes()).padStart(
+            2,
+            '0'
+        )}:${String(date.getSeconds()).padStart(2, '0')}`;
     };
     useEffect(() => {
-        if (session?.user?.user_id) {
-            getListSender(session.user.user_id).then(
-                (
-                    res:
-                        | {
-                              status: boolean;
-                              message: string;
-                              result?: Array<Result>;
-                          }
-                        | false
-                ) => {
-                    if (res && res.status) {
-                        setListSender(res.result);
-                    }
-                }
-            );
-        }
+        if (!session?.user?.user_id) return;
+        const fetchListSender = async () => {
+            const res = await getListSender(session.user.user_id);
+            if (res && res.status) setListSender(res.result);
+        };
+        const interval = setInterval(fetchListSender, 5000);
+        return () => clearInterval(interval);
     }, [session?.user?.user_id]);
     return (
         <main className='bg-zinc-900 w-full min-h-screen flex'>
