@@ -1,6 +1,7 @@
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
+'use client';
+import { useSession } from 'next-auth/react';
 import { ProfileAvatar } from './avatar';
+import useSWR from 'swr';
 import Image from 'next/image';
 import Link from 'next/link';
 import Loading from '@/components/loading';
@@ -16,37 +17,29 @@ interface Result {
     id_user: string;
 }
 
-export default async function ChatPage() {
-    const session = await getServerSession(authOptions);
+export default function ChatPage() {
+    const { data: session, status }: { data: any; status: string } =
+        useSession();
     const user_id: string | undefined | null = session?.user?.user_id;
+
     const options: RequestInit = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            user_id,
-            secret: process.env.NEXT_PUBLIC_SECRET
+            user_id
         }),
         cache: 'no-store'
     };
-    const response: Response = await fetch(
+    const fetcher = (url: string) =>
+        fetch(url, options).then(res => res.json());
+    const { data, error, isLoading } = useSWR(
         'https://chat-app-rouge-alpha.vercel.app/api/get_list_sender',
-        options
+        fetcher
     );
-    const res: {
-        result?: Array<Result>;
-        status: boolean;
-        message: string;
-    } = await response.json();
-    let listSender: Array<Result> | undefined | false = false;
-    if (response?.ok) {
-        listSender = res?.result;
-    } else if (response?.status === 400) {
-        listSender = undefined;
-    } else {
-        listSender = false;
-    }
+    let listSender: Array<Result> | undefined | false = data?.result;
+
     const getTimestamp = (isDate: string): string => {
         const date: Date = new Date(Number(isDate));
         return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
@@ -63,7 +56,7 @@ export default async function ChatPage() {
     return (
         <Wrapper>
             <div className='w-full flex flex-col gap-3 p-6 flex-grow'>
-                {!listSender ? (
+                {isLoading ? (
                     <div className='w-full flex justify-center gap-1.5 items-center text-lg font-medium text-zinc-500'>
                         <Loading /> Loading your chats...
                     </div>
