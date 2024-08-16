@@ -17,7 +17,7 @@ export default function Loading() {
                     />
                 </nav>
                 <div className='w-full flex flex-col gap-3 p-6 flex-grow items-center'>
-                    <div className='w-full flex justify-center gap-2 text-lg font-normal text-zinc-400'>
+                    <div className='w-full flex justify-center gap-2 text-lg font-medium text-zinc-500 items-center'>
                         <IsLoading /> Loading your chats...
                     </div>
                 </div>
