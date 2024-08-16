@@ -38,7 +38,7 @@ export default function ChatPage() {
         'https://chat-app-rouge-alpha.vercel.app/api/get_list_sender',
         fetcher
     );
-    let listSender: Array<Result> | undefined | false = data?.result;
+    let listSender: Array<Result> | undefined = data?.result;
 
     const getTimestamp = (isDate: string): string => {
         const date: Date = new Date(Number(isDate));
