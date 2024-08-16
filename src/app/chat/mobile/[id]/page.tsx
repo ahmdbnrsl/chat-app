@@ -23,6 +23,7 @@ export default function MobileView(props: any) {
     >(null);
     const [senderInfo, setSenderInfo] = useState<undefined | null | User>(null);
     const [load, setLoad] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
     const [disable, setDisable] = useState<boolean>(true);
     const { params } = props;
 
@@ -31,13 +32,20 @@ export default function MobileView(props: any) {
 
         const fetchSenderInfo = async () => {
             const res = await getSenderInfo(params.id);
-            if (res && res.status) setSenderInfo(res.result);
+            if (res && res.status) {
+                setSenderInfo(res.result);
+                setLoading(false);
+            }
         };
 
         const fetchMessages = async () => {
             const res = await getListMessage(session.user.user_id, params.id);
-            if (res && res.status) setListMessage(res.result?.reverse());
+            if (res && res.status) {
+                setListMessage(res.result?.reverse());
+            }
         };
+
+        if (listMessage) window.scrollTo(0, document.body.scrollHeight);
 
         fetchSenderInfo();
         const interval = setInterval(fetchMessages, 5000);
@@ -66,6 +74,7 @@ export default function MobileView(props: any) {
         if (send) {
             if (send?.status) {
                 (e.target as HTMLFormElement).reset();
+                window.scrollTo(0, document.body.scrollHeight);
             } else {
                 window.navigator.vibrate(200);
             }
@@ -82,21 +91,35 @@ export default function MobileView(props: any) {
                 <nav className='sticky top-0 z-20 bg-zinc-900 w-full py-4 px-6 flex flex-col md:flex-row gap-3 border-b border-zinc-800 items-center'>
                     <div className='flex justify-between w-full items-center'>
                         <div className='flex items-center gap-3'>
-                            <button className='p-3 text-zinc-300 font-medium text-lg sm:text-xl md:text-2xl outline-0 bg-transparent border-0 rounded-full hover:bg-zinc-800'>
-                                <Avatar
-                                    name={senderInfo ? senderInfo?.name : 'U'}
-                                    size='35'
-                                    round={true}
-                                />
+                            <button
+                                className={`text-zinc-300 font-medium text-lg sm:text-xl md:text-2xl outline-0 ${
+                                    !senderInfo
+                                        ? 'bg-zinc-800'
+                                        : 'bg-transparent'
+                                } border-0 rounded-full hover:bg-zinc-800`}
+                            >
+                                {senderInfo ? (
+                                    <Avatar
+                                        name={senderInfo?.name}
+                                        size='35'
+                                        round={true}
+                                    />
+                                ) : null}
                             </button>
                             <div className='flex flex-col'>
                                 <h1 className='text-zinc-200 text-lg sm:text-xl font-semibold tracking-normal'>
-                                    {senderInfo ? senderInfo?.name : ''}
+                                    {senderInfo ? (
+                                        senderInfo?.name
+                                    ) : (
+                                        <div className='px-4 py-1 rounded-lg bg-zinc-800'></div>
+                                    )}
                                 </h1>
                                 <p className='text-xs font-normal text-zinc-400'>
-                                    {senderInfo
-                                        ? '+' + senderInfo?.wa_number
-                                        : ''}
+                                    {senderInfo ? (
+                                        '+' + senderInfo?.wa_number
+                                    ) : (
+                                        <div className='px-4 py-0.5 rounded-lg bg-zinc-800'></div>
+                                    )}
                                 </p>
                             </div>
                         </div>
@@ -108,7 +131,11 @@ export default function MobileView(props: any) {
                     />
                 </nav>
                 <div className='w-full flex flex-col-reverse gap-3 p-6 flex-grow'>
-                    {listMessage &&
+                    {!listMessage ? (
+                        <div className='w-full flex justify-center gap-1.5 items-center text-lg font-medium text-zinc-500'>
+                            <Loading /> Loading messages...
+                        </div>
+                    ) : (
                         listMessage.map((message: Message) => (
                             <div
                                 key={message?.message_timestamp}
@@ -134,7 +161,8 @@ export default function MobileView(props: any) {
                                     </p>
                                 </div>
                             </div>
-                        ))}
+                        ))
+                    )}
                 </div>
                 <form
                     onSubmit={HandleSendMessage}
