@@ -62,7 +62,7 @@ export default function ChatPage() {
                     />
                 </div>
             )}
-            <section className='w-full flex flex-col min-h-screen lg:w-1/3'>
+            <section className='w-full flex flex-col min-h-screen xl:w-1/3'>
                 <nav className='sticky top-0 z-20 bg-zinc-900 w-full py-4 px-6 flex flex-col border-b border-zinc-800 items-center'>
                     <div className='flex justify-between w-full items-center'>
                         <h1 className='text-zinc-200 text-lg sm:text-xl font-semibold tracking-normal'>
@@ -133,7 +133,7 @@ export default function ChatPage() {
                     </button>
                 </div>
             </section>
-            <section className='hidden lg:min-h-screen lg:flex lg:w-4/6 lg:bg-zinc-950 lg:bg-ornament'></section>
+            <section className='hidden min-h-screen xl:flex w-4/6 bg-zinc-950 bg-ornament'></section>
         </main>
     );
 }
