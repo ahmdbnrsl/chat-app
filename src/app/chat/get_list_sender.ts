@@ -24,9 +24,7 @@ export const getListSender = async (
                 user_id,
                 secret: process.env.NEXT_PUBLIC_SECRET
             }),
-            next: {
-                revalidate: 5
-            }
+            cache: 'no-store'
         };
         const response: Response = await fetch(
             'https://chat-app-rouge-alpha.vercel.app/api/get_list_sender',
