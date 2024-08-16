@@ -60,7 +60,7 @@ export default function ChatPage() {
                     <div className='w-full flex justify-center gap-1.5 items-center text-lg font-medium text-zinc-500'>
                         <Loading /> Loading your chats...
                     </div>
-                ) : listSender.length > 0 ? (
+                ) : listSender?.length > 0 ? (
                     listSender?.map((sender: Result, index: number) => (
                         <Link
                             href={`/chat/mobile/${sender?.id_user}`}
