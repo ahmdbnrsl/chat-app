@@ -23,7 +23,6 @@ export default function MobileView(props: any) {
     >(null);
     const [senderInfo, setSenderInfo] = useState<undefined | null | User>(null);
     const [load, setLoad] = useState<boolean>(false);
-    const [loading, setLoading] = useState<boolean>(true);
     const [disable, setDisable] = useState<boolean>(true);
     const { params } = props;
 
@@ -32,10 +31,7 @@ export default function MobileView(props: any) {
 
         const fetchSenderInfo = async () => {
             const res = await getSenderInfo(params.id);
-            if (res && res.status) {
-                setSenderInfo(res.result);
-                setLoading(false);
-            }
+            if (res && res.status) setSenderInfo(res.result);
         };
 
         const fetchMessages = async () => {
@@ -44,8 +40,6 @@ export default function MobileView(props: any) {
                 setListMessage(res.result?.reverse());
             }
         };
-
-        if (listMessage) window.scrollTo(0, document.body.scrollHeight);
 
         fetchSenderInfo();
         const interval = setInterval(fetchMessages, 5000);
@@ -91,11 +85,17 @@ export default function MobileView(props: any) {
                 <nav className='sticky top-0 z-20 bg-zinc-900 w-full py-4 px-6 flex flex-col md:flex-row gap-3 border-b border-zinc-800 items-center'>
                     <div className='flex justify-between w-full items-center'>
                         <div className='flex items-center gap-3'>
+                            <Link
+                                href='/chat'
+                                className='text-lg sm:text-xl md:text-2xl text-zinc-400 px-2'
+                            >
+                                ⟨
+                            </Link>
                             <button
                                 className={`text-zinc-300 font-medium text-lg sm:text-xl md:text-2xl outline-0 ${
                                     !senderInfo
-                                        ? 'bg-zinc-800'
-                                        : 'bg-transparent'
+                                        ? 'bg-zinc-800 p-2'
+                                        : 'bg-transparent p-0'
                                 } border-0 rounded-full hover:bg-zinc-800`}
                             >
                                 {senderInfo ? (
@@ -111,14 +111,14 @@ export default function MobileView(props: any) {
                                     {senderInfo ? (
                                         senderInfo?.name
                                     ) : (
-                                        <div className='px-4 py-1 rounded-lg bg-zinc-800'></div>
+                                        <div className='px-6 py-2 rounded-lg bg-zinc-800'></div>
                                     )}
                                 </h1>
                                 <p className='text-xs font-normal text-zinc-400'>
                                     {senderInfo ? (
                                         '+' + senderInfo?.wa_number
                                     ) : (
-                                        <div className='px-4 py-0.5 rounded-lg bg-zinc-800'></div>
+                                        <div className='px-4 py-1 rounded-lg bg-zinc-800'></div>
                                     )}
                                 </p>
                             </div>
