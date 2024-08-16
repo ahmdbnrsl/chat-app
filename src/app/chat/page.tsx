@@ -21,7 +21,7 @@ export default function ChatPage() {
     const { data: session, status }: { data: any; status: string } =
         useSession();
     const user_id: string | undefined | null = session?.user?.user_id;
-
+    let listSender: Array<Result> | undefined = undefined;
     const options: RequestInit = {
         method: 'POST',
         headers: {
@@ -38,8 +38,7 @@ export default function ChatPage() {
         'https://chat-app-rouge-alpha.vercel.app/api/get_list_sender',
         fetcher
     );
-    let listSender: Array<Result> | undefined = data?.result;
-
+    listSender = data?.result;
     const getTimestamp = (isDate: string): string => {
         const date: Date = new Date(Number(isDate));
         return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
