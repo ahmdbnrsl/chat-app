@@ -7,6 +7,7 @@ import { ProfileAvatar, ProfileAvatar2 } from './avatar';
 import { useSession } from 'next-auth/react';
 import { getListSender } from './get_list_sender';
 import Modal from './modal';
+import Loading from '@/components/loading';
 
 interface Result {
     pp: string;
@@ -23,6 +24,7 @@ export default function ChatPage() {
         undefined | null | Array<Result>
     >(null);
     const [showModal, setShowModal] = useState<boolean>(false);
+    const [load, setLoad] = useState<boolean>(true);
     const { data: session, status }: { data: any; status: string } =
         useSession();
     const getTimestamp = (isDate: string): string => {
@@ -41,7 +43,10 @@ export default function ChatPage() {
         if (!session?.user?.user_id) return;
         const fetchListSender = async () => {
             const res = await getListSender(session.user.user_id);
-            if (res && res.status) setListSender(res.result);
+            if (res && res.status) {
+                setListSender(res.result);
+                setLoad(false);
+            }
         };
         const interval = setInterval(fetchListSender, 5000);
         return () => clearInterval(interval);
@@ -82,7 +87,11 @@ export default function ChatPage() {
                     />
                 </nav>
                 <div className='w-full flex flex-col gap-3 p-6 flex-grow'>
-                    {listSender &&
+                    {load ? (
+                        <div className='w-full flex justify-center gap-2 text-lg font-medium text-zinc-400'>
+                            <Loading /> Loading your chats...
+                        </div>
+                    ) : (
                         listSender?.map((sender: Result, index: number) => (
                             <Link
                                 href={`/chat/mobile/${sender?.id_user}`}
@@ -125,7 +134,8 @@ export default function ChatPage() {
                                     </p>
                                 </div>
                             </Link>
-                        ))}
+                        ))
+                    )}
                 </div>
                 <div className='sticky bottom-0 bg-zinc-900 w-full py-4 px-6 flex flex-col border-t border-zinc-800 items-center'>
                     <button className='bg-zinc-200 rounded-full py-1.5 px-6 outline-0 text-zinc-950 text-center'>
