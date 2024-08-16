@@ -9,6 +9,20 @@ interface Result {
     message: string;
 }
 
+declare module 'next-auth' {
+    interface Session {
+        user: {
+            name?: string | null;
+            wa_number?: string | null;
+            user_id?: string | null;
+            role?: string | null;
+            created_at?: string | null;
+            update_at?: string | null;
+            pp?: string | null;
+        };
+    }
+}
+
 export const authOptions: NextAuthOptions = {
     session: {
         strategy: 'jwt'
