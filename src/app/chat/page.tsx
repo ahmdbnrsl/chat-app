@@ -56,7 +56,7 @@ export default function ChatPage() {
     return (
         <Wrapper>
             <div className='w-full flex flex-col gap-3 p-6 flex-grow'>
-                {isLoading ? (
+                {!listSender ? (
                     <div className='w-full flex justify-center gap-1.5 items-center text-lg font-medium text-zinc-500'>
                         <Loading /> Loading your chats...
                     </div>
