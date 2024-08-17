@@ -46,8 +46,10 @@ export default function MobileView(props: any) {
             }
         };
 
-        fetchSenderInfo();
-        fetchMessages();
+        socket.on('connect', () => {
+            console.log('Connected to WebSocket server');
+        });
+
         socket.on('data_updated', (newData: Message) => {
             console.log('Data updated on server:', newData);
             if (
@@ -66,6 +68,13 @@ export default function MobileView(props: any) {
                 );
             }
         });
+
+        socket.on('disconnect', () => {
+            console.log('Disconnected from WebSocket server');
+        });
+
+        fetchSenderInfo();
+        fetchMessages();
 
         return () => {
             socket.off('data_updated');
