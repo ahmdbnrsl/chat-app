@@ -17,7 +17,8 @@ import { User } from '@/models/users';
 import { FaPaperPlane } from 'react-icons/fa';
 import { io } from 'socket.io-client';
 
-const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL);
+const socketURL = process.env.NEXT_PUBLIC_SOCKET_URL || '';
+const socket = io(socketURL);
 
 export default function MobileView(props: any) {
     const { data: session, status }: { data: any; status: string } =
