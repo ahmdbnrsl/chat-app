@@ -15,6 +15,9 @@ import { getListMessage, getSenderInfo, sendMessage } from './message_service';
 import { Message } from '@/models/messages';
 import { User } from '@/models/users';
 import { FaPaperPlane } from 'react-icons/fa';
+import { io } from 'socket.io-client';
+
+const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL);
 
 export default function MobileView(props: any) {
     const { data: session, status }: { data: any; status: string } =
@@ -43,8 +46,25 @@ export default function MobileView(props: any) {
         };
 
         fetchSenderInfo();
-        const interval = setInterval(fetchMessages, 5000);
-        return () => clearInterval(interval);
+        fetchMessages();
+        socket.on('data_updated', (newData: Message) => {
+            console.log('Data updated on server:', newData);
+            if (
+                (newData.sender_id === session?.user.user_id &&
+                    newData.receiver_id === params.id) ||
+                (newData.sender_id === params.id &&
+                    newData.receiver_id === session?.user?.user_id)
+            ) {
+                setListMessage((prevData: Array<Message>) => [
+                    ...prevData,
+                    newData
+                ]);
+            }
+        });
+
+        return () => {
+            socket.off('data_updated');
+        };
     }, [session?.user?.user_id, params.id]);
 
     const getTimestamp = useCallback((isDate: string): string => {
