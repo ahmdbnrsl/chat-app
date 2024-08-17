@@ -56,10 +56,12 @@ export default function MobileView(props: any) {
                 (newData.sender_id === params.id &&
                     newData.receiver_id === session?.user?.user_id)
             ) {
-                setListMessage((prevData: Array<Message>) => [
-                    ...prevData,
-                    newData
-                ]);
+                setListMessage(
+                    (prevData: Array<Message> | null | undefined) => [
+                        ...prevData,
+                        newData
+                    ]
+                );
             }
         });
 
