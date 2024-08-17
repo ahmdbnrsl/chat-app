@@ -46,8 +46,11 @@ export default function MobileView(props: any) {
             }
         };
 
+        fetchSenderInfo();
+        fetchMessages();
+
         socket.on('connect', () => {
-            console.log('Connected to WebSocket server');
+            console.info('live chat opened');
         });
 
         socket.on('data_updated', (newData: Message) => {
@@ -60,9 +63,11 @@ export default function MobileView(props: any) {
             ) {
                 setListMessage(
                     (prevData: Array<Message> | null | undefined) => {
+                        console.log('Previous state:', prevData);
                         const updatedMessages = prevData
                             ? [...(prevData as Array<Message>), newData]
                             : [newData];
+                        console.log('Updated state:', updatedMessages);
                         return updatedMessages;
                     }
                 );
@@ -70,11 +75,8 @@ export default function MobileView(props: any) {
         });
 
         socket.on('disconnect', () => {
-            console.log('Disconnected from WebSocket server');
+            console.info('live chat closed');
         });
-
-        fetchSenderInfo();
-        fetchMessages();
 
         return () => {
             socket.off('data_updated');
