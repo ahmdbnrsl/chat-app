@@ -54,6 +54,7 @@ export default function MobileView(props: any) {
         });
 
         socket.on('data_updated', (newData: Message) => {
+            if (!newData) return;
             if (
                 (newData.sender_id === session?.user.user_id &&
                     newData.receiver_id === params.id) ||
