@@ -58,7 +58,7 @@ export default function MobileView(props: any) {
             ) {
                 setListMessage(
                     (prevData: Array<Message> | null | undefined) => [
-                        ...prevData,
+                        ...(prevData as Array<Message>),
                         newData
                     ]
                 );
