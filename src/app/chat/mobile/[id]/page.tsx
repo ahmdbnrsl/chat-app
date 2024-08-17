@@ -63,11 +63,10 @@ export default function MobileView(props: any) {
             ) {
                 setListMessage(
                     (prevData: Array<Message> | null | undefined) => {
-                        console.log('Previous state:', prevData);
                         const updatedMessages = prevData
                             ? [...(prevData as Array<Message>), newData]
                             : [newData];
-                        console.log('Updated state:', updatedMessages);
+
                         return updatedMessages;
                     }
                 );
@@ -81,7 +80,7 @@ export default function MobileView(props: any) {
         return () => {
             socket.off('data_updated');
         };
-    }, [session?.user?.user_id, params.id]);
+    }, [session?.user?.user_id, params.id, socket]);
 
     const getTimestamp = useCallback((isDate: string): string => {
         const date = new Date(Number(isDate));
