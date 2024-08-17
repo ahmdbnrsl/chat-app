@@ -33,7 +33,7 @@ export default function MobileView(props: any) {
 
     useEffect(() => {
         if (!session?.user?.user_id || !params.id) return;
-
+        console.log('useEffect triggered');
         const fetchSenderInfo = async () => {
             const res = await getSenderInfo(params.id);
             if (res && res.status) setSenderInfo(res.result);
@@ -78,6 +78,7 @@ export default function MobileView(props: any) {
         });
 
         return () => {
+            console.log('useEffect closed');
             socket.off('data_updated');
         };
     }, [session?.user?.user_id, params.id, socket]);
