@@ -120,6 +120,7 @@ export default function MobileView(props: any) {
         if (send) {
             if (send?.status) {
                 (e.target as HTMLFormElement).reset();
+                setTextareaValue('');
                 window.scrollTo(0, document.body.scrollHeight);
             } else {
                 window.navigator.vibrate(200);
@@ -223,7 +224,9 @@ export default function MobileView(props: any) {
                                             : 'bg-zinc-800/[0.5] rounded-b-lg rounded-tr-lg'
                                     }`}
                                 >
-                                    <p>{message.message_text}</p>
+                                    <pre className='whitespace-pre-wrap text-base'>
+                                        {message.message_text}
+                                    </pre>
                                     <p className='mt-1 w-full text-end text-xs font-normal text-zinc-400'>
                                         {getTimestamp(
                                             message.message_timestamp
