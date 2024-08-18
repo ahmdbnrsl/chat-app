@@ -4,7 +4,11 @@ import Link from 'next/link';
 import Avatar from 'react-avatar';
 import { User } from '@/models/users';
 
-export default function NavbarChat({ senderInfo }: { senderInfo: User }) {
+export default function NavbarChat({
+    senderInfo
+}: {
+    senderInfo: User | null | undefined;
+}) {
     return (
         <nav className='sticky top-0 z-20 bg-zinc-950 w-full py-4 px-6 flex flex-col md:flex-row gap-3 border-b border-zinc-800 items-center'>
             <div className='flex justify-between w-full items-center'>
