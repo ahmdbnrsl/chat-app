@@ -1,6 +1,7 @@
 'use client';
 import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import Avatar from 'react-avatar';
 import useSWR from 'swr';
 import Image from 'next/image';
@@ -21,6 +22,7 @@ interface Result {
 export default function Layout({ children }: { children: React.ReactNode }) {
     const { data: session, status }: { data: any; status: string } =
         useSession();
+    const [pathTo, setPathTo] = useState<string>('');
     const user_id: string | undefined | null = session?.user?.user_id;
     let listSender: Array<Result> | undefined = undefined;
     const options: RequestInit = {
@@ -52,6 +54,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             '0'
         )}:${String(date.getSeconds()).padStart(2, '0')}`;
     };
+
+    useEffect(() => {
+        if (window.innerWidth < 1280) {
+            setPathTo('/chat/mobile/');
+        } else {
+            setPathTo('/chat/dekstop/');
+        }
+    }, [window.innerWidth]);
+
     const pathname = usePathname();
 
     if (pathname.startsWith('/chat/mobile/')) {
@@ -69,11 +80,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     ) : listSender?.length !== 0 ? (
                         listSender?.map((sender: Result, index: number) => (
                             <Link
-                                href={`${
-                                    window.innerWidth < 1280
-                                        ? '/chat/mobile'
-                                        : '/chat/dekstop'
-                                }/${sender?.id_user}`}
+                                href={`${pathTo}${sender?.id_user}`}
                                 key={index}
                                 className='w-full rounded-xl transition-colors hover:bg-zinc-900/[0.85] flex justify-between items-center p-3'
                             >
