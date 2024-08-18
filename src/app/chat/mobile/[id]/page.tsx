@@ -250,7 +250,7 @@ export default function MobileView(props: any) {
                     <button
                         disabled={disable}
                         type='submit'
-                        className={`flex justify-center items-center py-1 px-4 cursor-pointer ${
+                        className={`flex justify-center items-center py-3 px-4 cursor-pointer ${
                             load
                                 ? 'bg-zinc-800 text-zinc-500'
                                 : 'bg-gradient-to-br from-zinc-200 to-zinc-400 text-zinc-950'
