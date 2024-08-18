@@ -73,6 +73,8 @@ export default function MobileView(props: any) {
             }
         });
 
+        sock.on('data_deleted', () => fetchMessages());
+
         socket.on('disconnect', () => {
             console.info('live chat closed');
         });
