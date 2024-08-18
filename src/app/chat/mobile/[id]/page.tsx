@@ -139,11 +139,22 @@ export default function MobileView(props: any) {
                                 } border-0 rounded-full hover:bg-zinc-800`}
                             >
                                 {senderInfo ? (
-                                    <Avatar
-                                        name={senderInfo?.name}
-                                        size='35'
-                                        round={true}
-                                    />
+                                    senderInfo?.pp !== 'empety' ? (
+                                        <Image
+                                            alt='User profile'
+                                            src={senderInfo?.pp}
+                                            height={35}
+                                            weight={35}
+                                            className='rounded-full'
+                                            loading='lazy'
+                                        />
+                                    ) : (
+                                        <Avatar
+                                            name={senderInfo?.name}
+                                            size='35'
+                                            round={true}
+                                        />
+                                    )
                                 ) : null}
                             </button>
                             <div className='flex flex-col'>
