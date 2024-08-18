@@ -8,6 +8,7 @@ import {
     useState,
     useCallback,
     useMemo,
+    useRef,
     ChangeEvent,
     FormEvent
 } from 'react';
@@ -31,6 +32,18 @@ export default function MobileView(props: any) {
     const [load, setLoad] = useState<boolean>(false);
     const [disable, setDisable] = useState<boolean>(true);
     const { params } = props;
+    const textareaRef = useRef(null);
+    const [textareaValue, setTextareaValue] = useState<string>('');
+
+    useEffect(() => {
+        if (textareaRef.current) {
+            textareaRef.current.style.height = 'auto';
+            textareaRef.current.style.height = `${Math.min(
+                textareaRef.current.scrollHeight,
+                320
+            )}px`;
+        }
+    }, [textareaValue]);
 
     useEffect(() => {
         if (!session?.user?.user_id || !params.id) return;
@@ -119,6 +132,7 @@ export default function MobileView(props: any) {
         e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
     ) => {
         setDisable(e.target.value.length === 0);
+        setTextareaValue(e.target.value);
     };
     return (
         <main className='bg-zinc-950 w-full min-h-screen flex'>
@@ -205,8 +219,8 @@ export default function MobileView(props: any) {
                                     className={`w-fit text-zinc-300 py-1 min-w-[10rem] px-5 flex flex-col ${
                                         message.sender_id ===
                                         session?.user?.user_id
-                                            ? 'bg-zinc-900/[0.5] rounded-b-lg rounded-tl-lg'
-                                            : 'bg-zinc-900/[0.5] rounded-b-lg rounded-tr-lg'
+                                            ? 'bg-zinc-700/[0.5] rounded-b-lg rounded-tl-lg'
+                                            : 'bg-zinc-800/[0.5] rounded-b-lg rounded-tr-lg'
                                     }`}
                                 >
                                     <p>{message.message_text}</p>
@@ -222,13 +236,16 @@ export default function MobileView(props: any) {
                 </div>
                 <form
                     onSubmit={HandleSendMessage}
-                    className='sticky bottom-0 bg-zinc-950 w-full py-4 px-6 flex border-t gap-3 border-zinc-800 justify-center'
+                    className='sticky bottom-0 bg-zinc-950 w-full py-4 px-6 flex border-t gap-3 border-zinc-800 justify-center items-start'
                 >
                     <textarea
+                        disabled={!listMessage ? true : false}
+                        ref={textareaRef}
+                        value={textareaValue}
                         name='message'
                         onChange={MessageChangeValidate}
                         placeholder='Type your message...'
-                        className='h-fit max-h-32 resize-none w-full py-1 px-2.5 sm:py-2 sm:px-4 text-zinc-300 font-normal text-base sm:text-lg rounded-lg bg-zinc-900/[0.5] outline-0 border-2 border-zinc-800 focus:border-zinc-700 placeholder:text-zinc-400 placeholder:text-sm sm:placeholder:text-base'
+                        className='max-h-40 resize-none w-full py-1 px-2.5 sm:py-2 sm:px-4 text-zinc-300 font-normal text-base sm:text-lg rounded-lg bg-zinc-900/[0.5] outline-0 border-2 border-zinc-800 focus:border-zinc-700 placeholder:text-zinc-400 placeholder:text-sm sm:placeholder:text-base'
                     ></textarea>
                     <button
                         disabled={disable}
