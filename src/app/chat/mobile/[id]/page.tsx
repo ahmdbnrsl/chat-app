@@ -2,7 +2,9 @@
 import ListMessage from './listMessage';
 import NavbarChat from './Navbar';
 import FormMessage from './formMessage';
-import Loading from '@/components/loading';
+import LoadingMessage from '@/components/loadingMessage';
+import Avatar from 'react-avatar';
+import Image from 'next/image';
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useSession } from 'next-auth/react';
 import { getListMessage, getSenderInfo } from './message_service';
@@ -106,43 +108,93 @@ export default function MobileView(props: any) {
 
     return (
         <main className='bg-zinc-950 w-full min-h-screen flex'>
-            <section className='w-full flex flex-col min-h-screen bg-ornament bg-fixed bg-zinc-950'>
-                <NavbarChat senderInfo={senderInfo} />
-                <div className='w-full flex flex-col-reverse gap-3 p-6 flex-grow'>
-                    {!listMessage ? (
-                        <div className='w-full flex justify-center gap-1.5 items-center text-lg font-medium text-zinc-500'>
-                            <Loading /> Loading messages...
+            {!listMessage ? (
+                <section className='w-full flex flex-col min-h-screen bg-fixed bg-zinc-950 justify-center items-center'>
+                    <h1 className='flex items-center gap-2 sm:gap-3 text-xl sm:text-2xl md:text-3xl text-zinc-300 font-medium text-center'>
+                        <LoadingMessage /> Loading Messages...
+                    </h1>
+                </section>
+            ) : (
+                <section className='w-full flex flex-col min-h-screen bg-ornament bg-fixed bg-zinc-950'>
+                    <NavbarChat senderInfo={senderInfo} />
+                    {listMessage.length !== 0 ? (
+                        <div className='w-full flex flex-col-reverse gap-3 p-6 flex-grow'>
+                            {listMessage.map((message: Message, i: number) => {
+                                let checkDate: string | null = null;
+                                if (i === 0) {
+                                    checkDate = getDate(
+                                        message?.message_timestamp
+                                    );
+                                } else if (
+                                    getDate(message?.message_timestamp) !==
+                                    getDate(
+                                        listMessage[i - 1].message_timestamp
+                                    )
+                                ) {
+                                    checkDate = getDate(
+                                        message?.message_timestamp
+                                    );
+                                }
+                                return (
+                                    <ListMessage
+                                        key={message?.message_timestamp}
+                                        checkDate={checkDate}
+                                        timestamp={getTimestamp(
+                                            message?.message_timestamp
+                                        )}
+                                        message={message}
+                                    />
+                                );
+                            })}
                         </div>
                     ) : (
-                        listMessage.map((message: Message, i: number) => {
-                            let checkDate: string | null = null;
-                            if (i === 0) {
-                                checkDate = getDate(message?.message_timestamp);
-                            } else if (
-                                getDate(message?.message_timestamp) !==
-                                getDate(listMessage[i - 1].message_timestamp)
-                            ) {
-                                checkDate = getDate(message?.message_timestamp);
-                            }
-                            return (
-                                <ListMessage
-                                    key={message?.message_timestamp}
-                                    checkDate={checkDate}
-                                    timestamp={getTimestamp(
-                                        message?.message_timestamp
-                                    )}
-                                    message={message}
+                        <div className='w-full flex flex-col justify-center items-center p-6 flex-grow bg-zinc-950 gap-3'>
+                            {senderInfo?.pp !== 'empety' ? (
+                                <Image
+                                    src={senderInfo?.pp}
+                                    width={80}
+                                    height={80}
+                                    alt='user profile'
+                                    loading='lazy'
                                 />
-                            );
-                        })
+                            ) : (
+                                <Avatar
+                                    name={senderInfo?.name}
+                                    size='80'
+                                    round={true}
+                                />
+                            )}
+                            <h1 className='flex items-center gap-2 sm:gap-3 text-xl sm:text-2xl md:text-3xl text-zinc-300 font-medium text-center'>
+                                {senderInfo?.name}
+                            </h1>
+                            <p className='text-zinc-500 font-medium text-sm sm:text-base text-center'>
+                                {senderInfo?.user_id}
+                            </p>
+                            <p className='text-zinc-500 font-medium text-sm sm:text-base text-center'>
+                                {senderInfo?.wa_number}
+                            </p>
+                            <button
+                                onClick={() =>
+                                    (
+                                        document.querySelector(
+                                            '.form_sendmessage'
+                                        ) as HTMLTextAreaElement
+                                    ).focus()
+                                }
+                                type='button'
+                                className='flex justify-center items-center px-4 py-2  cursor-pointer bg-gradient-to-br from-zinc-200 to-zinc-400 text-zinc-950 text-lg rounded-full outline-0 font-medium'
+                            >
+                                Start Chatting
+                            </button>
+                        </div>
                     )}
-                </div>
-                <FormMessage
-                    paramsId={params.id}
-                    userId={session?.user?.user_id}
-                    isDisabled={!listMessage ? true : false}
-                />
-            </section>
+                    <FormMessage
+                        paramsId={params.id}
+                        userId={session?.user?.user_id}
+                        isDisabled={!listMessage ? true : false}
+                    />
+                </section>
+            )}
         </main>
     );
 }
