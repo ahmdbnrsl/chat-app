@@ -117,7 +117,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     )}
                 </div>
             </Wrapper>
-            <section className='hidden w-full xl:flex flex-col min-h-screen xl:w-4/6 bg-zinc-950 bg-ornament bg-fixed'>
+            <section className='hidden w-full xl:flex flex-col min-h-screen xl:w-4/6 bg-zinc-950 bg-ornament bg-fixed justify-center items-center'>
                 {children}
             </section>
         </main>

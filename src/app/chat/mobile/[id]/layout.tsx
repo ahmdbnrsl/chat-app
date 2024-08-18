@@ -1,3 +1,3 @@
-export default function Layout() {
-    return null;
+export default function Layout({ children }: { children: React.ReactNode }) {
+    return <>{children}</>;
 }
