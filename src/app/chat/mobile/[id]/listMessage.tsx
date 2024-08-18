@@ -5,18 +5,20 @@ import { Message } from '@/models/messages';
 export default function ListMessage({
     message,
     checkDate,
-    getTimestamp
+    getTimestamp,
+    key
 }: {
     message: Message;
     checkDate: string | null;
     timestamp: string;
+    key: string;
 }) {
     const { data: session, status }: { data: any; status: string } =
         useSession();
     return (
         <>
             <div
-                key={message?.message_timestamp}
+                key={key}
                 className={`w-full flex ${
                     message.sender_id === session?.user?.user_id
                         ? 'justify-end'
