@@ -23,7 +23,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     const { data: session, status }: { data: any; status: string } =
         useSession();
     const [pathTo, setPathTo] = useState<string>('');
-    const [width, setWidth] = useState<number>(0);
     const user_id: string | undefined | null = session?.user?.user_id;
     let listSender: Array<Result> | undefined = undefined;
     const options: RequestInit = {
@@ -58,15 +57,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
     useEffect(() => {
         const handleResize = () => {
-            setWidth(window.innerWidth);
+            if (window.innerWidth < 1280) {
+                setPathTo('/chat/mobile/');
+            } else {
+                setPathTo('/chat/dekstop/');
+            }
         };
         window.addEventListener('resize', handleResize);
-
-        if (width < 1280) {
-            setPathTo('/chat/mobile/');
-        } else {
-            setPathTo('/chat/dekstop/');
-        }
 
         return () => {
             window.removeEventListener('resize', handleResize);
