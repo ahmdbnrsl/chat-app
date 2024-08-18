@@ -125,7 +125,7 @@ export default function MobileView(props: any) {
                                 checkDate = getDate(message?.message_timestamp);
                             }
                             return (
-                                <listMessage
+                                <ListMessage
                                     key={message?.message_timestamp}
                                     checkDate={checkDate}
                                     timestamp={getTimestamp(
