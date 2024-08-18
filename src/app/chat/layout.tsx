@@ -59,6 +59,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         setWidth(window.innerWidth);
         const handleResize = () => {
+            console.log(window.innerWidth);
             setWidth(window.innerWidth);
         };
         window.addEventListener('resize', handleResize);
@@ -68,6 +69,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         } else {
             setPathTo('/chat/dekstop/');
         }
+
         return () => {
             window.removeEventListener('resize', handleResize);
         };
