@@ -224,7 +224,7 @@ export default function MobileView(props: any) {
                                             : 'bg-zinc-800/[0.5] rounded-b-lg rounded-tr-lg'
                                     }`}
                                 >
-                                    <pre className='whitespace-pre-wrap text-base'>
+                                    <pre className='whitespace-pre-wrap text-base font-inherit'>
                                         {message.message_text}
                                     </pre>
                                     <p className='mt-1 w-full text-end text-xs font-normal text-zinc-400'>
