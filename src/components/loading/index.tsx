@@ -3,7 +3,7 @@ export default function Loading() {
         <div role='status'>
             <svg
                 aria-hidden='true'
-                className='mr-2 w-4 mb-1 h-4 text-zinc-800 animate-spin fill-zinc-400'
+                className='w-4 mb-1 h-4 text-zinc-800 animate-spin fill-zinc-400'
                 viewBox='0 0 100 101'
                 fill='none'
                 xmlns='http://www.w3.org/2000/svg'
