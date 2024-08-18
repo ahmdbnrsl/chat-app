@@ -1,5 +1,6 @@
 'use client';
 import { useSession } from 'next-auth/react';
+import { usePathname } from 'next/navigation';
 import Avatar from 'react-avatar';
 import useSWR from 'swr';
 import Image from 'next/image';
@@ -51,6 +52,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             '0'
         )}:${String(date.getSeconds()).padStart(2, '0')}`;
     };
+    const pathname = usePathname();
+
+    if (pathname.startsWith('/chat/mobile/')) {
+        return <>{children}</>;
+    }
 
     return (
         <main className='bg-zinc-950 w-full min-h-screen flex'>
