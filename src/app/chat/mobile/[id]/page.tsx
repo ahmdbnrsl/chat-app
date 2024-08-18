@@ -32,7 +32,7 @@ export default function MobileView(props: any) {
     const [load, setLoad] = useState<boolean>(false);
     const [disable, setDisable] = useState<boolean>(true);
     const { params } = props;
-    const textareaRef = useRef(null);
+    const textareaRef = useRef<HTMLTextAreaElement | null>(null);
     const [textareaValue, setTextareaValue] = useState<string>('');
 
     useEffect(() => {
@@ -182,7 +182,7 @@ export default function MobileView(props: any) {
                                 </h1>
                                 <p
                                     className={`text-xs font-normal text-zinc-400 ${
-                                        senderInfo ? 'mt-1' : ''
+                                        !senderInfo ? 'mt-1.5' : ''
                                     }`}
                                 >
                                     {senderInfo ? (
