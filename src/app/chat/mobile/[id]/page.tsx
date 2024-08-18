@@ -107,10 +107,24 @@ export default function MobileView(props: any) {
 
     const getDate = (isDate: string): string => {
         const date: Date = new Date(Number(isDate));
-        return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
-            2,
-            '0'
-        )}-${String(date.getDate()).padStart(2, '0')}`;
+        const monthNames: string[] = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December'
+        ];
+        const monthName: string = monthNames[date.getMonth()];
+        return `${date.getFullYear()} ${monthName} ${String(
+            date.getDate()
+        ).padStart(2, '0')}`;
     };
 
     const HandleSendMessage = async (e: FormEvent<HTMLFormElement>) => {
@@ -228,13 +242,6 @@ export default function MobileView(props: any) {
 
                             return (
                                 <>
-                                    {checkDate ? (
-                                        <div className='w-full flex justify-center py-2'>
-                                            <div className='px-3 py-0.5 rounded bg-zinc-900 text-base text-zinc-300 font-medium'>
-                                                {checkDate}
-                                            </div>
-                                        </div>
-                                    ) : null}
                                     <div
                                         key={message?.message_timestamp}
                                         className={`w-full flex ${
@@ -262,6 +269,13 @@ export default function MobileView(props: any) {
                                             </p>
                                         </div>
                                     </div>
+                                    {checkDate ? (
+                                        <div className='w-full flex justify-center py-2'>
+                                            <div className='px-3 py-0.5 rounded bg-zinc-900 text-base text-zinc-300 font-medium'>
+                                                {checkDate}
+                                            </div>
+                                        </div>
+                                    ) : null}
                                 </>
                             );
                         })
