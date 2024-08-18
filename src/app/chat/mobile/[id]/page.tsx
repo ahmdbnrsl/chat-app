@@ -159,7 +159,7 @@ export default function MobileView(props: any) {
                                 />
                             ) : (
                                 <Avatar
-                                    name={senderInfo.name}
+                                    name={senderInfo?.name}
                                     size='80'
                                     round={true}
                                 />
