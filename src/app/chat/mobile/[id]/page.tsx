@@ -122,7 +122,7 @@ export default function MobileView(props: any) {
     return (
         <main className='bg-zinc-950 w-full min-h-screen flex'>
             <section className='w-full flex flex-col min-h-screen bg-ornament bg-fixed bg-zinc-950'>
-                <nav className='sticky top-0 z-20 bg-zinc-900 w-full py-4 px-6 flex flex-col md:flex-row gap-3 border-b border-zinc-800 items-center'>
+                <nav className='sticky top-0 z-20 bg-zinc-950 w-full py-4 px-6 flex flex-col md:flex-row gap-3 border-b border-zinc-800 items-center'>
                     <div className='flex justify-between w-full items-center'>
                         <div className='flex items-center gap-3'>
                             <Link
@@ -171,7 +171,7 @@ export default function MobileView(props: any) {
                     <input
                         type='text'
                         placeholder='Search message'
-                        className='w-full py-1 px-2.5 sm:py-2 sm:px-4 text-zinc-300 font-normal text-base sm:text-lg rounded-lg bg-zinc-800/[0.5] outline-0 border-2 border-zinc-800 focus:border-zinc-700 placeholder:text-zinc-400 placeholder:text-sm sm:placeholder:text-base'
+                        className='w-full py-1 px-2.5 sm:py-2 sm:px-4 text-zinc-300 font-normal text-base sm:text-lg rounded-lg bg-zinc-900/[0.5] outline-0 border-2 border-zinc-800 focus:border-zinc-700 placeholder:text-zinc-400 placeholder:text-sm sm:placeholder:text-base'
                     />
                 </nav>
                 <div className='w-full flex flex-col-reverse gap-3 p-6 flex-grow'>
@@ -190,11 +190,11 @@ export default function MobileView(props: any) {
                                 }`}
                             >
                                 <div
-                                    className={`w-fit text-zinc-300 py-1 min-w-[8rem] px-4 flex flex-col ${
+                                    className={`w-fit text-zinc-300 py-1 min-w-[10rem] px-5 flex flex-col ${
                                         message.sender_id ===
                                         session?.user?.user_id
-                                            ? 'bg-zinc-700 rounded-b-xl rounded-tl-xl'
-                                            : 'bg-zinc-900 rounded-b-xl rounded-tr-xl'
+                                            ? 'bg-zinc-900/[0.5] rounded-b-lg rounded-tl-lg'
+                                            : 'bg-zinc-900/[0.5] rounded-b-lg rounded-tr-lg'
                                     }`}
                                 >
                                     <p>{message.message_text}</p>
@@ -210,13 +210,13 @@ export default function MobileView(props: any) {
                 </div>
                 <form
                     onSubmit={HandleSendMessage}
-                    className='sticky bottom-0 bg-zinc-900 w-full py-4 px-6 flex border-t gap-3 border-zinc-800 justify-center'
+                    className='sticky bottom-0 bg-zinc-950 w-full py-4 px-6 flex border-t gap-3 border-zinc-800 justify-center'
                 >
                     <textarea
                         name='message'
                         onChange={MessageChangeValidate}
                         placeholder='Type your message...'
-                        className='h-fit max-h-32 resize-none w-full py-1 px-2.5 sm:py-2 sm:px-4 text-zinc-300 font-normal text-base sm:text-lg rounded-lg bg-zinc-800/[0.5] outline-0 border-2 border-zinc-800 focus:border-zinc-700 placeholder:text-zinc-400 placeholder:text-sm sm:placeholder:text-base'
+                        className='h-fit max-h-32 resize-none w-full py-1 px-2.5 sm:py-2 sm:px-4 text-zinc-300 font-normal text-base sm:text-lg rounded-lg bg-zinc-900/[0.5] outline-0 border-2 border-zinc-800 focus:border-zinc-700 placeholder:text-zinc-400 placeholder:text-sm sm:placeholder:text-base'
                     ></textarea>
                     <button
                         disabled={disable}

@@ -67,10 +67,10 @@ export default function ChatPage() {
                             className='w-full rounded-xl bg-zinc-800/[0.5] flex justify-between items-center p-3'
                         >
                             <div className='w-8/12 flex gap-3 items-center'>
-                                {session?.user?.pp !== 'empety' ? (
+                                {sender?.pp !== 'empety' ? (
                                     <Image
                                         alt='User profile'
-                                        src={sender?.user?.pp}
+                                        src={sender?.pp}
                                         height={50}
                                         wight={50}
                                         className='rounded-full'
@@ -78,7 +78,7 @@ export default function ChatPage() {
                                     />
                                 ) : (
                                     <Avatar
-                                        name={session?.user?.name}
+                                        name={sender?.name}
                                         size='50'
                                         round={true}
                                     />

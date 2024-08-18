@@ -37,7 +37,7 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
                             {session?.user?.pp !== 'empety' ? (
                                 <Image
                                     alt='User profile'
-                                    src={sender?.user?.pp}
+                                    src={session?.user?.pp}
                                     height={35}
                                     wight={35}
                                     className='rounded-full'
