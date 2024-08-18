@@ -51,8 +51,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             '0'
         )}:${String(date.getSeconds()).padStart(2, '0')}`;
     };
-    const linkTo: string =
-        window.innerWidth < 1280 ? '/chat/mobile' : '/chat/dekstop';
 
     return (
         <main className='bg-zinc-950 w-full min-h-screen flex'>
@@ -65,7 +63,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     ) : listSender?.length !== 0 ? (
                         listSender?.map((sender: Result, index: number) => (
                             <Link
-                                href={`${linkTo}/${sender?.id_user}`}
+                                href={`${
+                                    window.innerWidth < 1280
+                                        ? '/chat/mobile'
+                                        : '/chat/dekstop'
+                                }/${sender?.id_user}`}
                                 key={index}
                                 className='w-full rounded-xl transition-colors hover:bg-zinc-900/[0.85] flex justify-between items-center p-3'
                             >
