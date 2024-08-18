@@ -149,9 +149,9 @@ export default function MobileView(props: any) {
                         </div>
                     ) : (
                         <div className='w-full flex flex-col justify-center items-center p-6 flex-grow bg-zinc-950 gap-3'>
-                            {senderInfo?.pp !== 'empety' ? (
+                            {senderInfo && senderInfo.pp !== 'empety' ? (
                                 <Image
-                                    src={senderInfo?.pp}
+                                    src={senderInfo.pp}
                                     width={80}
                                     height={80}
                                     alt='user profile'
@@ -159,7 +159,7 @@ export default function MobileView(props: any) {
                                 />
                             ) : (
                                 <Avatar
-                                    name={senderInfo?.name}
+                                    name={senderInfo.name}
                                     size='80'
                                     round={true}
                                 />
