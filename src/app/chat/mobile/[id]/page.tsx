@@ -2,6 +2,7 @@
 import Avatar from 'react-avatar';
 import Loading from '@/components/loading';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
     useEffect,
     useState,
@@ -82,7 +83,7 @@ export default function MobileView(props: any) {
         return () => {
             socket.off('data_updated');
         };
-    }, [session?.user?.user_id, params.id]);
+    }, [session?.user?.user_id, params.id, socket]);
 
     const getTimestamp = useCallback((isDate: string): string => {
         const date = new Date(Number(isDate));
