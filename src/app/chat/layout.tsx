@@ -57,9 +57,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     };
 
     useEffect(() => {
-        setWidth(window.innerWidth);
         const handleResize = () => {
-            console.log(window.innerWidth);
             setWidth(window.innerWidth);
         };
         window.addEventListener('resize', handleResize);
