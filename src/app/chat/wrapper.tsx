@@ -1,8 +1,9 @@
 'use client';
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { ProfileAvatar, ProfileAvatar2 } from './avatar';
-import Modal from './modal';
+import Avatar from 'react-avatar';
+import Image from 'next/image';
+import Modal from '@/components/modal';
 export default function Wrapper({ children }: { children: React.ReactNode }) {
     const [showModal, setShowModal] = useState<boolean>(false);
     const { data: session, status }: { data: any; status: string } =
@@ -33,7 +34,22 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
                             onClick={() => setShowModal(true)}
                             className='text-zinc-300 font-medium text-lg sm:text-xl md:text-2xl outline-0 bg-transparent border-0 rounded-full'
                         >
-                            <ProfileAvatar2 username={session?.user?.name} />
+                            {session?.user?.pp !== 'empety' ? (
+                                <Image
+                                    alt='User profile'
+                                    src={sender?.user?.pp}
+                                    height={35}
+                                    wight={35}
+                                    className='rounded-full'
+                                    loading='lazy'
+                                />
+                            ) : (
+                                <Avatar
+                                    name={session?.user?.name}
+                                    size='35'
+                                    round={true}
+                                />
+                            )}
                         </button>
                     </div>
                     <input

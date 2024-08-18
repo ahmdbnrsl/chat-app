@@ -114,7 +114,9 @@ export default function MobileView(props: any) {
         setLoad(false);
     };
 
-    const MessageChangeValidate = (e: ChangeEvent<HTMLInputElement>) => {
+    const MessageChangeValidate = (
+        e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+    ) => {
         setDisable(e.target.value.length === 0);
     };
     return (
@@ -132,7 +134,7 @@ export default function MobileView(props: any) {
                             <button
                                 className={`text-zinc-300 font-medium text-lg sm:text-xl md:text-2xl outline-0 ${
                                     !senderInfo
-                                        ? 'bg-zinc-800 p-2'
+                                        ? 'bg-zinc-800 p-4'
                                         : 'bg-transparent p-0'
                                 } border-0 rounded-full hover:bg-zinc-800`}
                             >
@@ -149,14 +151,18 @@ export default function MobileView(props: any) {
                                     {senderInfo ? (
                                         senderInfo?.name
                                     ) : (
-                                        <div className='px-6 py-2 rounded-lg bg-zinc-800'></div>
+                                        <div className='px-9 py-2.5 rounded-lg bg-zinc-800'></div>
                                     )}
                                 </h1>
-                                <p className='text-xs font-normal text-zinc-400'>
+                                <p
+                                    className={`text-xs font-normal text-zinc-400 ${
+                                        senderInfo ? 'mt-1' : ''
+                                    }`}
+                                >
                                     {senderInfo ? (
                                         '+' + senderInfo?.wa_number
                                     ) : (
-                                        <div className='px-4 py-1 rounded-lg bg-zinc-800'></div>
+                                        <div className='px-7 py-1 rounded-lg bg-zinc-800'></div>
                                     )}
                                 </p>
                             </div>
@@ -206,13 +212,12 @@ export default function MobileView(props: any) {
                     onSubmit={HandleSendMessage}
                     className='sticky bottom-0 bg-zinc-900 w-full py-4 px-6 flex border-t gap-3 border-zinc-800 justify-center'
                 >
-                    <input
+                    <textarea
                         name='message'
                         onChange={MessageChangeValidate}
-                        type='text'
                         placeholder='Type your message...'
-                        className='w-full py-1 px-2.5 sm:py-2 sm:px-4 text-zinc-300 font-normal text-base sm:text-lg rounded-lg bg-zinc-800/[0.5] outline-0 border-2 border-zinc-800 focus:border-zinc-700 placeholder:text-zinc-400 placeholder:text-sm sm:placeholder:text-base'
-                    />
+                        className='h-fit max-h-32 resize-none w-full py-1 px-2.5 sm:py-2 sm:px-4 text-zinc-300 font-normal text-base sm:text-lg rounded-lg bg-zinc-800/[0.5] outline-0 border-2 border-zinc-800 focus:border-zinc-700 placeholder:text-zinc-400 placeholder:text-sm sm:placeholder:text-base'
+                    ></textarea>
                     <button
                         disabled={disable}
                         type='submit'

@@ -1,6 +1,6 @@
 'use client';
 import { useSession } from 'next-auth/react';
-import { ProfileAvatar } from './avatar';
+import Avatar from 'react-avatar';
 import useSWR from 'swr';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -67,18 +67,20 @@ export default function ChatPage() {
                             className='w-full rounded-xl bg-zinc-800/[0.5] flex justify-between items-center p-3'
                         >
                             <div className='w-8/12 flex gap-3 items-center'>
-                                {sender?.pp === 'empety' ? (
-                                    <h1 className='text-2xl sm:text-3xl md:text-4xl text-zinc-300'>
-                                        <ProfileAvatar username='beni' />
-                                    </h1>
-                                ) : (
+                                {session?.user?.pp !== 'empety' ? (
                                     <Image
-                                        alt='user profile'
-                                        src={sender?.pp}
-                                        width={50}
+                                        alt='User profile'
+                                        src={sender?.user?.pp}
                                         height={50}
-                                        loading='lazy'
+                                        wight={50}
                                         className='rounded-full'
+                                        loading='lazy'
+                                    />
+                                ) : (
+                                    <Avatar
+                                        name={session?.user?.name}
+                                        size='50'
+                                        round={true}
                                     />
                                 )}
                                 <div className='flex flex-col'>
