@@ -105,6 +105,14 @@ export default function MobileView(props: any) {
         ).padStart(2, '0')}`;
     }, []);
 
+    const getDate = (isDate: string): string => {
+        const date: Date = new Date(Number(isDate));
+        return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+            2,
+            '0'
+        )}-${String(date.getDate()).padStart(2, '0')}`;
+    };
+
     const HandleSendMessage = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoad(true);
@@ -207,34 +215,56 @@ export default function MobileView(props: any) {
                             <Loading /> Loading messages...
                         </div>
                     ) : (
-                        listMessage.map((message: Message) => (
-                            <div
-                                key={message?.message_timestamp}
-                                className={`w-full flex ${
-                                    message.sender_id === session?.user?.user_id
-                                        ? 'justify-end'
-                                        : 'justify-start'
-                                }`}
-                            >
-                                <div
-                                    className={`w-fit text-zinc-300 py-1 min-w-[10rem] px-5 flex flex-col ${
-                                        message.sender_id ===
-                                        session?.user?.user_id
-                                            ? 'bg-zinc-700/[0.5] rounded-b-lg rounded-tl-lg'
-                                            : 'bg-zinc-800/[0.5] rounded-b-lg rounded-tr-lg'
-                                    }`}
-                                >
-                                    <pre className='whitespace-pre-wrap text-base font-inherit'>
-                                        {message.message_text}
-                                    </pre>
-                                    <p className='mt-1 w-full text-end text-xs font-normal text-zinc-400'>
-                                        {getTimestamp(
-                                            message.message_timestamp
-                                        )}
-                                    </p>
-                                </div>
-                            </div>
-                        ))
+                        listMessage.map((message: Message, i: number) => {
+                            let checkDate: string | null = null;
+                            if (i === 0) {
+                                checkDate = getDate(message?.message_timestamp);
+                            } else if (
+                                getDate(message?.message_timestamp) !==
+                                getDate(listMessage[i - 1].message_timestamp)
+                            ) {
+                                checkDate = getDate(message?.message_timestamp);
+                            }
+
+                            return (
+                                <>
+                                    {checkDate ? (
+                                        <div className='w-full flex justify-center py-2'>
+                                            <div className='px-3 py-0.5 rounded bg-zinc-900 text-base text-zinc-300 font-medium'>
+                                                {checkDate}
+                                            </div>
+                                        </div>
+                                    ) : null}
+                                    <div
+                                        key={message?.message_timestamp}
+                                        className={`w-full flex ${
+                                            message.sender_id ===
+                                            session?.user?.user_id
+                                                ? 'justify-end'
+                                                : 'justify-start'
+                                        }`}
+                                    >
+                                        <div
+                                            className={`w-fit text-zinc-300 py-1 min-w-[10rem] px-5 flex flex-col ${
+                                                message.sender_id ===
+                                                session?.user?.user_id
+                                                    ? 'bg-zinc-700/[0.5] rounded-b-lg rounded-tl-lg'
+                                                    : 'bg-zinc-800/[0.5] rounded-b-lg rounded-tr-lg'
+                                            }`}
+                                        >
+                                            <pre className='whitespace-pre-wrap text-base font-inherit'>
+                                                {message.message_text}
+                                            </pre>
+                                            <p className='mt-1 w-full text-end text-xs font-normal text-zinc-400'>
+                                                {getTimestamp(
+                                                    message.message_timestamp
+                                                )}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </>
+                            );
+                        })
                     )}
                 </div>
                 <form
@@ -248,16 +278,16 @@ export default function MobileView(props: any) {
                         name='message'
                         onChange={MessageChangeValidate}
                         placeholder='Type your message...'
-                        className='max-h-40 resize-none w-full py-1 px-2.5 sm:py-2 sm:px-4 text-zinc-300 font-normal text-base sm:text-lg rounded-lg bg-zinc-900/[0.5] outline-0 border-2 border-zinc-800 focus:border-zinc-700 placeholder:text-zinc-400 placeholder:text-sm sm:placeholder:text-base'
+                        className='max-h-40 resize-none w-full py-1 px-2.5 sm:py-2 sm:px-4 text-zinc-300 font-normal text-base sm:text-lg rounded-xl bg-zinc-900/[0.5] outline-0 border-2 border-zinc-800 focus:border-zinc-700 placeholder:text-zinc-400 placeholder:text-sm sm:placeholder:text-base'
                     ></textarea>
                     <button
                         disabled={disable}
                         type='submit'
-                        className={`flex justify-center items-center py-3 px-4 cursor-pointer ${
+                        className={`flex justify-center items-center p-4  cursor-pointer ${
                             load
                                 ? 'bg-zinc-800 text-zinc-500'
                                 : 'bg-gradient-to-br from-zinc-200 to-zinc-400 text-zinc-950'
-                        } text-lg rounded-xl outline-0 font-medium`}
+                        } text-lg rounded-full outline-0 font-medium`}
                     >
                         {load ? <Loading /> : <FaPaperPlane />}
                     </button>
