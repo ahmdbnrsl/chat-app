@@ -5,7 +5,7 @@ import { Message } from '@/models/messages';
 export default function ListMessage({
     message,
     checkDate,
-    getTimestamp,
+    timestamp,
     key
 }: {
     message: Message;
