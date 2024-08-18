@@ -83,7 +83,7 @@ export default function MobileView(props: any) {
         return () => {
             socket.off('data_updated');
         };
-    }, [session?.user?.user_id, params.id, socket]);
+    }, [session?.user?.user_id, params.id]);
 
     const getTimestamp = useCallback((isDate: string): string => {
         const date = new Date(Number(isDate));
@@ -145,7 +145,7 @@ export default function MobileView(props: any) {
                                             alt='User profile'
                                             src={senderInfo?.pp}
                                             height={35}
-                                            weight={35}
+                                            width={35}
                                             className='rounded-full'
                                             loading='lazy'
                                         />

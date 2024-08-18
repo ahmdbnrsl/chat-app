@@ -39,7 +39,7 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
                                     alt='User profile'
                                     src={session?.user?.pp}
                                     height={35}
-                                    weight={35}
+                                    width={35}
                                     className='rounded-full'
                                     loading='lazy'
                                 />

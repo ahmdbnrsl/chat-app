@@ -72,7 +72,7 @@ export default function ChatPage() {
                                         alt='User profile'
                                         src={sender?.pp}
                                         height={50}
-                                        weight={50}
+                                        width={50}
                                         className='rounded-full'
                                         loading='lazy'
                                     />
