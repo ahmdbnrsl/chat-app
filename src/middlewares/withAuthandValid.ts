@@ -5,10 +5,17 @@ import {
     NextResponse
 } from 'next/server';
 import { getToken } from 'next-auth/jwt';
-import mongoose from 'mongoose';
-import { User, users } from '@/models/users';
+
+let mongoose;
+let user;
 
 const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
+
+if (typeof window === 'undefined') {
+    mongoose = require('mongoose');
+    const { users } = require('.././models/users');
+    user = users;
+}
 
 const onlyAdminPage: Array<string> = ['/dashboard'];
 const authPage: Array<string> = ['/login', '/signup'];
