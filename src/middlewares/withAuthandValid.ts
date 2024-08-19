@@ -51,17 +51,19 @@ export default function withAuthandValid(
         }
         const match = pathname.match(/^\/chat\/user_id\/([^\/]+)$/);
         if (match) {
-            try {
-                await mongoose.connect(URI);
-                const user_id = match[1];
-                const checkExistingUser: User | null = await users.findOne({
-                    user_id
-                });
-                if (!checkExistingUser) {
-                    return NextResponse.redirect(new URL('/chat', req.url));
+            if (mongoose && user) {
+                try {
+                    await mongoose.connect(URI);
+                    const user_id = match[1];
+                    const checkExistingUser = await user.findOne({
+                        user_id
+                    });
+                    if (!checkExistingUser) {
+                        return NextResponse.redirect(new URL('/chat', req.url));
+                    }
+                } finally {
+                    await mongoose.connection.close();
                 }
-            } finally {
-                await mongoose.connection.close();
             }
         }
         return middleware(req, next);
