@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { getListSender } from './get_list_sender';
 import { io } from 'socket.io-client';
 import { Message } from '@/models/messages';
+import { usePathname } from 'next/navigation';
 import SidebarChat from './Sidebar';
 import Wrapper from './wrapper';
 
@@ -75,7 +76,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         };
     }, []);
 
+    const pathName = usePathname();
+
     if (width < 1280) {
+        if (pathName.startsWith('/chat/user_id')) {
+            return <>{children}</>;
+        }
         return (
             <main className='bg-zinc-950 w-full min-h-screen flex'>
                 <Wrapper>
