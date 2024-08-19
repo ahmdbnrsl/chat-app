@@ -1,13 +1,13 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import withAuth from './middlewares/withAuth';
+import withAuthandValid from './middlewares/withAuthandValid';
 
 export function mainMiddleware(request: NextRequest) {
     const res = NextResponse.next();
     return res;
 }
 
-export default withAuth(mainMiddleware, [
+export default withAuthandValid(mainMiddleware, [
     '/chat',
     '/dashboard',
     '/login',
