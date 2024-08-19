@@ -119,7 +119,7 @@ export default function MobileView(props: any) {
                 <section className='w-full flex flex-col min-h-screen bg-ornament bg-fixed bg-zinc-950'>
                     <NavbarChat senderInfo={senderInfo} />
                     {listMessage.length !== 0 ? (
-                        <div className='w-full flex flex-col-reverse gap-3 p-6 flex-grow'>
+                        <div className='w-full flex flex-col-reverse gap-3 p-6 flex-grow max-h-screen overflow-y-auto'>
                             {listMessage.map((message: Message, i: number) => {
                                 let checkDate: string | null = null;
                                 if (i === 0) {

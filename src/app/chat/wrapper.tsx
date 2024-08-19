@@ -24,7 +24,7 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
                     />
                 </div>
             )}
-            <section className='bg-zinc-950 w-full flex flex-col min-h-screen xl:w-1/3'>
+            <section className='bg-zinc-950 w-full flex flex-col min-h-screen xl:w-1/3 xl:border-r border-zinc-800 box-border'>
                 <nav className='sticky top-0 z-20 bg-zinc-950 w-full py-4 px-6 flex flex-col border-b border-zinc-800 items-center'>
                     <div className='flex justify-between w-full items-center'>
                         <h1 className='text-zinc-200 text-lg sm:text-xl font-semibold tracking-normal'>
