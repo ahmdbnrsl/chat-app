@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { getListSender } from './get_list_sender';
 import { io } from 'socket.io-client';
+import { Message } from '@/models/messages';
 import Avatar from 'react-avatar';
 import Image from 'next/image';
 import Link from 'next/link';
