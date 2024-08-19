@@ -23,7 +23,6 @@ export default function MobileView(props: any) {
     >(null);
     const [senderInfo, setSenderInfo] = useState<undefined | null | User>(null);
     const { params } = props;
-    const { push } = useRouter();
 
     useEffect(() => {
         if (!session?.user?.user_id || !params.id) return;
