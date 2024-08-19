@@ -1,6 +1,5 @@
 'use client';
 import { useSession } from 'next-auth/react';
-import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { getListSender } from './get_list_sender';
 import { io } from 'socket.io-client';
@@ -27,7 +26,7 @@ interface Result {
 export default function Layout({ children }: { children: React.ReactNode }) {
     const { data: session, status }: { data: any; status: string } =
         useSession();
-    const [pathTo, setPathTo] = useState<string>('');
+    const [width, setWidth] = useState<number>(0);
     const [listSender, setListSender] = useState<
         Array<Result> | null | undefined
     >(null);
@@ -82,13 +81,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     };
 
     useEffect(() => {
-        if (window.innerWidth < 1280) {
-            setPathTo('/chat/mobile/');
-        } else setPathTo('/chat/dekstop/');
+        setWidth(window.innerWidth);
         const handleResize = () => {
-            if (window.innerWidth < 1280) {
-                setPathTo('/chat/mobile/');
-            } else setPathTo('/chat/dekstop/');
+            setWidth(window.innerWidth);
         };
         window.addEventListener('resize', handleResize);
         return () => {
@@ -96,9 +91,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         };
     }, []);
 
-    const pathname = usePathname();
-
-    if (pathname.startsWith('/chat/mobile/')) {
+    if (width < 1280) {
         return <>{children}</>;
     }
 
@@ -113,7 +106,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     ) : listSender?.length !== 0 ? (
                         listSender?.map((sender: Result, index: number) => (
                             <Link
-                                href={`${pathTo}${sender?.id_user}`}
+                                href={`/user_id/${sender?.id_user}`}
                                 key={index}
                                 className='w-full rounded-xl transition-colors hover:bg-zinc-900/[0.85] flex justify-between items-center p-3'
                             >
