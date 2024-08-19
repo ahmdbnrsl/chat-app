@@ -3,11 +3,22 @@ import { Result, getListSender } from '@/services/messages/get_list_sender';
 
 interface BodyRequest {
     user_id: string;
+    secret: string;
 }
 
 export async function POST(req: NextRequest) {
     const body: BodyRequest = await req.json();
-    const { user_id } = body;
+    const { user_id, secret } = body;
+
+    if (secret !== process.env.NEXT_PUBLIC_SECRET) {
+        return NextResponse.json(
+            {
+                status: false,
+                message: 'token is invalid'
+            },
+            { status: 400 }
+        );
+    }
 
     try {
         const res:

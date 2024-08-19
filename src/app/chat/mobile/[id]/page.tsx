@@ -11,6 +11,7 @@ import { getListMessage, getSenderInfo } from './message_service';
 import { Message } from '@/models/messages';
 import { User } from '@/models/users';
 import { io } from 'socket.io-client';
+import { useRouter } from 'next/navigation';
 
 const socketURL = process.env.NEXT_PUBLIC_SOCKET_URL || '';
 const socket = io(socketURL);
@@ -23,6 +24,20 @@ export default function MobileView(props: any) {
     >(null);
     const [senderInfo, setSenderInfo] = useState<undefined | null | User>(null);
     const { params } = props;
+    const { push } = useRouter();
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth >= 1280) {
+                push('/chat/dekstop/' + params.id);
+            }
+        };
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     useEffect(() => {
         if (!session?.user?.user_id || !params.id) return;
@@ -74,6 +89,7 @@ export default function MobileView(props: any) {
 
         return () => {
             socket.off('data_updated');
+            socket.off('data_deleted');
         };
     }, [session?.user?.user_id, params.id]);
 
@@ -110,7 +126,7 @@ export default function MobileView(props: any) {
         <main className='bg-zinc-950 w-full min-h-screen flex'>
             {!listMessage ? (
                 <section className='w-full flex flex-col min-h-screen bg-fixed bg-zinc-950 justify-center items-center'>
-                    <h1 className='flex items-center gap-2 sm:gap-3 text-xl sm:text-2xl md:text-3xl text-zinc-300 font-medium text-center'>
+                    <h1 className='flex items-center gap-2 sm:gap-3 text-lg sm:text-xl md:text-2xl text-zinc-400 font-medium text-center'>
                         <LoadingMessage /> Loading Messages...
                     </h1>
                 </section>
@@ -164,7 +180,7 @@ export default function MobileView(props: any) {
                                     round={true}
                                 />
                             )}
-                            <h1 className='flex items-center gap-2 sm:gap-3 text-xl sm:text-2xl md:text-3xl text-zinc-300 font-medium text-center'>
+                            <h1 className='flex items-center gap-2 sm:gap-3 text-lg sm:text-xl md:text-2xl text-zinc-300 font-medium text-center'>
                                 {senderInfo?.name}
                             </h1>
                             <p className='text-zinc-500 font-medium text-sm sm:text-base text-center'>

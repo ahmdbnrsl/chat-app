@@ -2,12 +2,16 @@
 import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { getListSender } from './get_list_sender';
+import { io } from 'socket.io-client';
 import Avatar from 'react-avatar';
-import useSWR from 'swr';
 import Image from 'next/image';
 import Link from 'next/link';
 import Loading from '@/components/loading';
 import Wrapper from './wrapper';
+
+const socketURL = process.env.NEXT_PUBLIC_SOCKET_URL || '';
+const socket = io(socketURL);
 
 interface Result {
     pp: string;
@@ -23,25 +27,46 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     const { data: session, status }: { data: any; status: string } =
         useSession();
     const [pathTo, setPathTo] = useState<string>('');
-    const user_id: string | undefined | null = session?.user?.user_id;
-    let listSender: Array<Result> | undefined = undefined;
-    const options: RequestInit = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            user_id
-        }),
-        cache: 'no-store'
-    };
-    const fetcher = (url: string) =>
-        fetch(url, options).then(res => res.json());
-    const { data, error, isLoading } = useSWR(
-        'https://chat-app-rouge-alpha.vercel.app/api/get_list_sender',
-        fetcher
-    );
-    listSender = data?.result;
+    const [listSender, setListSender] = useState<
+        Array<Result> | null | undefined
+    >(null);
+
+    useEffect(() => {
+        async function fetchListSender() {
+            const res:
+                | { result?: Array<Result>; status: boolean; message: string }
+                | false = await getListSender(session?.user.user_id);
+            if (res && res?.status) setListSender(res?.result);
+        }
+
+        fetchListSender();
+
+        socket.on('connect', () => {
+            console.info('live chat opened');
+        });
+
+        socket.on('data_updated', (newData: Message) => {
+            if (!newData) return;
+            if (
+                newData.sender_id === session?.user.user_id ||
+                newData.receiver_id === session?.user?.user_id
+            ) {
+                fetchListSender();
+            }
+        });
+
+        socket.on('data_deleted', () => fetchListSender());
+
+        socket.on('disconnect', () => {
+            console.info('live chat closed');
+        });
+
+        return () => {
+            socket.off('data_updated');
+            socket.off('data_deleted');
+        };
+    }, [session?.user?.user_id]);
+
     const getTimestamp = (isDate: string): string => {
         const date: Date = new Date(Number(isDate));
         return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(

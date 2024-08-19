@@ -59,7 +59,7 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
                     />
                 </nav>
                 {children}
-                <div className='sticky bottom-0 bg-zinc-950 w-full py-4 px-6 flex flex-col border-t border-zinc-800 items-center'>
+                <div className='sticky bottom-0 bg-zinc-950 w-full py-4 px-6 flex flex-col items-center'>
                     <button className='bg-zinc-200 rounded-full py-1.5 px-6 outline-0 text-zinc-950 text-center'>
                         + Start Chat
                     </button>
