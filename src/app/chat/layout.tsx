@@ -82,15 +82,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     };
 
     useEffect(() => {
+        if (window.innerWidth < 1280) {
+            setPathTo('/chat/mobile/');
+        } else setPathTo('/chat/dekstop/');
         const handleResize = () => {
             if (window.innerWidth < 1280) {
                 setPathTo('/chat/mobile/');
-            } else {
-                setPathTo('/chat/dekstop/');
-            }
+            } else setPathTo('/chat/dekstop/');
         };
         window.addEventListener('resize', handleResize);
-
         return () => {
             window.removeEventListener('resize', handleResize);
         };
