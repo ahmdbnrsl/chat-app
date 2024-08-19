@@ -11,7 +11,6 @@ import { getListMessage, getSenderInfo } from './message_service';
 import { Message } from '@/models/messages';
 import { User } from '@/models/users';
 import { io } from 'socket.io-client';
-import { useRouter } from 'next/navigation';
 
 const socketURL = process.env.NEXT_PUBLIC_SOCKET_URL || '';
 const socket = io(socketURL);
@@ -25,19 +24,6 @@ export default function MobileView(props: any) {
     const [senderInfo, setSenderInfo] = useState<undefined | null | User>(null);
     const { params } = props;
     const { push } = useRouter();
-
-    useEffect(() => {
-        const handleResize = () => {
-            if (window.innerWidth >= 1280) {
-                push('/chat/dekstop/' + params.id);
-            }
-        };
-        window.addEventListener('resize', handleResize);
-
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
 
     useEffect(() => {
         if (!session?.user?.user_id || !params.id) return;
