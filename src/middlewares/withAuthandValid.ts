@@ -6,8 +6,6 @@ import {
 } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 
-const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
-
 const onlyAdminPage: Array<string> = ['/dashboard'];
 const authPage: Array<string> = ['/login', '/signup'];
 
@@ -42,21 +40,24 @@ export default function withAuthandValid(
         }
         const match = pathname.match(/^\/chat\/user_id\/([^\/]+)$/);
         if (match) {
-            if (typeof window === 'undefined') {
-                const mongoose = await import('mongoose');
-                const { User, users } = await import('.././models/users');
-                try {
-                    await mongoose.connect(URI);
-                    const user_id = match[1];
-                    const checkExistingUser: User | null = await users.findOne({
-                        user_id
-                    });
-                    if (!checkExistingUser) {
-                        return NextResponse.redirect(new URL('/chat', req.url));
-                    }
-                } finally {
-                    await mongoose.connection.close();
-                }
+            const user_id = match[1];
+            const options: RequestInit = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    user_id,
+                    secret: process.env.NEXT_PUBLIC_SECRET
+                }),
+                cache: 'no-store'
+            };
+            const checkExistingUser: Response = await fetch(
+                'https://chat-app-rouge-alpha.vercel.app/api/get_user_info',
+                options
+            );
+            if (!checkExistingUser?.ok) {
+                return NextResponse.redirect(new URL('/chat', req.url));
             }
         }
         return middleware(req, next);
