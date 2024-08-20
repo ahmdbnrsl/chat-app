@@ -23,7 +23,7 @@ export const userSignUp = async ({
             cache: 'no-store'
         };
         const response: Response = await fetch(
-            'https://chat-app-rouge-alpha.vercel.app/api/register',
+            process.env.NEXT_PUBLIC_SELF_URL + '/api/register',
             options
         );
         const res: { status: boolean; message: string } = await response.json();

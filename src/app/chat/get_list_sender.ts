@@ -28,7 +28,7 @@ export const getListSender = async (
             cache: 'no-store'
         };
         const response: Response = await fetch(
-            'https://chat-app-rouge-alpha.vercel.app/api/get_list_sender',
+            process.env.NEXT_PUBLIC_SELF_URL + '/api/get_list_sender',
             options
         );
         const res: {

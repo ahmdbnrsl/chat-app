@@ -53,7 +53,7 @@ export default function withAuthandValid(
                 cache: 'no-store'
             };
             const checkExistingUser: Response = await fetch(
-                'https://chat-app-rouge-alpha.vercel.app/api/get_user_info',
+                process.env.NEXT_PUBLIC_SELF_URL + '/api/get_user_info',
                 options
             );
             if (!checkExistingUser?.ok) {

@@ -26,7 +26,7 @@ export const sendOTPCode = async ({
             cache: 'no-store'
         };
         const response: Response = await fetch(
-            'https://chat-app-rouge-alpha.vercel.app/api/send_otp',
+            process.env.NEXT_PUBLIC_SELF_URL + '/api/send_otp',
             options
         );
         const res: { status: boolean; message: string } = await response.json();

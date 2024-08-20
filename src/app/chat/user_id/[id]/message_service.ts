@@ -22,7 +22,7 @@ export const getListMessage = async (
             cache: 'no-store'
         };
         const response: Response = await fetch(
-            'https://chat-app-rouge-alpha.vercel.app/api/get_messages',
+            process.env.NEXT_PUBLIC_SELF_URL + '/api/get_messages',
             options
         );
         const res: {
@@ -62,7 +62,7 @@ export const getSenderInfo = async (
             cache: 'no-store'
         };
         const response: Response = await fetch(
-            'https://chat-app-rouge-alpha.vercel.app/api/get_user_info',
+            process.env.NEXT_PUBLIC_SELF_URL + '/api/get_user_info',
             options
         );
         const res: {
@@ -117,7 +117,7 @@ export const sendMessage = async ({
             cache: 'no-store'
         };
         const response: Response = await fetch(
-            'https://chat-app-rouge-alpha.vercel.app/api/push_message',
+            process.env.NEXT_PUBLIC_SELF_URL + '/api/push_message',
             options
         );
         const res: {
