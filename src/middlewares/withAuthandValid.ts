@@ -6,16 +6,7 @@ import {
 } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 
-let mongoose;
-let user;
-
 const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
-
-if (typeof window === 'undefined') {
-    mongoose = require('mongoose');
-    const { users } = require('.././models/users');
-    user = users;
-}
 
 const onlyAdminPage: Array<string> = ['/dashboard'];
 const authPage: Array<string> = ['/login', '/signup'];
@@ -51,11 +42,13 @@ export default function withAuthandValid(
         }
         const match = pathname.match(/^\/chat\/user_id\/([^\/]+)$/);
         if (match) {
-            if (mongoose && user) {
+            if (typeof window === 'undefined') {
+                const mongoose = await import('mongoose');
+                const { User, users } = await import('.././models/users');
                 try {
                     await mongoose.connect(URI);
                     const user_id = match[1];
-                    const checkExistingUser = await user.findOne({
+                    const checkExistingUser: User | null = await users.findOne({
                         user_id
                     });
                     if (!checkExistingUser) {
