@@ -38,7 +38,7 @@ export default function withAuthandValid(
                 }
             }
         }
-        const match = pathname.match(/^\/chat\/user_id\/([^\/]+)$/);
+        const match = pathName.match(/^\/chat\/user_id\/([^\/]+)$/);
         if (match) {
             const user_id = match[1];
             const options: RequestInit = {
