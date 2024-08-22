@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-import { users, User } from '@/models/users';
+import { users, User, Document } from '@/models/users';
+import { UpdateResult } from 'mongodb';
 
 const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
 
@@ -16,7 +17,7 @@ export const editUser = async ({
         await mongoose.connect(URI);
         const existingUser: User | null = await users.findOne({ user_id });
         if (existingUser) {
-            const updateUser: User | null = await users.updateOne(
+            const updateUser: UpdateResult<Document> = await users.updateOne(
                 { user_id },
                 {
                     $set: {
@@ -26,7 +27,7 @@ export const editUser = async ({
                 },
                 { new: true }
             );
-            if (updateUser) {
+            if (updateUser?.acknowledged) {
                 return {
                     status: true,
                     message: 'succes updating user'
