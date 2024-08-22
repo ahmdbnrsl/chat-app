@@ -1,35 +1,28 @@
+'use client';
 import Avatar from 'react-avatar';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaPen } from 'react-icons/fa6';
 import { useState } from 'react';
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import Loading from '@/components/loading';
 
-export default function ProfileInfoPage({
-    name,
-    wa_number,
-    created_at,
-    pp
-}: {
-    name: string;
-    wa_number: string;
-    created_at: string;
-    pp: string;
-}) {
-    const date: Date = new Date(Number(created_at));
-    const timestamp: string =
-        date.getFullYear() +
-        '-' +
-        String(date.getMonth() + 1).padStart(2, '0') +
-        '-' +
-        String(date.getDate()).padStart(2, '0') +
-        ' ' +
-        String(date.getHours()).padStart(2, '0') +
-        ':' +
-        String(date.getMinutes()).padStart(2, '0') +
-        ':' +
-        String(date.getSeconds()).padStart(2, '0');
+export default function ProfileInfoPage() {
+    const { data: session, status }: { data: any; status: string } =
+        useSession();
+    const getTimestamp = (isDate: string): string => {
+        const date: Date = new Date(Number(isDate));
+        return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(
+            2,
+            '0'
+        )}-${String(date.getDate()).padStart(2, '0')} ${String(
+            date.getHours()
+        ).padStart(2, '0')}:${String(date.getMinutes()).padStart(
+            2,
+            '0'
+        )}:${String(date.getSeconds()).padStart(2, '0')}`;
+    };
+
     const [load, setLoad] = useState<boolean>(false);
     const HandleLogout = () => {
         setLoad(true);
@@ -47,7 +40,7 @@ export default function ProfileInfoPage({
                 <FaPen />
             </Link>
             <div className='w-full flex flex-col items-center'>
-                {pp === 'empety' ? (
+                {session?.user?.pp && session?.user?.pp === 'empety' ? (
                     <Avatar
                         name={name}
                         size='125'
@@ -64,13 +57,13 @@ export default function ProfileInfoPage({
                     />
                 )}
                 <h1 className='mt-3 text-xl sm:text-2xl md:text-3xl text-zinc-300 text-center font-bold'>
-                    {name}
+                    {session?.user?.name}
                 </h1>
                 <p className='text-xs sm:text-sm md:text-base text-zinc-400 font-normal'>
-                    +{wa_number}
+                    +{session?.user?.wa_number}
                 </p>
                 <p className='text-xs sm:text-sm text-zinc-500 font-normal'>
-                    Created at : {timestamp}
+                    Created at : {getTimestamp(session?.user?.created_at)}
                 </p>
                 <button
                     onClick={HandleLogout}
