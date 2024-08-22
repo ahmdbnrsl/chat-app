@@ -63,10 +63,10 @@ export default function EditFormPage() {
                     e.target.value = '';
                 } else {
                     setMessage('Image is valid.');
-                    setIMGUrl(img.src);
+                    setIMGUrl(URL.createObjectURL(file));
                 }
 
-                URL.revokeObjectURL(img.src);
+                //URL.revokeObjectURL(img.src);
             };
         }
     };
