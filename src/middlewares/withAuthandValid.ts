@@ -40,24 +40,35 @@ export default function withAuthandValid(
         }
         const match = pathName.match(/^\/chat\/user_id\/([^\/]+)$/);
         if (match) {
-            const user_id = match[1];
-            const options: RequestInit = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    user_id,
-                    secret: process.env.NEXT_PUBLIC_SECRET
-                }),
-                cache: 'no-store'
-            };
-            const checkExistingUser: Response = await fetch(
-                process.env.NEXT_PUBLIC_SELF_URL + '/api/get_user_info',
-                options
-            );
-            if (!checkExistingUser?.ok) {
-                return NextResponse.redirect(new URL('/chat', req.url));
+            const token = await getToken({
+                req,
+                secret: process.env.NEXT_PUBLIC_SECRET
+            });
+            if (!token && !authPage.includes(pathName)) {
+                const url = new URL('/login', req.url);
+                url.searchParams.set('callbackUrl', encodeURI(req.url));
+                return NextResponse.redirect(url);
+            }
+            if (token) {
+                const user_id = match[1];
+                const options: RequestInit = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        user_id,
+                        secret: process.env.NEXT_PUBLIC_SECRET
+                    }),
+                    cache: 'no-store'
+                };
+                const checkExistingUser: Response = await fetch(
+                    process.env.NEXT_PUBLIC_SELF_URL + '/api/get_user_info',
+                    options
+                );
+                if (!checkExistingUser?.ok) {
+                    return NextResponse.redirect(new URL('/chat', req.url));
+                }
             }
         }
         return middleware(req, next);
