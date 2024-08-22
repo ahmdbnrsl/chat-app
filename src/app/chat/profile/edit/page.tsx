@@ -85,7 +85,7 @@ export default function EditFormPage() {
             <form className='p-4 w-full flex flex-col gap-4 mb-4'>
                 <div className='w-full flex flex-col items-start'>
                     <input
-                        value={nameValue}
+                        value={nameValue || ''}
                         type='text'
                         id='name'
                         name='name'
