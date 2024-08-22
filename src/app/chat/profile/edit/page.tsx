@@ -9,12 +9,10 @@ import { useState, useEffect, ChangeEvent } from 'react';
 export default function EditFormPage() {
     const { data: session, status }: { data: any; status: string } =
         useSession();
-    const [nameValue, setNameValue] = useState<string | null | undefined>('');
+    const [valueName, setValueName] = useState<string>('');
     const [labelName, setLabelName] = useState<string>('Edit your fullname');
     const [isDisable, setIsDisable] = useState<boolean>(true);
-    useEffect(() => {
-        setNameValue(session?.user?.name);
-    }, [session?.user?.name]);
+
     const InputChangeValidate = (e: ChangeEvent<HTMLInputElement>) => {
         const data = e.target.value;
         if (data !== '' && data.replace(/\s/g, '') === '')
@@ -28,8 +26,9 @@ export default function EditFormPage() {
                 data.replace(/\s/g, '') !== '')
         )
             setLabelName('Edit your fullname');
-        if (data !== nameValue) {
+        if (data !== session?.user?.name) {
             setIsDisable(false);
+            setValueName(data);
         }
     };
     return (
@@ -105,7 +104,7 @@ export default function EditFormPage() {
                 <div className='w-full flex flex-col items-start'>
                     <input
                         onChange={InputChangeValidate}
-                        value={nameValue || ''}
+                        value={valueName || session?.user?.name}
                         type='text'
                         id='name'
                         name='name'
