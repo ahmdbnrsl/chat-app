@@ -157,6 +157,7 @@ export default function MobileView(props: any) {
                                     height={80}
                                     alt='user profile'
                                     loading='lazy'
+                                    className='rounded-full border border-zinc-700'
                                 />
                             ) : (
                                 <Avatar

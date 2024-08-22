@@ -45,13 +45,13 @@ export default function SidebarChat({
                         className='w-full rounded-xl transition-colors hover:bg-zinc-900/[0.85] flex justify-between items-center p-3'
                     >
                         <div className='w-8/12 flex gap-3 items-center'>
-                            {sender?.pp !== 'empety' ? (
+                            {sender?.pp && sender?.pp !== 'empety' ? (
                                 <Image
                                     alt='User profile'
                                     src={sender?.pp}
                                     height={50}
                                     width={50}
-                                    className='rounded-full'
+                                    className='rounded-full border border-zinc-700'
                                     loading='lazy'
                                 />
                             ) : (

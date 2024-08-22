@@ -78,6 +78,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
     const pathName = usePathname();
 
+    if (pathName.startsWith('/chat/profile')) {
+        return <>{children}</>;
+    }
+
     if (width < 1280) {
         if (pathName.startsWith('/chat/user_id')) {
             return <>{children}</>;

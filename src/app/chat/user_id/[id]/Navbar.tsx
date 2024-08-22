@@ -33,7 +33,7 @@ export default function NavbarChat({
                                     src={senderInfo?.pp}
                                     height={35}
                                     width={35}
-                                    className='rounded-full'
+                                    className='rounded-full border border-zinc-700'
                                     loading='lazy'
                                 />
                             ) : (
