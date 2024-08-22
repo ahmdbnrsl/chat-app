@@ -1,6 +1,6 @@
 'use client';
-
 import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 import Avatar from 'react-avatar';
 import Image from 'next/image';
 export default function Wrapper({ children }: { children: React.ReactNode }) {
