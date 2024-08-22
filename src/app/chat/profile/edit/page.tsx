@@ -111,13 +111,17 @@ export default function EditFormPage() {
                     {message}
                 </p>
             </div>
-            <form className='p-4 w-full flex flex-col gap-4'>
+            <form className='p-4 w-full flex flex-col gap-4 mb-4'>
                 <div className='w-full flex flex-col items-start'>
                     <label
                         htmlFor='photo'
                         className='w-full relative flex justify-center items-center'
                     >
-                        <div className='w-[125px] h-[125px] rounded-full bg-zinc-800 border border-zinc-700'>
+                        <div
+                            className={`w-[125px] h-[125px] rounded-full bg-zinc-800 border border-zinc-700 ${
+                                loading ? 'opacity-10' : ''
+                            }`}
+                        >
                             {!IMGUrl &&
                                 (session?.user?.pp &&
                                 session?.user?.pp !== 'empety' ? (
@@ -148,7 +152,7 @@ export default function EditFormPage() {
                             } rounded-full border border-zinc-700 absolute z-[99999] bg-zinc-800/[0.3]`}
                         />
                         {loading ? (
-                            <div className='w-auto absolute z-[999999] scale-[2]'>
+                            <div className='w-auto absolute z-[999999] scale-[3]'>
                                 <Loading />
                             </div>
                         ) : (
@@ -163,8 +167,6 @@ export default function EditFormPage() {
                         id='photo'
                     />
                 </div>
-            </form>
-            <form className='p-4 w-full flex flex-col gap-4 mb-4'>
                 <div className='bg-zinc-800 w-full py-2 px-3 rounded-xl text-lg font-normal text-zinc-500 flex flex-col justify-center items-center'>
                     <p className='text-base'>Current fullname :</p>
                     <p className='font-medium text-zinc-300 flex items-center gap-2 flex-wrap text-center'>
