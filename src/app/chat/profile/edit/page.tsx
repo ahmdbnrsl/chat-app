@@ -17,7 +17,7 @@ export default function EditFormPage() {
     );
     const [IMGUrl, setIMGUrl] = useState<string>('');
     const [isDisable, setIsDisable] = useState<boolean>(true);
-    const [loading, setLoading] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const InputChangeValidate = (e: ChangeEvent<HTMLInputElement>) => {
         const data = e.target.value;
