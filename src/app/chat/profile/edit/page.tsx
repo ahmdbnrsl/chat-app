@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FaPen, FaArrowLeft } from 'react-icons/fa6';
 import { useSession } from 'next-auth/react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 
 export default function EditFormPage() {
     const { data: session, status }: { data: any; status: string } =
