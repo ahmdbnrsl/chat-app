@@ -9,7 +9,7 @@ import { useState, useEffect } from 'react';
 export default function EditFormPage() {
     const { data: session, status }: { data: any; status: string } =
         useSession();
-    const [nameValue, setNameValue] = useState<string>('');
+    const [nameValue, setNameValue] = useState<string | null | undefined>('');
     useEffect(() => {
         setNameValue(session?.user?.name);
     }, [session?.user?.name]);
