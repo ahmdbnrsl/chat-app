@@ -12,6 +12,7 @@ export default function EditFormPage() {
         useSession();
     const [labelName, setLabelName] = useState<string>('Edit your fullname');
     const [isDisable, setIsDisable] = useState<boolean>(true);
+    const [nameValue, setNameValue] = useState<string>('');
 
     const InputChangeValidate = (e: ChangeEvent<HTMLInputElement>) => {
         const data = e.target.value;
@@ -102,26 +103,25 @@ export default function EditFormPage() {
                 </div>
             </form>
             <form className='p-4 w-full flex flex-col gap-4 mb-4'>
-                <div className='bg-zinc-800 w-full py-2 px-3 rounded-xl text-lg text-center font-normal text-zinc-500 flex flex-col justify-center'>
-                    <p className='text-base'>Current fullname</p>
-                    <p className='font-medium text-zinc-300 flex'>
+                <div className='bg-zinc-800 w-full py-2 px-3 rounded-xl text-lg font-normal text-zinc-500 flex flex-col justify-center items-center'>
+                    <p className='text-base'>Current fullname :</p>
+                    <p className='font-medium text-zinc-300 flex items-center gap-2 flex-wrap text-center'>
                         {session?.user?.name
                             ? session?.user?.name
                             : 'Loading...'}{' '}
                         <span
                             className='cursor-pointer'
-                            onClick={() => {
-                                navigator.clipboard.writeText(
-                                    session?.user?.name || ''
-                                );
-                            }}
+                            onClick={() =>
+                                setNameValue(session?.user?.name || '')
+                            }
                         >
-                            <IoCopyOutline />
+                            <FaPen />
                         </span>
                     </p>
                 </div>
                 <div className='w-full flex flex-col items-start'>
                     <input
+                        value={nameValue}
                         onChange={InputChangeValidate}
                         type='text'
                         id='name'
