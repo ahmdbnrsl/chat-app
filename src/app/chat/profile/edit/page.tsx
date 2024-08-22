@@ -117,24 +117,26 @@ export default function EditFormPage() {
                         htmlFor='photo'
                         className='w-full relative flex justify-center items-center'
                     >
-                        {!IMGUrl &&
-                            (session?.user?.pp &&
-                            session?.user?.pp !== 'empety' ? (
-                                <Image
-                                    src={session?.user?.pp}
-                                    alt={session?.user?.name}
-                                    width={125}
-                                    height={125}
-                                    loading='lazy'
-                                    className='rounded-full border border-zinc-700'
-                                />
-                            ) : (
-                                <Avatar
-                                    size='125'
-                                    name={session?.user?.name}
-                                    round={true}
-                                />
-                            ))}
+                        <div className='w-[125px] h-[125px] rounded-full bg-zinc-800 border border-zinc-700'>
+                            {!IMGUrl &&
+                                (session?.user?.pp &&
+                                session?.user?.pp !== 'empety' ? (
+                                    <Image
+                                        src={session?.user?.pp}
+                                        alt={session?.user?.name}
+                                        width={125}
+                                        height={125}
+                                        loading='lazy'
+                                        className='rounded-full border border-zinc-700'
+                                    />
+                                ) : (
+                                    <Avatar
+                                        size='125'
+                                        name={session?.user?.name}
+                                        round={true}
+                                    />
+                                ))}
+                        </div>
                         <Image
                             src={`${IMGUrl || '/icon_asset/00_1.png'}`}
                             alt='icon'
@@ -143,10 +145,10 @@ export default function EditFormPage() {
                             loading='lazy'
                             className={`${
                                 loading ? 'hidden' : ''
-                            }rounded-full border border-zinc-700 absolute z-[99999] bg-zinc-800/[0.3]`}
+                            } rounded-full border border-zinc-700 absolute z-[99999] bg-zinc-800/[0.3]`}
                         />
                         {loading ? (
-                            <div className='w-auto absolute z-[999999] scale-125'>
+                            <div className='w-auto absolute z-[999999] scale-[2]'>
                                 <Loading />
                             </div>
                         ) : (
