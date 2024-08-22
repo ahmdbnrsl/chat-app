@@ -10,9 +10,28 @@ export default function EditFormPage() {
     const { data: session, status }: { data: any; status: string } =
         useSession();
     const [nameValue, setNameValue] = useState<string | null | undefined>('');
+    const [labelName, setLabelName] = useState<string>('Edit your fullname');
+    const [isDisable, setIsDisable] = useState<boolean>(true);
     useEffect(() => {
         setNameValue(session?.user?.name);
     }, [session?.user?.name]);
+    const InputChangeValidate = (e: ChangeEvent<HTMLInputElement>) => {
+        const data = e.target.value;
+        if (data !== '' && data.replace(/\s/g, '') === '')
+            setLabelName('Name must not only space!');
+        if (data.length < 5) setLabelName('Enter at least 5 letters');
+        if (data.length > 25) setLabelName('Limit 25 letters');
+        if (
+            data === '' ||
+            (data.length >= 5 &&
+                data.length <= 25 &&
+                data.replace(/\s/g, '') !== '')
+        )
+            setLabelName('Edit your fullname');
+        if (data !== nameValue) {
+            setIsDisable(false);
+        }
+    };
     return (
         <div className='w-full max-w-md bg-zinc-900 rounded-xl shadow shadow-xl shadow-zinc-950 flex flex-col border-2 border-zinc-800'>
             <div className='w-full p-4 flex mt-2'>
@@ -24,11 +43,11 @@ export default function EditFormPage() {
                 </Link>
             </div>
             <div className='w-full p-4 flex flex-col items-center mt-2'>
-                <h1 className='flex items-end gap-2 text-2xl font-bold text-zinc-300 text-center'>
-                    <FaPen /> Edit Profile
-                </h1>
+                <div className='flex items-center gap-2 text-2xl font-bold text-zinc-300 text-center'>
+                    <FaPen /> <h1>Edit Profile</h1>
+                </div>
                 <p className='mt-3 text-base font-normal text-center text-zinc-400'>
-                    You can edit profile photo and your name
+                    You can edit profile photo and your fullname
                 </p>
             </div>
             <form className='p-4 w-full flex flex-col gap-4'>
@@ -85,6 +104,7 @@ export default function EditFormPage() {
             <form className='p-4 w-full flex flex-col gap-4 mb-4'>
                 <div className='w-full flex flex-col items-start'>
                     <input
+                        onChanges={InputChangeValidate}
                         value={nameValue || ''}
                         type='text'
                         id='name'
@@ -97,13 +117,17 @@ export default function EditFormPage() {
                         htmlFor='name'
                         className='absolute -translate-y-3 peer-placeholder-shown:translate-y-3 ml-3 text-sm font-normal text-zinc-500 peer-focus:-translate-y-3 bg-zinc-900 w-auto px-2 py-1 peer-focus:text-zinc-300'
                     >
-                        Edit your name here
+                        {labelName}
                     </label>
                 </div>
-
                 <button
+                    disabled={isDisable}
                     type='submit'
-                    className='flex gap-2 justify-center items-center py-2 mt-2 w-full cursor-pointer bg-gradient-to-br from-zinc-200 to-zinc-400 text-zinc-950 text-lg rounded-xl outline-0 font-medium'
+                    className={`${
+                        isDisable
+                            ? 'bg-zinc-800 text-zinc-500'
+                            : 'bg-gradient-to-br from-zinc-200 to-zinc-400 text-zinc-950'
+                    } flex gap-2 justify-center items-center py-2 mt-2 w-full cursor-pointer text-lg rounded-xl outline-0 font-medium`}
                 >
                     Save Changes
                 </button>
