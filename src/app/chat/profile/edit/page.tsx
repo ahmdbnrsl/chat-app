@@ -56,7 +56,7 @@ export default function EditFormPage() {
             const img = document.createElement('img') as HTMLImageElement;
             img.src = URL.createObjectURL(file);
 
-            img.onload = () => {
+            img.onload = async () => {
                 const width = img.width;
                 const height = img.height;
 
