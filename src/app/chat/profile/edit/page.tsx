@@ -1,7 +1,7 @@
 'use client';
 import Avatar from 'react-avatar';
 import Image from 'next/image';
-import Link from 'next/Link';
+import Link from 'next/link';
 import { FaPen, FaArrowLeft } from 'react-icons/fa6';
 import { useSession } from 'next-auth/react';
 import { useState, useEffect } from 'react';
