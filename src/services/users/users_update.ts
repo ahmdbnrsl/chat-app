@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import { users, User, Document } from '@/models/users';
+import mongoose, { Document } from 'mongoose';
+import { users, User } from '@/models/users';
 import { UpdateResult } from 'mongodb';
 
 const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
