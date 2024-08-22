@@ -42,13 +42,13 @@ export default function ProfileInfoPage() {
             <div className='w-full flex flex-col items-center'>
                 {session?.user?.pp && session?.user?.pp === 'empety' ? (
                     <Avatar
-                        name={name}
+                        name={session?.user?.name}
                         size='125'
                         round={true}
                     />
                 ) : (
                     <Image
-                        src={pp}
+                        src={session?.user?.pp}
                         alt='profile photo'
                         width={125}
                         height={125}
