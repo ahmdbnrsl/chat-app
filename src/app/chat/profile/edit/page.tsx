@@ -51,7 +51,7 @@ export default function EditFormPage() {
                 return;
             }
 
-            const img = new Image() as HTMLImageElement;
+            const img = document.createElement('img') as HTMLImageElement;
             img.src = URL.createObjectURL(file);
 
             img.onload = () => {
