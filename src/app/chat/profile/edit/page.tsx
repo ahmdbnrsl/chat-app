@@ -65,28 +65,30 @@ export default function EditFormPage() {
                     e.target.value = '';
                 } else {
                     setLoading(true);
+                    setIsDisable(true);
                     setMessage('You can edit profile photo and your fullname');
                     const formData = new FormData();
                     formData.append('file', file);
                     try {
-                        const response = await fetch('/api/upload', {
+                        const response: Response = await fetch('/api/upload', {
                             method: 'POST',
                             body: formData
                         });
 
                         const result = await response.json();
-
                         if (response.ok) {
                             setIMGUrl(result.fileUrl);
                             setLoading(false);
+                            setIsDisable(false);
                         } else {
-                            setMessage(`Upload failed: ${result.error}`);
+                            setMessage(
+                                `Upload failed: unsupported image or bad connection`
+                            );
                         }
                     } catch (error) {
-                        setMessage(`Error: ${(error as Error).message}`);
+                        setMessage(`Server Error`);
                     }
                 }
-
                 URL.revokeObjectURL(img.src);
             };
         }
@@ -115,59 +117,40 @@ export default function EditFormPage() {
                         htmlFor='photo'
                         className='w-full relative flex justify-center items-center'
                     >
-                        {session?.user?.pp && session?.user?.pp === 'empety' ? (
-                            <>
-                                {!IMGUrl && (
-                                    <Avatar
-                                        size='125'
-                                        name={session?.user?.name}
-                                        round={true}
-                                    />
-                                )}
+                        {!IMGUrl &&
+                            (session?.user?.pp &&
+                            session?.user?.pp !== 'empety' ? (
                                 <Image
-                                    src={`${IMGUrl || '/icon_asset/00_1.png'}`}
-                                    alt='icon'
+                                    src={session?.user?.pp}
+                                    alt={session?.user?.name}
                                     width={125}
                                     height={125}
                                     loading='lazy'
-                                    className='rounded-full border border-zinc-700 absolute z-[99999] bg-zinc-800/[0.3]'
+                                    className='rounded-full border border-zinc-700'
                                 />
-                                {loading ? (
-                                    <div className='w-auto absolute z-[999999]'>
-                                        <Loading />
-                                    </div>
-                                ) : (
-                                    ''
-                                )}
-                            </>
+                            ) : (
+                                <Avatar
+                                    size='125'
+                                    name={session?.user?.name}
+                                    round={true}
+                                />
+                            ))}
+                        <Image
+                            src={`${IMGUrl || '/icon_asset/00_1.png'}`}
+                            alt='icon'
+                            width={125}
+                            height={125}
+                            loading='lazy'
+                            className={`${
+                                loading ? 'hidden' : ''
+                            }rounded-full border border-zinc-700 absolute z-[99999] bg-zinc-800/[0.3]`}
+                        />
+                        {loading ? (
+                            <div className='w-auto absolute z-[999999] scale-125'>
+                                <Loading />
+                            </div>
                         ) : (
-                            <>
-                                {!IMGUrl && (
-                                    <Image
-                                        src={session?.user?.pp}
-                                        alt={session?.user?.name}
-                                        width={125}
-                                        height={125}
-                                        loading='lazy'
-                                        className='rounded-full border border-zinc-700'
-                                    />
-                                )}
-                                <Image
-                                    src={`${IMGUrl || '/icon_asset/00_1.png'}`}
-                                    alt='icon'
-                                    width={125}
-                                    height={125}
-                                    loading='lazy'
-                                    className='rounded-full border border-zinc-700 absolute z-[99999] bg-zinc-800/[0.3]'
-                                />
-                                {loading ? (
-                                    <div className='w-auto absolute z-[999999]'>
-                                        <Loading />
-                                    </div>
-                                ) : (
-                                    ''
-                                )}
-                            </>
+                            ''
                         )}
                     </label>
                     <input
