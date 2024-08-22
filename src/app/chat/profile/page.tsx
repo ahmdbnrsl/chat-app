@@ -67,10 +67,10 @@ export default function ProfileInfoPage() {
                     {session?.user?.wa_number ? (
                         '+' + session?.user?.wa_number
                     ) : (
-                        <div className='px-5 py-1 rounded bg-zinc-800'></div>
+                        <div className='mt-2 px-5 py-1 rounded bg-zinc-800'></div>
                     )}
                 </p>
-                <p className='text-xs sm:text-sm text-zinc-500 font-normal'>
+                <p className='text-xs sm:text-sm text-zinc-500 font-normal flex gap-2'>
                     Created at :{' '}
                     {session?.user?.created_at ? (
                         getTimestamp(session?.user?.created_at)

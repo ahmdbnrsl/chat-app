@@ -3,13 +3,13 @@ import Avatar from 'react-avatar';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaPen, FaArrowLeft } from 'react-icons/fa6';
+import { IoCopyOutline } from 'react-icons/io5';
 import { useSession } from 'next-auth/react';
 import { useState, useEffect, ChangeEvent } from 'react';
 
 export default function EditFormPage() {
     const { data: session, status }: { data: any; status: string } =
         useSession();
-    const [valueName, setValueName] = useState<string>('');
     const [labelName, setLabelName] = useState<string>('Edit your fullname');
     const [isDisable, setIsDisable] = useState<boolean>(true);
 
@@ -28,7 +28,6 @@ export default function EditFormPage() {
             setLabelName('Edit your fullname');
         if (data !== session?.user?.name) {
             setIsDisable(false);
-            setValueName(data);
         } else {
             setIsDisable(true);
         }
@@ -103,10 +102,27 @@ export default function EditFormPage() {
                 </div>
             </form>
             <form className='p-4 w-full flex flex-col gap-4 mb-4'>
+                <div className='bg-zinc-800 w-full py-2 px-3 rounded-xl text-lg text-center font-normal text-zinc-500 flex flex-col justify-center'>
+                    <p className='text-base'>Current fullname</p>
+                    <p className='font-medium text-zinc-300 flex'>
+                        {session?.user?.name
+                            ? session?.user?.name
+                            : 'Loading...'}{' '}
+                        <span
+                            className='cursor-pointer'
+                            onClick={() => {
+                                navigator.clipboard.writeText(
+                                    session?.user?.name || ''
+                                );
+                            }}
+                        >
+                            <IoCopyOutline />
+                        </span>
+                    </p>
+                </div>
                 <div className='w-full flex flex-col items-start'>
                     <input
                         onChange={InputChangeValidate}
-                        value={valueName || session?.user?.name}
                         type='text'
                         id='name'
                         name='name'
