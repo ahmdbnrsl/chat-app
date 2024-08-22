@@ -2,6 +2,7 @@
 import Avatar from 'react-avatar';
 import Image from 'next/image';
 import Link from 'next/link';
+import Loading from '@/components/loading';
 import { FaPen, FaArrowLeft } from 'react-icons/fa6';
 import { IoCopyOutline } from 'react-icons/io5';
 import { useSession } from 'next-auth/react';
@@ -16,6 +17,7 @@ export default function EditFormPage() {
     );
     const [IMGUrl, setIMGUrl] = useState<string>('');
     const [isDisable, setIsDisable] = useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(true);
 
     const InputChangeValidate = (e: ChangeEvent<HTMLInputElement>) => {
         const data = e.target.value;
@@ -62,11 +64,30 @@ export default function EditFormPage() {
                     setMessage('Only 1:1 ratio images are allowed.');
                     e.target.value = '';
                 } else {
-                    setMessage('Image is valid.');
-                    setIMGUrl(URL.createObjectURL(file));
+                    setLoading(true);
+                    setMessage('You can edit profile photo and your fullname');
+                    const formData = new FormData();
+                    formData.append('file', file);
+                    try {
+                        const response = await fetch('/api/upload', {
+                            method: 'POST',
+                            body: formData
+                        });
+
+                        const result = await response.json();
+
+                        if (response.ok) {
+                            setIMGUrl(result.fileUrl);
+                            setLoading(false);
+                        } else {
+                            setMessage(`Upload failed: ${result.error}`);
+                        }
+                    } catch (error) {
+                        setMessage(`Error: ${(error as Error).message}`);
+                    }
                 }
 
-                //URL.revokeObjectURL(img.src);
+                URL.revokeObjectURL(img.src);
             };
         }
     };
@@ -96,11 +117,13 @@ export default function EditFormPage() {
                     >
                         {session?.user?.pp && session?.user?.pp === 'empety' ? (
                             <>
-                                <Avatar
-                                    size='125'
-                                    name={session?.user?.name}
-                                    round={true}
-                                />
+                                {!IMGUrl && (
+                                    <Avatar
+                                        size='125'
+                                        name={session?.user?.name}
+                                        round={true}
+                                    />
+                                )}
                                 <Image
                                     src={`${IMGUrl || '/icon_asset/00_1.png'}`}
                                     alt='icon'
@@ -109,17 +132,26 @@ export default function EditFormPage() {
                                     loading='lazy'
                                     className='rounded-full border border-zinc-700 absolute z-[99999] bg-zinc-800/[0.3]'
                                 />
+                                {loading ? (
+                                    <div className='w-auto absolute z-[999999]'>
+                                        <Loading />
+                                    </div>
+                                ) : (
+                                    ''
+                                )}
                             </>
                         ) : (
                             <>
-                                <Image
-                                    src={session?.user?.pp}
-                                    alt={session?.user?.name}
-                                    width={125}
-                                    height={125}
-                                    loading='lazy'
-                                    className='rounded-full border border-zinc-700'
-                                />
+                                {!IMGUrl && (
+                                    <Image
+                                        src={session?.user?.pp}
+                                        alt={session?.user?.name}
+                                        width={125}
+                                        height={125}
+                                        loading='lazy'
+                                        className='rounded-full border border-zinc-700'
+                                    />
+                                )}
                                 <Image
                                     src={`${IMGUrl || '/icon_asset/00_1.png'}`}
                                     alt='icon'
@@ -128,6 +160,13 @@ export default function EditFormPage() {
                                     loading='lazy'
                                     className='rounded-full border border-zinc-700 absolute z-[99999] bg-zinc-800/[0.3]'
                                 />
+                                {loading ? (
+                                    <div className='w-auto absolute z-[999999]'>
+                                        <Loading />
+                                    </div>
+                                ) : (
+                                    ''
+                                )}
                             </>
                         )}
                     </label>
