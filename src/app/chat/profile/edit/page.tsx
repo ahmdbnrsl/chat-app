@@ -1,16 +1,30 @@
 'use client';
 import Avatar from 'react-avatar';
 import Image from 'next/image';
-import { FaPen } from 'react-icons/fa6';
+import Link from 'next/Link';
+import { FaPen, FaArrowLeft } from 'react-icons/fa6';
 import { useSession } from 'next-auth/react';
+import { useState, useEffect } from 'react';
 
 export default function EditFormPage() {
     const { data: session, status }: { data: any; status: string } =
         useSession();
+    const [nameValue, setNameValue] = useState<string>('');
+    useEffect(() => {
+        setNameValue(session?.user?.name);
+    }, [session?.user?.name]);
     return (
         <div className='w-full max-w-md bg-zinc-900 rounded-xl shadow shadow-xl shadow-zinc-950 flex flex-col border-2 border-zinc-800'>
+            <div className='w-full p-4 flex mt-2'>
+                <Link
+                    href='/chat/profile'
+                    className='text-xl text-zinc-400'
+                >
+                    <FaArrowLeft />
+                </Link>
+            </div>
             <div className='w-full p-4 flex flex-col items-center mt-2'>
-                <h1 className='flex items-center gap-2 text-2xl font-bold text-zinc-300 text-center'>
+                <h1 className='flex items-end gap-2 text-2xl font-bold text-zinc-300 text-center'>
                     <FaPen /> Edit Profile
                 </h1>
                 <p className='mt-3 text-base font-normal text-center text-zinc-400'>
@@ -24,11 +38,21 @@ export default function EditFormPage() {
                         className='w-full relative flex justify-center items-center'
                     >
                         {session?.user?.pp && session?.user?.pp === 'empety' ? (
-                            <Avatar
-                                size='125'
-                                name={session?.user?.name}
-                                round={true}
-                            />
+                            <>
+                                <Avatar
+                                    size='125'
+                                    name={session?.user?.name}
+                                    round={true}
+                                />
+                                <Image
+                                    src='/icon_asset/00_1.png'
+                                    alt='icon'
+                                    width={125}
+                                    height={125}
+                                    loading='lazy'
+                                    className='rounded-full border border-zinc-700 absolute z-[99999] opacity-50'
+                                />
+                            </>
                         ) : (
                             <>
                                 <Image
@@ -45,7 +69,7 @@ export default function EditFormPage() {
                                     width={125}
                                     height={125}
                                     loading='lazy'
-                                    className='rounded-full border border-zinc-700 absolute z-[99999]'
+                                    className='rounded-full border border-zinc-700 absolute z-[99999] opacity-50'
                                 />
                             </>
                         )}
@@ -58,9 +82,10 @@ export default function EditFormPage() {
                     />
                 </div>
             </form>
-            <form className='p-4 w-full flex flex-col gap-4'>
+            <form className='p-4 w-full flex flex-col gap-4 mb-4'>
                 <div className='w-full flex flex-col items-start'>
                     <input
+                        value={nameValue}
                         type='text'
                         id='name'
                         name='name'
