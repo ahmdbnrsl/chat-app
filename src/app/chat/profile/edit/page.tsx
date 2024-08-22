@@ -11,6 +11,10 @@ export default function EditFormPage() {
     const { data: session, status }: { data: any; status: string } =
         useSession();
     const [labelName, setLabelName] = useState<string>('Edit your fullname');
+    const [message, setMessage] = useState<string>(
+        'You can edit profile photo and your fullname'
+    );
+    const [IMGUrl, setIMGUrl] = useState<string>('');
     const [isDisable, setIsDisable] = useState<boolean>(true);
 
     const InputChangeValidate = (e: ChangeEvent<HTMLInputElement>) => {
@@ -32,6 +36,40 @@ export default function EditFormPage() {
             setIsDisable(true);
         }
     };
+
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+
+        if (file) {
+            const fileName = file.name;
+            const validExtensions = ['jpg', 'jpeg', 'png'];
+            const fileExtension = fileName.split('.').pop()?.toLowerCase();
+
+            if (!fileExtension || !validExtensions.includes(fileExtension)) {
+                setMessage('Only .jpg and .png files are allowed.');
+                e.target.value = '';
+                return;
+            }
+
+            const img = new Image();
+            img.src = URL.createObjectURL(file);
+
+            img.onload = () => {
+                const width = img.width;
+                const height = img.height;
+
+                if (width !== height) {
+                    setMessage('Only 1:1 ratio images are allowed.');
+                    e.target.value = '';
+                } else {
+                    setMessage('Image is valid.');
+                    setIMGUrl(img.src);
+                }
+
+                URL.revokeObjectURL(img.src);
+            };
+        }
+    };
     return (
         <div className='w-full max-w-md bg-zinc-900 rounded-xl shadow shadow-xl shadow-zinc-950 flex flex-col border-2 border-zinc-800'>
             <div className='w-full p-4 flex mt-2'>
@@ -47,7 +85,7 @@ export default function EditFormPage() {
                     <FaPen /> <h1>Edit Profile</h1>
                 </div>
                 <p className='mt-3 text-base font-normal text-center text-zinc-400'>
-                    You can edit profile photo and your fullname
+                    {message}
                 </p>
             </div>
             <form className='p-4 w-full flex flex-col gap-4'>
@@ -64,12 +102,12 @@ export default function EditFormPage() {
                                     round={true}
                                 />
                                 <Image
-                                    src='/icon_asset/00_1.png'
+                                    src={`${IMGUrl || '/icon_asset/00_1.png'}`}
                                     alt='icon'
                                     width={125}
                                     height={125}
                                     loading='lazy'
-                                    className='rounded-full border border-zinc-700 absolute z-[99999] opacity-50'
+                                    className='rounded-full border border-zinc-700 absolute z-[99999] bg-zinc-800/[0.3]'
                                 />
                             </>
                         ) : (
@@ -83,17 +121,18 @@ export default function EditFormPage() {
                                     className='rounded-full border border-zinc-700'
                                 />
                                 <Image
-                                    src='/icon_asset/00_1.png'
+                                    src={`${IMGUrl || '/icon_asset/00_1.png'}`}
                                     alt='icon'
                                     width={125}
                                     height={125}
                                     loading='lazy'
-                                    className='rounded-full border border-zinc-700 absolute z-[99999] opacity-50'
+                                    className='rounded-full border border-zinc-700 absolute z-[99999] bg-zinc-800/[0.3]'
                                 />
                             </>
                         )}
                     </label>
                     <input
+                        onChange={handleFileChange}
                         type='file'
                         accept='.jpg, .png, .jpeg'
                         className='hidden'
