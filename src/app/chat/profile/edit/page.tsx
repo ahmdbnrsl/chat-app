@@ -29,6 +29,8 @@ export default function EditFormPage() {
         if (data !== session?.user?.name) {
             setIsDisable(false);
             setValueName(data);
+        } else {
+            setIsDisable(true);
         }
     };
     return (

@@ -57,13 +57,26 @@ export default function ProfileInfoPage() {
                     />
                 )}
                 <h1 className='mt-3 text-xl sm:text-2xl md:text-3xl text-zinc-300 text-center font-bold'>
-                    {session?.user?.name}
+                    {session?.user?.name ? (
+                        session?.user?.name
+                    ) : (
+                        <div className='px-6 py-3 rounded bg-zinc-800'></div>
+                    )}
                 </h1>
                 <p className='text-xs sm:text-sm md:text-base text-zinc-400 font-normal'>
-                    +{session?.user?.wa_number}
+                    {session?.user?.wa_number ? (
+                        '+' + session?.user?.wa_number
+                    ) : (
+                        <div className='px-5 py-1 rounded bg-zinc-800'></div>
+                    )}
                 </p>
                 <p className='text-xs sm:text-sm text-zinc-500 font-normal'>
-                    Created at : {getTimestamp(session?.user?.created_at)}
+                    Created at :{' '}
+                    {session?.user?.created_at ? (
+                        getTimestamp(session?.user?.created_at)
+                    ) : (
+                        <div className='px-5 py-1 rounded bg-zinc-800'></div>
+                    )}
                 </p>
                 <button
                     onClick={HandleLogout}
