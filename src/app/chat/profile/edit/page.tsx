@@ -12,7 +12,6 @@ export default function EditFormPage() {
         useSession();
     const [labelName, setLabelName] = useState<string>('Edit your fullname');
     const [isDisable, setIsDisable] = useState<boolean>(true);
-    const [nameValue, setNameValue] = useState<string>('');
 
     const InputChangeValidate = (e: ChangeEvent<HTMLInputElement>) => {
         const data = e.target.value;
@@ -110,18 +109,19 @@ export default function EditFormPage() {
                             ? session?.user?.name
                             : 'Loading...'}{' '}
                         <span
-                            className='cursor-pointer'
+                            className='cursor-pointer hover:text-zinc-500'
                             onClick={() =>
-                                setNameValue(session?.user?.name || '')
+                                window.navigator.clipboard.writeText(
+                                    session?.user?.name || ''
+                                )
                             }
                         >
-                            <FaPen />
+                            <IoCopyOutline />
                         </span>
                     </p>
                 </div>
                 <div className='w-full flex flex-col items-start'>
                     <input
-                        value={nameValue}
                         onChange={InputChangeValidate}
                         type='text'
                         id='name'
