@@ -147,7 +147,7 @@ export default function EditFormPage() {
                 const res = await update({
                     user: {
                         name: ev.name.value || session?.user?.name,
-                        pp: IMGUrl || 'empety'
+                        pp: IMGUrl || session?.user?.pp
                     }
                 });
                 if (!res?.error) {
@@ -179,7 +179,7 @@ export default function EditFormPage() {
             <div className='w-full p-4 flex mt-2'>
                 <Link
                     href='/chat/profile'
-                    className='text-xl text-zinc-400'
+                    className='text-base sm:text-lg md:text-xl text-zinc-400'
                 >
                     <FaArrowLeft />
                 </Link>
