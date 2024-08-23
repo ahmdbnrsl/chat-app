@@ -32,7 +32,7 @@ export default function ProfileInfoPage() {
         }, 2000);
     };
     return (
-        <div className='w-full max-w-md rounded-xl bg-zinc-900 p-7 flex  justify-end relative'>
+        <div className='w-full max-w-md rounded-xl bg-zinc-900 p-7 flex  flex-col items-end relative'>
             <Link
                 href='/chat'
                 className='text-start w-full text-zinc-400 py-2 text-base sm:text-lg md:text-xl'
