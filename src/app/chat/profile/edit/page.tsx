@@ -11,13 +11,17 @@ import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { editUser } from './editUser';
 
 export default function EditFormPage() {
-    const { data: session, status }: { data: any; status: string } =
-        useSession();
+    const {
+        data: session,
+        status,
+        update
+    }: { data: any; status: string; update: any } = useSession();
     const { push } = useRouter();
     const [labelName, setLabelName] = useState<string>('Edit your fullname');
-    const [message, setMessage] = useState<string>(
-        'You can edit profile photo and your fullname'
-    );
+    const [err, setErr] = useState<{ status: boolean; message: string }>({
+        status: false,
+        message: ''
+    });
     const [IMGUrl, setIMGUrl] = useState<string>('');
     const [isDisable, setIsDisable] = useState<boolean>(true);
     const [loading, setLoading] = useState<boolean>(false);
@@ -49,7 +53,10 @@ export default function EditFormPage() {
             const fileExtension = fileName.split('.').pop()?.toLowerCase();
 
             if (!fileExtension || !validExtensions.includes(fileExtension)) {
-                setMessage('Only .jpg and .png files are allowed.');
+                setErr({
+                    status: true,
+                    message: 'Only .jpg and .png files are allowed.'
+                });
                 e.target.value = '';
                 return;
             }
@@ -62,13 +69,19 @@ export default function EditFormPage() {
                 const height = img.height;
 
                 if (width !== height) {
-                    setMessage('Only 1:1 ratio images are allowed.');
+                    setErr({
+                        status: true,
+                        message: 'Only 1:1 ratio images are allowed.'
+                    });
                     e.target.value = '';
                 } else {
                     setLoading(true);
                     setIsDisable(true);
                     e.target.disabled = true;
-                    setMessage('You can edit profile photo and your fullname');
+                    setErr({
+                        status: false,
+                        message: 'You can edit profile photo and your fullname'
+                    });
                     const formData = new FormData();
                     formData.append('file', file);
                     try {
@@ -83,13 +96,14 @@ export default function EditFormPage() {
                             setLoading(false);
                             setIsDisable(false);
                         } else {
-                            setMessage(
-                                `Upload failed: unsupported image or bad connection`
-                            );
+                            setErr({
+                                status: true,
+                                message: `Upload failed: unsupported image or bad connection`
+                            });
                             e.target.disabled = false;
                         }
                     } catch (error) {
-                        setMessage(`Server Error`);
+                        setErr({ status: true, message: `Server Error` });
                         e.target.disabled = false;
                     }
                 }
@@ -130,14 +144,22 @@ export default function EditFormPage() {
                     update_at: Date.now().toString()
                 });
             if (editing && editing?.status) {
-                const res = await signIn('credentials', { redirect: false });
+                const res = await update({
+                    user: {
+                        name: ev.name.value || session?.user?.name,
+                        pp: IMGUrl || 'empety'
+                    }
+                });
                 if (!res?.error) {
                     setLoad(false);
                     push('/chat/profile');
                 } else {
                     if (res.status === 401) {
                         setLoad(false);
-                        setMessage('Failed to revalidate session');
+                        setErr({
+                            status: true,
+                            message: 'Failed to revalidate session'
+                        });
                         setIsDisable(false);
                         ev.name.disabled = false;
                         ev.photo.disabled = false;
@@ -145,7 +167,7 @@ export default function EditFormPage() {
                 }
             } else {
                 setLoad(false);
-                setMessage('Failed to update profile');
+                setErr({ status: true, message: 'Failed to update profile' });
                 setIsDisable(false);
                 ev.name.disabled = false;
                 ev.photo.disabled = false;
@@ -166,8 +188,14 @@ export default function EditFormPage() {
                 <div className='flex items-center gap-2 text-2xl font-bold text-zinc-300 text-center'>
                     <FaPen /> <h1>Edit Profile</h1>
                 </div>
-                <p className='mt-3 text-base font-normal text-center text-zinc-400'>
-                    {message}
+                <p
+                    className={`mt-3 text-base font-normal text-center ${
+                        err.status ? 'text-red-500' : 'text-zinc-400'
+                    }`}
+                >
+                    {err.status
+                        ? err.message
+                        : 'You can edit profile photo and your fullname'}
                 </p>
             </div>
             <form
@@ -230,7 +258,7 @@ export default function EditFormPage() {
                         id='photo'
                     />
                 </div>
-                <div className='bg-zinc-800 w-full py-2 px-3 rounded-xl text-lg font-normal text-zinc-500 flex flex-col justify-center items-center'>
+                <div className='mt-3 bg-zinc-800 w-full py-2 px-3 rounded-xl text-lg font-normal text-zinc-500 flex flex-col justify-center items-center'>
                     <p className='text-base'>Current fullname :</p>
                     <p className='font-medium text-zinc-300 flex items-center gap-2 flex-wrap text-center'>
                         {session?.user?.name

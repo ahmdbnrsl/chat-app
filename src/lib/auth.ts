@@ -72,7 +72,7 @@ export const authOptions: NextAuthOptions = {
         })
     ],
     callbacks: {
-        async jwt({ token, account, profile, user }: any) {
+        async jwt({ token, account, profile, user, trigger, session }: any) {
             if (account?.provider === 'credentials') {
                 token.name = user.name;
                 token.wa_number = user.wa_number;
@@ -81,6 +81,14 @@ export const authOptions: NextAuthOptions = {
                 token.created_at = user.created_at;
                 token.update_at = user.update_at;
                 token.pp = user.pp;
+            }
+            if (
+                trigger === 'update' &&
+                session?.user?.name &&
+                session?.user?.pp
+            ) {
+                token.name = session.user.name;
+                token.pp = session.user.pp;
             }
             return token;
         },
