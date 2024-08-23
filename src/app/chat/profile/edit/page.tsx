@@ -100,7 +100,10 @@ export default function EditFormPage() {
 
     const UpdateProfile = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const ev = e.target as typeof e.target & { message: { value: string } };
+        const ev = e.target as typeof e.target & {
+            name: { value: string };
+            photo: { value: File };
+        };
         const validate = (data: string): boolean => {
             if (
                 (data !== '' && data.replace(/\s/g, '') === '') ||
