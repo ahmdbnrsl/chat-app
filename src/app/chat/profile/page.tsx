@@ -32,19 +32,21 @@ export default function ProfileInfoPage() {
         }, 2000);
     };
     return (
-        <div className='w-full max-w-md rounded-xl bg-zinc-900 p-7 flex  flex-col items-end relative'>
-            <Link
-                href='/chat'
-                className='text-start w-full text-zinc-400 py-2 text-base sm:text-lg md:text-xl'
-            >
-                <FaArrowLeft />
-            </Link>
-            <Link
-                href='/chat/profile/edit'
-                className='text-zinc-400 outline-0 bg-zinc-800/[0.75] rounded-lg p-2 hover:bg-zinc-800/[0.40] absolute text-base sm:text-lg md:text-xl'
-            >
-                <FaPen />
-            </Link>
+        <div className='w-full max-w-md rounded-xl bg-zinc-900 p-7 flex  flex-col items-end'>
+            <div className='w-full flex justify-between gap-2'>
+                <Link
+                    href='/chat'
+                    className='text-zinc-400 outline-0 bg-zinc-800/[0.75] rounded-lg p-2 hover:bg-zinc-800/[0.40] text-base sm:text-lg md:text-xl'
+                >
+                    <FaArrowLeft />
+                </Link>
+                <Link
+                    href='/chat/profile/edit'
+                    className='text-zinc-400 outline-0 bg-zinc-800/[0.75] rounded-lg p-2 hover:bg-zinc-800/[0.40] text-base sm:text-lg md:text-xl'
+                >
+                    <FaPen />
+                </Link>
+            </div>
             <div className='w-full flex flex-col items-center'>
                 {session?.user?.pp && session?.user?.pp === 'empety' ? (
                     <Avatar

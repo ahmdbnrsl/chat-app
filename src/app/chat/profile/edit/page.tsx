@@ -179,7 +179,7 @@ export default function EditFormPage() {
             <div className='w-full p-4 flex mt-2'>
                 <Link
                     href='/chat/profile'
-                    className='text-base sm:text-lg md:text-xl text-zinc-400'
+                    className='text-zinc-400 outline-0 bg-zinc-800/[0.75] rounded-lg p-2 hover:bg-zinc-800/[0.40] text-base sm:text-lg md:text-xl'
                 >
                     <FaArrowLeft />
                 </Link>
