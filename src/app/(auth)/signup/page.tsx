@@ -30,23 +30,19 @@ export default function SignUpPage() {
         const waNumber = ev.wa.value;
         const validate = (data: string, type: string): boolean => {
             if (type === 'name') {
-                if (
-                    data === '' ||
+                return data === '' ||
                     (data !== '' && data.replace(/\s/g, '') === '') ||
                     data.length < 5 ||
                     data.length > 25
-                ) {
-                    return false;
-                } else return true;
+                    ? false
+                    : true;
             } else {
-                if (
-                    data === '' ||
+                return data === '' ||
                     !Number(data) ||
                     data.length < 9 ||
                     data.length > 20
-                ) {
-                    return false;
-                } else return true;
+                    ? false
+                    : true;
             }
         };
         if (!validate(nameUser, 'name')) {

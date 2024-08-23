@@ -87,14 +87,12 @@ export default function LoginPage({ searchParams }: any) {
         const ev: Data = e.target as Data;
         const OTP = ev.otp.value;
         const validate = (data: string): boolean => {
-            if (
-                data === '' ||
+            return data === '' ||
                 !Number(data) ||
                 data.length < 6 ||
                 data.length > 6
-            ) {
-                return false;
-            } else return true;
+                ? false
+                : true;
         };
         if (!validate(OTP)) {
             ev.otp.focus();

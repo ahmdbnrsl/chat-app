@@ -121,17 +121,16 @@ export default function EditFormPage() {
             photo: HTMLInputElement;
         };
         const validate = (data: string): boolean => {
-            if (
-                (data !== '' && data.replace(/\s/g, '') === '') ||
+            return (data !== '' && data.replace(/\s/g, '') === '') ||
                 data.length < 5 ||
                 data.length > 25
-            )
-                return false;
-            return true;
+                ? false
+                : true;
         };
-        if (ev.name.value !== '' && !validate(ev.name.value)) {
-            ev.name.focus();
-        } else if (ev.name.value === '' && !IMGUrl) {
+        if (
+            (ev.name.value !== '' && !validate(ev.name.value)) ||
+            (ev.name.value === '' && !IMGUrl)
+        ) {
             ev.name.focus();
         } else {
             setLoad(true);
