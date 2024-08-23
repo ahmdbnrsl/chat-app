@@ -21,7 +21,13 @@ interface Result {
     id_user: string;
 }
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({
+    children,
+    modal
+}: {
+    children: React.ReactNode;
+    modal: React.ReactNode;
+}) {
     const { data: session, status }: { data: any; status: string } =
         useSession();
     const [width, setWidth] = useState<number>(0);
@@ -79,7 +85,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     const pathName = usePathname();
 
     if (pathName.startsWith('/chat/profile')) {
-        return <>{children}</>;
+        return (
+            <>
+                {children}
+                {modal}
+            </>
+        );
     }
 
     if (width < 1280) {
@@ -87,22 +98,28 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             return <>{children}</>;
         }
         return (
-            <main className='bg-zinc-950 w-full min-h-screen flex'>
-                <Wrapper>
-                    <SidebarChat listSender={listSender} />
-                </Wrapper>
-            </main>
+            <>
+                <main className='bg-zinc-950 w-full min-h-screen flex'>
+                    <Wrapper>
+                        <SidebarChat listSender={listSender} />
+                    </Wrapper>
+                </main>
+                {modal}
+            </>
         );
     }
 
     return (
-        <main className='bg-zinc-950 w-full min-h-screen flex'>
-            <Wrapper>
-                <SidebarChat listSender={listSender} />
-            </Wrapper>
-            <section className='hidden w-full xl:flex flex-col min-h-screen xl:w-4/6 bg-zinc-950 bg-fixed justify-center items-center'>
-                {children}
-            </section>
-        </main>
+        <>
+            <main className='bg-zinc-950 w-full min-h-screen flex'>
+                <Wrapper>
+                    <SidebarChat listSender={listSender} />
+                </Wrapper>
+                <section className='hidden w-full xl:flex flex-col min-h-screen xl:w-4/6 bg-zinc-950 bg-fixed justify-center items-center'>
+                    {children}
+                </section>
+            </main>
+            {modal}
+        </>
     );
 }
