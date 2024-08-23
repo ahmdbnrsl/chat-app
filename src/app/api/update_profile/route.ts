@@ -5,6 +5,7 @@ interface BodyRequest {
     new_name?: string;
     new_pp?: string;
     user_id: string;
+    update_at: string;
     secret: string;
 }
 

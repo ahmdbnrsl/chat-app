@@ -5,12 +5,15 @@ import Link from 'next/link';
 import Loading from '@/components/loading';
 import { FaPen, FaArrowLeft } from 'react-icons/fa6';
 import { IoCopyOutline } from 'react-icons/io5';
-import { useSession } from 'next-auth/react';
-import { useState, useEffect, ChangeEvent } from 'react';
+import { useSession, signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { editUser } from './editUser';
 
 export default function EditFormPage() {
     const { data: session, status }: { data: any; status: string } =
         useSession();
+    const { push } = useRouter();
     const [labelName, setLabelName] = useState<string>('Edit your fullname');
     const [message, setMessage] = useState<string>(
         'You can edit profile photo and your fullname'
@@ -18,9 +21,12 @@ export default function EditFormPage() {
     const [IMGUrl, setIMGUrl] = useState<string>('');
     const [isDisable, setIsDisable] = useState<boolean>(true);
     const [loading, setLoading] = useState<boolean>(false);
+    const [load, setLoad] = useState<boolean>(false);
 
     const InputChangeValidate = (e: ChangeEvent<HTMLInputElement>) => {
         const data = e.target.value;
+        !IMGUrl && data === '' ? setIsDisable(true) : setIsDisable(false);
+        data !== session?.user?.name ? setIsDisable(false) : setIsDisable(true);
         if (data !== '' && data.replace(/\s/g, '') === '')
             setLabelName('Name must not only space!');
         if (data.length < 5) setLabelName('Enter at least 5 letters');
@@ -32,11 +38,6 @@ export default function EditFormPage() {
                 data.replace(/\s/g, '') !== '')
         )
             setLabelName('Edit your fullname');
-        if (data !== session?.user?.name) {
-            setIsDisable(false);
-        } else {
-            setIsDisable(true);
-        }
     };
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -66,6 +67,7 @@ export default function EditFormPage() {
                 } else {
                     setLoading(true);
                     setIsDisable(true);
+                    e.target.disabled = true;
                     setMessage('You can edit profile photo and your fullname');
                     const formData = new FormData();
                     formData.append('file', file);
@@ -84,13 +86,64 @@ export default function EditFormPage() {
                             setMessage(
                                 `Upload failed: unsupported image or bad connection`
                             );
+                            e.target.disabled = false;
                         }
                     } catch (error) {
                         setMessage(`Server Error`);
+                        e.target.disabled = false;
                     }
                 }
                 URL.revokeObjectURL(img.src);
             };
+        }
+    };
+
+    const UpdateProfile = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const ev = e.target as typeof e.target & { message: { value: string } };
+        const validate = (data: string): boolean => {
+            if (
+                (data !== '' && data.replace(/\s/g, '') === '') ||
+                data.length < 5 ||
+                data.length > 25
+            )
+                return false;
+            return true;
+        };
+        if (ev.name.value !== '' && !validate(ev.name.value)) {
+            ev.name.focus();
+        } else if (ev.name.value === '' && !IMGUrl) {
+            ev.name.focus();
+        } else {
+            setLoad(true);
+            setIsDisable(true);
+            ev.name.disabled = true;
+            ev.photo.disabled = true;
+            const editing: { status: boolean; message: string } | false =
+                await editUser({
+                    new_name: ev.name.value || '',
+                    new_pp: IMGUrl || '',
+                    update_at: Date.now().toString()
+                });
+            if (editing && editing?.status) {
+                const res = await signIn('credentials', { redirect: false });
+                if (!res?.error) {
+                    setLoad(false);
+                    push('/chat/profile');
+                } else {
+                    if (res.status === 401) {
+                        setLoad(false);
+                        setMessage('Failed to update profile');
+                        ev.name.disabled = false;
+                        ev.photo.disabled = false;
+                    }
+                }
+            } else {
+                setLoad(false);
+                setMessage('Failed to update profile');
+                ev.name.disabled = false;
+                ev.photo.disabled = false;
+            }
         }
     };
     return (
@@ -111,7 +164,10 @@ export default function EditFormPage() {
                     {message}
                 </p>
             </div>
-            <form className='p-4 w-full flex flex-col gap-4 mb-4'>
+            <form
+                onSubmit={UpdateProfile}
+                className='p-4 w-full flex flex-col gap-4 mb-4'
+            >
                 <div className='w-full flex flex-col items-start'>
                     <label
                         htmlFor='photo'
@@ -162,6 +218,7 @@ export default function EditFormPage() {
                     <input
                         onChange={handleFileChange}
                         type='file'
+                        name='photo'
                         accept='.jpg, .png, .jpeg'
                         className='hidden'
                         id='photo'
@@ -206,12 +263,18 @@ export default function EditFormPage() {
                     disabled={isDisable}
                     type='submit'
                     className={`${
-                        isDisable
+                        isDisable || load
                             ? 'bg-zinc-800 text-zinc-500'
                             : 'bg-gradient-to-br from-zinc-200 to-zinc-400 text-zinc-950'
                     } flex gap-2 justify-center items-center py-2 mt-2 w-full cursor-pointer text-lg rounded-xl outline-0 font-medium`}
                 >
-                    Save Changes
+                    {load ? (
+                        <>
+                            <Loading /> {'Updating profile...'}
+                        </>
+                    ) : (
+                        'Save Changes'
+                    )}
                 </button>
             </form>
         </div>

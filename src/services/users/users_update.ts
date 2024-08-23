@@ -7,11 +7,13 @@ const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
 export const editUser = async ({
     new_name,
     new_pp,
-    user_id
+    user_id,
+    update_at
 }: {
     new_name?: string;
     new_pp?: string;
     user_id: string;
+    update_at: string;
 }): Promise<{ status: boolean; message: string } | false> => {
     try {
         await mongoose.connect(URI);
@@ -22,6 +24,7 @@ export const editUser = async ({
                 {
                     $set: {
                         name: new_name || existingUser.name,
+                        update_at,
                         pp: new_pp || existingUser.pp
                     }
                 },
