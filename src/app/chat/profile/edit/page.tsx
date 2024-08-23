@@ -101,8 +101,8 @@ export default function EditFormPage() {
     const UpdateProfile = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const ev = e.target as typeof e.target & {
-            name: { value: string };
-            photo: { value: File };
+            name: HTMLInputElement;
+            photo: HTMLInputElement;
         };
         const validate = (data: string): boolean => {
             if (
