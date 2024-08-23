@@ -124,6 +124,7 @@ export default function EditFormPage() {
             ev.photo.disabled = true;
             const editing: { status: boolean; message: string } | false =
                 await editUser({
+                    user_id: session?.user?.user_id,
                     new_name: ev.name.value || '',
                     new_pp: IMGUrl || '',
                     update_at: Date.now().toString()
@@ -136,7 +137,8 @@ export default function EditFormPage() {
                 } else {
                     if (res.status === 401) {
                         setLoad(false);
-                        setMessage('Failed to update profile');
+                        setMessage('Failed to revalidate session');
+                        setIsDisable(false);
                         ev.name.disabled = false;
                         ev.photo.disabled = false;
                     }
@@ -144,6 +146,7 @@ export default function EditFormPage() {
             } else {
                 setLoad(false);
                 setMessage('Failed to update profile');
+                setIsDisable(false);
                 ev.name.disabled = false;
                 ev.photo.disabled = false;
             }

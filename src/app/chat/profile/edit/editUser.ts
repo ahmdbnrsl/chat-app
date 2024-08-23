@@ -1,9 +1,11 @@
 'use server';
 export const editUser = async ({
+    user_id,
     new_name,
     new_pp,
     update_at
 }: {
+    user_id: string;
     new_name?: string;
     new_pp?: string;
     update_at: string;
@@ -15,6 +17,7 @@ export const editUser = async ({
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
+                user_id,
                 new_name,
                 new_pp,
                 update_at,
