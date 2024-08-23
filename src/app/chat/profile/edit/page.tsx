@@ -101,10 +101,12 @@ export default function EditFormPage() {
                                 message: `Upload failed: unsupported image or bad connection`
                             });
                             e.target.disabled = false;
+                            setLoading(false);
                         }
                     } catch (error) {
                         setErr({ status: true, message: `Server Error` });
                         e.target.disabled = false;
+                        setLoading(false);
                     }
                 }
                 URL.revokeObjectURL(img.src);
