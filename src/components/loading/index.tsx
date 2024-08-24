@@ -1,4 +1,4 @@
-export default function Loading({ size }: { size?: string }) {
+export default function Loading() {
     return (
         <div role='status'>
             <svg
