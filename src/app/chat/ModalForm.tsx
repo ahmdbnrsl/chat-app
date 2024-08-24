@@ -30,7 +30,7 @@ export default function ModalForm() {
         setLoad(true);
     };
     return (
-        <div className='w-full max-w-md bg-zinc-900 rounded-xl shadow shadow-xl shadow-zinc-950 flex flex-col border-2 border-zinc-800'>
+        <div className='z-[999999999] w-full max-w-md bg-zinc-900 rounded-xl shadow shadow-xl shadow-zinc-950 flex flex-col border-2 border-zinc-800'>
             <div className='w-full p-4 flex flex-col items-center mt-2'>
                 <h1 className='flex items-center gap-2 text-2xl font-bold text-zinc-300 text-center'>
                     <MdOutlinePersonSearch /> Find User
@@ -45,7 +45,7 @@ export default function ModalForm() {
             </div>
             <form
                 onSubmit={SearchUser}
-                className={`flex p-4 w-full flex-col gap-4`}
+                className={`flex p-4 w-full flex-col gap-4 mb-4`}
             >
                 <div className='w-full flex flex-col gap-1'>
                     <input
