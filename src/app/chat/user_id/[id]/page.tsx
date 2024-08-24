@@ -2,7 +2,7 @@
 import ListMessage from './listMessage';
 import NavbarChat from './Navbar';
 import FormMessage from './formMessage';
-import LoadingMessage from '@/components/loadingMessage';
+import LoadingMessage from '@/components/loading';
 import Avatar from 'react-avatar';
 import Image from 'next/image';
 import { useEffect, useState, useCallback, useMemo } from 'react';
@@ -112,7 +112,7 @@ export default function MobileView(props: any) {
             {!listMessage ? (
                 <section className='w-full flex flex-col min-h-screen bg-fixed bg-zinc-950 justify-center items-center'>
                     <h1 className='flex items-center gap-2 sm:gap-3 text-lg sm:text-xl md:text-2xl text-zinc-400 font-medium text-center'>
-                        <LoadingMessage /> Loading Messages...
+                        <LoadingMessage size='16' />
                     </h1>
                 </section>
             ) : (
