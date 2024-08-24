@@ -17,13 +17,6 @@ export default function ListMessage({
         useSession();
     return (
         <>
-            {checkDate ? (
-                <div className='w-full flex justify-center py-2'>
-                    <div className='px-3 py-0.5 rounded bg-zinc-900 text-sm text-zinc-400 font-normal'>
-                        {checkDate}
-                    </div>
-                </div>
-            ) : null}
             <div
                 key={key}
                 className={`w-full flex ${
@@ -50,6 +43,13 @@ export default function ListMessage({
                     </p>
                 </div>
             </div>
+            {checkDate ? (
+                <div className='w-full flex justify-center py-2'>
+                    <div className='px-3 py-0.5 rounded bg-zinc-900 text-sm text-zinc-400 font-normal'>
+                        {checkDate}
+                    </div>
+                </div>
+            ) : null}
         </>
     );
 }
