@@ -122,16 +122,11 @@ export default function MobileView(props: any) {
                         <div className='w-full flex flex-col-reverse gap-3 p-6 flex-grow max-h-screen overflow-y-auto'>
                             {listMessage.map((message: Message, i: number) => {
                                 let checkDate: string | null =
-                                    i === 0
-                                        ? null
-                                        : i === listMessage.length - 1 ||
-                                          getDate(
-                                              message?.message_timestamp
-                                          ) !==
-                                              getDate(
-                                                  listMessage[i - 1]
-                                                      .message_timestamp
-                                              )
+                                    i === listMessage.length - 1 ||
+                                    getDate(message?.message_timestamp) !==
+                                        getDate(
+                                            listMessage[i + 1].message_timestamp
+                                        )
                                         ? getDate(message?.message_timestamp)
                                         : null;
                                 return (
