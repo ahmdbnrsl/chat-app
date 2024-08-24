@@ -26,10 +26,10 @@ export default function ListMessage({
                 }`}
             >
                 <div
-                    className={`w-fit text-zinc-300 py-1 min-w-[10rem] px-5 flex flex-col ${
+                    className={`w-fit text-zinc-300 py-1 min-w-[10rem] px-3 flex flex-col ${
                         message.sender_id === session?.user?.user_id
-                            ? 'bg-zinc-700/[0.5] rounded-b-lg rounded-tl-lg'
-                            : 'bg-zinc-800/[0.5] rounded-b-lg rounded-tr-lg'
+                            ? 'bg-zinc-700/[0.5] rounded-b-xl rounded-tl-xl'
+                            : 'bg-zinc-800/[0.5] rounded-b-xl rounded-tr-xl'
                     }`}
                 >
                     <pre
@@ -45,7 +45,7 @@ export default function ListMessage({
             </div>
             {checkDate ? (
                 <div className='w-full flex justify-center py-2'>
-                    <div className='px-3 py-0.5 rounded bg-zinc-900 text-base text-zinc-300 font-medium'>
+                    <div className='px-3 py-0.5 rounded bg-zinc-900 text-sm text-zinc-400 font-normal'>
                         {checkDate}
                     </div>
                 </div>
