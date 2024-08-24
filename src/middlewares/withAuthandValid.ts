@@ -8,6 +8,15 @@ import { getToken } from 'next-auth/jwt';
 
 const onlyAdminPage: Array<string> = ['/dashboard'];
 const authPage: Array<string> = ['/login', '/signup'];
+const APIRequireBearer: Array<string> = [
+    '/api/register',
+    '/api/send_otp',
+    '/api/update_profile',
+    '/api/get_list_sender',
+    '/api/get_messages',
+    '/api/get_user_info',
+    '/api/push_message'
+];
 
 export default function withAuthandValid(
     middleware: NextMiddleware,
@@ -73,20 +82,18 @@ export default function withAuthandValid(
                 }
             }
         }
-        if (pathName.startsWith('/api/')) {
-            if (!pathName.startsWith('/api/upload')) {
-                const authHeader = req.headers.get('Authorization');
+        if (APIRequireBearer.includes(pathName)) {
+            const authHeader = req.headers.get('Authorization');
 
-                if (!authHeader || !authHeader.startsWith('Bearer ')) {
-                    return new NextResponse('Unauthorized', { status: 401 });
-                }
+            if (!authHeader || !authHeader.startsWith('Bearer ')) {
+                return new NextResponse('Unauthorized', { status: 401 });
+            }
 
-                const token = authHeader.split(' ')[1];
-                const isValidToken = token === process.env.NEXT_PUBLIC_BEARER;
+            const token = authHeader.split(' ')[1];
+            const isValidToken = token === process.env.NEXT_PUBLIC_BEARER;
 
-                if (!isValidToken) {
-                    return new NextResponse('Unauthorized', { status: 401 });
-                }
+            if (!isValidToken) {
+                return new NextResponse('Unauthorized', { status: 401 });
             }
         }
         return middleware(req, next);
