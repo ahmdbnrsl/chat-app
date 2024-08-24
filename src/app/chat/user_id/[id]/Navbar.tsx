@@ -53,17 +53,6 @@ export default function NavbarChat({
                                 <div className='px-9 py-2.5 rounded-lg bg-zinc-800'></div>
                             )}
                         </h1>
-                        <p
-                            className={`text-xs font-normal text-zinc-400 ${
-                                !senderInfo ? 'mt-1.5' : ''
-                            }`}
-                        >
-                            {senderInfo ? (
-                                '+' + senderInfo?.wa_number
-                            ) : (
-                                <div className='px-7 py-1 rounded-lg bg-zinc-800'></div>
-                            )}
-                        </p>
                     </div>
                 </div>
             </div>
