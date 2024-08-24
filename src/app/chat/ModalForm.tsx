@@ -1,6 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, ChangeEvent } from 'react';
 import { MdOutlinePersonSearch } from 'react-icons/md';
 import Loading from '@/components/loading';
 
