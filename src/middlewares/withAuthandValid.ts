@@ -54,7 +54,9 @@ export default function withAuthandValid(
                 const options: RequestInit = {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        Authorization:
+                            'Bearer ' + process.env.NEXT_PUBLIC_BEARER
                     },
                     body: JSON.stringify({
                         user_id,
@@ -68,6 +70,22 @@ export default function withAuthandValid(
                 );
                 if (!checkExistingUser?.ok) {
                     return NextResponse.redirect(new URL('/chat', req.url));
+                }
+            }
+        }
+        if (pathName.startsWith('/api/')) {
+            if (!pathName.startsWith('/api/upload')) {
+                const authHeader = req.headers.get('Authorization');
+
+                if (!authHeader || !authHeader.startsWith('Bearer ')) {
+                    return new NextResponse('Unauthorized', { status: 401 });
+                }
+
+                const token = authHeader.split(' ')[1];
+                const isValidToken = token === process.env.NEXT_PUBLIC_BEARER;
+
+                if (!isValidToken) {
+                    return new NextResponse('Unauthorized', { status: 401 });
                 }
             }
         }

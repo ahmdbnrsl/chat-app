@@ -15,7 +15,8 @@ export const sendOTPCode = async ({
         const options: RequestInit = {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + process.env.NEXT_PUBLIC_BEARER
             },
             body: JSON.stringify({
                 wa_number,

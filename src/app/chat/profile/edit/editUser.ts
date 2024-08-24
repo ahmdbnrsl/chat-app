@@ -14,7 +14,8 @@ export const editUser = async ({
         const options: RequestInit = {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + process.env.NEXT_PUBLIC_BEARER
             },
             body: JSON.stringify({
                 user_id,
