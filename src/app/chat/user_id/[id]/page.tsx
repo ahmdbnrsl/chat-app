@@ -111,8 +111,8 @@ export default function MobileView(props: any) {
         <main className='bg-zinc-950 w-full min-h-screen flex'>
             {!listMessage ? (
                 <section className='w-full flex flex-col min-h-screen bg-fixed bg-zinc-950 justify-center items-center'>
-                    <h1 className='flex items-center gap-2 sm:gap-3 text-lg sm:text-xl md:text-2xl text-zinc-400 font-medium text-center'>
-                        <LoadingMessage size='16' />
+                    <h1 className='flex items-center gap-2 sm:gap-3 text-lg sm:text-xl md:text-2xl text-zinc-400 font-medium text-center scale-[3]'>
+                        <LoadingMessage />
                     </h1>
                 </section>
             ) : (
