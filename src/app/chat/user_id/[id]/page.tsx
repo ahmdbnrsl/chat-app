@@ -121,23 +121,19 @@ export default function MobileView(props: any) {
                     {listMessage.length !== 0 ? (
                         <div className='w-full flex flex-col-reverse gap-3 p-6 flex-grow max-h-screen overflow-y-auto'>
                             {listMessage.map((message: Message, i: number) => {
-                                let checkDate: string | null = null;
-                                if (i === 0) {
-                                    checkDate = null;
-                                } else if (
-                                    getDate(message?.message_timestamp) !==
-                                    getDate(
-                                        listMessage[i - 1].message_timestamp
-                                    )
-                                ) {
-                                    checkDate = getDate(
-                                        message?.message_timestamp
-                                    );
-                                } else if (i === listMessage.length - 1) {
-                                    checkDate = getDate(
-                                        message?.message_timestamp
-                                    );
-                                }
+                                let checkDate: string | null =
+                                    i === 0
+                                        ? null
+                                        : i === listMessage.length - 1 ||
+                                          getDate(
+                                              message?.message_timestamp
+                                          ) !==
+                                              getDate(
+                                                  listMessage[i - 1]
+                                                      .message_timestamp
+                                              )
+                                        ? getDate(message?.message_timestamp)
+                                        : null;
                                 return (
                                     <ListMessage
                                         key={message?.message_timestamp}
