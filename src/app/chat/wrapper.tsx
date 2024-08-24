@@ -35,7 +35,7 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
                             />
                         )}
                         <div className='flex flex-col'>
-                            <h1 className='text-base font-medium text-zinc-400'>
+                            <h1 className='text-base font-normal text-zinc-400'>
                                 Profile
                             </h1>
                         </div>
