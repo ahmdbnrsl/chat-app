@@ -66,9 +66,9 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
                 </button>
             </div>
             {showModal && (
-                <div className='absolute z-[99999999] inset-0 flex justify-center items-center bg-zinc-950/[0.15]'>
+                <div className='absolute z-[99999999] inset-0 flex justify-center items-center bg-zinc-950/[0.15] backdrop-blur'>
                     <div
-                        className='absolute inset-0'
+                        className='absolute inset-0 z-[99999998]'
                         onClick={() => setShowModal(false)}
                     ></div>
                     <ModalForm />
