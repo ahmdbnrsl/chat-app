@@ -36,13 +36,13 @@ export default function ProfileInfoPage() {
             <div className='w-full flex justify-between gap-2'>
                 <Link
                     href='/chat'
-                    className='text-zinc-400 outline-0 bg-zinc-800/[0.75] rounded-lg p-2 hover:bg-zinc-800/[0.40] text-base sm:text-lg md:text-xl'
+                    className='text-zinc-400 outline-0 bg-zinc-800/[0.75] rounded-lg p-2 hover:bg-zinc-800/[0.40] text-base sm:text-lg md:text-xl cursor-pointer'
                 >
                     <FaArrowLeft />
                 </Link>
                 <Link
                     href='/chat/profile/edit'
-                    className='text-zinc-400 outline-0 bg-zinc-800/[0.75] rounded-lg p-2 hover:bg-zinc-800/[0.40] text-base sm:text-lg md:text-xl'
+                    className='text-zinc-400 outline-0 bg-zinc-800/[0.75] rounded-lg p-2 hover:bg-zinc-800/[0.40] text-base sm:text-lg md:text-xl cursor-pointer'
                 >
                     <FaPen />
                 </Link>

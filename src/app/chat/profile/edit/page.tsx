@@ -180,7 +180,7 @@ export default function EditFormPage() {
             <div className='w-full p-4 flex mt-2'>
                 <Link
                     href='/chat/profile'
-                    className='text-zinc-400 outline-0 bg-zinc-800/[0.75] rounded-lg p-2 hover:bg-zinc-800/[0.40] text-base sm:text-lg md:text-xl'
+                    className='text-zinc-400 outline-0 bg-zinc-800/[0.75] rounded-lg p-2 hover:bg-zinc-800/[0.40] text-base sm:text-lg md:text-xl cursor-pointer'
                 >
                     <FaArrowLeft />
                 </Link>
@@ -209,7 +209,7 @@ export default function EditFormPage() {
                         className='w-full relative flex justify-center items-center'
                     >
                         <div
-                            className={`w-[125px] h-[125px] rounded-full bg-zinc-800 border border-zinc-700 ${
+                            className={`w-[125px] h-[125px] rounded-full bg-zinc-800 border border-zinc-700 cursor-pointer ${
                                 loading ? 'opacity-10' : ''
                             }`}
                         >
@@ -240,7 +240,7 @@ export default function EditFormPage() {
                             loading='lazy'
                             className={`${
                                 loading ? 'hidden' : ''
-                            } rounded-full border border-zinc-700 absolute z-[99999] bg-zinc-800/[0.3]`}
+                            } cursor-pointer rounded-full border border-zinc-700 absolute z-[99999] bg-zinc-800/[0.3]`}
                         />
                         {loading ? (
                             <div className='w-auto absolute z-[999999] scale-[3]'>

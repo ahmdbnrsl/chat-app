@@ -15,7 +15,7 @@ export default function NavbarChat({
                 <div className='flex items-center gap-3'>
                     <Link
                         href='/chat'
-                        className='text-lg sm:text-xl md:text-2xl text-zinc-400 px-2'
+                        className='text-lg sm:text-xl md:text-2xl text-zinc-300 px-2 mr-3 cursor-pointer'
                     >
                         ⟨
                     </Link>
@@ -70,7 +70,7 @@ export default function NavbarChat({
             <input
                 type='text'
                 placeholder='Search message'
-                className='w-full py-1 px-2.5 sm:py-2 sm:px-4 text-zinc-300 font-normal text-base sm:text-lg rounded-lg bg-zinc-900/[0.5] outline-0 border-2 border-zinc-800 focus:border-zinc-700 placeholder:text-zinc-400 placeholder:text-sm sm:placeholder:text-base'
+                className='w-full py-1 px-2.5 sm:py-2 sm:px-4 text-zinc-300 font-normal text-base sm:text-lg rounded-full bg-zinc-900/[0.5] outline-0 border-2 border-zinc-800 focus:border-zinc-700 placeholder:text-zinc-400 placeholder:text-sm sm:placeholder:text-base'
             />
         </nav>
     );

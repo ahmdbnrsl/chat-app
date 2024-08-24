@@ -42,7 +42,7 @@ export default function SidebarChat({
                     <Link
                         href={`/chat/user_id/${sender?.id_user}`}
                         key={index}
-                        className='w-full rounded-xl transition-colors hover:bg-zinc-900/[0.85] flex justify-between items-center p-3'
+                        className='w-full rounded-xl transition-colors hover:bg-zinc-900/[0.85] flex justify-between items-center p-3 cursor-pointer'
                     >
                         <div className='w-8/12 flex gap-3 items-center'>
                             {sender?.pp && sender?.pp !== 'empety' ? (
