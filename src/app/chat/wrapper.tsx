@@ -3,6 +3,7 @@ import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import Avatar from 'react-avatar';
 import Image from 'next/image';
+import { IoSearch } from 'react-icons/io5';
 export default function Wrapper({ children }: { children: React.ReactNode }) {
     const { data: session, status }: { data: any; status: string } =
         useSession();
@@ -15,7 +16,7 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
                     </h1>
                     <Link
                         href='/chat/profile'
-                        className='text-zinc-300 font-medium text-lg sm:text-xl md:text-2xl outline-0 bg-transparent border-0 rounded-full'
+                        className='text-zinc-300 font-medium text-lg sm:text-xl md:text-2xl outline-0 bg-transparent border-0 rounded-full flex py-1 pl-1 bg-zinc-800 hover:bg-zinc-900 pr-2.5 transition-colors'
                     >
                         {session?.user?.pp && session?.user?.pp !== 'empety' ? (
                             <Image
@@ -33,13 +34,26 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
                                 round={true}
                             />
                         )}
+                        <div className='flex flex-col'>
+                            <h1 className='text-base sm:text-lg font-medium text-zinc-300'>
+                                {session?.user?.name || 'Loading...'}
+                            </h1>
+                            <p className='text-xs text-zinc-400'>
+                                +{session?.user?.wa_number}
+                            </p>
+                        </div>
                     </Link>
                 </div>
-                <input
-                    type='text'
-                    placeholder='Search by name'
-                    className='mt-2 w-full py-2 px-4 text-zinc-300 font-normal text-base sm:text-lg rounded-lg bg-zinc-900/[0.5] outline-0 border-2 border-zinc-800 focus:border-zinc-700 placeholder:text-zinc-400 placeholder:text-sm sm:placeholder:text-base'
-                />
+                <div className='w-full relative flex justify-start items-center'>
+                    <div className='pl-3 absolute text-zinc-400 text-lg sm:text-xl'>
+                        <IoSearch />
+                    </div>
+                    <input
+                        type='text'
+                        placeholder='Search by name'
+                        className='mt-2 w-full py-2 pl-6 pr-4 text-zinc-300 font-normal text-base sm:text-lg rounded-full bg-zinc-900/[0.5] outline-0 border-2 border-zinc-800 focus:border-zinc-700 placeholder:text-zinc-400 placeholder:text-sm sm:placeholder:text-base'
+                    />
+                </div>
             </nav>
             {children}
             <div className='sticky bottom-0 bg-zinc-950 w-full py-4 px-6 flex flex-col items-center'>
