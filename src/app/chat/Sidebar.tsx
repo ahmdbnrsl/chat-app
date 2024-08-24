@@ -91,10 +91,10 @@ export default function SidebarChat({
                                 +{sender?.wa_number}
                             </p>
                             <p className='text-xs font-normal text-zinc-500'>
-                                {getDate(latestMessageTimestamp) ===
+                                {getDate(sender?.latestMessageTimestamp) ===
                                 getDate(Date.now().toString())
-                                    ? getHour(latestMessageTimestamp)
-                                    : getDate(latestMessageTimestamp)}
+                                    ? getHour(sender?.latestMessageTimestamp)
+                                    : getDate(sender?.latestMessageTimestamp)}
                             </p>
                         </div>
                     </Link>
