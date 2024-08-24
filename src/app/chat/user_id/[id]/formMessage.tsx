@@ -61,7 +61,7 @@ export default function FormMessagge({
     return (
         <form
             onSubmit={HandleSendMessage}
-            className='sticky bottom-0 bg-zinc-950 w-full py-4 px-6 flex border-t gap-3 border-zinc-800 justify-center items-center'
+            className='sticky bottom-0 bg-zinc-950 w-full py-4 px-6 flex gap-3 justify-center items-center'
         >
             <textarea
                 disabled={isDisabled}
