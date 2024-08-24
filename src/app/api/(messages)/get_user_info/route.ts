@@ -3,7 +3,8 @@ import { NextResponse, NextRequest } from 'next/server';
 import { users, User } from '@/models/users';
 
 interface BodyRequest {
-    user_id: string;
+    user_id?: string;
+    wa_number?: string;
     secret: string;
 }
 
@@ -22,8 +23,11 @@ export async function POST(req: NextRequest) {
         );
     }
     try {
+        type WANumber = string;
         await mongoose.connect(URI);
-        const result: User | null = await users.findOne({ user_id });
+        let result: User | null = user_id
+            ? await users.findOne({ user_id })
+            : await users.findOne({ wa_number: wa_number as WANumber });
         if (result) {
             return NextResponse.json({
                 status: true,
