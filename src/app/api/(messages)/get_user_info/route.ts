@@ -12,7 +12,7 @@ const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
 
 export async function POST(req: NextRequest) {
     const body: BodyRequest = await req.json();
-    const { secret, user_id } = body;
+    const { secret, user_id, wa_number } = body;
     if (secret !== process.env.NEXT_PUBLIC_SECRET) {
         return NextResponse.json(
             {
