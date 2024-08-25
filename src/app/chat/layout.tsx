@@ -34,7 +34,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             const res:
                 | { result?: Array<Result>; status: boolean; message: string }
                 | false = await getListSender(session?.user.user_id);
-            if (res && res?.status) setListSender(res?.result);
+            if (res && res?.status) setListSender(res?.result?.reverse());
         }
 
         fetchListSender();
