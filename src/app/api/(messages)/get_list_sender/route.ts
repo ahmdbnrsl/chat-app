@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
         if (res) {
             if (res?.status) {
                 const sortedMessageByTimestamp: Array<Result> =
-                    res?.result.sort((a: Result, b: Result) => {
+                    res?.result?.sort((a: Result, b: Result) => {
                         return (
                             Number(a.latestMessageTimestamp) -
                             Number(b.latestMessageTimestamp)
