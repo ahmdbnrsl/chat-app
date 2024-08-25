@@ -38,7 +38,7 @@ export const getUserInfo = async ({
             };
         } else if (response?.status === 404) {
             return {
-                status: true,
+                status: false,
                 message: res?.message
             };
         } else {

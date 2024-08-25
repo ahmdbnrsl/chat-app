@@ -1,11 +1,16 @@
 'use client';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState, FormEvent, ChangeEvent } from 'react';
 import { MdOutlinePersonSearch } from 'react-icons/md';
+import { getUserInfo } from '@/services/users/getUserInfo';
+import { User } from '@/models/users';
 import Loading from '@/components/loading';
 
 export default function ModalForm() {
     const { push } = useRouter();
+    const { data: session, status }: { data: any; status: string } =
+        useSession();
     const [load, setLoad] = useState<boolean>(false);
     const [labelWaNumber, setLabelWaNumber] = useState<string>(
         'Enter WhatsApp number'
@@ -27,7 +32,52 @@ export default function ModalForm() {
     };
     const SearchUser = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setLoad(true);
+        const ev = e.target as typeof e.target & {
+            wa: HTMLInputElement;
+        };
+        let wa_number: string = ev.wa.value;
+        const noValidate = (data: string): boolean => {
+            return (
+                data === '' ||
+                !Number(data) ||
+                data.length < 9 ||
+                data.length > 20
+            );
+        };
+        if (noValidate(wa_number)) {
+            ev.wa.focus();
+        } else {
+            setLoad(true);
+            wa_number = wa_number?.startsWith('0')
+                ? wa_number?.replace(/\D/g, '').replace('0', '62')
+                : wa_number?.replace(/\D/g, '');
+            if (wa_number !== session?.user?.wa_number) {
+                const findingUser:
+                    | { status: boolean; message: string; result?: User }
+                    | false = await getUserInfo({ wa_number });
+                if (findingUser) {
+                    if (findingUser?.status) {
+                        setLoad(false);
+                        push('/chat/user_id/' + findingUser?.result?.user_id);
+                    } else {
+                        setLoad(false);
+                        setErr({
+                            status: true,
+                            message: 'User is not registered'
+                        });
+                    }
+                } else {
+                    setLoad(false);
+                    setErr({ status: true, message: 'Something went wrong!' });
+                }
+            } else {
+                setLoad(false);
+                setErr({
+                    status: true,
+                    message: 'Do not enter your own number'
+                });
+            }
+        }
     };
     return (
         <div className='z-[999999999] w-full max-w-md bg-zinc-900 rounded-xl shadow shadow-xl shadow-zinc-950 flex flex-col border-2 border-zinc-800'>
