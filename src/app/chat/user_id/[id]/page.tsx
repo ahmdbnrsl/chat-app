@@ -7,7 +7,8 @@ import Avatar from 'react-avatar';
 import Image from 'next/image';
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useSession } from 'next-auth/react';
-import { getListMessage, getSenderInfo } from './message_service';
+import { getListMessage } from '@/services/messages/messageService';
+import { getUserInfo } from '@/services/users/getUserInfo';
 import { Message } from '@/models/messages';
 import { User } from '@/models/users';
 import { io } from 'socket.io-client';
@@ -28,7 +29,7 @@ export default function MobileView(props: any) {
         if (!session?.user?.user_id || !params.id) return;
 
         const fetchSenderInfo = async () => {
-            const res = await getSenderInfo(params.id);
+            const res = await getUserInfo({ user_id: params.id });
             if (res && res.status) setSenderInfo(res.result);
         };
 

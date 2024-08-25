@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from 'next/server';
-import { Result, getListSender } from '@/services/messages/get_list_sender';
+import { Result, getListSender } from '@/controller/messages/get_list_sender';
 
 interface BodyRequest {
     user_id: string;

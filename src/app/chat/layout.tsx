@@ -1,7 +1,7 @@
 'use client';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import { getListSender } from './get_list_sender';
+import { getListSender } from '@/services/messages/getListSender';
 import { io } from 'socket.io-client';
 import { Message } from '@/models/messages';
 import { usePathname } from 'next/navigation';

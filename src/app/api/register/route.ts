@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { User } from '@/models/users';
-import { storeUser } from '@/services/users/user_register';
+import { storeUser } from '@/controller/users/user_register';
 
 interface BodyRequest {
     wa_number: string;

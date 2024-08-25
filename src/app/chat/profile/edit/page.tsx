@@ -8,7 +8,7 @@ import { IoCopyOutline } from 'react-icons/io5';
 import { useSession, signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import { editUser } from './editUser';
+import { editUser } from '@/services/users/editUser';
 
 export default function EditFormPage() {
     const {

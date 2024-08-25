@@ -3,7 +3,7 @@
 import { FaUserPlus } from 'react-icons/fa6';
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { userSignUp } from './signup';
+import { userSignUp } from '@/services/users/signup';
 import Link from 'next/link';
 import Loading from '@/components/loading';
 

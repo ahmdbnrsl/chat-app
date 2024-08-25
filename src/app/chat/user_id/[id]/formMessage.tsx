@@ -2,7 +2,7 @@
 import Loading from '@/components/loading';
 import { FaPaperPlane } from 'react-icons/fa';
 import { useRef, useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import { sendMessage } from './message_service';
+import { sendMessage } from '@/services/messages/messageService';
 
 export default function FormMessagge({
     paramsId,

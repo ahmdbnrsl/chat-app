@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from 'next/server';
-import { editUser } from '@/services/users/users_update';
+import { editUser } from '@/controller/users/users_update';
 
 interface BodyRequest {
     new_name?: string;

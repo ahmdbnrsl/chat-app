@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from 'next/server';
-import { getListMessage } from '@/services/messages/get_list_message';
+import { getListMessage } from '@/controller/messages/get_list_message';
 import { Message } from '@/models/messages';
 
 interface BodyRequest {
