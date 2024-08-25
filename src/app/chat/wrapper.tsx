@@ -1,15 +1,22 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
+import { usePathname } from 'next/navigation';
+import { IoSearch } from 'react-icons/io5';
 import Link from 'next/link';
 import Avatar from 'react-avatar';
 import Image from 'next/image';
-import { IoSearch } from 'react-icons/io5';
 import ModalForm from './ModalForm';
+
 export default function Wrapper({ children }: { children: React.ReactNode }) {
     const { data: session, status }: { data: any; status: string } =
         useSession();
+    const pathName = usePathname();
     const [showModal, setShowModal] = useState<boolean>(false);
+
+    const showingModal = (): void => setShowModal(true);
+    const hideModal = (): void => setShowModal(false);
+
     return (
         <section className='bg-zinc-950 w-full flex flex-col min-h-screen xl:w-1/3 xl:border-r border-zinc-800 box-border relative'>
             <nav className='sticky top-0 z-20 bg-zinc-950 w-full py-4 px-6 flex flex-col border-b border-zinc-800 items-center'>
@@ -58,7 +65,7 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
             {children}
             <div className='sticky bottom-0 bg-zinc-950 w-full py-4 px-6 flex flex-col items-center'>
                 <button
-                    onClick={() => setShowModal(true)}
+                    onClick={showingModal}
                     type='button'
                     className='bg-zinc-200 rounded-full py-1.5 px-6 outline-0 text-zinc-950 text-center cursor-pointer hover:scale-[1.025] transition-transform'
                 >
@@ -69,9 +76,9 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
                 <div className='absolute z-[99999999] inset-0 flex justify-center items-center bg-zinc-950/[0.15] backdrop-blur p-4'>
                     <div
                         className='absolute inset-0'
-                        onClick={() => setShowModal(false)}
+                        onClick={hideModal}
                     ></div>
-                    <ModalForm />
+                    <ModalForm hide={hideModal} />
                 </div>
             )}
         </section>

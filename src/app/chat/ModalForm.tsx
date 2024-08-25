@@ -7,7 +7,7 @@ import { getUserInfo } from '@/services/users/getUserInfo';
 import { User } from '@/models/users';
 import Loading from '@/components/loading';
 
-export default function ModalForm() {
+export default function ModalForm({ hide }: { hide: () => void }) {
     const { push } = useRouter();
     const { data: session, status }: { data: any; status: string } =
         useSession();
@@ -58,6 +58,7 @@ export default function ModalForm() {
                 if (findingUser) {
                     if (findingUser?.status) {
                         setLoad(false);
+                        hide();
                         push('/chat/user_id/' + findingUser?.result?.user_id);
                     } else {
                         setLoad(false);
