@@ -2,7 +2,7 @@
 import Loading from '@/components/loading';
 import { FaPaperPlane } from 'react-icons/fa';
 import { useRef, useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import { sendMessage } from '@/services/messages/messageService';
+import { messFetcher as sendMessage } from '@/services/messages/messageService';
 
 export default function FormMessagge({
     paramsId,
@@ -34,12 +34,15 @@ export default function FormMessagge({
         setDisable(true);
 
         const ev = e.target as typeof e.target & { message: { value: string } };
-        const send = await sendMessage({
-            sender_id: userId,
-            receiver_id: paramsId,
-            message_text: ev.message.value,
-            message_timestamp: Date.now().toString()
-        });
+        const send = await sendMessage(
+            {
+                sender_id: userId,
+                receiver_id: paramsId,
+                message_text: ev.message.value,
+                message_timestamp: Date.now().toString()
+            },
+            { path: 'push_message', method: 'POST' }
+        );
         if (send) {
             if (send?.status) {
                 (e.target as HTMLFormElement).reset();

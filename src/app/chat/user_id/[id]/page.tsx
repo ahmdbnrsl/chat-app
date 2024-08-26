@@ -7,7 +7,7 @@ import Avatar from 'react-avatar';
 import Image from 'next/image';
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useSession } from 'next-auth/react';
-import { getListMessage } from '@/services/messages/messageService';
+import { messFetcher as getListMessage } from '@/services/messages/messageService';
 import { getUserInfo } from '@/services/users/getUserInfo';
 import { Message } from '@/models/messages';
 import { User } from '@/models/users';
@@ -34,7 +34,10 @@ export default function MobileView(props: any) {
         };
 
         const fetchMessages = async () => {
-            const res = await getListMessage(session.user.user_id, params.id);
+            const res = await getListMessage(
+                { sender_id: session.user.user_id, receiver_id: params.id },
+                { path: 'get_messages', method: 'POST' }
+            );
             if (res && res.status) {
                 setListMessage(res.result?.reverse());
             }
