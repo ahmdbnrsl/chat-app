@@ -1,4 +1,4 @@
-import { User } from '@/models/users';
+import { User } from '@/types';
 
 export const getUserInfo = async ({
     user_id,

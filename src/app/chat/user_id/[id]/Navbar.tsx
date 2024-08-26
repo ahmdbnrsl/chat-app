@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import Avatar from 'react-avatar';
-import { User } from '@/models/users';
+import type { User } from '@/types';
 
 export default function NavbarChat({
     senderInfo

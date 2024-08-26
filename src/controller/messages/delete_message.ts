@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
-import { Message, messages } from '@/models/messages';
-import { DeleteResult } from 'mongodb';
+import { messages } from '@/models/messages';
+import type { DeleteResult } from 'mongodb';
+import type { Message } from '@/types';
 
 const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
 

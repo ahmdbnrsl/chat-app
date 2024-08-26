@@ -2,9 +2,9 @@
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { getListSender } from '@/services/messages/getListSender';
-import type { Result } from '@/controller/messages/get_list_sender';
+import type { SenderMessage } from '@/types';
 import { io } from 'socket.io-client';
-import { Message } from '@/models/messages';
+import { Message } from '@/types';
 import { usePathname } from 'next/navigation';
 import SidebarChat from './Sidebar';
 import Wrapper from './wrapper';
@@ -16,7 +16,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         useSession();
     const [width, setWidth] = useState<number>(0);
     const [listSender, setListSender] = useState<
-        Array<Result> | undefined | null
+        Array<SenderMessage> | undefined | null
     >(null);
 
     useEffect(() => {

@@ -1,6 +1,6 @@
 'use client';
 import { useSession } from 'next-auth/react';
-import { Message } from '@/models/messages';
+import { Message } from '@/types';
 import { RiDeleteBin7Line } from 'react-icons/ri';
 import { IoCopyOutline } from 'react-icons/io5';
 import { messFetcher as deleteMessage } from '@/services/messages/messageService';

@@ -8,7 +8,8 @@ import { IoCopyOutline } from 'react-icons/io5';
 import { useSession, signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import { editUser } from '@/services/users/editUser';
+import { userFetcher as editUser } from '@/services/users/userService';
+import type { U } from '@/types';
 
 export default function EditFormPage() {
     const {
@@ -137,13 +138,15 @@ export default function EditFormPage() {
             setIsDisable(true);
             ev.name.disabled = true;
             ev.photo.disabled = true;
-            const editing: { status: boolean; message: string } | false =
-                await editUser({
+            const editing: U['UserInfo'] | false = await editUser(
+                {
                     user_id: session?.user?.user_id,
                     new_name: ev.name.value || '',
                     new_pp: IMGUrl || '',
                     update_at: Date.now().toString()
-                });
+                },
+                { path: 'edit_user', method: 'PUT' }
+            );
             if (editing && editing?.status) {
                 const res = await update({
                     user: {

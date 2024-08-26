@@ -3,8 +3,8 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState, FormEvent, ChangeEvent } from 'react';
 import { MdOutlinePersonSearch } from 'react-icons/md';
-import { getUserInfo } from '@/services/users/getUserInfo';
-import { User } from '@/models/users';
+import { userFetcher as getUserInfo } from '@/services/users/userService';
+import type { User, U } from '@/types';
 import Loading from '@/components/loading';
 
 export default function ModalForm({ hide }: { hide: () => void }) {
@@ -52,9 +52,12 @@ export default function ModalForm({ hide }: { hide: () => void }) {
                 ? wa_number?.replace(/\D/g, '').replace('0', '62')
                 : wa_number?.replace(/\D/g, '');
             if (wa_number !== session?.user?.wa_number) {
-                const findingUser:
-                    | { status: boolean; message: string; result?: User }
-                    | false = await getUserInfo({ wa_number });
+                const findingUser: U['UserInfo'] | false = await getUserInfo(
+                    {
+                        wa_number
+                    },
+                    { path: 'get_user_info', method: 'POST' }
+                );
                 if (findingUser) {
                     if (findingUser?.status) {
                         setLoad(false);

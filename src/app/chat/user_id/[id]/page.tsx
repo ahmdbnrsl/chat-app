@@ -8,16 +8,14 @@ import Image from 'next/image';
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useSession } from 'next-auth/react';
 import { messFetcher as getListMessage } from '@/services/messages/messageService';
-import { getUserInfo } from '@/services/users/getUserInfo';
-import { Message } from '@/models/messages';
-import { User } from '@/models/users';
+import { userFetcher as getUserInfo } from '@/services/users/userService';
 import { io } from 'socket.io-client';
-import type { M } from '@/types';
+import type { M, Message, User } from '@/types';
 
 const socketURL = process.env.NEXT_PUBLIC_SOCKET_URL || '';
 const socket = io(socketURL);
 
-export default function MobileView(props: any) {
+export default function ChatPage(props: any) {
     const { data: session, status }: { data: any; status: string } =
         useSession();
     const [listMessage, setListMessage] = useState<
@@ -30,7 +28,10 @@ export default function MobileView(props: any) {
         if (!session?.user?.user_id || !params.id) return;
 
         const fetchSenderInfo = async () => {
-            const res = await getUserInfo({ user_id: params.id });
+            const res = await getUserInfo(
+                { user_id: params.id },
+                { path: 'get_user_info', method: 'POST' }
+            );
             if (res && res.status) setSenderInfo(res.result);
         };
 

@@ -1,11 +1,6 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
+import type { OTP } from '@/types';
 
-export interface OTP extends Document {
-    wa_number: string;
-    otp_code: string;
-    created_at: string;
-    expired_at: string;
-}
 const OTPSchema: Schema<OTP> = new Schema({
     wa_number: {
         type: String,

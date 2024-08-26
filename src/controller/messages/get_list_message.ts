@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-import { Message, messages } from '@/models/messages';
+import { messages } from '@/models/messages';
+import type { Message } from '@/types';
 
 const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
 

@@ -1,16 +1,14 @@
 'use server';
 
-interface KeyParams {
-    wa_number: string;
-    created_at: string;
-    expired_at: string;
-}
-
 export const sendOTPCode = async ({
     wa_number,
     created_at,
     expired_at
-}: KeyParams): Promise<{ status: boolean; message: string } | false> => {
+}: {
+    wa_number: string;
+    created_at: string;
+    expired_at: string;
+}): Promise<{ status: boolean; message: string } | false> => {
     try {
         const options: RequestInit = {
             method: 'POST',

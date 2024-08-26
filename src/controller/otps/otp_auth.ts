@@ -1,8 +1,9 @@
+import type { DeleteResult } from 'mongodb';
+import type { User, OTP } from '@/types';
 import mongoose from 'mongoose';
 import { compare } from 'bcrypt';
-import { DeleteResult } from 'mongodb';
-import { otps, OTP } from '@/models/otps';
-import { User, users } from '@/models/users';
+import { otps } from '@/models/otps';
+import { users } from '@/models/users';
 
 const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
 

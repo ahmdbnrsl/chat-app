@@ -1,10 +1,10 @@
 'use server';
-import type { M } from '@/types';
+import type { U } from '@/types';
 
-export const getListSender = async (
-    bodyOptions: M['GetListSender'],
-    fetchOptions: M['FetchOptions']
-): Promise<M['ListSender'] | false> => {
+export const userFetcher = async (
+    bodyOptions: U['GetUserInfo'] | U['Signup'] | U['EditUser'],
+    fetchOptions: U['FetchOptions']
+): Promise<U['UserInfo'] | false> => {
     try {
         bodyOptions.secret = process.env.NEXT_PUBLIC_SECRET;
         const options: RequestInit = {
@@ -20,7 +20,7 @@ export const getListSender = async (
             process.env.NEXT_PUBLIC_SELF_URL + '/api/' + fetchOptions.path,
             options
         );
-        const res: M['ListSender'] = await response.json();
+        const res: M['UserInfo'] = await response.json();
         if (response?.ok && res?.status) {
             if (res?.result) {
                 return {

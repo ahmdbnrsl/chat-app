@@ -1,23 +1,14 @@
 import mongoose from 'mongoose';
-import { Message, messages } from '@/models/messages';
-import { users, User } from '@/models/users';
+import { messages } from '@/models/messages';
+import { users } from '@/models/users';
+import { Message, User, SenderMessage } from '@/types';
 
 const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
-
-export interface Result {
-    pp: string;
-    name: string;
-    wa_number: string;
-    fromMe: boolean;
-    latestMessageText: string;
-    latestMessageTimestamp: string;
-    id_user: string;
-}
 
 export const getListSender = async (
     user_id: string
 ): Promise<
-    { result?: Array<Result>; status: boolean; message: string } | false
+    { result?: Array<SenderMessage>; status: boolean; message: string } | false
 > => {
     try {
         await mongoose.connect(URI);
@@ -64,7 +55,7 @@ export const getListSender = async (
                 }
             );
             const userss: Array<User> = await users.find({ $or: userData });
-            const listSender: Array<Promise<Result | null>> = userss.map(
+            const listSender: Array<Promise<SenderMessage | null>> = userss.map(
                 async (user: User) => {
                     if (user.user_id === user_id) return null;
                     const message: Array<Message> = await messages.find({

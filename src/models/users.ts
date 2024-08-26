@@ -1,14 +1,6 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
+import type { User } from '@/types';
 
-export interface User extends Document {
-    user_id: string;
-    wa_number: string;
-    name: string;
-    created_at: string;
-    update_at: string;
-    role: string;
-    pp: string;
-}
 const UserSchema: Schema<User> = new Schema({
     user_id: {
         type: String,

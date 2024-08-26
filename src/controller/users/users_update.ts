@@ -1,6 +1,7 @@
 import mongoose, { Document } from 'mongoose';
-import { users, User } from '@/models/users';
-import { UpdateResult } from 'mongodb';
+import { users } from '@/models/users';
+import type { UpdateResult } from 'mongodb';
+import type { User } from '@/types';
 
 const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
 

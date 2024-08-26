@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 import { v4 as uuid } from 'uuid';
-import { Message, messages } from '@/models/messages';
-import { User, users } from '@/models/users';
+import { messages } from '@/models/messages';
+import { users } from '@/models/users';
+import type { User, Message } from '@/types';
 
 const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
 

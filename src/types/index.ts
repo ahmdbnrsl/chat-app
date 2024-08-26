@@ -1,5 +1,39 @@
-import { Message } from '@/models/messages';
-import type { Result } from '@/controller/messages/get_list_sender';
+import { Document } from 'mongoose';
+
+export interface Message extends Document {
+    message_id: string;
+    sender_id: string;
+    receiver_id: string;
+    message_text: string;
+    message_timestamp: string;
+}
+
+export interface User extends Document {
+    user_id: string;
+    wa_number: string;
+    name: string;
+    created_at: string;
+    update_at: string;
+    role: string;
+    pp: string;
+}
+
+export interface OTP extends Document {
+    wa_number: string;
+    otp_code: string;
+    created_at: string;
+    expired_at: string;
+}
+
+export interface SenderMessage {
+    pp: string;
+    name: string;
+    wa_number: string;
+    fromMe: boolean;
+    latestMessageText: string;
+    latestMessageTimestamp: string;
+    id_user: string;
+}
 
 export interface M {
     GetListSender: {
@@ -22,19 +56,48 @@ export interface M {
         message_id: string;
         secret?: string;
     };
-
     FetchOptions: {
         path: string;
         method: string;
     };
-    Result: {
+    ListMessage: {
         status: boolean;
         message: string;
         result?: Array<Message>;
     };
-    Result2: {
+    ListSender: {
         status: boolean;
         message: string;
-        result?: Array<Result>;
+        result?: Array<SenderMessage>;
+    };
+}
+
+export interface U {
+    Signup: {
+        wa_number: string;
+        name: string;
+        created_at: string;
+        secret?: string;
+    };
+    EditUser: {
+        user_id: string;
+        new_name?: string;
+        new_pp?: string;
+        update_at: string;
+        secret?: string;
+    };
+    GetUserInfo: {
+        user_id?: string;
+        wa_number?: string;
+        secret?: string;
+    };
+    FetchOptions: {
+        path: string;
+        method: string;
+    };
+    UserInfo: {
+        status: boolean;
+        message: string;
+        result?: User;
     };
 }

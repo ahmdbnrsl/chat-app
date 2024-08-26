@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
-import { OTP, otps } from '@/models/otps';
-import { User, users } from '@/models/users';
+import { otps } from '@/models/otps';
+import { users } from '@/models/users';
+import type { User, OTP } from '@/types';
 
 const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
 
