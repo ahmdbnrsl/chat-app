@@ -60,7 +60,7 @@ export default function MobileView(props: any) {
                     newData.receiver_id === session?.user?.user_id)
             ) {
                 setListMessage(
-                    (prevData: Array<Message> | null | undefined) => {
+                    (prevData: M['Result']['result'] | null | undefined) => {
                         const updatedMessages = prevData
                             ? [newData, ...(prevData as M['Result']['result'])]
                             : [newData];
