@@ -31,8 +31,8 @@ export default function ListMessage({
                 <div
                     className={`w-fit text-zinc-300 py-1 min-w-[10rem] px-3 flex flex-col rounded-b-xl transition-colors ${
                         message.sender_id === session?.user?.user_id
-                            ? 'bg-zinc-700/[0.5] rounded-tl-xl hover:bg-zinc-800/[0.5]'
-                            : 'bg-zinc-800/[0.5] rounded-tr-xl hover:bg-zinc-700/[0.5]'
+                            ? 'bg-zinc-700/[0.5] rounded-tl-xl group-hover:bg-zinc-800/[0.5]'
+                            : 'bg-zinc-800/[0.5] rounded-tr-xl group-hover:bg-zinc-700/[0.5]'
                     }`}
                 >
                     <pre
@@ -46,18 +46,18 @@ export default function ListMessage({
                     </p>
                 </div>
                 {session?.user?.user_id === message.sender_id ? (
-                    <div className='transition-all group-hover:flex flex-col hidden gap-3 px-5 rounded-lg mt-2.5 bg-zinc-800/[0.5] py-2 text-lg'>
-                        <button className='outline-0 bg-transparent text-red-500'>
-                            <RiDeleteBin7Line /> Delete
+                    <div className='transition-all group-hover:flex flex-col hidden gap-3 px-5 rounded-lg mt-2.5 bg-zinc-800/[0.5] py-2'>
+                        <button className='outline-0 bg-transparent text-red-500 flex gap-1.5 text-base items-center'>
+                            <RiDeleteBin7Line className='text-lg' /> Delete
                         </button>
-                        <button className='outline-0 bg-transparent text-zinc-300'>
-                            <IoCopyOutline /> Copy
+                        <button className='outline-0 bg-transparent text-zinc-300 flex gap-1.5 text-base items-center'>
+                            <IoCopyOutline className='text-lg' /> Copy
                         </button>
                     </div>
                 ) : (
                     <div className='transition-all group-hover:flex hidden gap-3 px-5 rounded-lg mt-2.5 bg-zinc-700/[0.5] py-2 text-lg'>
-                        <button className='outline-0 bg-transparent text-zinc-300'>
-                            <IoCopyOutline /> Copy
+                        <button className='outline-0 bg-transparent text-zinc-300 flex gap-1.5 text-base items-center'>
+                            <IoCopyOutline className='text-lg' /> Copy
                         </button>
                     </div>
                 )}
