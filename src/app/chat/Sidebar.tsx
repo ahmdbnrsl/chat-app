@@ -10,14 +10,14 @@ export default function SidebarChat({
 }: {
     listSender: M['Result']['result'] | null | undefined;
 }) {
-    const getHour = (isDate: string): string => {
-        const date: Date = new Date(Number(isDate));
+    const getHour = (isDate: string | undefined): string => {
+        const date: Date = new Date(Number(isDate || '0'));
         return `${String(date.getHours()).padStart(2, '0')}:${String(
             date.getMinutes()
         ).padStart(2, '0')}`;
     };
-    const getDate = (isDate: string): string => {
-        const date: Date = new Date(Number(isDate));
+    const getDate = (isDate: string | undefined): string => {
+        const date: Date = new Date(Number(isDate || '0'));
         const monthNames: string[] = [
             'January',
             'February',
