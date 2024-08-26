@@ -1,6 +1,9 @@
 'use client';
 import { useSession } from 'next-auth/react';
 import { Message } from '@/models/messages';
+import { MdDeleteOutline } from 'react-icons/md';
+import { IoCopyOutline } from 'react-icons/io5';
+import { deleteMessage } from '@/services/messages/messageService';
 
 export default function ListMessage({
     message,
@@ -19,10 +22,10 @@ export default function ListMessage({
         <>
             <div
                 key={key}
-                className={`w-full flex ${
+                className={`w-full flex group flex-col ${
                     message.sender_id === session?.user?.user_id
-                        ? 'justify-end'
-                        : 'justify-start'
+                        ? 'items-end'
+                        : 'items-start'
                 }`}
             >
                 <div
@@ -42,6 +45,22 @@ export default function ListMessage({
                         {timestamp}
                     </p>
                 </div>
+                {session?.user?.user_id === message.sender_id ? (
+                    <div className='group-hover:flex hidden gap-3 px-5 rounded-lg mt-2.5 bg-zinc-700/[0.5] py-2 text-lg'>
+                        <button className='outline-0 bg-transparent text-red-500'>
+                            <MdDeleteOutline />
+                        </button>
+                        <button className='outline-0 bg-transparent text-zinc-300'>
+                            <IoCopyOutline />
+                        </button>
+                    </div>
+                ) : (
+                    <div className='group-hover:flex hidden gap-3 px-5 rounded-lg mt-2.5 bg-zinc-800/[0.5] py-2 text-lg'>
+                        <button className='outline-0 bg-transparent text-zinc-300'>
+                            <IoCopyOutline />
+                        </button>
+                    </div>
+                )}
             </div>
             {checkDate ? (
                 <div className='w-full flex justify-center py-2'>
