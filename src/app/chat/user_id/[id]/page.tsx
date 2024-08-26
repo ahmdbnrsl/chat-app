@@ -125,7 +125,7 @@ export default function MobileView(props: any) {
                     <NavbarChat senderInfo={senderInfo} />
                     {listMessage.length !== 0 ? (
                         <div className='w-full flex flex-col-reverse gap-3 p-6 flex-grow max-h-screen overflow-y-auto'>
-                            {listMessage.map((message: Message, i: number) => {
+                            {listMessage.map((message: any, i: number) => {
                                 let checkDate: string | null =
                                     i === listMessage.length - 1 ||
                                     getDate(message?.message_timestamp) !==

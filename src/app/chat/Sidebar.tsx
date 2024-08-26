@@ -45,7 +45,7 @@ export default function SidebarChat({
                     <Loading /> Loading your chats...
                 </div>
             ) : listSender?.length !== 0 ? (
-                listSender?.map((sender: Result, index: number) => (
+                listSender?.map((sender: any, index: number) => (
                     <Link
                         href={`/chat/user_id/${sender?.id_user}`}
                         key={index}
