@@ -3,21 +3,12 @@ import Loading from '@/components/loading';
 import Avatar from 'react-avatar';
 import Link from 'next/link';
 import Image from 'next/image';
-
-interface Result {
-    pp: string;
-    name: string;
-    wa_number: string;
-    fromMe: boolean;
-    latestMessageText: string;
-    latestMessageTimestamp: string;
-    id_user: string;
-}
+import type { M } from '@/types/fetchOptions';
 
 export default function SidebarChat({
     listSender
 }: {
-    listSender: Array<Result> | null | undefined;
+    listSender: M['Result']['result'] | null | undefined;
 }) {
     const getHour = (isDate: string): string => {
         const date: Date = new Date(Number(isDate));
