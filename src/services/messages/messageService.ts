@@ -28,9 +28,9 @@ interface M {
 }
 
 export const messFetcher = async (
-    bodyOptions: M.GetListMessage | M.SendMessage | M.DeleteMessage,
-    fetchOptions: M.FetchOptions
-): Promise<M.Result> => {
+    bodyOptions: M['GetListMessage'] | M['SendMessage'] | M['DeleteMessage'],
+    fetchOptions: M['FetchOptions']
+): Promise<M['Result']> => {
     try {
         bodyOptions.secret = process.env.NEXT_PUBLIC_SECRET;
         const options: RequestInit = {
