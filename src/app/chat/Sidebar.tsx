@@ -3,7 +3,7 @@ import Loading from '@/components/loading';
 import Avatar from 'react-avatar';
 import Link from 'next/link';
 import Image from 'next/image';
-import type { M } from '@/types/fetchOptions';
+import type { M } from '@/types/fetcherOptions';
 
 export default function SidebarChat({
     listSender
