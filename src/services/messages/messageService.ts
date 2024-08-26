@@ -8,7 +8,7 @@ export const messFetcher = async (
         | M['DeleteMessage']
         | M['GetListSender'],
     fetchOptions: M['FetchOptions']
-): Promise<M['Result']> => {
+): Promise<M['Result'] | false> => {
     try {
         bodyOptions.secret = process.env.NEXT_PUBLIC_SECRET;
         const options: RequestInit = {

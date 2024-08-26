@@ -25,21 +25,19 @@ export interface M {
         path: string;
         method: string;
     };
-    Result:
-        | {
-              status: boolean;
-              message: string;
-              result?:
-                  | Array<Message>
-                  | Array<{
-                        pp: string;
-                        name: string;
-                        wa_number: string;
-                        fromMe: boolean;
-                        latestMessageText: string;
-                        latestMessageTimestamp: string;
-                        id_user: string;
-                    }>;
-          }
-        | false;
+    Result: {
+        status: boolean;
+        message: string;
+        result?:
+            | Array<Message>
+            | Array<{
+                  pp: string;
+                  name: string;
+                  wa_number: string;
+                  fromMe: boolean;
+                  latestMessageText: string;
+                  latestMessageTimestamp: string;
+                  id_user: string;
+              }>;
+    };
 }
