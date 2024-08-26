@@ -15,9 +15,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     const { data: session, status }: { data: any; status: string } =
         useSession();
     const [width, setWidth] = useState<number>(0);
-    const [listSender, setListSender] = useState<M['Result']['result'] | null>(
-        null
-    );
+    const [listSender, setListSender] = useState<Array<Result> | null>(null);
 
     useEffect(() => {
         async function fetchListSender() {
