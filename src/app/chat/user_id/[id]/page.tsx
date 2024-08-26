@@ -12,7 +12,6 @@ import { getUserInfo } from '@/services/users/getUserInfo';
 import { Message } from '@/models/messages';
 import { User } from '@/models/users';
 import { io } from 'socket.io-client';
-import type { M } from '@/types/fetcherOptions';
 
 const socketURL = process.env.NEXT_PUBLIC_SOCKET_URL || '';
 const socket = io(socketURL);
@@ -20,9 +19,9 @@ const socket = io(socketURL);
 export default function MobileView(props: any) {
     const { data: session, status }: { data: any; status: string } =
         useSession();
-    const [listMessage, setListMessage] = useState<
-        M['Result']['result'] | null
-    >(null);
+    const [listMessage, setListMessage] = useState<any[] | null | undefined>(
+        null
+    );
     const [senderInfo, setSenderInfo] = useState<undefined | null | User>(null);
     const { params } = props;
 
