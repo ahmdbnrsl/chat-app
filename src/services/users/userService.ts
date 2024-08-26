@@ -20,7 +20,7 @@ export const userFetcher = async (
             process.env.NEXT_PUBLIC_SELF_URL + '/api/' + fetchOptions.path,
             options
         );
-        const res: M['UserInfo'] = await response.json();
+        const res: U['UserInfo'] = await response.json();
         if (response?.ok && res?.status) {
             if (res?.result) {
                 return {
