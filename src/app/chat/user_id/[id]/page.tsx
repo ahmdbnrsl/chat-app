@@ -12,6 +12,7 @@ import { getUserInfo } from '@/services/users/getUserInfo';
 import { Message } from '@/models/messages';
 import { User } from '@/models/users';
 import { io } from 'socket.io-client';
+import type { M } from '@/types';
 
 const socketURL = process.env.NEXT_PUBLIC_SOCKET_URL || '';
 const socket = io(socketURL);
@@ -19,9 +20,9 @@ const socket = io(socketURL);
 export default function MobileView(props: any) {
     const { data: session, status }: { data: any; status: string } =
         useSession();
-    const [listMessage, setListMessage] = useState<any[] | null | undefined>(
-        null
-    );
+    const [listMessage, setListMessage] = useState<
+        M['Result']['result'] | null | undefined
+    >(null);
     const [senderInfo, setSenderInfo] = useState<undefined | null | User>(null);
     const { params } = props;
 
@@ -50,7 +51,7 @@ export default function MobileView(props: any) {
             console.info('live chat opened');
         });
 
-        socket.on('data_updated', (newData: Message) => {
+        socket.on('data_updated', (newData: M['List']) => {
             if (!newData) return;
             if (
                 (newData.sender_id === session?.user.user_id &&
@@ -58,13 +59,15 @@ export default function MobileView(props: any) {
                 (newData.sender_id === params.id &&
                     newData.receiver_id === session?.user?.user_id)
             ) {
-                setListMessage((prevData: any[] | null | undefined) => {
-                    const updatedMessages = prevData
-                        ? [newData, ...(prevData as Array<any>)]
-                        : [newData];
+                setListMessage(
+                    (prevData: M['Result']['result'] | null | undefined) => {
+                        const updatedMessages = prevData
+                            ? [newData, ...(prevData as M['Result']['result'])]
+                            : [newData];
 
-                    return updatedMessages;
-                });
+                        return updatedMessages;
+                    }
+                );
             }
         });
 
@@ -122,26 +125,31 @@ export default function MobileView(props: any) {
                     <NavbarChat senderInfo={senderInfo} />
                     {listMessage.length !== 0 ? (
                         <div className='w-full flex flex-col-reverse gap-3 p-6 flex-grow max-h-screen overflow-y-auto'>
-                            {listMessage.map((message: any, i: number) => {
-                                let checkDate: string | null =
-                                    i === listMessage.length - 1 ||
-                                    getDate(message?.message_timestamp) !==
-                                        getDate(
-                                            listMessage[i + 1].message_timestamp
-                                        )
-                                        ? getDate(message?.message_timestamp)
-                                        : null;
-                                return (
-                                    <ListMessage
-                                        key={message?.message_timestamp}
-                                        checkDate={checkDate}
-                                        timestamp={getTimestamp(
-                                            message?.message_timestamp
-                                        )}
-                                        message={message}
-                                    />
-                                );
-                            })}
+                            {listMessage.map(
+                                (message: M['List'], i: number) => {
+                                    let checkDate: string | null =
+                                        i === listMessage.length - 1 ||
+                                        getDate(message?.message_timestamp) !==
+                                            getDate(
+                                                listMessage[i + 1]
+                                                    .message_timestamp
+                                            )
+                                            ? getDate(
+                                                  message?.message_timestamp
+                                              )
+                                            : null;
+                                    return (
+                                        <ListMessage
+                                            key={message?.message_timestamp}
+                                            checkDate={checkDate}
+                                            timestamp={getTimestamp(
+                                                message?.message_timestamp
+                                            )}
+                                            message={message}
+                                        />
+                                    );
+                                }
+                            )}
                         </div>
                     ) : (
                         <div className='w-full flex flex-col justify-center items-center p-6 flex-grow bg-zinc-950 gap-3'>

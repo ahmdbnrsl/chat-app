@@ -41,4 +41,15 @@ export interface M {
                   id_user: string;
               }>;
     };
+    List:
+        | Message
+        | {
+              pp: string;
+              name: string;
+              wa_number: string;
+              fromMe: boolean;
+              latestMessageText: string;
+              latestMessageTimestamp: string;
+              id_user: string;
+          };
 }

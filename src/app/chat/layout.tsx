@@ -2,7 +2,7 @@
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { messFetcher as getListSender } from '@/services/messages/messageService';
-import type { M } from '@/types/fetcherOptions';
+import type { M } from '@/types';
 import { io } from 'socket.io-client';
 import { Message } from '@/models/messages';
 import { usePathname } from 'next/navigation';

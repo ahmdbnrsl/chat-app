@@ -3,8 +3,7 @@ import Loading from '@/components/loading';
 import Avatar from 'react-avatar';
 import Link from 'next/link';
 import Image from 'next/image';
-import type { M } from '@/types/fetcherOptions';
-import type { Result } from '@/controller/messages/get_list_sender';
+import type { M } from '@/types';
 
 export default function SidebarChat({
     listSender
@@ -45,7 +44,7 @@ export default function SidebarChat({
                     <Loading /> Loading your chats...
                 </div>
             ) : listSender?.length !== 0 ? (
-                listSender?.map((sender: any, index: number) => (
+                listSender?.map((sender: M['List'], index: number) => (
                     <Link
                         href={`/chat/user_id/${sender?.id_user}`}
                         key={index}

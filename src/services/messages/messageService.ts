@@ -1,5 +1,5 @@
 'use server';
-import type { M } from '@/types/fetcherOptions';
+import type { M } from '@/types';
 
 export const messFetcher = async (
     bodyOptions:
