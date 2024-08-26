@@ -65,7 +65,7 @@ export default function ListMessage({
                                 copied ? 'text-teal-500' : 'text-zinc-300'
                             } outline-0 bg-transparent flex gap-1.5 text-base items-center`}
                         >
-                            {copied ? (
+                            {!copied ? (
                                 <>
                                     <IoCopyOutline className='text-lg' /> Copy
                                 </>
@@ -85,7 +85,7 @@ export default function ListMessage({
                                 copied ? 'text-teal-500' : 'text-zinc-300'
                             } outline-0 bg-transparent flex gap-1.5 text-base items-center`}
                         >
-                            {copied ? (
+                            {!copied ? (
                                 <>
                                     <IoCopyOutline className='text-lg' /> Copy
                                 </>
