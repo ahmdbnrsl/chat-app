@@ -51,7 +51,7 @@ export default function MobileView(props: any) {
             console.info('live chat opened');
         });
 
-        socket.on('data_updated', (newData: M['List']) => {
+        socket.on('data_updated', (newData: Message) => {
             if (!newData) return;
             if (
                 (newData.sender_id === session?.user.user_id &&
@@ -59,13 +59,15 @@ export default function MobileView(props: any) {
                 (newData.sender_id === params.id &&
                     newData.receiver_id === session?.user?.user_id)
             ) {
-                setListMessage((prevData: Message | null | undefined) => {
-                    const updatedMessages = prevData
-                        ? [newData, ...(prevData as Array<Message>)]
-                        : [newData];
+                setListMessage(
+                    (prevData: Array<Message> | null | undefined) => {
+                        const updatedMessages = prevData
+                            ? [newData, ...(prevData as Array<Message>)]
+                            : [newData];
 
-                    return updatedMessages;
-                });
+                        return updatedMessages;
+                    }
+                );
             }
         });
 
