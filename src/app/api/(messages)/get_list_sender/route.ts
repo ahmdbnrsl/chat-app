@@ -1,5 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server';
-import { Result, getListSender } from '@/controller/messages/get_list_sender';
+import { getListSender } from '@/controller/messages/get_list_sender';
+import type { M, SenderMessage } from '@/types';
 
 interface BodyRequest {
     user_id: string;
@@ -21,13 +22,11 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        const res:
-            | { result?: Array<Result>; status: boolean; message: string }
-            | false = await getListSender(user_id);
+        const res: M['SenderMessage'] | false = await getListSender(user_id);
         if (res) {
             if (res?.status) {
-                const sortedMessageByTimestamp: Array<Result> | undefined =
-                    res?.result?.sort((a: Result, b: Result) => {
+                const sortedMessageByTimestamp: M['SenderMessage']['result'] =
+                    res?.result?.sort((a: SenderMessage, b: SenderMessage) => {
                         return (
                             Number(a.latestMessageTimestamp) -
                             Number(b.latestMessageTimestamp)
