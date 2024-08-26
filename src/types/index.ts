@@ -41,15 +41,18 @@ export interface M {
                   id_user: string;
               }>;
     };
-    List:
-        | Message
-        | {
-              pp: string;
-              name: string;
-              wa_number: string;
-              fromMe: boolean;
-              latestMessageText: string;
-              latestMessageTimestamp: string;
-              id_user: string;
-          };
+    List: {
+        pp?: string;
+        name?: string;
+        wa_number?: string;
+        fromMe?: boolean;
+        latestMessageText?: string;
+        latestMessageTimestamp?: string;
+        id_user?: string;
+        message_id?: string;
+        sender_id?: string;
+        receiver_id?: string;
+        message_text?: string;
+        message_timestamp?: string;
+    };
 }
