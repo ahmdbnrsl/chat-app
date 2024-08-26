@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from 'next/server';
-import { Message } from '@/models/messages';
+import type { Message } from '@/types';
 import { pushMessage } from '@/controller/messages/push_message';
 
 interface BodyRequest {

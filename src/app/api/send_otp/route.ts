@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from 'next/server';
-import { OTP } from '@/models/otps';
+import type { OTP } from '@/types';
 import { storeOTP } from '@/controller/otps/otp_store';
 interface BodyRequest {
     wa_number: string;

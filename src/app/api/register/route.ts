@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from 'next/server';
-import { User } from '@/models/users';
+import type { User } from '@/types';
 import { storeUser } from '@/controller/users/user_register';
 
 interface BodyRequest {

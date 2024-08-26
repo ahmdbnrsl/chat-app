@@ -1,7 +1,7 @@
 import { NextAuthOptions, User as NextAuthUser } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { authOTP } from '@/controller/otps/otp_auth';
-import { User } from '@/models/users';
+import type { User } from '@/types';
 
 interface Result {
     user?: User | null;

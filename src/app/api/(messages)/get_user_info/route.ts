@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { NextResponse, NextRequest } from 'next/server';
-import { users, User } from '@/models/users';
+import { users } from '@/models/users';
+import type { User } from '@/types';
 
 interface BodyRequest {
     user_id?: string;
