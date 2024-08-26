@@ -4,6 +4,8 @@ import { Message } from '@/models/messages';
 import { RiDeleteBin7Line } from 'react-icons/ri';
 import { IoCopyOutline } from 'react-icons/io5';
 import { deleteMessage } from '@/services/messages/messageService';
+import { IoMdCheckmark } from 'react-icons/io';
+import { useState, MouseEvent } from 'react';
 
 export default function ListMessage({
     message,
@@ -18,6 +20,12 @@ export default function ListMessage({
 }) {
     const { data: session, status }: { data: any; status: string } =
         useSession();
+    const [copied, setCopied] = useState<boolean>(false);
+    const HandleCopy = (e: MouseEvent<HTMLButtonElement>, text: string) => {
+        setCopied(true);
+        window.navigator.clipBoard.writeText(text);
+        setTimeout(() => setCopied(false), 1000);
+    };
     return (
         <>
             <div
@@ -47,17 +55,45 @@ export default function ListMessage({
                 </div>
                 {session?.user?.user_id === message.sender_id ? (
                     <div className='transition-all group-hover:flex flex-col hidden gap-3 px-5 rounded-lg mt-2.5 bg-zinc-800/[0.5] py-2'>
-                        <button className='outline-0 bg-transparent text-red-500 flex gap-1.5 text-base items-center'>
+                        <button className='hover:opacity-60 outline-0 bg-transparent text-red-500 flex gap-1.5 text-base items-center'>
                             <RiDeleteBin7Line className='text-lg' /> Delete
                         </button>
-                        <button className='outline-0 bg-transparent text-zinc-300 flex gap-1.5 text-base items-center'>
-                            <IoCopyOutline className='text-lg' /> Copy
+                        <button
+                            onClick={e => HandleCopy(e, message.message_text)}
+                            className={`${
+                                copied ? 'text-teal-500' : 'text-zinc-300'
+                            } outline-0 bg-transparent flex gap-1.5 text-base items-center`}
+                        >
+                            {copied ? (
+                                <>
+                                    <IoCopyOutline className='text-lg' /> Copy
+                                </>
+                            ) : (
+                                <>
+                                    <IoMdCheckmark className='text-lg' />{' '}
+                                    Copied!
+                                </>
+                            )}
                         </button>
                     </div>
                 ) : (
                     <div className='transition-all group-hover:flex hidden gap-3 px-5 rounded-lg mt-2.5 bg-zinc-700/[0.5] py-2 text-lg'>
-                        <button className='outline-0 bg-transparent text-zinc-300 flex gap-1.5 text-base items-center'>
-                            <IoCopyOutline className='text-lg' /> Copy
+                        <button
+                            onClick={e => HandleCopy(e, message.message_text)}
+                            className={`${
+                                copied ? 'text-teal-500' : 'text-zinc-300'
+                            } outline-0 bg-transparent flex gap-1.5 text-base items-center`}
+                        >
+                            {copied ? (
+                                <>
+                                    <IoCopyOutline className='text-lg' /> Copy
+                                </>
+                            ) : (
+                                <>
+                                    <IoMdCheckmark className='text-lg' />{' '}
+                                    Copied!
+                                </>
+                            )}
                         </button>
                     </div>
                 )}
