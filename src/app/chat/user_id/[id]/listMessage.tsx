@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/react';
 import { Message } from '@/models/messages';
 import { RiDeleteBin7Line } from 'react-icons/ri';
 import { IoCopyOutline } from 'react-icons/io5';
-import { deleteMessage } from '@/services/messages/messageService';
+import { messFetcher as deleteMessage } from '@/services/messages/messageService';
 import { IoMdCheckmark } from 'react-icons/io';
 import { useState, MouseEvent } from 'react';
 
