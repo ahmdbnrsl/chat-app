@@ -4,6 +4,7 @@ import Avatar from 'react-avatar';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { M } from '@/types/fetcherOptions';
+import type { Result } from '@/controller/messages/get_list_sender';
 
 export default function SidebarChat({
     listSender
