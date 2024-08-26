@@ -2,6 +2,7 @@
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { messFetcher as getListSender } from '@/services/messages/messageService';
+import type { M } from '@/types/fetcherOptions';
 import { io } from 'socket.io-client';
 import { Message } from '@/models/messages';
 import { usePathname } from 'next/navigation';
@@ -11,23 +12,13 @@ import Wrapper from './wrapper';
 const socketURL = process.env.NEXT_PUBLIC_SOCKET_URL || '';
 const socket = io(socketURL);
 
-interface Result {
-    pp: string;
-    name: string;
-    wa_number: string;
-    fromMe: boolean;
-    latestMessageText: string;
-    latestMessageTimestamp: string;
-    id_user: string;
-}
-
 export default function Layout({ children }: { children: React.ReactNode }) {
     const { data: session, status }: { data: any; status: string } =
         useSession();
     const [width, setWidth] = useState<number>(0);
-    const [listSender, setListSender] = useState<
-        Array<Result> | null | undefined
-    >(null);
+    const [listSender, setListSender] = useState<M['Result']['result'] | null>(
+        null
+    );
 
     useEffect(() => {
         async function fetchListSender() {
