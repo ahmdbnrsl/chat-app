@@ -22,10 +22,10 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        const res: M['SenderMessage'] | false = await getListSender(user_id);
+        const res: M['ListSender'] | false = await getListSender(user_id);
         if (res) {
             if (res?.status) {
-                const sortedMessageByTimestamp: M['SenderMessage']['result'] =
+                const sortedMessageByTimestamp: M['ListSender']['result'] =
                     res?.result?.sort((a: SenderMessage, b: SenderMessage) => {
                         return (
                             Number(a.latestMessageTimestamp) -
