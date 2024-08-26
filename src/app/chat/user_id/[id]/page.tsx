@@ -59,15 +59,13 @@ export default function MobileView(props: any) {
                 (newData.sender_id === params.id &&
                     newData.receiver_id === session?.user?.user_id)
             ) {
-                setListMessage(
-                    (prevData: M['Result']['result'] | null | undefined) => {
-                        const updatedMessages = prevData
-                            ? [newData, ...(prevData as M['Result']['result'])]
-                            : [newData];
+                setListMessage((prevData: any[]) => {
+                    const updatedMessages = prevData
+                        ? [newData, ...(prevData as Array<any>)]
+                        : [newData];
 
-                        return updatedMessages;
-                    }
-                );
+                    return updatedMessages;
+                });
             }
         });
 
