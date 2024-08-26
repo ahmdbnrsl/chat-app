@@ -145,7 +145,7 @@ export default function EditFormPage() {
                     new_pp: IMGUrl || '',
                     update_at: Date.now().toString()
                 },
-                { path: 'edit_user', method: 'PUT' }
+                { path: 'update_profile', method: 'PUT' }
             );
             if (editing && editing?.status) {
                 const res = await update({
