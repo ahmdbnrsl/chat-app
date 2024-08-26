@@ -3,6 +3,7 @@ import { Message } from '@/models/messages';
 export interface M {
     GetListSender: {
         user_id: string;
+        secret?: string;
     };
     GetListMessage: {
         sender_id: string;
