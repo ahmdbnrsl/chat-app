@@ -62,7 +62,7 @@ export default function MobileView(props: any) {
                 setListMessage(
                     (prevData: M['Result']['result'] | null | undefined) => {
                         const updatedMessages = prevData
-                            ? [newData, ...(prevData as M['Result']['result'])]
+                            ? [newData, ...(prevData as Array<M['List']>)]
                             : [newData];
 
                         return updatedMessages;
