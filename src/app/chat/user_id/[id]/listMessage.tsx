@@ -22,8 +22,9 @@ export default function ListMessage({
         useSession();
     const [copied, setCopied] = useState<boolean>(false);
     const HandleCopy = (e: MouseEvent<HTMLButtonElement>, text: string) => {
+        e.preventDefault();
         setCopied(true);
-        window.navigator.clipBoard.writeText(text);
+        window.navigator.clipboard.writeText(text);
         setTimeout(() => setCopied(false), 1000);
     };
     return (
