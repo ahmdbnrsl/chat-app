@@ -21,7 +21,7 @@ export default function MobileView(props: any) {
     const { data: session, status }: { data: any; status: string } =
         useSession();
     const [listMessage, setListMessage] = useState<
-        M['Result']['result'] | null | undefined
+        Array<Message> | null | undefined
     >(null);
     const [senderInfo, setSenderInfo] = useState<undefined | null | User>(null);
     const { params } = props;
@@ -59,15 +59,13 @@ export default function MobileView(props: any) {
                 (newData.sender_id === params.id &&
                     newData.receiver_id === session?.user?.user_id)
             ) {
-                setListMessage(
-                    (prevData: M['Result']['result'] | null | undefined) => {
-                        const updatedMessages = prevData
-                            ? [newData, ...(prevData as Array<M['List']>)]
-                            : [newData];
+                setListMessage((prevData: Message | null | undefined) => {
+                    const updatedMessages = prevData
+                        ? [newData, ...(prevData as Array<Message>)]
+                        : [newData];
 
-                        return updatedMessages;
-                    }
-                );
+                    return updatedMessages;
+                });
             }
         });
 
@@ -83,15 +81,15 @@ export default function MobileView(props: any) {
         };
     }, [session?.user?.user_id, params.id]);
 
-    const getTimestamp = useCallback((isDate: string | undefined): string => {
-        const date = new Date(Number(isDate || '0'));
+    const getTimestamp = useCallback((isDate: string): string => {
+        const date = new Date(Number(isDate));
         return `${String(date.getHours()).padStart(2, '0')}:${String(
             date.getMinutes()
         ).padStart(2, '0')}`;
     }, []);
 
-    const getDate = (isDate: string | undefined): string => {
-        const date: Date = new Date(Number(isDate || '0'));
+    const getDate = (isDate: string): string => {
+        const date: Date = new Date(Number(isDate));
         const monthNames: string[] = [
             'January',
             'February',
@@ -125,31 +123,26 @@ export default function MobileView(props: any) {
                     <NavbarChat senderInfo={senderInfo} />
                     {listMessage.length !== 0 ? (
                         <div className='w-full flex flex-col-reverse gap-3 p-6 flex-grow max-h-screen overflow-y-auto'>
-                            {listMessage.map(
-                                (message: M['List'], i: number) => {
-                                    let checkDate: string | null =
-                                        i === listMessage.length - 1 ||
-                                        getDate(message?.message_timestamp) !==
-                                            getDate(
-                                                listMessage[i + 1]
-                                                    .message_timestamp
-                                            )
-                                            ? getDate(
-                                                  message?.message_timestamp
-                                              )
-                                            : null;
-                                    return (
-                                        <ListMessage
-                                            key={message?.message_timestamp}
-                                            checkDate={checkDate}
-                                            timestamp={getTimestamp(
-                                                message?.message_timestamp
-                                            )}
-                                            message={message}
-                                        />
-                                    );
-                                }
-                            )}
+                            {listMessage.map((message: Message, i: number) => {
+                                let checkDate: string | null =
+                                    i === listMessage.length - 1 ||
+                                    getDate(message?.message_timestamp) !==
+                                        getDate(
+                                            listMessage[i + 1].message_timestamp
+                                        )
+                                        ? getDate(message?.message_timestamp)
+                                        : null;
+                                return (
+                                    <ListMessage
+                                        key={message?.message_timestamp}
+                                        checkDate={checkDate}
+                                        timestamp={getTimestamp(
+                                            message?.message_timestamp
+                                        )}
+                                        message={message}
+                                    />
+                                );
+                            })}
                         </div>
                     ) : (
                         <div className='w-full flex flex-col justify-center items-center p-6 flex-grow bg-zinc-950 gap-3'>

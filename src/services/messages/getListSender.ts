@@ -1,10 +1,11 @@
 'use server';
 import type { M } from '@/types';
+import type { Result } from '@/controller/messages/get_list_sender';
 
-export const messFetcher = async (
-    bodyOptions: M['GetListMessage'] | M['SendMessage'] | M['DeleteMessage'],
+export const getListSender = async (
+    bodyOptions: M['GetListSender'],
     fetchOptions: M['FetchOptions']
-): Promise<M['Result'] | false> => {
+): Promise<M['Result2'] | false> => {
     try {
         bodyOptions.secret = process.env.NEXT_PUBLIC_SECRET;
         const options: RequestInit = {
@@ -20,7 +21,7 @@ export const messFetcher = async (
             process.env.NEXT_PUBLIC_SELF_URL + '/api/' + fetchOptions.path,
             options
         );
-        const res: M['Result'] = await response.json();
+        const res: M['Result2'] = await response.json();
         if (response?.ok && res?.status) {
             if (res?.result) {
                 return {

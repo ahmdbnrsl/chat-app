@@ -4,20 +4,21 @@ import Avatar from 'react-avatar';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { M } from '@/types';
+import type { Result } from '@/controller/messages/get_list_sender';
 
 export default function SidebarChat({
     listSender
 }: {
-    listSender: M['Result']['result'] | null | undefined;
+    listSender: Array<Result> | null | undefined;
 }) {
-    const getHour = (isDate: string | undefined): string => {
-        const date: Date = new Date(Number(isDate || '0'));
+    const getHour = (isDate: string): string => {
+        const date: Date = new Date(Number(isDate));
         return `${String(date.getHours()).padStart(2, '0')}:${String(
             date.getMinutes()
         ).padStart(2, '0')}`;
     };
-    const getDate = (isDate: string | undefined): string => {
-        const date: Date = new Date(Number(isDate || '0'));
+    const getDate = (isDate: string): string => {
+        const date: Date = new Date(Number(isDate));
         const monthNames: string[] = [
             'January',
             'February',
@@ -44,7 +45,7 @@ export default function SidebarChat({
                     <Loading /> Loading your chats...
                 </div>
             ) : listSender?.length !== 0 ? (
-                listSender?.map((sender: M['List'], index: number) => (
+                listSender?.map((sender: Result, index: number) => (
                     <Link
                         href={`/chat/user_id/${sender?.id_user}`}
                         key={index}

@@ -1,14 +1,13 @@
 'use client';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import { messFetcher as getListSender } from '@/services/messages/messageService';
-import type { M } from '@/types';
+import { getListSender } from '@/services/messages/getListSender';
+import type { Result } from '@/controller/messages/get_list_sender';
 import { io } from 'socket.io-client';
 import { Message } from '@/models/messages';
 import { usePathname } from 'next/navigation';
 import SidebarChat from './Sidebar';
 import Wrapper from './wrapper';
-
 const socketURL = process.env.NEXT_PUBLIC_SOCKET_URL || '';
 const socket = io(socketURL);
 

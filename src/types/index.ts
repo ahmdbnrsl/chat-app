@@ -1,4 +1,5 @@
 import { Message } from '@/models/messages';
+import type { Result } from '@/controller/messages/get_list_sender';
 
 export interface M {
     GetListSender: {
@@ -29,30 +30,11 @@ export interface M {
     Result: {
         status: boolean;
         message: string;
-        result?:
-            | Array<Message>
-            | Array<{
-                  pp: string;
-                  name: string;
-                  wa_number: string;
-                  fromMe: boolean;
-                  latestMessageText: string;
-                  latestMessageTimestamp: string;
-                  id_user: string;
-              }>;
+        result?: Array<Message>;
     };
-    List: {
-        pp?: string;
-        name?: string;
-        wa_number?: string;
-        fromMe?: boolean;
-        latestMessageText?: string;
-        latestMessageTimestamp?: string;
-        id_user?: string;
-        message_id?: string;
-        sender_id?: string;
-        receiver_id?: string;
-        message_text?: string;
-        message_timestamp?: string;
+    Result2: {
+        status: boolean;
+        message: string;
+        result?: Array<Result>;
     };
 }
