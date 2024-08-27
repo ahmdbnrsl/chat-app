@@ -52,14 +52,14 @@ export default function LoginPage({ searchParams }: any) {
             ev.wa.focus();
         } else {
             setLoad(true);
-            const otpCode: O['IsOTPCode'] | false = await sendOTPCode(
+            const otpCode: O['IsOTPCode'] | false = (await sendOTPCode(
                 {
                     wa_number: waNumber,
                     created_at: Date.now().toString(),
                     expired_at: (Date.now() + 1000 * 60 * 60).toString()
                 },
                 { path: 'send_otp', method: 'POST' }
-            );
+            )) as O['IsOTPCode'];
             if (otpCode) {
                 if (otpCode?.status) {
                     setLoad(false);
