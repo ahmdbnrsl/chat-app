@@ -1,5 +1,5 @@
 'use server';
-import type { M } from '@/types';
+import type { M, SenderMessage, Message } from '@/types';
 
 export const messFetcher = async (
     bodyOptions:
@@ -30,7 +30,7 @@ export const messFetcher = async (
                 return {
                     status: true,
                     message: res?.message,
-                    result: res?.result
+                    result: res?.result as SenderMessage[] | Message[]
                 };
             } else {
                 return {
