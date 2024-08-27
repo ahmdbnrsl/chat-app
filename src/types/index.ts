@@ -130,7 +130,11 @@ export interface O {
         created_at: string;
         expired_at: string;
     };
-    IsOTPCode;
+    IsOTPCode: {
+        status: boolean;
+        message: string;
+        result?: OTP;
+    };
     IsStoreOTPCode: {
         status: boolean;
         message: string;
