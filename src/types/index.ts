@@ -142,7 +142,7 @@ export interface O {
 export interface FetchOptions {
     path: string;
     method: string;
-    cache?: string;
+    cache?: RequestCache;
     tag?: string;
 }
 

@@ -44,7 +44,7 @@ export default function ChatPage(props: any) {
                 {
                     path: 'get_messages',
                     method: 'POST',
-                    cache: 'force-cache',
+                    cache: 'force-cache' as RequestCache,
                     tag: 'list_messages'
                 }
             );

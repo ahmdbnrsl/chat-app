@@ -27,7 +27,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 {
                     path: 'get_list_sender',
                     method: 'POST',
-                    cache: 'force-cache',
+                    cache: 'force-cache' as RequestCache,
                     tag: 'list_sender'
                 }
             );
