@@ -130,18 +130,31 @@ export interface O {
         created_at: string;
         expired_at: string;
     };
-    IsOTPCode: {
+    IsOTPCode;
+    IsStoreOTPCode: {
         status: boolean;
         message: string;
+        result?: OTP;
     };
     IsAuthOTPCode: {
         user?: User | null;
         status: boolean;
         message: string;
     };
-    IsStoreOTPCode: {
-        result?: OTP;
-        status: boolean;
-        message?: string;
-    };
 }
+
+export interface ResultFetcher {
+    status: boolean;
+    message: string;
+    result?: Array<Message> | Array<SenderMessage> | User | OTP;
+}
+
+export type BodyOptions =
+    | U['GetUserInfo']
+    | U['Signup']
+    | U['EditUser']
+    | M['GetListMessage']
+    | M['SendMessage']
+    | M['DeleteMessage']
+    | M['GetListSender']
+    | O['SendOTPCode'];

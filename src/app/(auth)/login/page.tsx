@@ -1,9 +1,10 @@
 'use client';
 
+import type { O } from '@/types';
 import { FaUserLock } from 'react-icons/fa';
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { sendOTPCode } from '@/services/otps/OTPService';
+import { FetcherService as sendOTPCode } from '@/services/fetcherService';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import Loading from '@/components/loading';
@@ -51,12 +52,14 @@ export default function LoginPage({ searchParams }: any) {
             ev.wa.focus();
         } else {
             setLoad(true);
-            const otpCode: { status: boolean; message: string } | false =
-                await sendOTPCode({
+            const otpCode: O['IsOTPCode'] | false = await sendOTPCode(
+                {
                     wa_number: waNumber,
                     created_at: Date.now().toString(),
                     expired_at: (Date.now() + 1000 * 60 * 60).toString()
-                });
+                },
+                { path: 'send_otp', method: 'POST' }
+            );
             if (otpCode) {
                 if (otpCode?.status) {
                     setLoad(false);
