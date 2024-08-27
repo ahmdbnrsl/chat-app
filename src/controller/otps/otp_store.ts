@@ -31,7 +31,7 @@ export const storeOTP = async ({
                     created_at,
                     expired_at
                 });
-                return { result, status: true };
+                return { result, message: 'Success store OTP', status: true };
             } else {
                 await otps.deleteOne({ wa_number });
                 const result: OTP = await otps.create({
@@ -40,7 +40,7 @@ export const storeOTP = async ({
                     created_at,
                     expired_at
                 });
-                return { result, status: true };
+                return { result, message: 'Success store OTP', status: true };
             }
         } else {
             return {
