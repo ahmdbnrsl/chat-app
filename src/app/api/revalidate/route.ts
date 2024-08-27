@@ -2,7 +2,7 @@ import { NextResponse, NextRequest } from 'next/server';
 import { revalidateTag } from 'next/cache';
 import type { RevalidateBodyRequest } from '@/types';
 
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
     const body: RevalidateBodyRequest = await req.json();
     const { secret, tag } = body;
     if (secret !== process.env.NEXT_PUBLIC_SECRET) {
