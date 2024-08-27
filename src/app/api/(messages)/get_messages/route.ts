@@ -15,11 +15,9 @@ export async function POST(req: NextRequest) {
         );
     }
     try {
-        const result:
-            | { status: true; message: string; list: Array<Message> }
-            | false = await getListMessage(body);
-        if (result) {
-            const sortedMessageByTimestamp: Array<Message> = result?.list.sort(
+        const res: M['ListMessage'] | false = await getListMessage(body);
+        if (res) {
+            const sortedMessageByTimestamp: Array<Message> = res?.result?.sort(
                 (a: Message, b: Message) => {
                     return (
                         Number(a.message_timestamp) -
@@ -29,7 +27,7 @@ export async function POST(req: NextRequest) {
             );
             return NextResponse.json({
                 status: true,
-                message: result?.message,
+                message: res?.message,
                 result: sortedMessageByTimestamp
             });
         } else {
