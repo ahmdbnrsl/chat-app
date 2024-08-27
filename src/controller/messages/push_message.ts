@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { v4 as uuid } from 'uuid';
 import { messages } from '@/models/messages';
 import { users } from '@/models/users';
-import type { User, Message } from '@/types';
+import type { User, Message, M } from '@/types';
 
 const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
 
@@ -11,12 +11,7 @@ export const pushMessage = async ({
     receiver_id,
     message_text,
     message_timestamp
-}: {
-    sender_id: string;
-    receiver_id: string;
-    message_text: string;
-    message_timestamp: string;
-}): Promise<{ result?: Message; status: boolean; message: string } | false> => {
+}: M['SendMessage']): Promise<M['IsMessage'] | false> => {
     try {
         await mongoose.connect(URI);
         if (receiver_id !== sender_id) {
