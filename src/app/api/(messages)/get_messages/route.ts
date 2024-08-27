@@ -17,14 +17,13 @@ export async function POST(req: NextRequest) {
     try {
         const res: M['ListMessage'] | false = await getListMessage(body);
         if (res) {
-            const sortedMessageByTimestamp: Array<Message> = res?.result?.sort(
-                (a: Message, b: Message) => {
-                    return (
-                        Number(a.message_timestamp) -
-                        Number(b.message_timestamp)
-                    );
-                }
-            );
+            const sortedMessageByTimestamp: Array<Message> = (
+                res?.result as Array<Message>
+            )?.sort((a: Message, b: Message) => {
+                return (
+                    Number(a.message_timestamp) - Number(b.message_timestamp)
+                );
+            });
             return NextResponse.json({
                 status: true,
                 message: res?.message,
