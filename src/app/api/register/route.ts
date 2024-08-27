@@ -1,16 +1,9 @@
 import { NextResponse, NextRequest } from 'next/server';
-import type { User } from '@/types';
+import type { User, U } from '@/types';
 import { storeUser } from '@/controller/users/user_register';
 
-interface BodyRequest {
-    wa_number: string;
-    name: string;
-    created_at: string;
-    secret: string;
-}
-
 export async function POST(req: NextRequest) {
-    const body: BodyRequest = await req.json();
+    const body: U['Signup'] = await req.json();
     const { secret } = body;
     if (secret !== process.env.NEXT_PUBLIC_SECRET) {
         return NextResponse.json(

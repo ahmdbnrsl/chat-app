@@ -1,23 +1,9 @@
 import { NextResponse, NextRequest } from 'next/server';
-import type { Message } from '@/types';
+import type { M, Message } from '@/types';
 import { pushMessage } from '@/controller/messages/push_message';
 
-interface BodyRequest {
-    sender_id: string;
-    receiver_id: string;
-    message_text: string;
-    message_timestamp: string;
-    secret: string;
-}
-
-interface Result {
-    result?: Message;
-    status: boolean;
-    message: string;
-}
-
 export async function POST(req: NextRequest) {
-    const body: BodyRequest = await req.json();
+    const body: M['SendMessage'] = await req.json();
     const { secret } = body;
     if (secret !== process.env.NEXT_PUBLIC_SECRET) {
         return NextResponse.json(
@@ -29,7 +15,7 @@ export async function POST(req: NextRequest) {
         );
     }
     try {
-        const result: Result | false = await pushMessage(body);
+        const result: M['IsMessage'] | false = await pushMessage(body);
         if (result) {
             if (result?.status) {
                 return NextResponse.json({

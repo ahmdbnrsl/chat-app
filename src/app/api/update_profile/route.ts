@@ -1,16 +1,9 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { editUser } from '@/controller/users/users_update';
-
-interface BodyRequest {
-    new_name?: string;
-    new_pp?: string;
-    user_id: string;
-    update_at: string;
-    secret: string;
-}
+import type { U } from '@/types';
 
 export async function PUT(req: NextRequest) {
-    const body: BodyRequest = await req.json();
+    const body: U['EditUser'] = await req.json();
     const { secret } = body;
     if (secret !== process.env.NEXT_PUBLIC_SECRET) {
         return NextResponse.json(

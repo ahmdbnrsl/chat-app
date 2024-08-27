@@ -1,13 +1,9 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { deleteMessage } from '@/controller/messages/delete_message';
-
-interface BodyRequest {
-    secret: string;
-    message_id: string;
-}
+import type { M } from '@/types';
 
 export async function DELETE(req: NextRequest) {
-    const body: BodyRequest = await req.json();
+    const body: M['DeleteMessage'] = await req.json();
     const { secret, message_id } = body;
     if (secret !== process.env.NEXT_PUBLIC_SECRET) {
         return NextResponse.json(

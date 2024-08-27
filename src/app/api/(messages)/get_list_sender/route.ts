@@ -2,13 +2,8 @@ import { NextResponse, NextRequest } from 'next/server';
 import { getListSender } from '@/controller/messages/get_list_sender';
 import type { M, SenderMessage } from '@/types';
 
-interface BodyRequest {
-    user_id: string;
-    secret: string;
-}
-
 export async function POST(req: NextRequest) {
-    const body: BodyRequest = await req.json();
+    const body: M['GetListSender'] = await req.json();
     const { user_id, secret } = body;
 
     if (secret !== process.env.NEXT_PUBLIC_SECRET) {

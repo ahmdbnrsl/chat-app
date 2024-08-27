@@ -1,34 +1,25 @@
 'use server';
+import type { O } from '@/types';
 
-export const sendOTPCode = async ({
-    wa_number,
-    created_at,
-    expired_at
-}: {
-    wa_number: string;
-    created_at: string;
-    expired_at: string;
-}): Promise<{ status: boolean; message: string } | false> => {
+export const sendOTPCode = async (
+    bodyOptions: O['SendOTPCode']
+): Promise<O['IsOTPCode'] | false> => {
     try {
+        bodyOptions.secret = process.env.NEXT_PUBLIC_SECRET;
         const options: RequestInit = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: 'Bearer ' + process.env.NEXT_PUBLIC_BEARER
             },
-            body: JSON.stringify({
-                wa_number,
-                created_at,
-                expired_at,
-                secret: process.env.NEXT_PUBLIC_SECRET
-            }),
+            body: JSON.stringify(bodyOptions),
             cache: 'no-store'
         };
         const response: Response = await fetch(
             process.env.NEXT_PUBLIC_SELF_URL + '/api/send_otp',
             options
         );
-        const res: { status: boolean; message: string } = await response.json();
+        const res: O['IsOTPCode'] = await response.json();
         if (response?.ok) {
             return {
                 status: true,

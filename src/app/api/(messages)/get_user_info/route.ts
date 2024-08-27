@@ -1,18 +1,12 @@
 import mongoose from 'mongoose';
 import { NextResponse, NextRequest } from 'next/server';
 import { users } from '@/models/users';
-import type { User } from '@/types';
-
-interface BodyRequest {
-    user_id?: string;
-    wa_number?: string;
-    secret: string;
-}
+import type { U, User } from '@/types';
 
 const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
 
 export async function POST(req: NextRequest) {
-    const body: BodyRequest = await req.json();
+    const body: U['GetUserInfo'] = await req.json();
     const { secret, user_id, wa_number } = body;
     if (secret !== process.env.NEXT_PUBLIC_SECRET) {
         return NextResponse.json(

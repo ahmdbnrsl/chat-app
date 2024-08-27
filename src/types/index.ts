@@ -70,6 +70,11 @@ export interface M {
         message: string;
         result?: Array<SenderMessage>;
     };
+    IsMessage: {
+        status: boolean;
+        message: string;
+        result?: Message;
+    };
 }
 
 export interface U {
@@ -99,5 +104,18 @@ export interface U {
         status: boolean;
         message: string;
         result?: User;
+    };
+}
+
+export interface O {
+    SendOTPCode: {
+        wa_number: string;
+        created_at: string;
+        expired_at: string;
+        secret?: string;
+    };
+    IsOTPCode: {
+        status: boolean;
+        message: string;
     };
 }

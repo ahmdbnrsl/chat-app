@@ -1,12 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server';
-import type { OTP } from '@/types';
+import type { OTP, O } from '@/types';
 import { storeOTP } from '@/controller/otps/otp_store';
-interface BodyRequest {
-    wa_number: string;
-    created_at: string;
-    expired_at: string;
-    secret: string;
-}
 
 function generateOTP(): string {
     let digits: string = '0123456789';
@@ -19,7 +13,7 @@ function generateOTP(): string {
 }
 
 export async function POST(req: NextRequest) {
-    const body: BodyRequest = await req.json();
+    const body: O['SendOTPCode'] = await req.json();
     const { wa_number, created_at, expired_at, secret } = body;
     if (secret !== process.env.NEXT_PUBLIC_SECRET) {
         return NextResponse.json(
@@ -41,7 +35,7 @@ export async function POST(req: NextRequest) {
             });
         if (res) {
             if (res?.status) {
-                const mess: string = `Copy your OTP code for your VBChat verification below.`;
+                const mess: string = `*Copy your OTP code*\nfor your VBChat verification below.`;
                 const buttons: Array<object> = [
                     {
                         name: 'cta_copy',
@@ -60,18 +54,16 @@ export async function POST(req: NextRequest) {
                         secret: process.env.NEXT_PUBLIC_SECRET,
                         number: wa_number,
                         mess,
-                        rep: 'VBChat verification',
+                        rep: 'do not share this to anyone',
                         quoted: '',
                         buttons: JSON.stringify(buttons)
                     })
                 };
-                const response: boolean = await fetch(
+                const response: Response = await fetch(
                     process.env.NEXT_PUBLIC_BASE_URL + '/custom',
                     option
-                ).then((res: any): boolean =>
-                    res.status == 200 ? true : false
                 );
-                if (response) {
+                if (response?.ok) {
                     return NextResponse.json(
                         {
                             status: true,
