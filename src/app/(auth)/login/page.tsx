@@ -3,7 +3,7 @@
 import { FaUserLock } from 'react-icons/fa';
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { sendOTPCode } from '@/services/otps/sendOtp';
+import { sendOTPCode } from '@/services/otps/OTPService';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import Loading from '@/components/loading';
