@@ -51,13 +51,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 newData.sender_id === session?.user.user_id ||
                 newData.receiver_id === session?.user?.user_id
             ) {
-                fetchListSender();
+                //fetchListSender();
                 revalidateListSender();
             }
         });
 
         socket.on('data_deleted', () => {
-            fetchListSender();
+            // fetchListSender();
             revalidateListSender();
         });
 
