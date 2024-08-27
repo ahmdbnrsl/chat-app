@@ -26,7 +26,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 { path: 'get_list_sender', method: 'POST' }
             );
             if (res && res?.status)
-                setListSender((res?.result as Array<Message>)?.reverse());
+                setListSender((res?.result as Array<SenderMessage>)?.reverse());
         }
 
         fetchListSender();
