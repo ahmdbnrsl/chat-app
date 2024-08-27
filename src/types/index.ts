@@ -56,10 +56,6 @@ export interface M {
         message_id: string;
         secret?: string;
     };
-    FetchOptions: {
-        path: string;
-        method: string;
-    };
     ListMessage: {
         status: boolean;
         message: string;
@@ -100,10 +96,6 @@ export interface U {
         user_id?: string;
         wa_number?: string;
         secret?: string;
-    };
-    FetchOptions: {
-        path: string;
-        method: string;
     };
     UserInfo: {
         status: boolean;
@@ -147,10 +139,22 @@ export interface O {
     };
 }
 
+export interface FetchOptions {
+    path: string;
+    method: string;
+    cache?: string;
+    tag?: string;
+}
+
 export interface ResultFetcher {
     status: boolean;
     message: string;
     result?: Array<Message> | Array<SenderMessage> | User | OTP;
+}
+
+export interface RevalidateBodyRequest {
+    tag: string;
+    secret: string;
 }
 
 export type BodyOptions =

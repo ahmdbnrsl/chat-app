@@ -11,6 +11,7 @@ import {
     FetcherService as getUserInfo,
     FetcherService as getListMessage
 } from '@/services/fetcherService';
+import { revalidate } from '@/services/revalidateService';
 import { io } from 'socket.io-client';
 import type { M, Message, User } from '@/types';
 
@@ -40,11 +41,20 @@ export default function ChatPage(props: any) {
         const fetchMessages = async () => {
             const res = await getListMessage(
                 { sender_id: session.user.user_id, receiver_id: params.id },
-                { path: 'get_messages', method: 'POST' }
+                {
+                    path: 'get_messages',
+                    method: 'POST',
+                    cache: 'force-cache',
+                    tag: 'list_messages'
+                }
             );
             if (res && res.status) {
                 setListMessage((res.result as Array<Message>)?.reverse());
             }
+        };
+
+        const revalidateMessage = async () => {
+            await revalidate('list_messages');
         };
 
         fetchSenderInfo();
@@ -71,10 +81,14 @@ export default function ChatPage(props: any) {
                         return updatedMessages;
                     }
                 );
+                revalidateMessage();
             }
         });
 
-        socket.on('data_deleted', () => fetchMessages());
+        socket.on('data_deleted', () => {
+            fetchMessages();
+            revalidateMessage();
+        });
 
         socket.on('disconnect', () => {
             console.info('live chat closed');

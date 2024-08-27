@@ -1,21 +1,33 @@
 'use server';
-import type { U, M, O, ResultFetcher, BodyOptions } from '@/types';
+import type {
+    U,
+    M,
+    O,
+    ResultFetcher,
+    BodyOptions,
+    FetchOptions
+} from '@/types';
 
 export const FetcherService = async (
     bodyOptions: BodyOptions,
-    fetchOptions: M['FetchOptions']
+    fetchOptions: FetchOptions
 ): Promise<ResultFetcher | false> => {
     try {
         bodyOptions.secret = process.env.NEXT_PUBLIC_SECRET;
-        const options: RequestInit = {
+        let options: RequestInit = {
             method: fetchOptions.method,
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: 'Bearer ' + process.env.NEXT_PUBLIC_BEARER
             },
             body: JSON.stringify(bodyOptions),
-            cache: 'no-store'
+            cache: fetchOptions?.cache || 'no-store'
         };
+        if (fetchOptions?.cache && fetchOptions?.tag) {
+            options.next = {
+                tags: [fetchOptions.tag]
+            };
+        }
         const response: Response = await fetch(
             process.env.NEXT_PUBLIC_SELF_URL + '/api/' + fetchOptions.path,
             options

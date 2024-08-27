@@ -2,6 +2,7 @@
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { FetcherService as getListSender } from '@/services/fetcherService';
+import { revalidate } from '@/services/revalidateService';
 import type { SenderMessage } from '@/types';
 import { io } from 'socket.io-client';
 import { Message } from '@/types';
@@ -23,10 +24,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         async function fetchListSender() {
             const res = await getListSender(
                 { user_id: session?.user.user_id },
-                { path: 'get_list_sender', method: 'POST' }
+                {
+                    path: 'get_list_sender',
+                    method: 'POST',
+                    cache: 'force-cache',
+                    tag: 'list_sender'
+                }
             );
             if (res && res?.status)
                 setListSender((res?.result as Array<SenderMessage>)?.reverse());
+        }
+
+        async function revalidateListSender() {
+            await revalidate('list_sender');
         }
 
         fetchListSender();
@@ -42,10 +52,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 newData.receiver_id === session?.user?.user_id
             ) {
                 fetchListSender();
+                revalidateListSender();
             }
         });
 
-        socket.on('data_deleted', () => fetchListSender());
+        socket.on('data_deleted', () => {
+            fetchListSender();
+            revalidateListSender();
+        });
 
         socket.on('disconnect', () => {
             console.info('live chat closed');
