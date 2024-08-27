@@ -10,24 +10,24 @@ export const getListMessage = async ({
 }: M['GetListMessage']): Promise<M['ListMessage'] | false> => {
     try {
         await mongoose.connect(URI);
-        const list: Array<Message> = await messages.find({
+        const result: Array<Message> = await messages.find({
             $or: [
                 { sender_id, receiver_id },
                 { sender_id: receiver_id, receiver_id: sender_id }
             ]
         });
-        if (list.length !== 0) {
+        if (result.length !== 0) {
             return {
                 status: true,
                 message:
-                    'Succes get list message total message : ' + list.length,
-                list
+                    'Succes get list message total message : ' + result.length,
+                result
             };
         } else {
             return {
                 status: true,
                 message: 'no message found',
-                list: []
+                result: []
             };
         }
     } catch (error) {
