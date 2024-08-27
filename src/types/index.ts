@@ -70,6 +70,11 @@ export interface M {
         message: string;
         result?: Array<SenderMessage>;
     };
+    ResultMessageService: {
+        status: boolean;
+        message: string;
+        result?: Array<Message> | Array<SenderMessage>;
+    };
     IsMessage: {
         status: boolean;
         message: string;
