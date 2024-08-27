@@ -41,7 +41,7 @@ export default function ChatPage(props: any) {
                 { path: 'get_messages', method: 'POST' }
             );
             if (res && res.status) {
-                setListMessage(res.result?.reverse());
+                setListMessage(res.result?.reverse() as Array<Message>);
             }
         };
 

@@ -1,7 +1,7 @@
 'use client';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import { getListSender } from '@/services/messages/getListSender';
+import { messFetcher as getListSender } from '@/services/messages/messageService';
 import type { SenderMessage } from '@/types';
 import { io } from 'socket.io-client';
 import { Message } from '@/types';
@@ -25,7 +25,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 { user_id: session?.user.user_id },
                 { path: 'get_list_sender', method: 'POST' }
             );
-            if (res && res?.status) setListSender(res?.result?.reverse());
+            if (res && res?.status)
+                setListSender(res?.result?.reverse() as Array<SenderMessage>);
         }
 
         fetchListSender();
