@@ -7,8 +7,10 @@ import Avatar from 'react-avatar';
 import Image from 'next/image';
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useSession } from 'next-auth/react';
-import { messFetcher as getListMessage } from '@/services/messages/messageService';
-import { userFetcher as getUserInfo } from '@/services/users/userService';
+import {
+    FetcherService as getUserInfo,
+    FetcherService as getListMessage
+} from '@/services/fetcherService';
 import { io } from 'socket.io-client';
 import type { M, Message, User } from '@/types';
 
@@ -32,7 +34,7 @@ export default function ChatPage(props: any) {
                 { user_id: params.id },
                 { path: 'get_user_info', method: 'POST' }
             );
-            if (res && res.status) setSenderInfo(res.result);
+            if (res && res.status) setSenderInfo(res.result as User);
         };
 
         const fetchMessages = async () => {

@@ -1,7 +1,7 @@
 'use client';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import { messFetcher as getListSender } from '@/services/messages/messageService';
+import { FetcherService as getListSender } from '@/services/fetcherService';
 import type { SenderMessage } from '@/types';
 import { io } from 'socket.io-client';
 import { Message } from '@/types';

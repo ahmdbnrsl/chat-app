@@ -3,7 +3,7 @@
 import { FaUserPlus } from 'react-icons/fa6';
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import { userFetcher as userSignUp } from '@/services/users/userService';
+import { FetcherService as userSignUp } from '@/services/fetcherService';
 import Link from 'next/link';
 import Loading from '@/components/loading';
 import type { U } from '@/types';
@@ -52,14 +52,14 @@ export default function SignUpPage() {
             ev.wa.focus();
         } else {
             setLoad(true);
-            const user: U['UserInfo'] | false = await userSignUp(
+            const user: U['UserInfo'] | false = (await userSignUp(
                 {
                     wa_number: waNumber,
                     name: nameUser,
                     created_at: Date.now().toString()
                 },
                 { path: 'register', method: 'POST' }
-            );
+            )) as U['UserInfo'];
             if (user) {
                 if (user?.status) {
                     setLoad(false);
