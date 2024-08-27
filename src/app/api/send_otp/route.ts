@@ -26,13 +26,12 @@ export async function POST(req: NextRequest) {
     }
     try {
         const otp_code: string = generateOTP();
-        const res: { result?: OTP; status: boolean; message?: string } | false =
-            await storeOTP({
-                wa_number,
-                otp_code,
-                created_at,
-                expired_at
-            });
+        const res: O['IsStoreOTPCode'] | false = await storeOTP({
+            wa_number,
+            otp_code,
+            created_at,
+            expired_at
+        });
         if (res) {
             if (res?.status) {
                 const mess: string = `*Copy your OTP code*\nfor your VBChat verification below.`;

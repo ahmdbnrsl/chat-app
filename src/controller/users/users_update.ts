@@ -1,7 +1,7 @@
 import mongoose, { Document } from 'mongoose';
 import { users } from '@/models/users';
 import type { UpdateResult } from 'mongodb';
-import type { User } from '@/types';
+import type { User, U } from '@/types';
 
 const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
 
@@ -10,12 +10,7 @@ export const editUser = async ({
     new_pp,
     user_id,
     update_at
-}: {
-    new_name?: string;
-    new_pp?: string;
-    user_id: string;
-    update_at: string;
-}): Promise<{ status: boolean; message: string } | false> => {
+}: U['EditUser']): Promise<{ status: boolean; message: string } | false> => {
     try {
         await mongoose.connect(URI);
         const existingUser: User | null = await users.findOne({ user_id });

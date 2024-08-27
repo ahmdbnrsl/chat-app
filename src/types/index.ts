@@ -114,8 +114,29 @@ export interface O {
         expired_at: string;
         secret?: string;
     };
+    AuthOTPCode: {
+        wa_number: string;
+        otp_code: string;
+        timestamp: string;
+    };
+    StoreOTPCode: {
+        wa_number: string;
+        otp_code: string;
+        created_at: string;
+        expired_at: string;
+    };
     IsOTPCode: {
         status: boolean;
         message: string;
+    };
+    IsAuthOTPCode: {
+        user?: User | null;
+        status: boolean;
+        message: string;
+    };
+    IsStoreOTPCode: {
+        result?: OTP;
+        status: boolean;
+        message?: string;
     };
 }

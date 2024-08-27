@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import { otps } from '@/models/otps';
 import { users } from '@/models/users';
-import type { User, OTP } from '@/types';
+import type { User, OTP, O } from '@/types';
 
 const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
 
@@ -11,12 +11,7 @@ export const storeOTP = async ({
     otp_code,
     created_at,
     expired_at
-}: {
-    wa_number: string;
-    otp_code: string;
-    created_at: string;
-    expired_at: string;
-}): Promise<{ result?: OTP; status: boolean; message?: string } | false> => {
+}: O['StoreOTPCode']): Promise<O['IsStoreOTPCode'] | false> => {
     try {
         await mongoose.connect(URI);
         wa_number = wa_number?.startsWith('0')

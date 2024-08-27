@@ -1,5 +1,5 @@
 import type { DeleteResult } from 'mongodb';
-import type { User, OTP } from '@/types';
+import type { User, OTP, O } from '@/types';
 import mongoose from 'mongoose';
 import { compare } from 'bcrypt';
 import { otps } from '@/models/otps';
@@ -11,13 +11,7 @@ export const authOTP = async ({
     wa_number,
     otp_code,
     timestamp
-}: {
-    wa_number: string;
-    otp_code: string;
-    timestamp: string;
-}): Promise<
-    { user?: User | null; status: boolean; message: string } | false
-> => {
+}: O['AuthOTPCode']): Promise<O['IsAuthOTPCode'] | false> => {
     try {
         await mongoose.connect(URI);
         wa_number = wa_number?.startsWith('0')

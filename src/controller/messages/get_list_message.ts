@@ -1,18 +1,13 @@
 import mongoose from 'mongoose';
 import { messages } from '@/models/messages';
-import type { Message } from '@/types';
+import type { Message, M } from '@/types';
 
 const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
 
 export const getListMessage = async ({
     sender_id,
     receiver_id
-}: {
-    sender_id: string;
-    receiver_id: string;
-}): Promise<
-    { status: true; message: string; list: Array<Message> } | false
-> => {
+}: M['GetListMessage']): Promise<M['ListMessage'] | false> => {
     try {
         await mongoose.connect(URI);
         const list: Array<Message> = await messages.find({

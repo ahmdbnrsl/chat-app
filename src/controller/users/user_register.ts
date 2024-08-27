@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { v4 as uuid } from 'uuid';
 import { users } from '@/models/users';
-import type { User } from '@/types';
+import type { User, U } from '@/types';
 
 const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
 
@@ -9,11 +9,7 @@ export const storeUser = async ({
     wa_number,
     name,
     created_at
-}: {
-    wa_number: string;
-    name: string;
-    created_at: string;
-}): Promise<{ result?: User; status: boolean; message: string } | false> => {
+}: U['Signup']): Promise<U['UserInfo'] | false> => {
     try {
         await mongoose.connect(URI);
         wa_number = wa_number?.startsWith('0')

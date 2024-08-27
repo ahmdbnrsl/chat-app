@@ -1,13 +1,7 @@
 import { NextAuthOptions, User as NextAuthUser } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { authOTP } from '@/controller/otps/otp_auth';
-import type { User } from '@/types';
-
-interface Result {
-    user?: User | null;
-    status: boolean;
-    message: string;
-}
+import type { User, O } from '@/types';
 
 declare module 'next-auth' {
     interface Session {
@@ -52,7 +46,7 @@ export const authOptions: NextAuthOptions = {
                     OTP: string;
                     timestamp: string;
                 };
-                const user: Result | false = await authOTP({
+                const user: O['IsAuthOTPCode'] | false = await authOTP({
                     wa_number,
                     otp_code: OTP,
                     timestamp
