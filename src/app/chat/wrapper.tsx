@@ -1,7 +1,7 @@
 'use client';
 import { useState, MouseEvent } from 'react';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { IoSearch } from 'react-icons/io5';
 import Link from 'next/link';
 import Avatar from 'react-avatar';
@@ -12,6 +12,7 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
     const { data: session, status }: { data: any; status: string } =
         useSession();
     const { push } = useRouter();
+    const pathName = usePathname();
     const [showModal, setShowModal] = useState<boolean>(false);
 
     const showingModal = (): void => setShowModal(true);
@@ -21,7 +22,7 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
         e.preventDefault();
         const baseUrl: string =
             process.env.NEXT_PUBLIC_SELF_URL || 'https://vbchat.vercel.app';
-        const url = new URL('/chat/profile', baseUrl);
+        const url = new URL(pathName, baseUrl);
         url.searchParams.set('callbackUrl', encodeURI(baseUrl + '/chat'));
         push(String(url));
     };
