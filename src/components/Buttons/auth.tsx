@@ -15,7 +15,7 @@ export default function AuthButton({
         <button
             disabled={onDisabling}
             type={type}
-            onClick={onClicking || (e => e.preventDefault())}
+            onClick={onClicking || (() => {})}
             className={`${
                 onDisabling || onLoading
                     ? 'bg-zinc-800 text-zinc-500'
