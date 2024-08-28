@@ -22,8 +22,8 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
         e.preventDefault();
         const baseUrl: string =
             process.env.NEXT_PUBLIC_SELF_URL || 'https://vbchat.vercel.app';
-        const url = new URL(pathName, baseUrl);
-        url.searchParams.set('callbackUrl', encodeURI(baseUrl + '/chat'));
+        const url = new URL('/chat/profile', baseUrl);
+        url.searchParams.set('callbackUrl', encodeURI(baseUrl + pathName));
         push(String(url));
     };
 
