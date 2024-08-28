@@ -8,7 +8,8 @@ import { signOut, useSession } from 'next-auth/react';
 import Loading from '@/components/loading';
 import AuthButton from '@/components/Buttons/auth';
 
-export default function ProfileInfoPage() {
+export default function ProfileInfoPage({ searchParams }: any) {
+    const callbackUrl = searchParams.callbackUrl || '/chat';
     const { data: session, status }: { data: any; status: string } =
         useSession();
     const getTimestamp = (isDate: string): string => {
@@ -36,7 +37,7 @@ export default function ProfileInfoPage() {
         <div className='w-full max-w-md rounded-xl bg-zinc-900 p-7 flex  flex-col items-end'>
             <div className='w-full flex justify-between gap-2'>
                 <Link
-                    href='/chat'
+                    href={callbackUrl}
                     className='text-zinc-400 outline-0 bg-zinc-800/[0.75] rounded-lg p-2 hover:bg-zinc-800/[0.40] text-base sm:text-lg md:text-xl cursor-pointer'
                 >
                     <FaArrowLeft />
