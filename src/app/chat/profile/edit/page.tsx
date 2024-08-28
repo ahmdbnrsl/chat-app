@@ -184,7 +184,7 @@ export default function EditFormPage({ searchParams }: any) {
         <div className='w-full max-w-md bg-zinc-900 rounded-xl shadow shadow-xl shadow-zinc-950 flex flex-col border-2 border-zinc-800'>
             <div className='w-full p-4 flex mt-2'>
                 <Link
-                    href={callbackUrl}
+                    href='/chat/edit'
                     className='text-zinc-400 outline-0 bg-zinc-800/[0.75] rounded-lg p-2 hover:bg-zinc-800/[0.40] text-base sm:text-lg md:text-xl cursor-pointer'
                 >
                     <FaArrowLeft />

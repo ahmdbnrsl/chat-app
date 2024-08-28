@@ -24,7 +24,7 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
             'https://vbchat.vercel.app/chat';
         const url = new URL('/profile', baseUrl);
         url.searchParams.set('callbackUrl', encodeURI(baseUrl));
-        push(url);
+        push(String(url));
     };
 
     return (
