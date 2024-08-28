@@ -1,12 +1,5 @@
 'use server';
-import type {
-    U,
-    M,
-    O,
-    ResultFetcher,
-    BodyOptions,
-    FetchOptions
-} from '@/types';
+import type { ResultFetcher, BodyOptions, FetchOptions } from '@/types';
 
 export const FetcherService = async (
     bodyOptions: BodyOptions,

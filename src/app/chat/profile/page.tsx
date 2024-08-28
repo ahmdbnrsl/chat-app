@@ -6,6 +6,7 @@ import { FaPen, FaArrowLeft } from 'react-icons/fa6';
 import { useState } from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import Loading from '@/components/loading';
+import AuthButton from '@/components/Buttons/auth';
 
 export default function ProfileInfoPage() {
     const { data: session, status }: { data: any; status: string } =
@@ -86,7 +87,15 @@ export default function ProfileInfoPage() {
                         <div className='px-5 py-1 rounded bg-zinc-800'></div>
                     )}
                 </p>
-                <button
+                <AuthButton
+                    onDisabling={load ? true : false}
+                    onClicking={HandleLogout}
+                    type='button'
+                    loadingText='Logging out...'
+                >
+                    Logout
+                </AuthButton>
+                {/*<button
                     onClick={HandleLogout}
                     disabled={load ? true : false}
                     type='submit'
@@ -103,7 +112,7 @@ export default function ProfileInfoPage() {
                     ) : (
                         'Logout'
                     )}
-                </button>
+                </button>*/}
             </div>
         </div>
     );

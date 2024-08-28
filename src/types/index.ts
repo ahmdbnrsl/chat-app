@@ -1,4 +1,5 @@
 import { Document } from 'mongoose';
+import { MouseEvent } from 'react';
 
 export interface Message extends Document {
     message_id: string;
@@ -65,11 +66,6 @@ export interface M {
         status: boolean;
         message: string;
         result?: Array<SenderMessage>;
-    };
-    ResultMessageService: {
-        status: boolean;
-        message: string;
-        result?: Array<Message> | Array<SenderMessage>;
     };
     IsMessage: {
         status: boolean;
@@ -166,3 +162,13 @@ export type BodyOptions =
     | M['DeleteMessage']
     | M['GetListSender']
     | O['SendOTPCode'];
+
+// COMPONENTS PROPS TYPES
+
+export type AuthButtonProps = {
+    children: React.ReactNode;
+    onDisabling: boolean;
+    type: string;
+    onLoading: boolean;
+    onClicking?: (e: MouseEvent<HTMLButtonElement>) => void;
+};
