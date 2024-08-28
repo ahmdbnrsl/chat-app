@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { FetcherService as userSignUp } from '@/services/fetcherService';
 import Link from 'next/link';
 import Loading from '@/components/loading';
+import AuthButton from '@/components/Buttons/auth';
 import type { U } from '@/types';
 
 export default function SignUpPage() {
@@ -163,23 +164,14 @@ export default function SignUpPage() {
                         {labelWaNumber}
                     </label>
                 </div>
-                <button
-                    disabled={load ? true : false}
+                <AuthButton
+                    onDisabling={load ? true : false}
                     type='submit'
-                    className={`flex gap-2 justify-center items-center py-2 mt-2 w-full cursor-pointer ${
-                        load
-                            ? 'bg-zinc-800 text-zinc-500'
-                            : 'bg-gradient-to-br from-zinc-200 to-zinc-400 text-zinc-950'
-                    } text-lg rounded-xl outline-0 font-medium`}
+                    onLoading={load}
+                    loadingText='Loading...'
                 >
-                    {load ? (
-                        <>
-                            <Loading /> {'Loading...'}
-                        </>
-                    ) : (
-                        'Sign Up'
-                    )}
-                </button>
+                    Sign Up
+                </AuthButton>
             </form>
             <p className='px-4 text-center w-full text-zinc-400 text-base mt-2 mb-7 font-normal flex justify-center gap-1'>
                 Already have an account?{' '}

@@ -8,6 +8,7 @@ import { FetcherService as sendOTPCode } from '@/services/fetcherService';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import Loading from '@/components/loading';
+import AuthButton from '@/components/Buttons/auth';
 
 export default function LoginPage({ searchParams }: any) {
     const { push } = useRouter();
@@ -201,23 +202,14 @@ export default function LoginPage({ searchParams }: any) {
                         {labelWaNumber}
                     </label>
                 </div>
-                <button
-                    disabled={load ? true : false}
+                <AuthButton
+                    onDisabling={load ? true : false}
                     type='submit'
-                    className={`flex gap-2 justify-center items-center py-2 mt-2 w-full cursor-pointer ${
-                        load
-                            ? 'bg-zinc-800 text-zinc-500'
-                            : 'bg-gradient-to-br from-zinc-200 to-zinc-400 text-zinc-950'
-                    } text-lg rounded-xl outline-0 font-medium`}
+                    onLoading={load}
+                    loadingText='Sending OTP...'
                 >
-                    {load ? (
-                        <>
-                            <Loading /> {'Sending OTP...'}
-                        </>
-                    ) : (
-                        'Send OTP'
-                    )}
-                </button>
+                    Send OTP
+                </AuthButton>
             </form>
             <form
                 onSubmit={Login}
@@ -242,23 +234,15 @@ export default function LoginPage({ searchParams }: any) {
                         {labelOTP}
                     </label>
                 </div>
-                <button
-                    disabled={load ? true : false}
+                <AuthButton
+                    onDisabling={load ? true : false}
                     type='submit'
-                    className={`flex gap-2 justify-center items-center py-2 mt-2 sm:mt-0 w-full cursor-pointer ${
-                        load
-                            ? 'bg-zinc-800 text-zinc-500'
-                            : 'bg-gradient-to-br from-zinc-200 to-zinc-400 text-zinc-950'
-                    } text-lg rounded-xl outline-0 font-medium`}
+                    onLoading={load}
+                    loadingText='Verifying OTP...'
+                    isVerify='yes'
                 >
-                    {load ? (
-                        <>
-                            <Loading /> {'Verifying OTP...'}
-                        </>
-                    ) : (
-                        'Verify OTP'
-                    )}
-                </button>
+                    Verify OTP
+                </AuthButton>
             </form>
             {formHidden && (
                 <p className='px-4 text-center w-full text-zinc-400 text-base mt-2 mb-7 font-normal flex justify-center gap-1'>

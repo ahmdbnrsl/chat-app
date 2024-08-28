@@ -9,6 +9,7 @@ import { useSession, signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { FetcherService as editUser } from '@/services/fetcherService';
+import AuthButton from '@/components/Buttons/auth';
 import type { U } from '@/types';
 
 export default function EditFormPage() {
@@ -297,23 +298,14 @@ export default function EditFormPage() {
                         {labelName}
                     </label>
                 </div>
-                <button
-                    disabled={isDisable}
+                <AuthButton
+                    onLoading={load}
+                    onDisabling={isDisable}
                     type='submit'
-                    className={`${
-                        isDisable || load
-                            ? 'bg-zinc-800 text-zinc-500'
-                            : 'bg-gradient-to-br from-zinc-200 to-zinc-400 text-zinc-950'
-                    } flex gap-2 justify-center items-center py-2 mt-2 w-full cursor-pointer text-lg rounded-xl outline-0 font-medium`}
+                    loadingText='Updating profile...'
                 >
-                    {load ? (
-                        <>
-                            <Loading /> {'Updating profile...'}
-                        </>
-                    ) : (
-                        'Save Changes'
-                    )}
-                </button>
+                    Save Changes
+                </AuthButton>
             </form>
         </div>
     );

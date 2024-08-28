@@ -8,7 +8,8 @@ export default function AuthButton({
     type,
     onLoading,
     loadingText,
-    onClicking
+    onClicking,
+    isVerify
 }: AuthButtonProps) {
     return (
         <button
@@ -19,7 +20,9 @@ export default function AuthButton({
                 onDisabling || onLoading
                     ? 'bg-zinc-800 text-zinc-500'
                     : 'bg-gradient-to-br from-zinc-200 to-zinc-400 text-zinc-950'
-            } flex gap-2 justify-center items-center py-2 mt-2 w-full cursor-pointer text-lg rounded-xl outline-0 font-medium`}
+            } flex gap-2 justify-center items-center py-2 mt-2 w-full cursor-pointer text-lg rounded-xl outline-0 font-medium ${
+                isVerify ? 'sm:mt-0' : ''
+            }`}
         >
             {onLoading ? (
                 <>

@@ -172,4 +172,5 @@ export type AuthButtonProps = {
     onLoading: boolean;
     loadingText: string;
     onClicking?: (e: MouseEvent<HTMLButtonElement>) => void;
+    isVerify?: string;
 };
