@@ -21,8 +21,9 @@ export default function EditFormPage({ searchParams }: any) {
     const { push } = useRouter();
     const baseUrl: string =
         process.env.NEXT_PUBLIC_SELF_URL || 'https://vbchat.vercel.app';
-    const callbackUrl =
-        searchParams.callbackUrl || encodeURI(baseUrl + '/chat');
+    const callbackUrl = encodeURI(
+        searchParams.callbackUrl || baseUrl + '/chat'
+    );
     const [labelName, setLabelName] = useState<string>('Edit your fullname');
     const [err, setErr] = useState<{ status: boolean; message: string }>({
         status: false,
@@ -161,7 +162,7 @@ export default function EditFormPage({ searchParams }: any) {
                 });
                 if (!res?.error) {
                     setLoad(false);
-                    push('/chat/profile/callbackUrl?=' + callbackUrl);
+                    push('/chat/profile?callbackUrl=' + callbackUrl);
                 } else {
                     if (res.status === 401) {
                         setLoad(false);
@@ -187,7 +188,7 @@ export default function EditFormPage({ searchParams }: any) {
         <div className='w-full max-w-md bg-zinc-900 rounded-xl shadow shadow-xl shadow-zinc-950 flex flex-col border-2 border-zinc-800'>
             <div className='w-full p-4 flex mt-2'>
                 <Link
-                    href={`/chat/profile/callbackUrl?=${callbackUrl}`}
+                    href={`/chat/profile?callbackUrl=${callbackUrl}`}
                     className='text-zinc-400 outline-0 bg-zinc-800/[0.75] rounded-lg p-2 hover:bg-zinc-800/[0.40] text-base sm:text-lg md:text-xl cursor-pointer'
                 >
                     <FaArrowLeft />
