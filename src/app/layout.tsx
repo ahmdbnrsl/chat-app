@@ -1,24 +1,32 @@
 'use client';
-import { Inter } from 'next/font/google';
-import { usePathname } from 'next/navigation';
+import { Poppins } from 'next/font/google';
 import { SessionProvider } from 'next-auth/react';
+import MetadataWrap from './Metadata';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
-
-const disableNavbar: Array<string> = ['/login', '/signup', '/chat'];
+const poppins = Poppins({
+    subsets: ['latin'],
+    weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
+});
 
 export default function RootLayout({
     children
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const pathName = usePathname();
     return (
         <html lang='en'>
-            <body className={`${inter.className} bg-zinc-950`}>
-                <SessionProvider>{children}</SessionProvider>
-            </body>
+            <MetadataWrap>
+                <head>
+                    <meta
+                        name='theme-color'
+                        content='#09090b'
+                    />
+                </head>
+                <body className={`${poppins.className} bg-zinc-950`}>
+                    <SessionProvider>{children}</SessionProvider>
+                </body>
+            </MetadataWrap>
         </html>
     );
 }

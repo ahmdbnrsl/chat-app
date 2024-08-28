@@ -6,6 +6,7 @@ import { MdOutlinePersonSearch } from 'react-icons/md';
 import { FetcherService as getUserInfo } from '@/services/fetcherService';
 import type { User, U } from '@/types';
 import Loading from '@/components/loading';
+import AuthButton from '@/components/Buttons/auth';
 
 export default function ModalForm({ hide }: { hide: () => void }) {
     const { push } = useRouter();
@@ -118,23 +119,14 @@ export default function ModalForm({ hide }: { hide: () => void }) {
                         {labelWaNumber}
                     </label>
                 </div>
-                <button
-                    disabled={load ? true : false}
+                <AuthButton
+                    onDisabling={load ? true : false}
                     type='submit'
-                    className={`flex gap-2 justify-center items-center py-2 mt-2 w-full cursor-pointer ${
-                        load
-                            ? 'bg-zinc-800 text-zinc-500'
-                            : 'bg-gradient-to-br from-zinc-200 to-zinc-400 text-zinc-950'
-                    } text-lg rounded-xl outline-0 font-medium`}
+                    onLoading={load}
+                    loadingText='Searching...'
                 >
-                    {load ? (
-                        <>
-                            <Loading /> {'Searching...'}
-                        </>
-                    ) : (
-                        'Find user'
-                    )}
-                </button>
+                    Find user
+                </AuthButton>
             </form>
         </div>
     );
