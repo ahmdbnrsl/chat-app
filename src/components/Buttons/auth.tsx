@@ -7,6 +7,7 @@ export default function AuthButton({
     onDisabling,
     type,
     onLoading,
+    loadingText,
     onClicking
 }: AuthButtonProps) {
     return (

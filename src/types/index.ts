@@ -170,5 +170,6 @@ export type AuthButtonProps = {
     onDisabling: boolean;
     type: string;
     onLoading: boolean;
+    loadingText: string;
     onClicking?: (e: MouseEvent<HTMLButtonElement>) => void;
 };
