@@ -1,7 +1,7 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, MouseEvent } from 'react';
 import { useSession } from 'next-auth/react';
-import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { IoSearch } from 'react-icons/io5';
 import Link from 'next/link';
 import Avatar from 'react-avatar';
@@ -11,11 +11,21 @@ import ModalForm from './ModalForm';
 export default function Wrapper({ children }: { children: React.ReactNode }) {
     const { data: session, status }: { data: any; status: string } =
         useSession();
-    const pathName = usePathname();
+    const { push } = useRouter();
     const [showModal, setShowModal] = useState<boolean>(false);
 
     const showingModal = (): void => setShowModal(true);
     const hideModal = (): void => setShowModal(false);
+
+    const Redirect = (e: MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        const baseUrl: string =
+            process.env.NEXT_PUBLIC_SELF_URL + '/chat' ||
+            'https://vbchat.vercel.app/chat';
+        const url = new URL('/profile', baseUrl);
+        url.searchParams.set('callbackUrl', encodeURI(baseUrl));
+        push(url);
+    };
 
     return (
         <section className='bg-zinc-950 w-full flex flex-col min-h-screen xl:w-1/3 xl:border-r border-zinc-800 box-border relative'>
@@ -24,8 +34,8 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
                     <h1 className='text-zinc-200 text-lg sm:text-xl font-semibold tracking-normal'>
                         Chats
                     </h1>
-                    <Link
-                        href='/chat/profile'
+                    <button
+                        onClick={Redirect}
                         className='text-zinc-300 font-medium text-lg sm:text-xl md:text-2xl outline-0 bg-transparent border-0 rounded-full flex py-1 pl-1 bg-zinc-900 hover:bg-zinc-800 pr-4 transition-colors gap-2 items-center cursor-pointer'
                     >
                         {session?.user?.pp && session?.user?.pp !== 'empety' ? (
@@ -49,7 +59,7 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
                                 Profile
                             </h1>
                         </div>
-                    </Link>
+                    </button>
                 </div>
                 <div className='w-full relative flex justify-start items-center'>
                     <div className='-mb-0.5 pl-3 absolute text-zinc-400 text-lg sm:text-xl'>

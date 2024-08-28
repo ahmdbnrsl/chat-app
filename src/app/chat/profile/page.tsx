@@ -43,7 +43,7 @@ export default function ProfileInfoPage({ searchParams }: any) {
                     <FaArrowLeft />
                 </Link>
                 <Link
-                    href='/chat/profile/edit'
+                    href={`/chat/profile/edit?callbackUrl=${callbackUrl}`}
                     className='text-zinc-400 outline-0 bg-zinc-800/[0.75] rounded-lg p-2 hover:bg-zinc-800/[0.40] text-base sm:text-lg md:text-xl cursor-pointer'
                 >
                     <FaPen />
