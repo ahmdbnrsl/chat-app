@@ -20,10 +20,9 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
     const Redirect = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         const baseUrl: string =
-            process.env.NEXT_PUBLIC_SELF_URL + '/chat' ||
-            'https://vbchat.vercel.app/chat';
-        const url = new URL('/profile', baseUrl);
-        url.searchParams.set('callbackUrl', encodeURI(baseUrl));
+            process.env.NEXT_PUBLIC_SELF_URL || 'https://vbchat.vercel.app';
+        const url = new URL('/chat/profile', baseUrl);
+        url.searchParams.set('callbackUrl', encodeURI(baseUrl + '/chat'));
         push(String(url));
     };
 
