@@ -2,10 +2,8 @@
 import { useSession } from 'next-auth/react';
 import { Message } from '@/types';
 import { RiDeleteBin7Line } from 'react-icons/ri';
-import { IoCopyOutline } from 'react-icons/io5';
 import { FetcherService as deleteMessage } from '@/services/fetcherService';
-import { IoMdCheckmark } from 'react-icons/io';
-import { useState, MouseEvent } from 'react';
+import CopyButton from '@/components/Buttons/copy';
 
 export default function ListMessage({
     message,
@@ -20,13 +18,6 @@ export default function ListMessage({
 }) {
     const { data: session, status }: { data: any; status: string } =
         useSession();
-    const [copied, setCopied] = useState<boolean>(false);
-    const HandleCopy = (e: MouseEvent<HTMLButtonElement>, text: string) => {
-        e.preventDefault();
-        setCopied(true);
-        window.navigator.clipboard.writeText(text);
-        setTimeout(() => setCopied(false), 1000);
-    };
     return (
         <>
             <div
@@ -59,43 +50,11 @@ export default function ListMessage({
                         <button className='hover:opacity-60 outline-0 bg-transparent text-red-500 flex gap-1.5 text-base items-center'>
                             <RiDeleteBin7Line className='text-lg' /> Delete
                         </button>
-                        <button
-                            onClick={e => HandleCopy(e, message.message_text)}
-                            className={`${
-                                copied ? 'text-teal-500' : 'text-zinc-300'
-                            } outline-0 bg-transparent flex gap-1.5 text-base items-center`}
-                        >
-                            {!copied ? (
-                                <>
-                                    <IoCopyOutline className='text-lg' /> Copy
-                                </>
-                            ) : (
-                                <>
-                                    <IoMdCheckmark className='text-lg' />{' '}
-                                    Copied!
-                                </>
-                            )}
-                        </button>
+                        <CopyButton copyText={message.message_text} />
                     </div>
                 ) : (
                     <div className='transition-all group-hover:flex hidden gap-3 px-5 rounded-lg mt-2.5 bg-zinc-700/[0.5] py-2 text-lg'>
-                        <button
-                            onClick={e => HandleCopy(e, message.message_text)}
-                            className={`${
-                                copied ? 'text-teal-500' : 'text-zinc-300'
-                            } outline-0 bg-transparent flex gap-1.5 text-base items-center`}
-                        >
-                            {!copied ? (
-                                <>
-                                    <IoCopyOutline className='text-lg' /> Copy
-                                </>
-                            ) : (
-                                <>
-                                    <IoMdCheckmark className='text-lg' />{' '}
-                                    Copied!
-                                </>
-                            )}
-                        </button>
+                        <CopyButton copyText={message.message_text} />
                     </div>
                 )}
             </div>

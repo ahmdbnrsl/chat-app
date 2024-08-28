@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import Avatar from 'react-avatar';
+import SearchInput from '@/components/Inputs/search';
 import type { User } from '@/types';
 
 export default function NavbarChat({
@@ -56,11 +57,7 @@ export default function NavbarChat({
                     </div>
                 </div>
             </div>
-            <input
-                type='text'
-                placeholder='Search message'
-                className='w-full py-1 px-2.5 sm:py-2 sm:px-4 text-zinc-300 font-normal text-base sm:text-lg rounded-full bg-zinc-900/[0.5] outline-0 border-2 border-zinc-800 focus:border-zinc-700 placeholder:text-zinc-400 placeholder:text-sm sm:placeholder:text-base'
-            />
+            <SearchInput placeHolder='Search message' />
         </nav>
     );
 }

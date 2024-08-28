@@ -7,6 +7,8 @@ import Link from 'next/link';
 import Avatar from 'react-avatar';
 import Image from 'next/image';
 import ModalForm from './ModalForm';
+import StartButton from '@/components/Buttons/start';
+import SearchInput from '@/components/Inputs/search';
 
 export default function Wrapper({ children }: { children: React.ReactNode }) {
     const { data: session, status }: { data: any; status: string } =
@@ -61,26 +63,13 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
                         </div>
                     </button>
                 </div>
-                <div className='w-full relative flex justify-start items-center'>
-                    <div className='-mb-0.5 pl-3 absolute text-zinc-400 text-lg sm:text-xl'>
-                        <IoSearch />
-                    </div>
-                    <input
-                        type='text'
-                        placeholder='Search by name'
-                        className='mt-2 w-full py-2 pl-10 pr-4 text-zinc-300 font-normal text-base sm:text-lg rounded-full bg-zinc-900/[0.5] outline-0 border-2 border-zinc-800 focus:border-zinc-700 placeholder:text-zinc-400 placeholder:text-sm sm:placeholder:text-base'
-                    />
-                </div>
+                <SearchInput placeHolder='Search by name' />
             </nav>
             {children}
             <div className='sticky bottom-0 bg-zinc-950 w-full py-4 px-6 flex flex-col items-center'>
-                <button
-                    onClick={showingModal}
-                    type='button'
-                    className='bg-zinc-200 rounded-full py-1.5 px-6 outline-0 text-zinc-950 text-center cursor-pointer hover:scale-[1.025] transition-transform'
-                >
-                    + Start Chat
-                </button>
+                <StartButton onClicking={showingModal}>
+                    + Start chat
+                </StartButton>
             </div>
             {showModal && (
                 <div className='absolute z-[99999999] inset-0 flex justify-center items-center bg-zinc-950/[0.15] backdrop-blur p-4'>
