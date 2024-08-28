@@ -1,8 +1,50 @@
-'use client';
 import { Poppins } from 'next/font/google';
-import { SessionProvider } from 'next-auth/react';
-import MetadataWrap from './Metadata';
+import SessionWrap from './session';
 import './globals.css';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    metadataBase: new URL(
+        process.env.NEXT_PUBLIC_SELF_URL || 'http://localhost:3000'
+    ),
+    title: 'VB CHAT',
+    description: 'Simple Chat App Web Basically',
+    authors: [
+        {
+            name: 'Ahmad Beni Rusli',
+            url: 'https://instagram.com/ahmd.bn.tsx'
+        }
+    ],
+    icons: {
+        icon: '/icon.png'
+    },
+    openGraph: {
+        title: 'VB CHAT',
+        description: 'Simple Chat App Web Basically',
+        url: process.env.NEXT_PUBLIC_SELF_URL || 'https://vbchat.vercel.app/',
+        siteName: 'Chat App',
+        type: 'website',
+        images: [
+            {
+                url: 'https://vbchat.vercel.app/og.png',
+                secureUrl: 'https://vbchat.vercel.app/og.png',
+                width: 1280,
+                height: 700,
+                alt: 'Open Graph VB CHAT Image'
+            }
+        ]
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'VB CHAT',
+        description: 'Simple Chat App Web Basically ',
+        images: {
+            url: 'https://vbchat.vercel.app/og.png',
+            alt: 'Twitter Card VB CHAT Image'
+        }
+    },
+    themeColor: '#09090b'
+};
 
 const poppins = Poppins({
     subsets: ['latin'],
@@ -16,17 +58,15 @@ export default function RootLayout({
 }>) {
     return (
         <html lang='en'>
-            <MetadataWrap>
-                <head>
-                    <meta
-                        name='theme-color'
-                        content='#09090b'
-                    />
-                </head>
-                <body className={`${poppins.className} bg-zinc-950`}>
-                    <SessionProvider>{children}</SessionProvider>
-                </body>
-            </MetadataWrap>
+            <head>
+                <meta
+                    name='theme-color'
+                    content='#09090b'
+                />
+            </head>
+            <body className={`${poppins.className} bg-zinc-950`}>
+                <SessionWrap>{children}</SessionWrap>
+            </body>
         </html>
     );
 }
