@@ -91,6 +91,7 @@ export default function ProfileInfoPage() {
                     onDisabling={load ? true : false}
                     onClicking={HandleLogout}
                     type='button'
+                    onLoading={load}
                     loadingText='Logging out...'
                 >
                     Logout
