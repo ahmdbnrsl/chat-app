@@ -168,7 +168,7 @@ export type BodyOptions =
 export type AuthButtonProps = {
     children: React.ReactNode;
     onDisabling: boolean;
-    type: string;
+    type: 'submit' | 'reset' | 'button' | undefined;
     onLoading: boolean;
     loadingText: string;
     onClicking?: (e: MouseEvent<HTMLButtonElement>) => void;
