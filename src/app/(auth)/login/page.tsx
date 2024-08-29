@@ -1,5 +1,6 @@
 'use client';
 
+import Head from 'next/head';
 import type { O } from '@/types';
 import { FaUserLock } from 'react-icons/fa';
 import { useState, ChangeEvent, FormEvent } from 'react';
@@ -157,6 +158,9 @@ export default function LoginPage({ searchParams }: any) {
 
     return (
         <>
+            <Head>
+                <title>{load ? 'Loading...' : 'VB CHAT | Log In'}</title>
+            </Head>
             <div className='w-full mt-2 p-4 flex flex-col items-center'>
                 <h1 className='flex items-center gap-2 text-2xl font-bold text-zinc-300 text-center'>
                     <FaUserLock /> Login

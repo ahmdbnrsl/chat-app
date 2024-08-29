@@ -1,5 +1,6 @@
 'use client';
 
+import Head from 'next/head';
 import { FaUserPlus } from 'react-icons/fa6';
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
@@ -114,6 +115,9 @@ export default function SignUpPage() {
 
     return (
         <>
+            <Head>
+                <title>{load ? 'Loading...' : 'VB CHAT | Sign Up'}</title>
+            </Head>
             <div className='w-full p-4 flex flex-col items-center mt-2'>
                 <h1 className='flex items-center gap-2 text-2xl font-bold text-zinc-300 text-center'>
                     <FaUserPlus /> Sign Up

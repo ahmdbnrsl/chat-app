@@ -1,4 +1,6 @@
 'use client';
+
+import Head from 'next/head';
 import Avatar from 'react-avatar';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -187,125 +189,130 @@ export default function EditFormPage({ searchParams }: any) {
         }
     };
     return (
-        <div className='w-full max-w-md bg-zinc-900 rounded-xl shadow shadow-xl shadow-zinc-950 flex flex-col border-2 border-zinc-800'>
-            <div className='w-full p-4 flex mt-2'>
-                <Link
-                    href={`/chat/profile?callbackUrl=${callbackUrl}`}
-                    className='text-zinc-400 outline-0 bg-zinc-800/[0.75] rounded-lg p-2 hover:bg-zinc-800/[0.40] text-base sm:text-lg md:text-xl cursor-pointer'
-                >
-                    <FaArrowLeft />
-                </Link>
-            </div>
-            <div className='w-full p-4 flex flex-col items-center mt-2'>
-                <div className='flex items-center gap-2 text-2xl font-bold text-zinc-300 text-center'>
-                    <FaPen /> <h1>Edit Profile</h1>
-                </div>
-                <p
-                    className={`mt-3 text-base font-normal text-center ${
-                        err.status ? 'text-red-500' : 'text-zinc-400'
-                    }`}
-                >
-                    {err.status
-                        ? err.message
-                        : 'You can edit profile photo and your fullname'}
-                </p>
-            </div>
-            <form
-                onSubmit={UpdateProfile}
-                className='p-4 w-full flex flex-col gap-4 mb-4'
-            >
-                <div className='w-full flex flex-col items-start'>
-                    <label
-                        htmlFor='photo'
-                        className='w-full relative flex justify-center items-center'
+        <>
+            <Head>
+                <title>{load ? 'Loading...' : 'VB CHAT | Edit'}</title>
+            </Head>
+            <div className='w-full max-w-md bg-zinc-900 rounded-xl shadow shadow-xl shadow-zinc-950 flex flex-col border-2 border-zinc-800'>
+                <div className='w-full p-4 flex mt-2'>
+                    <Link
+                        href={`/chat/profile?callbackUrl=${callbackUrl}`}
+                        className='text-zinc-400 outline-0 bg-zinc-800/[0.75] rounded-lg p-2 hover:bg-zinc-800/[0.40] text-base sm:text-lg md:text-xl cursor-pointer'
                     >
-                        <div
-                            className={`w-[125px] h-[125px] rounded-full bg-zinc-800 border border-zinc-700 cursor-pointer ${
-                                loading ? 'opacity-10' : ''
-                            }`}
-                        >
-                            {!IMGUrl &&
-                                (session?.user?.pp &&
-                                session?.user?.pp !== 'empety' ? (
-                                    <Image
-                                        src={session?.user?.pp}
-                                        alt={session?.user?.name}
-                                        width={125}
-                                        height={125}
-                                        loading='lazy'
-                                        className='rounded-full border border-zinc-700'
-                                    />
-                                ) : (
-                                    <Avatar
-                                        size='125'
-                                        name={session?.user?.name}
-                                        round={true}
-                                    />
-                                ))}
-                        </div>
-                        <Image
-                            src={`${IMGUrl || '/icon_asset/00_1.png'}`}
-                            alt='icon'
-                            width={125}
-                            height={125}
-                            loading='lazy'
-                            className={`${
-                                loading ? 'hidden' : ''
-                            } cursor-pointer rounded-full border border-zinc-700 absolute z-[99999] bg-zinc-800/[0.3]`}
-                        />
-                        {loading ? (
-                            <div className='w-auto absolute z-[999999] scale-[3]'>
-                                <Loading />
-                            </div>
-                        ) : (
-                            ''
-                        )}
-                    </label>
-                    <input
-                        onChange={handleFileChange}
-                        type='file'
-                        name='photo'
-                        accept='.jpg, .png, .jpeg'
-                        className='hidden'
-                        id='photo'
-                    />
+                        <FaArrowLeft />
+                    </Link>
                 </div>
-                <div className='mt-3 bg-zinc-800 w-full py-2 px-3 rounded-xl text-lg font-normal text-zinc-500 flex flex-col justify-center items-center'>
-                    <p className='text-base'>Current fullname :</p>
-                    <p className='font-medium text-zinc-300 flex items-center gap-2 flex-wrap text-center'>
-                        {session?.user?.name
-                            ? session?.user?.name
-                            : 'Loading...'}{' '}
-                        <span
-                            className='cursor-pointer hover:text-zinc-500'
-                            onClick={() =>
-                                window.navigator.clipboard.writeText(
-                                    session?.user?.name || ''
-                                )
-                            }
-                        >
-                            <IoCopyOutline />
-                        </span>
+                <div className='w-full p-4 flex flex-col items-center mt-2'>
+                    <div className='flex items-center gap-2 text-2xl font-bold text-zinc-300 text-center'>
+                        <FaPen /> <h1>Edit Profile</h1>
+                    </div>
+                    <p
+                        className={`mt-3 text-base font-normal text-center ${
+                            err.status ? 'text-red-500' : 'text-zinc-400'
+                        }`}
+                    >
+                        {err.status
+                            ? err.message
+                            : 'You can edit profile photo and your fullname'}
                     </p>
                 </div>
-                <div className='w-full flex flex-col items-start'>
-                    <AuthInput
-                        identifier='name'
-                        type='text'
-                        onChanging={InputChangeValidate}
-                        maxs={25}
-                    />
-                    <AuthLabel forInput='name'>{labelName}</AuthLabel>
-                </div>
-                <AuthButton
-                    onLoading={load}
-                    onDisabling={isDisable}
-                    type='submit'
-                    loadingText='Updating profile...'
+                <form
+                    onSubmit={UpdateProfile}
+                    className='p-4 w-full flex flex-col gap-4 mb-4'
                 >
-                    Save Changes
-                </AuthButton>
-            </form>
-        </div>
+                    <div className='w-full flex flex-col items-start'>
+                        <label
+                            htmlFor='photo'
+                            className='w-full relative flex justify-center items-center'
+                        >
+                            <div
+                                className={`w-[125px] h-[125px] rounded-full bg-zinc-800 border border-zinc-700 cursor-pointer ${
+                                    loading ? 'opacity-10' : ''
+                                }`}
+                            >
+                                {!IMGUrl &&
+                                    (session?.user?.pp &&
+                                    session?.user?.pp !== 'empety' ? (
+                                        <Image
+                                            src={session?.user?.pp}
+                                            alt={session?.user?.name}
+                                            width={125}
+                                            height={125}
+                                            loading='lazy'
+                                            className='rounded-full border border-zinc-700'
+                                        />
+                                    ) : (
+                                        <Avatar
+                                            size='125'
+                                            name={session?.user?.name}
+                                            round={true}
+                                        />
+                                    ))}
+                            </div>
+                            <Image
+                                src={`${IMGUrl || '/icon_asset/00_1.png'}`}
+                                alt='icon'
+                                width={125}
+                                height={125}
+                                loading='lazy'
+                                className={`${
+                                    loading ? 'hidden' : ''
+                                } cursor-pointer rounded-full border border-zinc-700 absolute z-[99999] bg-zinc-800/[0.3]`}
+                            />
+                            {loading ? (
+                                <div className='w-auto absolute z-[999999] scale-[3]'>
+                                    <Loading />
+                                </div>
+                            ) : (
+                                ''
+                            )}
+                        </label>
+                        <input
+                            onChange={handleFileChange}
+                            type='file'
+                            name='photo'
+                            accept='.jpg, .png, .jpeg'
+                            className='hidden'
+                            id='photo'
+                        />
+                    </div>
+                    <div className='mt-3 bg-zinc-800 w-full py-2 px-3 rounded-xl text-lg font-normal text-zinc-500 flex flex-col justify-center items-center'>
+                        <p className='text-base'>Current fullname :</p>
+                        <p className='font-medium text-zinc-300 flex items-center gap-2 flex-wrap text-center'>
+                            {session?.user?.name
+                                ? session?.user?.name
+                                : 'Loading...'}{' '}
+                            <span
+                                className='cursor-pointer hover:text-zinc-500'
+                                onClick={() =>
+                                    window.navigator.clipboard.writeText(
+                                        session?.user?.name || ''
+                                    )
+                                }
+                            >
+                                <IoCopyOutline />
+                            </span>
+                        </p>
+                    </div>
+                    <div className='w-full flex flex-col items-start'>
+                        <AuthInput
+                            identifier='name'
+                            type='text'
+                            onChanging={InputChangeValidate}
+                            maxs={25}
+                        />
+                        <AuthLabel forInput='name'>{labelName}</AuthLabel>
+                    </div>
+                    <AuthButton
+                        onLoading={load}
+                        onDisabling={isDisable}
+                        type='submit'
+                        loadingText='Updating profile...'
+                    >
+                        Save Changes
+                    </AuthButton>
+                </form>
+            </div>
+        </>
     );
 }

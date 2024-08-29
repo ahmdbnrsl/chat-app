@@ -1,4 +1,6 @@
 'use client';
+
+import Head from 'next/head';
 import ListMessage from './listMessage';
 import NavbarChat from './Navbar';
 import FormMessage from './formMessage';
@@ -91,88 +93,104 @@ export default function ChatPage({
     }, [fetchSenderInfo, fetchMessages, session?.user?.user_id, params.id]);
 
     return (
-        <main className='bg-zinc-950 w-full min-h-screen flex'>
-            {!listMessage ? (
-                <section className='w-full flex flex-col min-h-screen bg-fixed bg-zinc-950 justify-center items-center'>
-                    <h1 className='flex items-center gap-2 sm:gap-3 text-lg sm:text-xl md:text-2xl text-zinc-400 font-medium text-center scale-[3]'>
-                        <LoadingMessage />
-                    </h1>
-                </section>
-            ) : (
-                <section className='w-full flex flex-col min-h-screen bg-ornament bg-fixed bg-zinc-950'>
-                    <NavbarChat senderInfo={senderInfo} />
-                    {listMessage.length !== 0 ? (
-                        <div className='w-full flex flex-col-reverse gap-3 p-6 flex-grow max-h-screen overflow-y-auto'>
-                            {listMessage.map((message: Message, i: number) => {
-                                let checkDate: string | null =
-                                    i === listMessage.length - 1 ||
-                                    getDate(message?.message_timestamp) !==
-                                        getDate(
-                                            listMessage[i + 1].message_timestamp
-                                        )
-                                        ? getDate(message?.message_timestamp)
-                                        : null;
-                                return (
-                                    <ListMessage
-                                        key={message?.message_timestamp}
-                                        checkDate={checkDate}
-                                        timestamp={getTimestamp(
-                                            message?.message_timestamp
-                                        )}
-                                        message={message}
+        <>
+            <Head>
+                <title>
+                    {!listMessage
+                        ? 'Loading...'
+                        : 'VB CHAT | ' + senderInfo?.name}
+                </title>
+            </Head>
+            <main className='bg-zinc-950 w-full min-h-screen flex'>
+                {!listMessage ? (
+                    <section className='w-full flex flex-col min-h-screen bg-fixed bg-zinc-950 justify-center items-center'>
+                        <h1 className='flex items-center gap-2 sm:gap-3 text-lg sm:text-xl md:text-2xl text-zinc-400 font-medium text-center scale-[3]'>
+                            <LoadingMessage />
+                        </h1>
+                    </section>
+                ) : (
+                    <section className='w-full flex flex-col min-h-screen bg-ornament bg-fixed bg-zinc-950'>
+                        <NavbarChat senderInfo={senderInfo} />
+                        {listMessage.length !== 0 ? (
+                            <div className='w-full flex flex-col-reverse gap-3 p-6 flex-grow max-h-screen overflow-y-auto'>
+                                {listMessage.map(
+                                    (message: Message, i: number) => {
+                                        let checkDate: string | null =
+                                            i === listMessage.length - 1 ||
+                                            getDate(
+                                                message?.message_timestamp
+                                            ) !==
+                                                getDate(
+                                                    listMessage[i + 1]
+                                                        .message_timestamp
+                                                )
+                                                ? getDate(
+                                                      message?.message_timestamp
+                                                  )
+                                                : null;
+                                        return (
+                                            <ListMessage
+                                                key={message?.message_timestamp}
+                                                checkDate={checkDate}
+                                                timestamp={getTimestamp(
+                                                    message?.message_timestamp
+                                                )}
+                                                message={message}
+                                            />
+                                        );
+                                    }
+                                )}
+                            </div>
+                        ) : (
+                            <div className='w-full flex flex-col justify-center items-center p-6 flex-grow bg-zinc-950'>
+                                {senderInfo && senderInfo.pp !== 'empety' ? (
+                                    <Image
+                                        src={senderInfo.pp}
+                                        width={100}
+                                        height={100}
+                                        alt='user profile'
+                                        loading='lazy'
+                                        className='rounded-full border border-zinc-700'
                                     />
-                                );
-                            })}
-                        </div>
-                    ) : (
-                        <div className='w-full flex flex-col justify-center items-center p-6 flex-grow bg-zinc-950'>
-                            {senderInfo && senderInfo.pp !== 'empety' ? (
-                                <Image
-                                    src={senderInfo.pp}
-                                    width={100}
-                                    height={100}
-                                    alt='user profile'
-                                    loading='lazy'
-                                    className='rounded-full border border-zinc-700'
-                                />
-                            ) : (
-                                <Avatar
-                                    name={senderInfo?.name}
-                                    size='100'
-                                    round={true}
-                                />
-                            )}
-                            <h1 className='flex items-center gap-2 sm:gap-3 text-lg sm:text-xl md:text-2xl text-zinc-300 font-bold text-center'>
-                                {senderInfo?.name}
-                            </h1>
-                            <p className='text-zinc-500 font-medium text-sm sm:text-base text-center'>
-                                +{senderInfo?.wa_number}
-                            </p>
-                            <p className='text-zinc-500 font-medium text-sm sm:text-xs text-center'>
-                                {senderInfo?.user_id}
-                            </p>
-                            <button
-                                onClick={() =>
-                                    (
-                                        document.querySelector(
-                                            '.form_sendmessage'
-                                        ) as HTMLTextAreaElement
-                                    ).focus()
-                                }
-                                type='button'
-                                className='flex justify-center items-center px-4 py-2  cursor-pointer bg-gradient-to-br from-zinc-200 to-zinc-400 text-zinc-950 text-lg rounded-full outline-0 font-medium'
-                            >
-                                Start Chatting
-                            </button>
-                        </div>
-                    )}
-                    <FormMessage
-                        paramsId={params.id}
-                        userId={session?.user?.user_id}
-                        isDisabled={!listMessage ? true : false}
-                    />
-                </section>
-            )}
-        </main>
+                                ) : (
+                                    <Avatar
+                                        name={senderInfo?.name}
+                                        size='100'
+                                        round={true}
+                                    />
+                                )}
+                                <h1 className='flex items-center gap-2 sm:gap-3 text-lg sm:text-xl md:text-2xl text-zinc-300 font-bold text-center'>
+                                    {senderInfo?.name}
+                                </h1>
+                                <p className='text-zinc-500 font-medium text-sm sm:text-base text-center'>
+                                    +{senderInfo?.wa_number}
+                                </p>
+                                <p className='text-zinc-500 font-medium text-sm sm:text-xs text-center'>
+                                    {senderInfo?.user_id}
+                                </p>
+                                <button
+                                    onClick={() =>
+                                        (
+                                            document.querySelector(
+                                                '.form_sendmessage'
+                                            ) as HTMLTextAreaElement
+                                        ).focus()
+                                    }
+                                    type='button'
+                                    className='flex justify-center items-center px-4 py-2  cursor-pointer bg-gradient-to-br from-zinc-200 to-zinc-400 text-zinc-950 text-lg rounded-full outline-0 font-medium'
+                                >
+                                    Start Chatting
+                                </button>
+                            </div>
+                        )}
+                        <FormMessage
+                            paramsId={params.id}
+                            userId={session?.user?.user_id}
+                            isDisabled={!listMessage ? true : false}
+                        />
+                    </section>
+                )}
+            </main>
+        </>
     );
 }
