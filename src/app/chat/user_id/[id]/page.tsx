@@ -6,71 +6,65 @@ import LoadingMessage from '@/components/loading';
 import Avatar from 'react-avatar';
 import Image from 'next/image';
 import { useEffect, useState, useCallback, useMemo } from 'react';
-import { useSession } from 'next-auth/react';
-import {
-    FetcherService as getUserInfo,
-    FetcherService as getListMessage
-} from '@/services/fetcherService';
+import { useSession, Session } from 'next-auth/react';
+import { FetcherService } from '@/services/fetcherService';
 import { revalidate } from '@/services/revalidateService';
-import { io } from 'socket.io-client';
+import { io, Socket } from 'socket.io-client';
 import type { M, Message, User } from '@/types';
 
-const socketURL = process.env.NEXT_PUBLIC_SOCKET_URL || '';
-const socket = io(socketURL);
+const socketURL: string = process.env.NEXT_PUBLIC_SOCKET_URL || '';
+const socket: Socket = io(socketURL);
 
-export default function ChatPage(props: any) {
-    const { data: session, status }: { data: any; status: string } =
+export default function ChatPage({
+    params
+}: {
+    params: { id: string };
+}): JSX.Element {
+    const { data: session, status }: { data: Session | null; status: string } =
         useSession();
     const [listMessage, setListMessage] = useState<
         Array<Message> | null | undefined
     >(null);
     const [senderInfo, setSenderInfo] = useState<undefined | null | User>(null);
-    const { params } = props;
+
+    const fetchSenderInfo = useCallback(async (): Promise<void> => {
+        if (!params.id) return;
+        const res = await FetcherService(
+            { user_id: params.id },
+            { path: 'get_user_info', method: 'POST' }
+        );
+        if (res && res?.status) setSenderInfo(res.result as User);
+    }, [params.id]);
+
+    const fetchMessages = useCallback(async (): Promise<void> => {
+        if (!session?.user?.user_id || !params.id) return;
+        const res = await FetcherService(
+            { sender_id: session.user.user_id, receiver_id: params.id },
+            {
+                path: 'get_messages',
+                method: 'POST',
+                cache: 'force-cache' as RequestCache,
+                tag: 'list_messages'
+            }
+        );
+        if (res && res?.status) {
+            setListMessage((res.result as Array<Message>)?.reverse());
+        }
+    }, [session?.user?.user_id, params.id]);
 
     useEffect(() => {
         if (!session?.user?.user_id || !params.id) return;
 
-        const fetchSenderInfo = async () => {
-            const res = await getUserInfo(
-                { user_id: params.id },
-                { path: 'get_user_info', method: 'POST' }
-            );
-            if (res && res.status) setSenderInfo(res.result as User);
-        };
-
-        const fetchMessages = async () => {
-            const res = await getListMessage(
-                { sender_id: session.user.user_id, receiver_id: params.id },
-                {
-                    path: 'get_messages',
-                    method: 'POST',
-                    cache: 'force-cache' as RequestCache,
-                    tag: 'list_messages'
-                }
-            );
-            if (res && res.status) {
-                setListMessage((res.result as Array<Message>)?.reverse());
-            }
-        };
-
-        const revalidateMessage = async () => {
-            await revalidate('list_messages');
-        };
-
         fetchSenderInfo();
         fetchMessages();
 
-        socket.on('connect', () => {
-            console.info('live chat opened');
-        });
-
-        socket.on('data_updated', (newData: Message) => {
+        const handleDataUpdated = (newData: Message): void => {
             if (!newData) return;
             if (
-                (newData.sender_id === session?.user.user_id &&
+                (newData.sender_id === session.user.user_id &&
                     newData.receiver_id === params.id) ||
                 (newData.sender_id === params.id &&
-                    newData.receiver_id === session?.user?.user_id)
+                    newData.receiver_id === session.user.user_id)
             ) {
                 setListMessage(
                     (prevData: Array<Message> | null | undefined) => {
@@ -81,25 +75,23 @@ export default function ChatPage(props: any) {
                         return updatedMessages;
                     }
                 );
-                revalidateMessage();
+                revalidate('list_messages');
             }
-        });
+        };
 
+        socket.on('connect', () => console.info('live chat opened'));
+        socket.on('data_updated', handleDataUpdated);
         socket.on('data_deleted', () => {
             fetchMessages();
-            revalidateMessage();
+            revalidate('list_messages');
         });
-
-        socket.on('disconnect', () => {
-            console.info('live chat closed');
-        });
+        socket.on('disconnect', () => console.info('live chat closed'));
 
         return () => {
-            socket.off('data_updated');
+            socket.off('data_updated', handleDataUpdated);
             socket.off('data_deleted');
         };
-    }, [session?.user?.user_id, params.id]);
-
+    }, [fetchSenderInfo, fetchMessages, session?.user?.user_id, params.id]);
     const getTimestamp = useCallback((isDate: string): string => {
         const date = new Date(Number(isDate));
         return `${String(date.getHours()).padStart(2, '0')}:${String(
