@@ -1,8 +1,7 @@
 'use client';
 import { useSession } from 'next-auth/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { FetcherService as getListSender } from '@/services/fetcherService';
-import { revalidate } from '@/services/revalidateService';
 import type { SenderMessage } from '@/types';
 import { io } from 'socket.io-client';
 import { Message } from '@/types';
@@ -20,62 +19,47 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         Array<SenderMessage> | undefined | null
     >(null);
 
-    useEffect(() => {
-        async function fetchListSender() {
-            const res = await getListSender(
-                { user_id: session?.user.user_id },
-                {
-                    path: 'get_list_sender',
-                    method: 'POST',
-                    cache: 'force-cache' as RequestCache,
-                    tag: 'list_sender'
-                }
-            );
-            if (res && res?.status)
-                setListSender((res?.result as Array<SenderMessage>)?.reverse());
-        }
+    const fetchListSender = useCallback(async (): Promise<void> => {
+        if (!session?.user?.user_id) return;
+        const res = await getListSender(
+            { user_id: session?.user.user_id },
+            {
+                path: 'get_list_sender',
+                method: 'POST'
+            }
+        );
+        if (res && res?.status)
+            setListSender((res?.result as Array<SenderMessage>)?.reverse());
+    }, [session?.user.user_id]);
 
-        async function revalidateListSender() {
-            await revalidate('list_sender');
-        }
+    useEffect(() => {
+        if (!session?.user?.user_id) return;
 
         fetchListSender();
-
-        socket.on('connect', () => {
-            console.info('live chat opened');
-        });
-
-        socket.on('data_updated', (newData: Message) => {
+        const handleDataUpdated = (newData: Message) => {
             if (!newData) return;
             if (
                 newData.sender_id === session?.user.user_id ||
                 newData.receiver_id === session?.user?.user_id
             ) {
                 fetchListSender();
-                revalidateListSender();
             }
-        });
+        };
 
-        socket.on('data_deleted', () => {
-            fetchListSender();
-            revalidateListSender();
-        });
-
-        socket.on('disconnect', () => {
-            console.info('live chat closed');
-        });
+        socket.on('connect', () => console.info('live chat opened'));
+        socket.on('data_updated', handleDataUpdated);
+        socket.on('data_deleted', () => fetchListSender());
+        socket.on('disconnect', () => console.info('live chat closed'));
 
         return () => {
-            socket.off('data_updated');
+            socket.off('data_updated', handleDataUpdated);
             socket.off('data_deleted');
         };
-    }, [session?.user?.user_id]);
+    }, [fetchListSender, session?.user?.user_id]);
 
     useEffect(() => {
         setWidth(window.innerWidth);
-        const handleResize = () => {
-            setWidth(window.innerWidth);
-        };
+        const handleResize = () => setWidth(window.innerWidth);
         window.addEventListener('resize', handleResize);
         return () => {
             window.removeEventListener('resize', handleResize);

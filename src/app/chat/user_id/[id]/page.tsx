@@ -8,9 +8,9 @@ import Image from 'next/image';
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useSession } from 'next-auth/react';
 import { FetcherService } from '@/services/fetcherService';
-import { revalidate } from '@/services/revalidateService';
 import { io, Socket } from 'socket.io-client';
 import type { M, Message, User } from '@/types';
+import { getDate, getHour as getTimestamp } from '@/services/getTime';
 
 const socketURL: string = process.env.NEXT_PUBLIC_SOCKET_URL || '';
 const socket: Socket = io(socketURL);
@@ -42,9 +42,7 @@ export default function ChatPage({
             { sender_id: session.user.user_id, receiver_id: params.id },
             {
                 path: 'get_messages',
-                method: 'POST',
-                cache: 'force-cache' as RequestCache,
-                tag: 'list_messages'
+                method: 'POST'
             }
         );
         if (res && res?.status) {
@@ -75,16 +73,12 @@ export default function ChatPage({
                         return updatedMessages;
                     }
                 );
-                revalidate('list_messages');
             }
         };
 
         socket.on('connect', () => console.info('live chat opened'));
         socket.on('data_updated', handleDataUpdated);
-        socket.on('data_deleted', () => {
-            fetchMessages();
-            revalidate('list_messages');
-        });
+        socket.on('data_deleted', () => fetchMessages());
         socket.on('disconnect', () => console.info('live chat closed'));
 
         return () => {
@@ -92,34 +86,6 @@ export default function ChatPage({
             socket.off('data_deleted');
         };
     }, [fetchSenderInfo, fetchMessages, session?.user?.user_id, params.id]);
-    const getTimestamp = useCallback((isDate: string): string => {
-        const date = new Date(Number(isDate));
-        return `${String(date.getHours()).padStart(2, '0')}:${String(
-            date.getMinutes()
-        ).padStart(2, '0')}`;
-    }, []);
-
-    const getDate = (isDate: string): string => {
-        const date: Date = new Date(Number(isDate));
-        const monthNames: string[] = [
-            'January',
-            'February',
-            'March',
-            'April',
-            'May',
-            'June',
-            'July',
-            'August',
-            'September',
-            'October',
-            'November',
-            'December'
-        ];
-        const monthName: string = monthNames[date.getMonth()];
-        return `${date.getFullYear()} ${monthName} ${String(
-            date.getDate()
-        ).padStart(2, '0')}`;
-    };
 
     return (
         <main className='bg-zinc-950 w-full min-h-screen flex'>

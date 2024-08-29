@@ -5,39 +5,13 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import type { M, SenderMessage } from '@/types';
+import { getDate, getHour } from '@/services/getTime';
 
 export default function SidebarChat({
     listSender
 }: {
     listSender: Array<SenderMessage> | null | undefined;
 }) {
-    const getHour = (isDate: string): string => {
-        const date: Date = new Date(Number(isDate));
-        return `${String(date.getHours()).padStart(2, '0')}:${String(
-            date.getMinutes()
-        ).padStart(2, '0')}`;
-    };
-    const getDate = (isDate: string): string => {
-        const date: Date = new Date(Number(isDate));
-        const monthNames: string[] = [
-            'January',
-            'February',
-            'March',
-            'April',
-            'May',
-            'June',
-            'July',
-            'August',
-            'September',
-            'October',
-            'November',
-            'December'
-        ];
-        const monthName: string = monthNames[date.getMonth()];
-        return `${date.getFullYear()} ${monthName} ${String(
-            date.getDate()
-        ).padStart(2, '0')}`;
-    };
     const pathName: string = usePathname();
     const IdSender: string = pathName.split('/').slice(-1)[0];
     return (
