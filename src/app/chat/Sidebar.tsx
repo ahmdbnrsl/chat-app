@@ -3,6 +3,7 @@ import Loading from '@/components/loading';
 import Avatar from 'react-avatar';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import type { M, SenderMessage } from '@/types';
 
 export default function SidebarChat({
@@ -37,6 +38,8 @@ export default function SidebarChat({
             date.getDate()
         ).padStart(2, '0')}`;
     };
+    const pathName: string = usePathname();
+    const IdSender: string = pathName.split('/').slice(-1)[0];
     return (
         <div className='w-full flex flex-col gap-3 p-6 flex-grow overflow-y-auto max-h-screen'>
             {!listSender ? (
@@ -48,7 +51,9 @@ export default function SidebarChat({
                     <Link
                         href={`/chat/user_id/${sender?.id_user}`}
                         key={index}
-                        className='w-full rounded-xl transition-colors hover:bg-zinc-900/[0.85] flex justify-between items-center p-3 cursor-pointer'
+                        className={`w-full rounded-xl transition-colors hover:bg-zinc-900/[0.85] flex justify-between items-center p-3 cursor-pointer ${
+                            IdSender === sender?.id_user && 'bg-zinc-900/[0.85]'
+                        }`}
                     >
                         <div className='w-8/12 flex gap-3 items-center'>
                             {sender?.pp && sender?.pp !== 'empety' ? (
