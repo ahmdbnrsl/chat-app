@@ -1,4 +1,4 @@
-export default async function AuthLabel({
+export default function AuthLabel({
     forInput,
     children
 }: {
