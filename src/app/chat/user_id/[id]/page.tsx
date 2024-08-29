@@ -6,7 +6,7 @@ import LoadingMessage from '@/components/loading';
 import Avatar from 'react-avatar';
 import Image from 'next/image';
 import { useEffect, useState, useCallback, useMemo } from 'react';
-import { useSession, Session } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { FetcherService } from '@/services/fetcherService';
 import { revalidate } from '@/services/revalidateService';
 import { io, Socket } from 'socket.io-client';
@@ -20,7 +20,7 @@ export default function ChatPage({
 }: {
     params: { id: string };
 }): JSX.Element {
-    const { data: session, status }: { data: Session | null; status: string } =
+    const { data: session, status }: { data: any; status: string } =
         useSession();
     const [listMessage, setListMessage] = useState<
         Array<Message> | null | undefined
