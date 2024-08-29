@@ -8,6 +8,7 @@ import Link from 'next/link';
 import Loading from '@/components/loading';
 import AuthButton from '@/components/Buttons/auth';
 import AuthLabel from '@/components/Labels/auth';
+import AuthInput from '@/components/Inputs/auth';
 import type { U } from '@/types';
 
 export default function SignUpPage() {
@@ -132,31 +133,27 @@ export default function SignUpPage() {
                 className='p-4 w-full flex flex-col gap-4'
             >
                 <div className='w-full flex flex-col items-start'>
-                    <input
-                        onChange={InputChangeValidate}
+                    <AuthInput
+                        identifier='name'
                         type='text'
-                        id='name'
-                        name='name'
-                        maxLength={25}
-                        placeholder='...'
-                        className='name peer w-full bg-zinc-900 outline-0 text-lg font-normal text-zinc-200 tracking-wider rounded-xl px-4 py-2 border-4 border-zinc-600 placeholder:text-transparent focus:border-zinc-400 cursor-text'
+                        onChanging={InputChangeValidate}
+                        maxs={25}
                     />
+
                     <AuthLabel forInput='name'>{labelName}</AuthLabel>
                 </div>
                 <div className='w-full flex flex-col gap-1'>
-                    <input
-                        onChange={InputChangeValidate}
+                    <AuthInput
+                        identifier='wa'
                         type='text'
-                        id='wa'
-                        name='wa'
-                        maxLength={20}
-                        placeholder='...'
-                        className='wa peer w-full bg-zinc-900 outline-0 text-lg font-normal text-zinc-200 tracking-widest rounded-xl px-4 py-2 border-4 border-zinc-600 placeholder:text-transparent focus:border-zinc-400 cursor-text'
+                        onChanging={InputChangeValidate}
+                        maxs={20}
                     />
+
                     <AuthLabel forInput='wa'>{labelWaNumber}</AuthLabel>
                 </div>
                 <AuthButton
-                    onDisabling={load ? true : false}
+                    onDisabling={load}
                     type='submit'
                     onLoading={load}
                     loadingText='Loading...'

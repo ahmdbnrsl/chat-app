@@ -197,7 +197,7 @@ export default function LoginPage({ searchParams }: any) {
                     <AuthLabel forInput='wa'>{labelWaNumber}</AuthLabel>
                 </div>
                 <AuthButton
-                    onDisabling={load ? true : false}
+                    onDisabling={load}
                     type='submit'
                     onLoading={load}
                     loadingText='Sending OTP...'
@@ -221,7 +221,7 @@ export default function LoginPage({ searchParams }: any) {
                     <AuthLabel forInput='otp'>{labelOTP}</AuthLabel>
                 </div>
                 <AuthButton
-                    onDisabling={load ? true : false}
+                    onDisabling={load}
                     type='submit'
                     onLoading={load}
                     loadingText='Verifying OTP...'

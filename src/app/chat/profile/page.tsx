@@ -89,7 +89,7 @@ export default function ProfileInfoPage({ searchParams }: any) {
                     )}
                 </p>
                 <AuthButton
-                    onDisabling={load ? true : false}
+                    onDisabling={load}
                     onClicking={HandleLogout}
                     type='button'
                     onLoading={load}

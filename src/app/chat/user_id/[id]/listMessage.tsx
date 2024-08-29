@@ -1,9 +1,10 @@
 'use client';
+import { useState, MouseEvent } from 'react';
 import { useSession } from 'next-auth/react';
 import { Message } from '@/types';
-import { RiDeleteBin7Line } from 'react-icons/ri';
 import { FetcherService as deleteMessage } from '@/services/fetcherService';
 import CopyButton from '@/components/Buttons/copy';
+import DeleteButton from '@/components/Buttons/delete';
 
 export default function ListMessage({
     message,
@@ -18,6 +19,24 @@ export default function ListMessage({
 }) {
     const { data: session, status }: { data: any; status: string } =
         useSession();
+    const [load, setLoad] = useState<boolean>(false);
+    const HandleDelete = async (
+        e: MouseEvent<HTMLButtonElement>,
+        messageId: string
+    ) => {
+        e.preventDefault();
+        setLoad(true);
+        const deleted = await deleteMessage(
+            { message_id: messageId },
+            {
+                path: 'delete_message',
+                method: 'DELETE'
+            }
+        );
+        if (deleted && deleted?.status) {
+            setLoad(false);
+        }
+    };
     return (
         <>
             <div
@@ -47,9 +66,11 @@ export default function ListMessage({
                 </div>
                 {session?.user?.user_id === message.sender_id ? (
                     <div className='transition-all group-hover:flex flex-col hidden gap-3 px-5 rounded-lg mt-2.5 bg-zinc-800/[0.5] py-2'>
-                        <button className='hover:opacity-60 outline-0 bg-transparent text-red-500 flex gap-1.5 text-base items-center'>
-                            <RiDeleteBin7Line className='text-lg' /> Delete
-                        </button>
+                        <DeleteButton
+                            onClicking={HandleDelete}
+                            messageId={message.message_id}
+                            load={load}
+                        />
                         <CopyButton copyText={message.message_text} />
                     </div>
                 ) : (

@@ -114,7 +114,7 @@ export default function ModalForm({ hide }: { hide: () => void }) {
                     <AuthLabel forInput='wa'>{labelWaNumber}</AuthLabel>
                 </div>
                 <AuthButton
-                    onDisabling={load ? true : false}
+                    onDisabling={load}
                     type='submit'
                     onLoading={load}
                     loadingText='Searching...'
