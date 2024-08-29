@@ -5,13 +5,16 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import type { M, SenderMessage } from '@/types';
-import { getDate, getHour } from '@/services/getTime';
+import { date, hour } from '@/services/getTime';
+import { useCallback } from 'react';
 
 export default function SidebarChat({
     listSender
 }: {
     listSender: Array<SenderMessage> | null | undefined;
 }) {
+    const getDate = useCallback(date, []);
+    const getHour = useCallback(hour, []);
     const pathName: string = usePathname();
     const IdSender: string = pathName.split('/').slice(-1)[0];
     return (

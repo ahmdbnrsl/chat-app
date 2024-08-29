@@ -10,7 +10,7 @@ import { useSession } from 'next-auth/react';
 import { FetcherService } from '@/services/fetcherService';
 import { io, Socket } from 'socket.io-client';
 import type { M, Message, User } from '@/types';
-import { getDate, getHour as getTimestamp } from '@/services/getTime';
+import { date, hour } from '@/services/getTime';
 
 const socketURL: string = process.env.NEXT_PUBLIC_SOCKET_URL || '';
 const socket: Socket = io(socketURL);
@@ -26,6 +26,9 @@ export default function ChatPage({
         Array<Message> | null | undefined
     >(null);
     const [senderInfo, setSenderInfo] = useState<undefined | null | User>(null);
+
+    const getDate = useCallback(date, []);
+    const getTimestamp = useCallback(hour, []);
 
     const fetchSenderInfo = useCallback(async (): Promise<void> => {
         if (!params.id) return;
@@ -122,12 +125,12 @@ export default function ChatPage({
                             })}
                         </div>
                     ) : (
-                        <div className='w-full flex flex-col justify-center items-center p-6 flex-grow bg-zinc-950 gap-3'>
+                        <div className='w-full flex flex-col justify-center items-center p-6 flex-grow bg-zinc-950'>
                             {senderInfo && senderInfo.pp !== 'empety' ? (
                                 <Image
                                     src={senderInfo.pp}
-                                    width={80}
-                                    height={80}
+                                    width={100}
+                                    height={100}
                                     alt='user profile'
                                     loading='lazy'
                                     className='rounded-full border border-zinc-700'
@@ -135,18 +138,18 @@ export default function ChatPage({
                             ) : (
                                 <Avatar
                                     name={senderInfo?.name}
-                                    size='80'
+                                    size='100'
                                     round={true}
                                 />
                             )}
-                            <h1 className='flex items-center gap-2 sm:gap-3 text-lg sm:text-xl md:text-2xl text-zinc-300 font-medium text-center'>
+                            <h1 className='flex items-center gap-2 sm:gap-3 text-lg sm:text-xl md:text-2xl text-zinc-300 font-bold text-center'>
                                 {senderInfo?.name}
                             </h1>
                             <p className='text-zinc-500 font-medium text-sm sm:text-base text-center'>
-                                {senderInfo?.user_id}
+                                +{senderInfo?.wa_number}
                             </p>
-                            <p className='text-zinc-500 font-medium text-sm sm:text-base text-center'>
-                                {senderInfo?.wa_number}
+                            <p className='text-zinc-500 font-medium text-sm sm:text-xs text-center'>
+                                {senderInfo?.user_id}
                             </p>
                             <button
                                 onClick={() =>
