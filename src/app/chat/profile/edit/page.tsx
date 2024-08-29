@@ -10,6 +10,8 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { FetcherService as editUser } from '@/services/fetcherService';
 import AuthButton from '@/components/Buttons/auth';
+import AuthLabel from '@/components/Labels/auth';
+import AuthInput from '@/components/Inputs/auth';
 import type { U } from '@/types';
 
 export default function EditFormPage({ searchParams }: any) {
@@ -287,21 +289,13 @@ export default function EditFormPage({ searchParams }: any) {
                     </p>
                 </div>
                 <div className='w-full flex flex-col items-start'>
-                    <input
-                        onChange={InputChangeValidate}
+                    <AuthInput
+                        identifier='name'
                         type='text'
-                        id='name'
-                        name='name'
-                        maxLength={25}
-                        placeholder='...'
-                        className='name peer w-full bg-zinc-900 outline-0 text-lg font-normal text-zinc-200 tracking-wider rounded-xl px-4 py-2 border-4 border-zinc-600 placeholder:text-transparent focus:border-zinc-400 cursor-text'
+                        onChanging={InputChangeValidate}
+                        maxs={25}
                     />
-                    <label
-                        htmlFor='name'
-                        className='absolute -translate-y-3 peer-placeholder-shown:translate-y-3 ml-3 text-sm font-normal text-zinc-500 peer-focus:-translate-y-3 bg-zinc-900 w-auto px-2 py-1 peer-focus:text-zinc-300'
-                    >
-                        {labelName}
-                    </label>
+                    <AuthLabel forInput='name'>{labelName}</AuthLabel>
                 </div>
                 <AuthButton
                     onLoading={load}

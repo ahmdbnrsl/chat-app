@@ -7,6 +7,8 @@ import { FetcherService as getUserInfo } from '@/services/fetcherService';
 import type { User, U } from '@/types';
 import Loading from '@/components/loading';
 import AuthButton from '@/components/Buttons/auth';
+import AuthLabel from '@/components/Labels/auth';
+import AuthInput from '@/components/Inputs/auth';
 
 export default function ModalForm({ hide }: { hide: () => void }) {
     const { push } = useRouter();
@@ -103,21 +105,13 @@ export default function ModalForm({ hide }: { hide: () => void }) {
                 className={`flex p-4 w-full flex-col gap-4 mb-4`}
             >
                 <div className='w-full flex flex-col gap-1'>
-                    <input
-                        onChange={InputChangeValidate}
+                    <AuthInput
+                        identifier='wa'
                         type='text'
-                        id='wa'
-                        name='wa'
-                        maxLength={20}
-                        placeholder='...'
-                        className='wa peer w-full bg-zinc-900 outline-0 text-lg font-normal text-zinc-200 tracking-widest rounded-xl px-4 py-2 border-4 border-zinc-600 placeholder:text-transparent focus:border-zinc-400 cursor-text'
+                        onChanging={InputChangeValidate}
+                        maxs={20}
                     />
-                    <label
-                        htmlFor='wa'
-                        className='absolute -translate-y-3 peer-placeholder-shown:translate-y-3 ml-3 text-sm font-normal text-zinc-500 peer-focus:-translate-y-3 bg-zinc-900 w-auto px-2 py-1 peer-focus:text-zinc-300'
-                    >
-                        {labelWaNumber}
-                    </label>
+                    <AuthLabel forInput='wa'>{labelWaNumber}</AuthLabel>
                 </div>
                 <AuthButton
                     onDisabling={load ? true : false}

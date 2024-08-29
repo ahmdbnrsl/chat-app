@@ -1,5 +1,5 @@
 import { Document } from 'mongoose';
-import { MouseEvent } from 'react';
+import { MouseEvent, ChangeEvent } from 'react';
 
 export interface Message extends Document {
     message_id: string;
@@ -173,4 +173,11 @@ export type AuthButtonProps = {
     loadingText: string;
     onClicking?: (e: MouseEvent<HTMLButtonElement>) => void;
     isVerify?: string;
+};
+
+export type AuthInputProps = {
+    identifier: string;
+    type: 'text' | 'password' | 'email' | 'number' | 'file' | undefined;
+    maxs: number;
+    onChanging?: (e: ChangeEvent<HTMLInputElement>) => void;
 };

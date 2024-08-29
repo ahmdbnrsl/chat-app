@@ -10,7 +10,7 @@ export default function SearchInput({
 }) {
     return (
         <div className='w-full relative flex justify-start items-center'>
-            <div className='-mb-0.5 pl-3 absolute text-zinc-400 text-lg sm:text-xl'>
+            <div className='-mb-[0.19rem] pl-3 absolute text-zinc-400 text-lg sm:text-xl'>
                 <IoSearch />
             </div>
             <input
