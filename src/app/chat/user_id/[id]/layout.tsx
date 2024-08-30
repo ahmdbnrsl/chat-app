@@ -25,6 +25,15 @@ export async function generateMetadata({
                 siteName: 'Chat App',
                 type: 'website',
                 images: [user?.pp || '']
+            },
+            twitter: {
+                card: 'summary_large_image',
+                title: 'VB CHAT | Chat',
+                description: 'Chat with ' + user?.name,
+                images: {
+                    url: user?.pp || '',
+                    alt: 'Twitter Card VB CHAT Image'
+                }
             }
         };
     } else {
