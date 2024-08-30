@@ -91,7 +91,9 @@ export default function ChatPage({
             const index: number = messId?.indexOf(deletedMessageId);
             if (index !== -1) {
                 (listMessage as Array<Message>)?.splice(index, 1);
+                console.log(listMessage);
             }
+            console.log(listMessage);
             // setListMessage(listMessage);
         };
 
