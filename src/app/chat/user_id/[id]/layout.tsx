@@ -11,8 +11,9 @@ export async function generateMetadata({
         { user_id: params.id },
         { path: 'get_user_info', method: 'POST' }
     );
-    let user: User | undefined = res?.result as User;
+
     if (res && res?.status) {
+        let user: User | undefined = res?.result as User;
         return {
             title: `VB CHAT ${user?.name && '| ' + user?.name}`,
             openGraph: {
