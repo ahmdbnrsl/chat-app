@@ -101,8 +101,8 @@ export default function ChatPage({
         socket.on('disconnect', () => console.info('live chat closed'));
 
         return () => {
-            socket.off('data_updated', handleDataUpdated);
-            socket.off('data_deleted');
+            socket.off('data_updated', handleMessageUpdated);
+            socket.off('data_deleted', handleMessageDeleted);
         };
     }, [fetchSenderInfo, fetchMessages, session?.user?.user_id, params.id]);
 
