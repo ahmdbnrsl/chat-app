@@ -87,7 +87,7 @@ export default function ChatPage({
                 (message: Message) => {
                     return message._id;
                 }
-            );
+            ) as Array<string>;
             const index: number = messId.indexOf(deletedMessageId);
             if (index !== -1) {
                 listMessage.splice(index, 1);
