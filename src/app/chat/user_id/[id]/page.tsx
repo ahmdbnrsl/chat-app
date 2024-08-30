@@ -83,20 +83,24 @@ export default function ChatPage({
 
         const handleMessageDeleted = (deletedMessageId: string): void => {
             if (!deletedMessageId) return;
-            const messId: Array<string> = (listMessage as Array<Message>)?.map(
-                (message: Message) => {
-                    return message._id;
+            setListMessage((prevData: Array<Message> | null | undefined) => {
+                const messId: Array<string> = (prevData as Array<Message>)?.map(
+                    (message: Message) => {
+                        return message._id;
+                    }
+                ) as Array<string>;
+                console.log(messId);
+                const index: number = messId?.indexOf(deletedMessageId);
+                console.log(index);
+                console.log(prevData);
+                if (index !== -1) {
+                    (prevData as Array<Message>)?.splice(index, 1);
+                    console.log(prevData);
                 }
-            ) as Array<string>;
-            console.log(messId);
-            const index: number = messId?.indexOf(deletedMessageId);
-            console.log(index);
-            console.log(listMessage);
-            if (index !== -1) {
-                (listMessage as Array<Message>)?.splice(index, 1);
-                console.log(listMessage);
-            }
-            console.log(listMessage);
+                console.log(prevData);
+                return prevData;
+            });
+
             // setListMessage(listMessage);
         };
 
