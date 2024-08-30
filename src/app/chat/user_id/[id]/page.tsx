@@ -92,7 +92,7 @@ export default function ChatPage({
             if (index !== -1) {
                 (listMessage as Array<Message>)?.splice(index, 1);
             }
-            setListMessage(listMessage);
+            // setListMessage(listMessage);
         };
 
         socket.on('connect', () => console.info('live chat opened'));
