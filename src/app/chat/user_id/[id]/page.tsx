@@ -83,14 +83,14 @@ export default function ChatPage({
 
         const handleMessageDeleted = (deletedMessageId: string): void => {
             if (!deletedMessageId) return;
-            const messId: Array<string> = listMessage.map(
+            const messId: Array<string> = (listMessage as Array<Message>)?.map(
                 (message: Message) => {
                     return message._id;
                 }
             ) as Array<string>;
-            const index: number = messId.indexOf(deletedMessageId);
+            const index: number = messId?.indexOf(deletedMessageId);
             if (index !== -1) {
-                listMessage.splice(index, 1);
+                (listMessage as Array<Message>)?.splice(index, 1);
             }
             setListMessage(listMessage);
         };
