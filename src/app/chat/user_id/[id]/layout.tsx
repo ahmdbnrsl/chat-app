@@ -7,7 +7,7 @@ export async function generateMetadata({
 }: {
     params: { id: string };
 }): Promise<Metadata> {
-    const res = await FetcherService(
+    const res = await getUserInfo(
         { user_id: params.id },
         { path: 'get_user_info', method: 'POST' }
     );
