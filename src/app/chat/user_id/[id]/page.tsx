@@ -61,7 +61,7 @@ export default function ChatPage({
         fetchSenderInfo();
         fetchMessages();
 
-        const handleDataUpdated = (newData: Message): void => {
+        const handleMessageUpdated = (newData: Message): void => {
             if (!newData) return;
             if (
                 (newData.sender_id === session.user.user_id &&
@@ -81,9 +81,23 @@ export default function ChatPage({
             }
         };
 
+        const handleMessageDeleted = (deletedMessageId: string): void => {
+            if (!deletedMessageId) return;
+            const messId: Array<string> = listMessage.map(
+                (message: Message) => {
+                    return message._id;
+                }
+            );
+            const index: number = messId.indexOf(deletedMessageId);
+            if (index !== -1) {
+                listMessage.splice(index, 1);
+            }
+            setListMessage(listMessage);
+        };
+
         socket.on('connect', () => console.info('live chat opened'));
-        socket.on('data_updated', handleDataUpdated);
-        socket.on('data_deleted', () => fetchMessages());
+        socket.on('data_updated', handleMessageUpdated);
+        socket.on('data_deleted', handleMessageDeleted);
         socket.on('disconnect', () => console.info('live chat closed'));
 
         return () => {
