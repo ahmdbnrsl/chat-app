@@ -90,15 +90,10 @@ export default function ChatPage({
                     }
                 ) as Array<string>;
                 const index: number = messId?.indexOf(deletedMessageId);
-                /*if (index !== -1) {
+                if (index !== -1)
                     (prevData as Array<Message>)?.splice(index, 1);
-                    console.log(prevData);
-                }*/
-                console.log(prevData);
                 return prevData;
             });
-
-            // setListMessage(listMessage);
         };
 
         socket.on('connect', () => console.info('live chat opened'));

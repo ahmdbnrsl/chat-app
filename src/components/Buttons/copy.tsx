@@ -16,7 +16,7 @@ export default function CopyButton({ copyText }: { copyText: string }) {
             onClick={e => HandleCopy(e, copyText)}
             className={`${
                 copied ? 'text-green-500' : 'text-zinc-300'
-            } outline-0 bg-transparent flex gap-1.5 text-base items-center`}
+            } outline-0 bg-transparent flex gap-1.5 text-sm items-center`}
         >
             {!copied ? (
                 <>

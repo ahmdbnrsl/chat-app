@@ -16,7 +16,7 @@ export default function DeleteButton({
         <button
             disabled={load}
             onClick={onClicking ? e => onClicking(e, messageId) : () => {}}
-            className={`hover:opacity-60 outline-0 bg-transparent text-red-500 flex gap-1.5 text-base items-center ${
+            className={`hover:opacity-60 outline-0 bg-transparent text-red-500 flex gap-1.5 text-sm items-center ${
                 load && 'text-zinc-500'
             }`}
         >
