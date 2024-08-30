@@ -1,4 +1,5 @@
 'use client';
+
 import { useState, MouseEvent } from 'react';
 import { useSession } from 'next-auth/react';
 import { Message } from '@/types';
