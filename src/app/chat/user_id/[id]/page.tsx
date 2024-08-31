@@ -158,7 +158,7 @@ export default function ChatPage({
                     </h1>
                 </section>
             ) : (
-                <section className='w-full flex flex-col min-h-screen bg-ornament bg-fixed bg-zinc-950'>
+                <section className='w-full flex flex-col h-screen bg-ornament bg-fixed bg-zinc-950 overflow-y-auto'>
                     <NavbarChat senderInfo={senderInfo} />
                     {listMessage.length !== 0 ? (
                         <ListMessages
