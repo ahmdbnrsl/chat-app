@@ -76,7 +76,9 @@ export default function ChatPage({
             ) {
                 setListMessage(
                     (prevData: DateGroup[] | null | undefined): DateGroup[] => {
-                        const updatedData: DateGroup[] = [...prevData];
+                        const updatedData: DateGroup[] = [
+                            ...(prevData as DateGroup[])
+                        ];
                         const messageDate: string = new Date(
                             parseInt(newData.message_timestamp)
                         ).toLocaleDateString('en-US', {
