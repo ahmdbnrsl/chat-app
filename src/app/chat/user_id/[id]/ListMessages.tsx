@@ -16,7 +16,7 @@ export default function ListMessages({
         useSession();
     const { user_id, pp, name: userName } = session.user;
     return (
-        <div className='w-full flex flex-col justify-end gap-3 px-6 pb-7 pt-16 flex-grow max-h-screen overflow-y-auto'>
+        <div className='w-full flex flex-col justify-end gap-3 px-6 pb-7 pt-16 flex-grow max-h-screen overflow-y-scroll'>
             {listMessage.map((date: DateGroup, dateIndex: number) => (
                 <div key={dateIndex}>
                     <div className='w-full flex justify-center py-4'>
@@ -67,7 +67,7 @@ export default function ListMessages({
                                         }`}
                                     >
                                         <h1 className='text-zinc-300 font-medium text-base'>
-                                            {profileName}
+                                            {isFromMe ? 'You' : profileName}
                                         </h1>
                                         {message.messages.map(
                                             (
@@ -76,7 +76,7 @@ export default function ListMessages({
                                             ) => (
                                                 <div
                                                     key={bubleIndex}
-                                                    className='bg-zinc-900 rounded-xl py-2 text-base px-3 text-zinc-300 min-w-[5rem]'
+                                                    className='w-fit h-fit bg-zinc-900 rounded-xl py-2 text-base px-3 text-zinc-300 min-w-[5rem]'
                                                 >
                                                     {buble.message_text}
                                                 </div>
