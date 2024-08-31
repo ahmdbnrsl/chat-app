@@ -90,13 +90,19 @@ export default function ChatPage({
                 });
                 setListMessage(
                     (prevData: Array<DateGroup> | null | undefined) => {
-                        const updatedMessages = prevData
-                            ? groupMessagesByDateAndSender([
-                                  ...(messages as Array<Message>),
-                                  newData
-                              ])
-                            : [newData];
-                        return updatedMessages;
+                        let groupedMessage: Array<DateGroup>;
+                        if (prevData) {
+                            groupedMessage = groupMessagesByDateAndSender([
+                                ...(messages as Array<Message>),
+                                newData
+                            ]);
+                            return groupedMessage;
+                        } else {
+                            groupedMessage = groupMessagesByDateAndSender([
+                                newData
+                            ]);
+                            return groupedMessage;
+                        }
                     }
                 );
                 console.log(messages);
