@@ -38,9 +38,9 @@ export default function ListMessages({
                             return (
                                 <div
                                     key={messageIndex}
-                                    className={`w-full flex py-2 gap-2 ${
+                                    className={`w-full flex py-2 gap-2.5 ${
                                         isFromMe &&
-                                        'justify-end flex-row-reverse'
+                                        'flex-row-reverse justify-start'
                                     }`}
                                 >
                                     <div className='w-fit h-fit rounded-full bg-zinc-900/[0.5]'>
@@ -62,7 +62,7 @@ export default function ListMessages({
                                         )}
                                     </div>
                                     <div
-                                        className={`flex flex-col ${
+                                        className={`flex flex-col gap-2 ${
                                             isFromMe && 'items-end'
                                         }`}
                                     >
@@ -76,7 +76,7 @@ export default function ListMessages({
                                             ) => (
                                                 <div
                                                     key={bubleIndex}
-                                                    className='bg-zinc-900 rounded-xl py-2 text-sm px-3 text-zinc-300'
+                                                    className='bg-zinc-900 rounded-xl py-2 text-base px-3 text-zinc-300'
                                                 >
                                                     {buble.message_text}
                                                 </div>
