@@ -19,6 +19,8 @@ interface DateGroup {
     messages: SenderGroup[];
 }
 
+type ID = string;
+
 function groupMessagesByDateAndSender(messages: Message[]): DateGroup[] {
     const groupedByDate = messages.reduce(
         (
@@ -27,7 +29,7 @@ function groupMessagesByDateAndSender(messages: Message[]): DateGroup[] {
         ) => {
             const date = new Date(
                 parseInt(curr.message_timestamp)
-            ).toLocaleDateString('id-ID', {
+            ).toLocaleDateString('en-US', {
                 day: 'numeric',
                 month: 'long',
                 year: 'numeric'
@@ -45,7 +47,7 @@ function groupMessagesByDateAndSender(messages: Message[]): DateGroup[] {
                 message_text: curr.message_text.trim(),
                 message_id: curr.message_id,
                 message_timestamp: curr.message_timestamp,
-                _id: curr._id
+                _id: curr._id as ID
             });
 
             return acc;
