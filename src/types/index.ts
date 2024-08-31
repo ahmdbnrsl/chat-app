@@ -79,7 +79,7 @@ export interface M {
     ListMessage: {
         status: boolean;
         message: string;
-        result?: Array<DateGroup>;
+        result?: Array<Message>;
     };
     ListSender: {
         status: boolean;
