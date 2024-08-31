@@ -74,7 +74,10 @@ export default function ListMessages({
                                                 buble: GroupedMessage,
                                                 bubleIndex: number
                                             ) => (
-                                                <div className='bg-zinc-900 rounded-xl py-2 text-sm px-3 text-zinc-300'>
+                                                <div
+                                                    key={bubleIndex}
+                                                    className='bg-zinc-900 rounded-xl py-2 text-sm px-3 text-zinc-300'
+                                                >
                                                     {buble.message_text}
                                                 </div>
                                             )
