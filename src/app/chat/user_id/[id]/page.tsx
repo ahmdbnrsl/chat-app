@@ -1,6 +1,6 @@
 'use client';
 
-import ListMessages from './ListMessages.tsx';
+import ListMessages from './ListMessages';
 import NavbarChat from './Navbar';
 import FormMessage from './formMessage';
 import LoadingMessage from '@/components/loading';
