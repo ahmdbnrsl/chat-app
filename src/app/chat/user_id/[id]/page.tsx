@@ -1,6 +1,6 @@
 'use client';
 
-import ListMessage from './listMessage';
+import ListMessages from './ListMessages.tsx';
 import NavbarChat from './Navbar';
 import FormMessage from './formMessage';
 import LoadingMessage from '@/components/loading';
@@ -161,10 +161,10 @@ export default function ChatPage({
                 <section className='w-full flex flex-col min-h-screen bg-ornament bg-fixed bg-zinc-950'>
                     <NavbarChat senderInfo={senderInfo} />
                     {listMessage.length !== 0 ? (
-                        <div
-                            onClick={() => console.log(listMessage)}
-                            className='w-full flex flex-col-reverse gap-3 p-6 flex-grow max-h-screen overflow-y-auto'
-                        ></div>
+                        <ListMessages
+                            listMessage={listMessage as Array<DateGroup>}
+                            senderInfo={senderInfo as User}
+                        />
                     ) : (
                         <div className='w-full flex flex-col justify-center items-center p-6 flex-grow bg-zinc-950'>
                             {senderInfo && senderInfo.pp !== 'empety' ? (
