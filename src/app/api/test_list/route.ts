@@ -21,7 +21,10 @@ interface DateGroup {
 
 function groupMessagesByDateAndSender(messages: Message[]): DateGroup[] {
     const groupedByDate = messages.reduce(
-        (acc: { [key: string]: { [key: string]: GroupedMessage[] } }, curr) => {
+        (
+            acc: Record<string, Record<string, GroupedMessage[]>>,
+            curr: Message
+        ) => {
             const date = new Date(
                 parseInt(curr.message_timestamp)
             ).toLocaleDateString('id-ID', {
@@ -47,7 +50,7 @@ function groupMessagesByDateAndSender(messages: Message[]): DateGroup[] {
 
             return acc;
         },
-        {}
+        {} as Record<string, Record<string, GroupedMessage[]>>
     );
 
     const result: DateGroup[] = Object.keys(groupedByDate).map(date => ({
