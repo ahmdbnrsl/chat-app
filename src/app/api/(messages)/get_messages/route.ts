@@ -1,6 +1,7 @@
 import { NextResponse, NextRequest } from 'next/server';
 import { getListMessage } from '@/controller/messages/get_list_message';
 import type { M, Message } from '@/types';
+import { groupMessagesByDateAndSender } from '@/services/groupingMessages';
 
 export async function POST(req: NextRequest) {
     const body: M['GetListMessage'] = await req.json();
@@ -27,7 +28,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({
                 status: true,
                 message: res?.message,
-                result: sortedMessageByTimestamp
+                result: groupMessagesByDateAndSender(sortedMessageByTimestamp)
             });
         } else {
             return NextResponse.json(

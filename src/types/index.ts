@@ -164,7 +164,12 @@ export interface FetchOptions {
 export interface ResultFetcher {
     status: boolean;
     message: string;
-    result?: Array<Message> | Array<SenderMessage> | User | OTP;
+    result?:
+        | Array<Message>
+        | Array<SenderMessage>
+        | User
+        | OTP
+        | Array<DateGroup>;
 }
 
 export interface RevalidateBodyRequest {

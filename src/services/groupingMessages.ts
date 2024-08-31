@@ -1,4 +1,3 @@
-'use client';
 import type { Message, GroupedMessage, DateGroup, ID } from '@/types';
 
 export function groupMessagesByDateAndSender(messages: Message[]): DateGroup[] {

@@ -13,7 +13,6 @@ import { FetcherService } from '@/services/fetcherService';
 import { io, Socket } from 'socket.io-client';
 import type { M, DateGroup, Message, User } from '@/types';
 import { date, hour } from '@/services/getTime';
-import { groupMessagesByDateAndSender } from '@/services/groupingMessages';
 
 const socketURL: string = process.env.NEXT_PUBLIC_SOCKET_URL || '';
 const socket: Socket = io(socketURL);
@@ -25,9 +24,6 @@ export default function ChatPage({
 }): JSX.Element {
     const { data: session, status }: { data: any; status: string } =
         useSession();
-    const [messages, setMessages] = useState<Array<Message> | null | undefined>(
-        null
-    );
     const [listMessage, setListMessage] = useState<
         Array<DateGroup> | null | undefined
     >(null);
@@ -60,10 +56,7 @@ export default function ChatPage({
             }
         );
         if (res && res?.status) {
-            const groupedMessage: Array<DateGroup> =
-                groupMessagesByDateAndSender(res.result as Array<Message>);
-            setListMessage(groupedMessage);
-            setMessages(res.result as Array<Message>);
+            setListMessage(res.result as Array<DateGroup>);
         }
     }, [session?.user?.user_id, params.id]);
 
@@ -81,48 +74,13 @@ export default function ChatPage({
                 (newData.sender_id === params.id &&
                     newData.receiver_id === session.user.user_id)
             ) {
-                setMessages((prevData: Array<Message> | null | undefined) => {
-                    const updatedMessages = prevData
-                        ? [...(prevData as Array<Message>), newData]
-                        : [newData];
-
-                    return updatedMessages;
-                });
-                setListMessage(
-                    (prevData: Array<DateGroup> | null | undefined) => {
-                        let groupedMessage: Array<DateGroup>;
-                        if (prevData) {
-                            groupedMessage = groupMessagesByDateAndSender([
-                                ...(messages as Array<Message>),
-                                newData
-                            ]);
-                            return groupedMessage;
-                        } else {
-                            groupedMessage = groupMessagesByDateAndSender([
-                                newData
-                            ]);
-                            return groupedMessage;
-                        }
-                    }
-                );
-                console.log(messages);
                 console.log(listMessage);
             }
         };
 
         const handleMessageDeleted = (deletedMessageId: string): void => {
             if (!deletedMessageId) return;
-            setMessages((prevData: Array<Message> | null | undefined) => {
-                const messId: Array<string> = (prevData as Array<Message>)?.map(
-                    (message: Message) => {
-                        return message._id;
-                    }
-                ) as Array<string>;
-                const index: number = messId?.indexOf(deletedMessageId);
-                if (index !== -1)
-                    (prevData as Array<Message>)?.splice(index, 1);
-                return prevData;
-            });
+            console.log(listMessage);
         };
 
         socket.on('connect', () => console.info('live chat opened'));
