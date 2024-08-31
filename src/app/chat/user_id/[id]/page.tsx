@@ -74,58 +74,60 @@ export default function ChatPage({
                 (newData.sender_id === params.id &&
                     newData.receiver_id === session.user.user_id)
             ) {
-                setListMessage((prevData: DateGroup[]): DateGroup[] => {
-                    const updatedData: DateGroup[] = [...prevData];
-                    const messageDate: string = new Date(
-                        parseInt(newData.message_timestamp)
-                    ).toLocaleDateString('en-US', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric'
-                    });
-
-                    let dateGroup: DateGroup | undefined = updatedData.find(
-                        group => group.date === messageDate
-                    );
-                    if (!dateGroup) {
-                        dateGroup = { date: messageDate, messages: [] };
-                        updatedData.push(dateGroup);
-                    }
-
-                    let senderGroup: SenderGroup | undefined =
-                        dateGroup.messages.find(
-                            group => group.sender_id === newData.sender_id
-                        );
-                    if (!senderGroup) {
-                        senderGroup = {
-                            sender_id: newData.sender_id,
-                            messages: []
-                        };
-                        dateGroup.messages.push(senderGroup);
-                    }
-
-                    const existingMessageIndex: number =
-                        senderGroup.messages.findIndex(
-                            msg => msg.message_id === newData.message_id
-                        );
-                    if (existingMessageIndex > -1) {
-                        senderGroup.messages[existingMessageIndex] = {
-                            message_text: newData.message_text,
-                            message_id: newData.message_id,
-                            message_timestamp: newData.message_timestamp,
-                            _id: newData._id as ID
-                        };
-                    } else {
-                        senderGroup.messages.push({
-                            message_text: newData.message_text,
-                            message_id: newData.message_id,
-                            message_timestamp: newData.message_timestamp,
-                            _id: newData._id as ID
+                setListMessage(
+                    (prevData: DateGroup[] | null | undefined): DateGroup[] => {
+                        const updatedData: DateGroup[] = [...prevData];
+                        const messageDate: string = new Date(
+                            parseInt(newData.message_timestamp)
+                        ).toLocaleDateString('en-US', {
+                            day: 'numeric',
+                            month: 'long',
+                            year: 'numeric'
                         });
-                    }
 
-                    return updatedData;
-                });
+                        let dateGroup: DateGroup | undefined = updatedData.find(
+                            group => group.date === messageDate
+                        );
+                        if (!dateGroup) {
+                            dateGroup = { date: messageDate, messages: [] };
+                            updatedData.push(dateGroup);
+                        }
+
+                        let senderGroup: SenderGroup | undefined =
+                            dateGroup.messages.find(
+                                group => group.sender_id === newData.sender_id
+                            );
+                        if (!senderGroup) {
+                            senderGroup = {
+                                sender_id: newData.sender_id,
+                                messages: []
+                            };
+                            dateGroup.messages.push(senderGroup);
+                        }
+
+                        const existingMessageIndex: number =
+                            senderGroup.messages.findIndex(
+                                msg => msg.message_id === newData.message_id
+                            );
+                        if (existingMessageIndex > -1) {
+                            senderGroup.messages[existingMessageIndex] = {
+                                message_text: newData.message_text,
+                                message_id: newData.message_id,
+                                message_timestamp: newData.message_timestamp,
+                                _id: newData._id as ID
+                            };
+                        } else {
+                            senderGroup.messages.push({
+                                message_text: newData.message_text,
+                                message_id: newData.message_id,
+                                message_timestamp: newData.message_timestamp,
+                                _id: newData._id as ID
+                            });
+                        }
+
+                        return updatedData;
+                    }
+                );
             }
         };
 
