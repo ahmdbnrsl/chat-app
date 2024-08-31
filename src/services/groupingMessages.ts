@@ -1,5 +1,5 @@
 'use client';
-import type { Message, GroupedMessage, DateGroup } from '@/types';
+import type { Message, GroupedMessage, DateGroup, ID } from '@/types';
 
 export function groupMessagesByDateAndSender(messages: Message[]): DateGroup[] {
     const groupedByDate = messages.reduce(
