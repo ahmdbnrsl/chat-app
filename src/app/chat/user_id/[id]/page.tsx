@@ -11,8 +11,9 @@ import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useSession } from 'next-auth/react';
 import { FetcherService } from '@/services/fetcherService';
 import { io, Socket } from 'socket.io-client';
-import type { M, Message, User } from '@/types';
+import type { M, DateGroup, Message, User } from '@/types';
 import { date, hour } from '@/services/getTime';
+import { groupMessagesByDateAndSender } from '@/services/groupingMessages';
 
 const socketURL: string = process.env.NEXT_PUBLIC_SOCKET_URL || '';
 const socket: Socket = io(socketURL);
@@ -24,8 +25,11 @@ export default function ChatPage({
 }): JSX.Element {
     const { data: session, status }: { data: any; status: string } =
         useSession();
+    const [messages, setMessages] = useState<Array<Message> | null | undefined>(
+        null
+    );
     const [listMessage, setListMessage] = useState<
-        Array<Message> | null | undefined
+        Array<DateGroup> | null | undefined
     >(null);
     const [senderInfo, setSenderInfo] = useState<undefined | null | User>(null);
 
@@ -56,7 +60,10 @@ export default function ChatPage({
             }
         );
         if (res && res?.status) {
-            setListMessage((res.result as Array<Message>)?.reverse());
+            const groupedMessage: Array<DateGroup> =
+                groupMessagesByDateAndSender(res.result as Array<Message>);
+            setListMessage(groupedMessage);
+            setMessages(res.result as Array<Message>);
         }
     }, [session?.user?.user_id, params.id]);
 
@@ -74,21 +81,32 @@ export default function ChatPage({
                 (newData.sender_id === params.id &&
                     newData.receiver_id === session.user.user_id)
             ) {
-                setListMessage(
-                    (prevData: Array<Message> | null | undefined) => {
-                        const updatedMessages = prevData
-                            ? [newData, ...(prevData as Array<Message>)]
-                            : [newData];
+                setMessages((prevData: Array<Message> | null | undefined) => {
+                    const updatedMessages = prevData
+                        ? [...(prevData as Array<Message>), newData]
+                        : [newData];
 
+                    return updatedMessages;
+                });
+                setListMessage(
+                    (prevData: Array<DateGroup> | null | undefined) => {
+                        const updatedMessages = prevData
+                            ? groupMessagesByDateAndSender([
+                                  ...(messages as Array<Message>),
+                                  newData
+                              ])
+                            : [newData];
                         return updatedMessages;
                     }
                 );
+                console.log(messages);
+                console.log(listMessage);
             }
         };
 
         const handleMessageDeleted = (deletedMessageId: string): void => {
             if (!deletedMessageId) return;
-            setListMessage((prevData: Array<Message> | null | undefined) => {
+            setMessages((prevData: Array<Message> | null | undefined) => {
                 const messId: Array<string> = (prevData as Array<Message>)?.map(
                     (message: Message) => {
                         return message._id;
@@ -124,29 +142,7 @@ export default function ChatPage({
                 <section className='w-full flex flex-col min-h-screen bg-ornament bg-fixed bg-zinc-950'>
                     <NavbarChat senderInfo={senderInfo} />
                     {listMessage.length !== 0 ? (
-                        <div className='w-full flex flex-col-reverse gap-3 p-6 flex-grow max-h-screen overflow-y-auto'>
-                            {listMessage.map((message: Message, i: number) => {
-                                let checkDate: string | null =
-                                    i === listMessage.length - 1 ||
-                                    getDate(message?.message_timestamp) !==
-                                        getDate(
-                                            listMessage[i + 1].message_timestamp
-                                        )
-                                        ? getDate(message?.message_timestamp)
-                                        : null;
-                                return (
-                                    <ListMessage
-                                        key={message?.message_timestamp}
-                                        checkDate={checkDate}
-                                        timestamp={getTimestamp(
-                                            message?.message_timestamp
-                                        )}
-                                        message={message}
-                                        senderPp={senderInfo?.pp}
-                                    />
-                                );
-                            })}
-                        </div>
+                        <div className='w-full flex flex-col-reverse gap-3 p-6 flex-grow max-h-screen overflow-y-auto'></div>
                     ) : (
                         <div className='w-full flex flex-col justify-center items-center p-6 flex-grow bg-zinc-950'>
                             {senderInfo && senderInfo.pp !== 'empety' ? (

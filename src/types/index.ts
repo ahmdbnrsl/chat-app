@@ -36,6 +36,25 @@ export interface SenderMessage {
     id_user: string;
 }
 
+export interface GroupedMessage {
+    message_text: string;
+    message_id: string;
+    message_timestamp: string;
+    _id: string;
+}
+
+export interface SenderGroup {
+    sender_id: string;
+    messages: GroupedMessage[];
+}
+
+export interface DateGroup {
+    date: string;
+    messages: SenderGroup[];
+}
+
+export type ID = string;
+
 export interface M {
     GetListSender: {
         user_id: string;
@@ -60,7 +79,7 @@ export interface M {
     ListMessage: {
         status: boolean;
         message: string;
-        result?: Array<Message>;
+        result?: Array<DateGroup>;
     };
     ListSender: {
         status: boolean;
