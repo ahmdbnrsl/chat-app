@@ -11,7 +11,7 @@ import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useSession } from 'next-auth/react';
 import { FetcherService } from '@/services/fetcherService';
 import { io, Socket } from 'socket.io-client';
-import type { M, DateGroup, Message, User, ID } from '@/types';
+import type { M, DateGroup, Message, User, ID, SenderGroup } from '@/types';
 import { date, hour } from '@/services/getTime';
 
 const socketURL: string = process.env.NEXT_PUBLIC_SOCKET_URL || '';
@@ -74,7 +74,7 @@ export default function ChatPage({
                 (newData.sender_id === params.id &&
                     newData.receiver_id === session.user.user_id)
             ) {
-                setListmessage((prevData: DateGroup[]): DateGroup[] => {
+                setListMessage((prevData: DateGroup[]): DateGroup[] => {
                     const updatedData: DateGroup[] = [...prevData];
                     const messageDate: string = new Date(
                         parseInt(newData.message_timestamp)
