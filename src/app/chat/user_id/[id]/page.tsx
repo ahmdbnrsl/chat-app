@@ -142,6 +142,7 @@ export default function ChatPage({
                                             message?.message_timestamp
                                         )}
                                         message={message}
+                                        senderPp={senderInfo?.pp}
                                     />
                                 );
                             })}

@@ -11,12 +11,14 @@ export default function ListMessage({
     message,
     checkDate,
     timestamp,
-    key
+    key,
+    senderPp
 }: {
     message: Message;
     checkDate: string | null;
     timestamp: string;
     key: string;
+    senderPp?: string;
 }) {
     const { data: session, status }: { data: any; status: string } =
         useSession();
@@ -49,10 +51,10 @@ export default function ListMessage({
                 }`}
             >
                 <div
-                    className={`w-fit text-zinc-300 py-1 min-w-[10rem] px-3 flex flex-col rounded-b-xl transition-colors ${
+                    className={`w-fit text-zinc-300 py-1 min-w-[10rem] px-3 flex flex-col rounded-b-2xl transition-colors ${
                         message.sender_id === session?.user?.user_id
-                            ? 'bg-zinc-700/[0.5] rounded-tl-xl group-hover:bg-zinc-800/[0.5]'
-                            : 'bg-zinc-800/[0.5] rounded-tr-xl group-hover:bg-zinc-700/[0.5]'
+                            ? 'bg-zinc-700/[0.5] rounded-tl-2xl group-hover:bg-zinc-800/[0.5]'
+                            : 'bg-zinc-800/[0.5] rounded-tr-2xl group-hover:bg-zinc-700/[0.5]'
                     }`}
                 >
                     <pre
@@ -80,13 +82,13 @@ export default function ListMessage({
                     </div>
                 )}
             </div>
-            {checkDate ? (
+            {checkDate && (
                 <div className='w-full flex justify-center py-2'>
                     <div className='px-3 py-0.5 rounded bg-zinc-900 text-sm text-zinc-400 font-normal'>
                         {checkDate}
                     </div>
                 </div>
-            ) : null}
+            )}
         </>
     );
 }

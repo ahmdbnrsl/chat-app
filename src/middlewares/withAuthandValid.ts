@@ -17,7 +17,8 @@ const APIRequireBearer: Array<string> = [
     '/api/get_user_info',
     '/api/push_message',
     '/api/delete_message',
-    '/api/revalidate'
+    '/api/revalidate',
+    '/api/test_list'
 ];
 
 export default function withAuthandValid(
