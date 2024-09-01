@@ -60,7 +60,7 @@ export default function SidebarChat({
                             </div>
                         </div>
                         <div className='w-1/4 flex flex-col justify-center items-end'>
-                            <p className='text-xs sm:text-sm font-normal text-zinc-400'>
+                            <p className='text-xs sm:text-sm font-normal text-zinc-500'>
                                 +{sender?.wa_number}
                             </p>
                             <p className='text-xs font-normal text-zinc-500'>
