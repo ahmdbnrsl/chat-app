@@ -1,12 +1,19 @@
 import { Document } from 'mongoose';
 import { MouseEvent, ChangeEvent } from 'react';
 
+export interface MessageQuoted {
+    message_text: string;
+    from_name: string;
+    message_id: string;
+}
+
 export interface Message extends Document {
     message_id: string;
     sender_id: string;
     receiver_id: string;
     message_text: string;
     message_timestamp: string;
+    message_quoted?: MessageQuoted;
 }
 
 export interface User extends Document {
@@ -70,6 +77,7 @@ export interface M {
         receiver_id: string | undefined;
         message_text: string;
         message_timestamp: string;
+        message_quoted?: MessageQuoted;
         secret?: string;
     };
     DeleteMessage: {

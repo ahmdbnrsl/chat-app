@@ -6,30 +6,22 @@ import type { User, Message, M } from '@/types';
 
 const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
 
-export const pushMessage = async ({
-    sender_id,
-    receiver_id,
-    message_text,
-    message_timestamp
-}: M['SendMessage']): Promise<M['IsMessage'] | false> => {
+export const pushMessage = async (
+    messageOptions: M['SendMessage']
+): Promise<M['IsMessage'] | false> => {
     try {
         await mongoose.connect(URI);
         if (receiver_id !== sender_id) {
             const checkExistingReceiver: User | null = await users.findOne({
-                user_id: receiver_id
+                user_id: messageOptions.receiver_id
             });
             const checkExistingSender: User | null = await users.findOne({
-                user_id: sender_id
+                user_id: messageOptions.sender_id
             });
             if (checkExistingReceiver && checkExistingSender) {
-                let message_id: string = uuid();
-                const res: Message = await messages.create({
-                    message_id,
-                    sender_id,
-                    receiver_id,
-                    message_text,
-                    message_timestamp
-                });
+                messageOptions.message_id = uuid();
+                if ('secret' in messageOptions) delete messageOptions.secret;
+                const res: Message = await messages.create(messageOptions);
                 return {
                     result: res,
                     status: true,

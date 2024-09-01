@@ -1,5 +1,11 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
-import type { Message } from '@/types';
+import type { Message, MessageQuoted } from '@/types';
+
+const MessageQuotedSchema: Schema<MessageQuoted> = new Schema({
+    message_text: { type: String, required: false },
+    from_name: { type: String, required: false },
+    message_id: { type: String, required: false }
+});
 
 const MessageSchema: Schema<Message> = new Schema({
     message_id: {
@@ -21,6 +27,10 @@ const MessageSchema: Schema<Message> = new Schema({
     message_timestamp: {
         type: String,
         required: true
+    },
+    message_quoted: {
+        type: MessageQuotedSchema,
+        required: false
     }
 });
 export const messages = mongoose.model('messages', MessageSchema);
