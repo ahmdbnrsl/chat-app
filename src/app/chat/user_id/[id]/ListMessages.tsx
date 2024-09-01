@@ -41,7 +41,7 @@ export default function ListMessages({
                                     key={messageIndex}
                                     className={`w-full flex flex-col md:flex-row py-2 gap-2.5 ${
                                         isFromMe &&
-                                        'items-end md:items-baseline md:flex-row-reverse md:justify-start'
+                                        'items-end md:flex-row-reverse md:justify-start md:items-start'
                                     }`}
                                 >
                                     <div className='w-fit h-fit rounded-full bg-zinc-900/[0.5]'>
