@@ -2,7 +2,7 @@
 
 import ListMessages from './ListMessages';
 import NavbarChat from './Navbar';
-import FormMessage from './formMessage';
+import FormMessage from './FormMessage';
 import LoadingMessage from '@/components/loading';
 import StartButton from '@/components/Buttons/start';
 import Avatar from 'react-avatar';

@@ -1,4 +1,5 @@
 'use client';
+
 import { useSession } from 'next-auth/react';
 import { useEffect, useState, useCallback } from 'react';
 import { FetcherService as getListSender } from '@/services/fetcherService';
@@ -7,7 +8,7 @@ import { io } from 'socket.io-client';
 import { Message } from '@/types';
 import { usePathname } from 'next/navigation';
 import SidebarChat from './Sidebar';
-import Wrapper from './wrapper';
+import Wrapper from './Wrapper';
 const socketURL = process.env.NEXT_PUBLIC_SOCKET_URL || '';
 const socket = io(socketURL);
 
