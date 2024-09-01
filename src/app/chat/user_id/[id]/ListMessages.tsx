@@ -17,7 +17,7 @@ export default function ListMessages({
         useSession();
     const { user_id, pp, name: userName } = session.user;
     return (
-        <div className='w-full flex flex-col justify-end gap-3 px-6 pb-7 pt-16 flex-grow'>
+        <>
             {listMessage.map((date: DateGroup, dateIndex: number) => (
                 <div key={dateIndex}>
                     <div className='w-full flex justify-center py-4'>
@@ -41,7 +41,7 @@ export default function ListMessages({
                                     key={messageIndex}
                                     className={`w-full flex flex-col md:flex-row py-2 gap-2.5 ${
                                         isFromMe &&
-                                        'md:flex-row-reverse md:justify-start'
+                                        'items-end md:flex-row-reverse md:justify-start'
                                     }`}
                                 >
                                     <div className='w-fit h-fit rounded-full bg-zinc-900/[0.5]'>
@@ -63,7 +63,7 @@ export default function ListMessages({
                                         )}
                                     </div>
                                     <div
-                                        className={`flex flex-col gap-2 ${
+                                        className={`w-full md:w-fit flex flex-col gap-2 ${
                                             isFromMe && 'items-end'
                                         }`}
                                     >
@@ -89,6 +89,6 @@ export default function ListMessages({
                     )}
                 </div>
             ))}
-        </div>
+        </>
     );
 }

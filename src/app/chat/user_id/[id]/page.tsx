@@ -131,7 +131,6 @@ export default function ChatPage({
                         return updatedData;
                     }
                 );
-                window.scrollTo(0, document.body.scrollHeight);
             }
         };
 
@@ -160,13 +159,15 @@ export default function ChatPage({
                     </h1>
                 </section>
             ) : (
-                <section className='w-full flex flex-col h-screen bg-ornament bg-fixed bg-zinc-950 overflow-y-auto'>
+                <section className='w-full flex flex-col min-h-screen bg-ornament bg-fixed bg-zinc-950'>
                     <NavbarChat senderInfo={senderInfo} />
                     {listMessage.length !== 0 ? (
-                        <ListMessages
-                            listMessage={listMessage as Array<DateGroup>}
-                            senderInfo={senderInfo as User}
-                        />
+                        <div className='w-full flex flex-col justify-end gap-3 px-6 pb-7 pt-16 flex-grow overflow-y-auto'>
+                            <ListMessages
+                                listMessage={listMessage as Array<DateGroup>}
+                                senderInfo={senderInfo as User}
+                            />
+                        </div>
                     ) : (
                         <div className='w-full flex flex-col justify-center items-center p-6 flex-grow bg-zinc-950'>
                             {senderInfo && senderInfo.pp !== 'empety' ? (
