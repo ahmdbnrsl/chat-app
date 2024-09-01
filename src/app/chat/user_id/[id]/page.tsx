@@ -159,10 +159,10 @@ export default function ChatPage({
                     </h1>
                 </section>
             ) : (
-                <section className='w-full flex flex-col min-h-screen bg-ornament bg-fixed bg-zinc-950'>
+                <section className='w-full flex flex-col h-screen overflow-y-auto bg-ornament bg-fixed bg-zinc-950'>
                     <NavbarChat senderInfo={senderInfo} />
                     {listMessage.length !== 0 ? (
-                        <div className='w-full flex flex-col justify-end gap-3 px-6 pb-7 pt-16 flex-grow min-h-screen overflow-y-auto'>
+                        <div className='w-full flex flex-col justify-end gap-3 px-6 pb-7 pt-16 flex-grow min-h-screen'>
                             <ListMessages
                                 listMessage={listMessage as Array<DateGroup>}
                                 senderInfo={senderInfo as User}
