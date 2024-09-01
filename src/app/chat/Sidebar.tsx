@@ -18,7 +18,7 @@ export default function SidebarChat({
     const pathName: string = usePathname();
     const IdSender: string = pathName.split('/').slice(-1)[0];
     return (
-        <div className='w-full flex flex-col gap-3 p-6 flex-grow overflow-y-auto max-h-screen'>
+        <div className='w-full flex flex-col gap-3 p-6 flex-grow'>
             {!listSender ? (
                 <div className='w-full flex justify-center gap-1.5 items-center text-lg font-medium text-zinc-500'>
                     <Loading /> Loading your chats...
