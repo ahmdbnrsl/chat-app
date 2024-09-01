@@ -57,6 +57,7 @@ export default function ChatPage({
         );
         if (res && res?.status) {
             setListMessage(res.result as Array<DateGroup>);
+            window.scrollTo(0, document.body.scrollHeight);
         }
     }, [session?.user?.user_id, params.id]);
 
@@ -130,6 +131,7 @@ export default function ChatPage({
                         return updatedData;
                     }
                 );
+                window.scrollTo(0, document.body.scrollHeight);
             }
         };
 

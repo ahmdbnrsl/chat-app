@@ -3,6 +3,7 @@
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Avatar from 'react-avatar';
+import BubleMessage from '@/components/Buble';
 import type { DateGroup, SenderGroup, GroupedMessage, User } from '@/types';
 
 export default function ListMessages({
@@ -38,9 +39,9 @@ export default function ListMessages({
                             return (
                                 <div
                                     key={messageIndex}
-                                    className={`w-full flex py-2 gap-2.5 ${
+                                    className={`w-full flex flex-col md:flex-row py-2 gap-2.5 ${
                                         isFromMe &&
-                                        'flex-row-reverse justify-start'
+                                        'md:flex-row-reverse md:justify-start'
                                     }`}
                                 >
                                     <div className='w-fit h-fit rounded-full bg-zinc-900/[0.5]'>
@@ -74,12 +75,11 @@ export default function ListMessages({
                                                 buble: GroupedMessage,
                                                 bubleIndex: number
                                             ) => (
-                                                <div
+                                                <BubleMessage
+                                                    buble={buble}
                                                     key={bubleIndex}
-                                                    className='w-fit h-fit bg-zinc-900 rounded-xl py-2 text-base px-3 text-zinc-300 min-w-[5rem]'
-                                                >
-                                                    {buble.message_text}
-                                                </div>
+                                                    isFromMe={isFromMe}
+                                                />
                                             )
                                         )}
                                     </div>
