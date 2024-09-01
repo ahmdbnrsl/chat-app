@@ -153,16 +153,16 @@ export default function ChatPage({
     return (
         <main className='bg-zinc-950 w-full min-h-screen flex'>
             {!listMessage ? (
-                <section className='w-full flex flex-col min-h-screen bg-fixed bg-zinc-950 justify-center items-center'>
+                <section className='w-full flex flex-col h-screen bg-fixed bg-zinc-950 justify-center items-center'>
                     <h1 className='flex items-center gap-2 sm:gap-3 text-lg sm:text-xl md:text-2xl text-zinc-400 font-medium text-center scale-[3]'>
                         <LoadingMessage />
                     </h1>
                 </section>
             ) : (
-                <section className='w-full flex flex-col h-screen bg-ornament bg-fixed bg-zinc-950'>
+                <section className='w-full flex flex-col h-screen bg-ornament bg-fixed bg-zinc-950 overflow-y-auto'>
                     <NavbarChat senderInfo={senderInfo} />
                     {listMessage.length !== 0 ? (
-                        <div className='w-full flex flex-col h-screen flex-grow overflow-y-auto'>
+                        <div className='w-full flex flex-col flex-grow justify-end'>
                             <ListMessages
                                 listMessage={listMessage as Array<DateGroup>}
                                 senderInfo={senderInfo as User}
