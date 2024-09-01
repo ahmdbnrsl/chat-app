@@ -162,7 +162,7 @@ export default function ChatPage({
                 <section className='w-full flex flex-col min-h-screen bg-ornament bg-fixed bg-zinc-950'>
                     <NavbarChat senderInfo={senderInfo} />
                     {listMessage.length !== 0 ? (
-                        <div className='w-full flex flex-col justify-end gap-3 px-6 pb-7 pt-16 flex-grow overflow-y-auto'>
+                        <div className='w-full flex flex-col justify-end gap-3 px-6 pb-7 pt-16 flex-grow h-screen overflow-y-auto'>
                             <ListMessages
                                 listMessage={listMessage as Array<DateGroup>}
                                 senderInfo={senderInfo as User}
