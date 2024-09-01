@@ -17,7 +17,7 @@ export default function ListMessages({
         useSession();
     const { user_id, pp, name: userName } = session.user;
     return (
-        <div className='w-full flex flex-col justify-end gap-3 px-6 pb-7 pt-16 overflow-y-scroll'>
+        <div className='w-full flex flex-col justify-end gap-3 px-6 pb-7 pt-16'>
             {listMessage.map((date: DateGroup, dateIndex: number) => (
                 <div key={dateIndex}>
                     <div className='w-full flex justify-center py-4'>
