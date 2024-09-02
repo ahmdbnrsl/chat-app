@@ -42,30 +42,25 @@ export default function BubleMessage({
             id={buble.message_id}
             className={`w-fit h-fit transition-transform ${
                 isFromMe ? 'bg-zinc-700' : 'bg-zinc-900'
-            } rounded-xl py-2 text-base px-3 text-zinc-300 min-w-[5rem] flex flex-col max-w-full`}
+            } rounded-xl p-2 text-base text-zinc-300 min-w-[5rem] flex flex-col max-w-full`}
         >
             {buble?.message_quoted && (
-                <div className='w-full px-[0.015rem] pt-[0.015rem] pb-2.5'>
-                    <div
-                        onClick={e =>
-                            HandleScroll(
-                                e,
-                                buble?.message_quoted?.message_id as ID
-                            )
-                        }
-                        className={`w-full p-2 flex flex-col gap-1 rounded-xl ${
-                            isFromMe ? 'bg-zinc-900' : 'bg-zinc-700'
-                        }`}
-                    >
-                        <p className='text-zinc-400 text-sm font-medium'>
-                            {buble.message_quoted.from_name}
-                        </p>
-                        <p className='text-zinc-500 text-xs font-normal'>
-                            {truncateFiltration(
-                                buble?.message_quoted?.message_text as ID
-                            )}
-                        </p>
-                    </div>
+                <div
+                    onClick={e =>
+                        HandleScroll(e, buble?.message_quoted?.message_id as ID)
+                    }
+                    className={`w-full p-2 flex flex-col gap-1 rounded-xl pb-2.5 ${
+                        isFromMe ? 'bg-zinc-900' : 'bg-zinc-700'
+                    }`}
+                >
+                    <p className='text-zinc-400 text-sm font-medium'>
+                        {buble.message_quoted.from_name}
+                    </p>
+                    <p className='text-zinc-500 text-xs font-normal'>
+                        {truncateFiltration(
+                            buble?.message_quoted?.message_text as ID
+                        )}
+                    </p>
                 </div>
             )}
             <div>
