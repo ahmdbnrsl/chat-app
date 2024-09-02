@@ -78,6 +78,7 @@ export interface M {
         message_text: string;
         message_timestamp: string;
         message_quoted?: MessageQuoted;
+        message_id?: string;
         secret?: string;
     };
     DeleteMessage: {
