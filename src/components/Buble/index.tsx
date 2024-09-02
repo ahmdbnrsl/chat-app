@@ -1,6 +1,6 @@
 'use client';
 
-import type { GroupedMessage } from '@/types';
+import type { GroupedMessage, MessageQuoted, ID } from '@/types';
 import { hour } from '@/services/getTime';
 import { useCallback, MouseEvent } from 'react';
 
@@ -43,7 +43,13 @@ export default function BubleMessage({
                 <div className='w-full px-[0.06rem] pt-[0.06rem] pb-1.5'>
                     <div
                         onClick={e =>
-                            HandleScroll(e, buble.message_quoted.message_id)
+                            HandleScroll(
+                                e,
+                                (
+                                    (buble as GroupedMessage)
+                                        ?.message_quoted as MessageQuoted
+                                )?.message_id as ID
+                            )
                         }
                         className={`w-full p-2 flex flex-col gap-1 rounded-xl ${
                             isFromMe ? 'bg-zinc-900' : 'bg-slate-900'
