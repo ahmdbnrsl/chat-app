@@ -58,7 +58,7 @@ export default function BubleMessage({
                         <p className='text-zinc-400 text-sm font-medium'>
                             {buble.message_quoted.from_name}
                         </p>
-                        <p className='text-zinc-500 text-xs font-normal truncate'>
+                        <p className='text-zinc-500 text-xs font-normal truncate max-h-[3ch]'>
                             {buble.message_quoted.message_text}
                         </p>
                     </div>
