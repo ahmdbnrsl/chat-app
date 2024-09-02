@@ -70,18 +70,18 @@ export default function FormMessagge({
     return (
         <div className='sticky bottom-0 bg-zinc-950 flex flex-col w-full gap-2.5'>
             {quotedInfo && (
-                <div className='w-full mx-6 my-4 py-1 px-2.5 sm:py-2 sm:px-4 bg-zinc-900/[0.75] flex flex-col items-end relative'>
-                    <div className='flex flex-col w-full gap-1.5'>
+                <div className='w-full px-6 py-4 flex flex-col items-end relative'>
+                    <div className='py-1 px-2.5 sm:py-2 sm:px-4 flex flex-col w-full gap-1.5 bg-zinc-900/[0.75] rounded-lg'>
                         <p className='text-sm font-medium text-zinc-400'>
-                            {quotedInfo.from_name}
+                            reply to {quotedInfo.from_name}
                         </p>
-                        <p className='text-xs font-normal text-zinc-500'>
+                        <p className='text-xs font-normal text-zinc-500 max-h-[3ch] truncate'>
                             {quotedInfo.message_text}
                         </p>
                     </div>
                     <button
                         onClick={reset}
-                        className='py-1 px-2 rounded bg-zinc-800 text-sm text-zinc-400 absolute'
+                        className='py-1 px-2 text-sm text-zinc-400 absolute'
                     >
                         <IoMdClose />
                     </button>
@@ -98,7 +98,7 @@ export default function FormMessagge({
                     name='message'
                     onChange={MessageChangeValidate}
                     placeholder='Type your message...'
-                    className='form_sendmessage max-h-40 resize-none w-full py-1 px-2.5 sm:py-2 sm:px-4 text-zinc-300 font-normal text-base outline-0 border-0 rounded-lg placeholder:text-zinc-500 placeholder:text-sm sm:placeholder:text-base'
+                    className='form_sendmessage max-h-40 resize-none w-full py-1 px-2.5 sm:py-2 sm:px-4 text-zinc-300 font-normal text-base outline-0 border-0 rounded-lg placeholder:text-zinc-500 placeholder:text-sm sm:placeholder:text-base bg-zinc-950'
                 ></textarea>
                 <CircleButton
                     isLoad={load}
