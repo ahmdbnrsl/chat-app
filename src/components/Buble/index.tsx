@@ -50,10 +50,10 @@ export default function BubleMessage({
                         HandleScroll(e, buble?.message_quoted?.message_id as ID)
                     }
                     className={`cursor-pointer w-full flex rounded-lg mb-2 ${
-                        isFromMe ? 'bg-slate-900/[0.6]' : 'bg-zinc-900/[0.6]'
+                        isFromMe ? 'bg-slate-950/[0.6]' : 'bg-zinc-950/[0.6]'
                     }`}
                 >
-                    <div className='w-[2px] flex items-stretch bg-slate-300'></div>
+                    <div className='w-[2px] flex items-stretch bg-slate-300 rounded-b-full rounded-t-full'></div>
                     <div className='p-2 flex flex-col gap-1'>
                         <p className='text-zinc-400 text-sm font-medium'>
                             {buble.message_quoted.from_name}
