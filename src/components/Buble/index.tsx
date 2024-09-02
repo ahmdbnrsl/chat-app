@@ -5,10 +5,12 @@ import { hour } from '@/services/getTime';
 import { useCallback } from 'react';
 
 export default function BubleMessage({
+    onClicking,
     key,
     buble,
     isFromMe
 }: {
+    onClicking: () => void;
     key: number;
     buble: GroupedMessage;
     isFromMe: boolean;
@@ -16,6 +18,7 @@ export default function BubleMessage({
     const timestamp = useCallback(hour, []);
     return (
         <div
+            onClick={onClicking}
             key={key}
             className={`w-fit h-fit ${
                 isFromMe ? 'bg-slate-900' : 'bg-zinc-900'

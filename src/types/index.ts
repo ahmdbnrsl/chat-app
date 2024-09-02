@@ -214,3 +214,11 @@ export type AuthInputProps = {
     maxs: number;
     onChanging?: (e: ChangeEvent<HTMLInputElement>) => void;
 };
+
+// STATE TYPES
+
+export interface MessageQuotedState {
+    quotedInfo: MessageQuoted | null;
+    add: (isQuoted: MessageQuoted) => void;
+    reset: () => void;
+}

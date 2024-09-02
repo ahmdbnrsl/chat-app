@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Avatar from 'react-avatar';
 import BubleMessage from '@/components/Buble';
 import type { DateGroup, SenderGroup, GroupedMessage, User } from '@/types';
+import { useManageQuoted } from '@/lib/useManageQuoted';
 
 export default function ListMessages({
     listMessage,
@@ -16,6 +17,14 @@ export default function ListMessages({
     const { data: session, status }: { data: any; status: string } =
         useSession();
     const { user_id, pp, name: userName } = session.user;
+    const { add } = useManageQuoted();
+    const handleReply = (buble: GroupedMessage, fromName: string) => {
+        add({
+            message_text: buble.message_text,
+            message_id: buble.message_id,
+            from_name: fromName
+        });
+    };
     return (
         <div className='w-full flex flex-col justify-end gap-3 px-6 pb-7 pt-16'>
             {listMessage.map((date: DateGroup, dateIndex: number) => (
@@ -76,6 +85,12 @@ export default function ListMessages({
                                                 bubleIndex: number
                                             ) => (
                                                 <BubleMessage
+                                                    onClicking={() =>
+                                                        handleReply(
+                                                            buble,
+                                                            profileName
+                                                        )
+                                                    }
                                                     buble={buble}
                                                     key={bubleIndex}
                                                     isFromMe={isFromMe}
