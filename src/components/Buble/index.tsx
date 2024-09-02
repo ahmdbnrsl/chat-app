@@ -41,26 +41,29 @@ export default function BubleMessage({
             key={key}
             id={buble.message_id}
             className={`w-fit h-fit transition-transform ${
-                isFromMe ? 'bg-zinc-700' : 'bg-zinc-900'
-            } rounded-xl p-1 text-base text-zinc-300 min-w-[5rem] flex flex-col max-w-full`}
+                isFromMe ? 'bg-slate-900' : 'bg-zinc-900'
+            } rounded-lg p-1 text-base text-zinc-300 min-w-[5rem] flex flex-col max-w-full`}
         >
             {buble?.message_quoted && (
                 <div
                     onClick={e =>
                         HandleScroll(e, buble?.message_quoted?.message_id as ID)
                     }
-                    className={`w-full p-2 flex flex-col gap-1 rounded-xl mb-3 ${
-                        isFromMe ? 'bg-zinc-900' : 'bg-zinc-700'
+                    className={`cursor-pointer w-full flex rounded-lg mb-2 ${
+                        isFromMe ? 'bg-slate-900/[0.6]' : 'bg-zinc-900/[0.6]'
                     }`}
                 >
-                    <p className='text-zinc-400 text-sm font-medium'>
-                        {buble.message_quoted.from_name}
-                    </p>
-                    <p className='text-zinc-500 text-xs font-normal'>
-                        {truncateFiltration(
-                            buble?.message_quoted?.message_text as ID
-                        )}
-                    </p>
+                    <div className='w-[2px] flex items-stretch bg-slate-300'></div>
+                    <div className='p-2 flex flex-col gap-1'>
+                        <p className='text-zinc-400 text-sm font-medium'>
+                            {buble.message_quoted.from_name}
+                        </p>
+                        <p className='text-zinc-500 text-xs font-normal'>
+                            {truncateFiltration(
+                                buble?.message_quoted?.message_text as ID
+                            )}
+                        </p>
+                    </div>
                 </div>
             )}
             <div>
