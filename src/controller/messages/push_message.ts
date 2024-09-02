@@ -11,7 +11,7 @@ export const pushMessage = async (
 ): Promise<M['IsMessage'] | false> => {
     try {
         await mongoose.connect(URI);
-        if (receiver_id !== sender_id) {
+        if (messageOptions.receiver_id !== messageOptions.sender_id) {
             const checkExistingReceiver: User | null = await users.findOne({
                 user_id: messageOptions.receiver_id
             });
