@@ -2,7 +2,7 @@
 
 import type { GroupedMessage } from '@/types';
 import { hour } from '@/services/getTime';
-import { useCallback } from 'react';
+import { useCallback, MouseEvent } from 'react';
 
 export default function BubleMessage({
     onClicking,
