@@ -42,14 +42,14 @@ export default function BubleMessage({
             id={buble.message_id}
             className={`w-fit h-fit transition-transform ${
                 isFromMe ? 'bg-zinc-700' : 'bg-zinc-900'
-            } rounded-xl p-2 text-base text-zinc-300 min-w-[5rem] flex flex-col max-w-full`}
+            } rounded-xl p-1 text-base text-zinc-300 min-w-[5rem] flex flex-col max-w-full`}
         >
             {buble?.message_quoted && (
                 <div
                     onClick={e =>
                         HandleScroll(e, buble?.message_quoted?.message_id as ID)
                     }
-                    className={`w-full p-2 flex flex-col gap-1 rounded-xl pb-2.5 ${
+                    className={`w-full p-2 flex flex-col gap-1 rounded-xl mb-3 ${
                         isFromMe ? 'bg-zinc-900' : 'bg-zinc-700'
                     }`}
                 >
@@ -65,13 +65,13 @@ export default function BubleMessage({
             )}
             <div>
                 <pre
-                    className='h-full whitespace-pre-wrap text-base font-inherit'
+                    className='mt-1 px-2 h-full whitespace-pre-wrap text-base font-inherit'
                     style={{ fontFamily: 'inherit' }}
                 >
                     {buble.message_text}
                 </pre>
             </div>
-            <p className='mt-1 w-full text-end text-xs font-normal text-zinc-500'>
+            <p className='px-2 mb-1 mt-1 w-full text-end text-xs font-normal text-zinc-500'>
                 {timestamp(buble.message_timestamp)}
             </p>
         </div>
