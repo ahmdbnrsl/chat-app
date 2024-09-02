@@ -27,9 +27,11 @@ export default function BubleMessage({
                 block: 'center',
                 behavior: 'smooth'
             });
-            el.style.transform = 'scale(1.05)';
+            el.style.transform = 'scale(1.02)';
+            el.style.border = '1px solid #d4d4d8';
             setTimeout(() => {
                 el.style.transform = 'scale(1)';
+                el.style.border = 'none';
             }, 1500);
         }
     };
@@ -43,7 +45,7 @@ export default function BubleMessage({
             } rounded-xl py-2 text-base px-3 text-zinc-300 min-w-[5rem] flex flex-col max-w-full`}
         >
             {buble?.message_quoted && (
-                <div className='w-full px-[0.06rem] pt-[0.06rem] pb-1.5'>
+                <div className='w-full px-[0.015rem] pt-[0.015rem] pb-2.5'>
                     <div
                         onClick={e =>
                             HandleScroll(
