@@ -26,6 +26,7 @@ export function groupMessagesByDateAndSender(messages: Message[]): DateGroup[] {
                 message_text: curr.message_text.trim(),
                 message_id: curr.message_id,
                 message_timestamp: curr.message_timestamp,
+                message_quoted: curr?.message_quoted,
                 _id: curr._id as ID
             });
 

@@ -53,7 +53,7 @@ export default function FormMessagge({
             if (send?.status) {
                 (e.target as HTMLFormElement).reset();
                 setTextareaValue('');
-                window.scrollTo(0, document.body.scrollHeight);
+                reset();
             } else {
                 window.navigator.vibrate(200);
             }
@@ -70,7 +70,7 @@ export default function FormMessagge({
     return (
         <div className='sticky bottom-0 bg-zinc-950 flex flex-col w-full gap-2.5'>
             {quotedInfo && (
-                <div className='w-full px-6 py-4 flex flex-col items-end relative'>
+                <div className='w-full px-6 pt-4 flex flex-col items-end relative'>
                     <div className='py-1 px-2.5 sm:py-2 sm:px-4 flex flex-col w-full gap-1.5 bg-zinc-900/[0.75] rounded-lg'>
                         <p className='text-sm font-medium text-zinc-400'>
                             reply to {quotedInfo.from_name}

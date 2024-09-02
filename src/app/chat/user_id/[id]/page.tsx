@@ -13,6 +13,7 @@ import { FetcherService } from '@/services/fetcherService';
 import { io, Socket } from 'socket.io-client';
 import type { M, DateGroup, Message, User, ID, SenderGroup } from '@/types';
 import { date, hour } from '@/services/getTime';
+import { useManageQuoted } from '@/lib/useManageQuoted';
 
 const socketURL: string = process.env.NEXT_PUBLIC_SOCKET_URL || '';
 const socket: Socket = io(socketURL);
@@ -28,6 +29,7 @@ export default function ChatPage({
         Array<DateGroup> | null | undefined
     >(null);
     const [senderInfo, setSenderInfo] = useState<undefined | null | User>(null);
+    const { reset: resetQuoted } = useManageQuoted();
 
     const getDate = useCallback(date, []);
     const getTimestamp = useCallback(hour, []);
@@ -57,6 +59,7 @@ export default function ChatPage({
         );
         if (res && res?.status) {
             setListMessage(res.result as Array<DateGroup>);
+            resetQuoted();
             window.scrollTo(0, document.body.scrollHeight);
         }
     }, [session?.user?.user_id, params.id]);
@@ -117,6 +120,7 @@ export default function ChatPage({
                                 message_text: newData.message_text,
                                 message_id: newData.message_id,
                                 message_timestamp: newData.message_timestamp,
+                                message_quoted: newData?.message_quoted,
                                 _id: newData._id as ID
                             };
                         } else {
@@ -124,6 +128,7 @@ export default function ChatPage({
                                 message_text: newData.message_text,
                                 message_id: newData.message_id,
                                 message_timestamp: newData.message_timestamp,
+                                message_quoted: newData?.message_quoted,
                                 _id: newData._id as ID
                             });
                         }

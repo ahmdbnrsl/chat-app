@@ -48,6 +48,7 @@ export interface GroupedMessage {
     message_id: string;
     message_timestamp: string;
     _id: string;
+    message_quoted?: MessageQuoted;
 }
 
 export interface SenderGroup {
