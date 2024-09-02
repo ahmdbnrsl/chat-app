@@ -4,7 +4,7 @@
 @layer components {
     /*==ROOT==*/
     ::-webkit-scrollbar {
-        @apply w-2;
+        @apply w-1.5;
     }
     ::-webkit-scrollbar-track {
         @apply bg-zinc-900 rounded-full;
