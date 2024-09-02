@@ -98,6 +98,7 @@ export default function ListMessages({
                                             )
                                         )}
                                     </div>
+                                    <div className='w-[35px] hidden md:flex'></div>
                                 </div>
                             );
                         }
