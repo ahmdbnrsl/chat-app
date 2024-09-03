@@ -22,7 +22,10 @@
         "react-avatar": "^5.0.3",
         "socket.io-client": "latest",
         "zustand": "latest",
-        "react-use": "latest"
+        "react-use": "latest",
+        "@shadcn/ui": "latest",
+        "@radix-ui/react-dropdown-menu": "latest",
+        "lucide-react": "latest"
     },
     "devDependencies": {
         "typescript": "^5",

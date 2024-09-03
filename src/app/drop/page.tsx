@@ -1,69 +1,38 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
-import { useClickAway } from 'react-use';
+import * as React from 'react';
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { ChevronDownIcon } from 'lucide-react';
 
-export default function DropdownMenu() {
-    const [isOpen, setIsOpen] = useState(false);
-    const [position, setPosition] = useState({ top: 0, left: 0 });
-    const buttonRef = useRef<HTMLButtonElement>(null);
-    const menuRef = useRef<HTMLDivElement>(null);
-
-    useClickAway(menuRef, () => setIsOpen(false));
-
-    const toggleDropdown = () => {
-        setIsOpen(!isOpen);
-
-        if (buttonRef.current) {
-            const rect = buttonRef.current.getBoundingClientRect();
-            const menuHeight = 150;
-            const menuWidth = 200;
-
-            let top = rect.bottom;
-            let left = rect.left;
-
-            if (rect.bottom + menuHeight > window.innerHeight) {
-                top = rect.top - menuHeight;
-            }
-            if (rect.left + menuWidth > window.innerWidth) {
-                left = rect.left - (rect.left + menuWidth - window.innerWidth);
-            }
-
-            setPosition({ top, left });
-        }
-    };
-
+export default function Dropdown() {
     return (
-        <div className='flex justify-center items-center h-screen bg-gray-100'>
-            <div className='relative'>
-                <button
-                    ref={buttonRef}
-                    onClick={toggleDropdown}
-                    className='px-4 py-2 bg-blue-500 text-white rounded'
-                >
-                    Toggle Dropdown
-                </button>
+        <main className='flex min-h-screen flex-col items-center justify-center p-24'>
+            <h1 className='text-2xl mb-4'>Welcome to My App</h1>
+            <DropdownMenu.Root>
+                <DropdownMenu.Trigger asChild>
+                    <button className='inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600'>
+                        Options <ChevronDownIcon className='ml-2 h-4 w-4' />
+                    </button>
+                </DropdownMenu.Trigger>
 
-                {isOpen && (
-                    <div
-                        ref={menuRef}
-                        style={{ top: position.top, left: position.left }}
-                        className='absolute z-10 w-48 bg-white shadow-lg border rounded'
+                <DropdownMenu.Portal>
+                    <DropdownMenu.Content
+                        className='bg-white border rounded-md shadow-md p-1'
+                        align='end'
+                        sideOffset={5}
                     >
-                        <ul>
-                            <li className='px-4 py-2 hover:bg-gray-200 cursor-pointer'>
-                                Option 1
-                            </li>
-                            <li className='px-4 py-2 hover:bg-gray-200 cursor-pointer'>
-                                Option 2
-                            </li>
-                            <li className='px-4 py-2 hover:bg-gray-200 cursor-pointer'>
-                                Option 3
-                            </li>
-                        </ul>
-                    </div>
-                )}
-            </div>
-        </div>
+                        <DropdownMenu.Item className='px-4 py-2 cursor-pointer hover:bg-gray-100'>
+                            Profile
+                        </DropdownMenu.Item>
+                        <DropdownMenu.Item className='px-4 py-2 cursor-pointer hover:bg-gray-100'>
+                            Settings
+                        </DropdownMenu.Item>
+                        <DropdownMenu.Item className='px-4 py-2 cursor-pointer hover:bg-gray-100'>
+                            Log out
+                        </DropdownMenu.Item>
+                    </DropdownMenu.Content>
+                </DropdownMenu.Portal>
+            </DropdownMenu.Root>
+        </main>
     );
 }

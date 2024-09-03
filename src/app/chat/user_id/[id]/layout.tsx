@@ -24,14 +24,24 @@ export async function generateMetadata({
                     'https://vbchat.vercel.app/',
                 siteName: 'Chat App',
                 type: 'website',
-                images: [user?.pp || '']
+                images: [
+                    user?.pp
+                        ? user?.pp !== 'empety'
+                            ? user?.pp
+                            : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+                        : ''
+                ]
             },
             twitter: {
                 card: 'summary_large_image',
                 title: 'VB CHAT | Chat',
                 description: 'Chat with ' + user?.name,
                 images: {
-                    url: user?.pp || '',
+                    url: user?.pp
+                        ? user?.pp !== 'empety'
+                            ? user?.pp
+                            : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+                        : '',
                     alt: 'Twitter Card VB CHAT Image'
                 }
             }
