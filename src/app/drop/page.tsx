@@ -5,8 +5,8 @@ import { useOnClickOutside } from 'usehooks-ts';
 
 export default function Dropdown() {
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [menuStyles, setMenuStyles] = useState({});
-    const buttonRef = useRef(null);
+    const [menuStyles, setMenuStyles] = useState<object>({});
+    const buttonRef = useRef<HTMLButtonElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
 
     useOnClickOutside(menuRef, () => setIsOpen(false));
