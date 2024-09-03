@@ -30,20 +30,20 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                         aria-labelledby='options-menu'
                     >
                         <button
-                            className='w-full text-left px-4 py-2 text-sm text-zinc-400 hover:bg-zinc-950/[0.4] hover:text-zinc-300'
+                            className='flex gap-2 w-full text-left px-4 py-2 text-sm text-zinc-400 hover:bg-zinc-950/[0.4] hover:text-zinc-300'
                             role='menuitem'
                             onClick={handleReply}
                         >
                             <FaArrowLeft /> Reply
                         </button>
                         <button
-                            className='w-full text-left px-4 py-2 text-sm text-zinc-400 hover:bg-zinc-950/[0.4] hover:text-zinc-300'
+                            className='flex gap-2 w-full text-left px-4 py-2 text-sm text-zinc-400 hover:bg-zinc-950/[0.4] hover:text-zinc-300'
                             role='menuitem'
                         >
                             <MdContentCopy /> Copy
                         </button>
                         <button
-                            className='w-full text-left px-4 py-2 text-sm text-red-700 hover:bg-zinc-950/[0.4] hover:text-red-500'
+                            className='flex gap-2 w-full text-left px-4 py-2 text-sm text-red-700 hover:bg-zinc-950/[0.4] hover:text-red-500'
                             role='menuitem'
                         >
                             <MdDeleteOutline /> Delete
