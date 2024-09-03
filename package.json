@@ -21,7 +21,8 @@
         "swr": "latest",
         "react-avatar": "^5.0.3",
         "socket.io-client": "latest",
-        "zustand": "latest"
+        "zustand": "latest",
+        "react-use": "latest"
     },
     "devDependencies": {
         "typescript": "^5",
