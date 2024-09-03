@@ -25,6 +25,7 @@ export default function BubleMessage({
     const [pressTimeout, setPressTimeout] = useState<NodeJS.Timeout | null>(
         null
     );
+    const [opacity, setOpacity] = useState<string>('opacity-100');
 
     const handleReply = () => {
         add({
@@ -50,12 +51,60 @@ export default function BubleMessage({
         }
     };
 
+    const handleLongPress = useCallback((): void => {
+        handleReply();
+        setOpacity('opacity-50');
+    }, []);
+
+    const handleMouseDown = (event: MouseEvent<HTMLDivElement>): void => {
+        setIsPressed(true);
+        const timeout = setTimeout(handleLongPress, 500);
+        setPressTimeout(timeout);
+    };
+
+    const handleMouseUp = (event: MouseEvent<HTMLDivElement>): void => {
+        setIsPressed(false);
+        if (pressTimeout) {
+            clearTimeout(pressTimeout);
+            setPressTimeout(null);
+            setOpacity('opacity-100');
+        }
+    };
+
+    const handleMouseLeave = (event: MouseEvent<HTMLDivElement>): void => {
+        setIsPressed(false);
+        if (pressTimeout) {
+            clearTimeout(pressTimeout);
+            setPressTimeout(null);
+            setOpacity('opacity-100');
+        }
+    };
+
+    const handleTouchStart = (event: TouchEvent<HTMLDivElement>): void => {
+        setIsPressed(true);
+        const timeout = setTimeout(handleLongPress, 500);
+        setPressTimeout(timeout);
+    };
+
+    const handleTouchEnd = (event: TouchEvent<HTMLDivElement>): void => {
+        setIsPressed(false);
+        if (pressTimeout) {
+            clearTimeout(pressTimeout);
+            setPressTimeout(null);
+            setOpacity('opacity-100');
+        }
+    };
+
     return (
         <div
-            onClick={handleReply}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseLeave}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
             key={key}
             id={buble.message_id}
-            className={`w-fit h-fit transition-transform ${
+            className={`${opacity} w-fit h-fit transition-transform ${
                 isFromMe ? 'bg-slate-900' : 'bg-zinc-900'
             } rounded-lg p-1 text-base text-zinc-300 min-w-[5rem] flex flex-col max-w-full`}
         >

@@ -5,40 +5,28 @@ import { useOnClickOutside } from 'usehooks-ts';
 
 export default function Dropdown() {
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [menuStyles, setMenuStyles] = useState<React.CSSProperties>({
-        position: 'absolute',
-        top: '0px',
-        left: '0px',
-        visibility: 'hidden'
-    });
+    const [positionTop, setPositionTop] = useState<string>('0');
     const buttonRef = useRef<HTMLButtonElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
 
     useOnClickOutside(menuRef, () => setIsOpen(false));
+    const isFromMe = false;
 
     const calculatePosition = useCallback(() => {
         if (buttonRef.current && menuRef.current) {
-            const buttonRect = buttonRef.current.getBoundingClientRect();
-            const menuRect = menuRef.current.getBoundingClientRect();
-            const viewportHeight = window.innerHeight;
-            const viewportWidth = window.innerWidth;
+            const spaceRemaining =
+                window.innerHeight -
+                buttonRef.current.getBoundingClientRect().bottom;
+            const contentHeight = menuRef.current.clientHeight;
 
-            const isBelow =
-                buttonRect.bottom + menuRect.height <= viewportHeight;
-            const isRight = buttonRect.left + menuRect.width <= viewportWidth;
+            const topPosition =
+                spaceRemaining > contentHeight
+                    ? null
+                    : -(contentHeight - spaceRemaining);
 
-            const top = isBelow
-                ? buttonRect.bottom + window.scrollY
-                : buttonRect.top - menuRect.height + window.scrollY;
-            const left = isRight
-                ? buttonRect.left + window.scrollX
-                : buttonRect.right - menuRect.width + window.scrollX;
-
-            setMenuStyles({
-                top: `${top}px`,
-                left: `${left}px`,
-                position: 'absolute'
-            });
+            setPositionTop(String(topPosition));
+            const xPosition: 'left' | 'right' = isFromMe ? 'right' : 'left';
+            menuRef.current.style[xPosition] = '0';
         }
     }, []);
 
@@ -47,13 +35,15 @@ export default function Dropdown() {
             calculatePosition();
         }
     }, [isOpen, calculatePosition]);
-
     return (
-        <div className='w-full h-screen flex justify-center items-center'>
+        <div className='bg-zinc-950 w-full h-screen flex justify-center items-center flex-col'>
+            <div className='h-[90vh] w-full'></div>
             <div className='relative inline-block text-left'>
                 <button
                     ref={buttonRef}
-                    onClick={() => setIsOpen(!isOpen)}
+                    onClick={() => {
+                        setIsOpen(!isOpen);
+                    }}
                     className='inline-flex w-full justify-center rounded-md bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75'
                 >
                     Options
@@ -62,8 +52,8 @@ export default function Dropdown() {
                 {isOpen && (
                     <div
                         ref={menuRef}
-                        style={menuStyles}
-                        className='z-10 mt-2 w-56 rounded-md bg-zinc-900 shadow-lg focus:outline-none'
+                        style={{ top: positionTop + 'px' }}
+                        className='absolute z-10 mt-2 w-56 rounded-md bg-zinc-900 shadow-lg focus:outline-none'
                     >
                         <div
                             className='py-1'
