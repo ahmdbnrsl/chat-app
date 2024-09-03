@@ -5,7 +5,7 @@ import { useOnClickOutside } from 'usehooks-ts';
 
 export default function Dropdown() {
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [menuStyles, setMenuStyles] = useState<object>({});
+    const [menuStyles, setMenuStyles] = useState<React.CSSProperties>({});
     const buttonRef = useRef<HTMLButtonElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -20,13 +20,15 @@ export default function Dropdown() {
             const viewportWidth = window.innerWidth;
             const isBelow =
                 buttonRect.bottom + menuRect.height < viewportHeight;
-            const top = isBelow
-                ? buttonRect.bottom
-                : buttonRect.top - menuRect.height;
+            const top =
+                (isBelow
+                    ? buttonRect.bottom
+                    : buttonRect.top - menuRect.height) + window.scrollY;
             const isRight = buttonRect.right + menuRect.width < viewportWidth;
-            const left = isRight
-                ? buttonRect.left
-                : buttonRect.right - menuRect.width;
+            const left =
+                (isRight
+                    ? buttonRect.left
+                    : buttonRect.right - menuRect.width) + window.scrollX;
 
             setMenuStyles({
                 top: `${top}px`,
