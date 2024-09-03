@@ -23,9 +23,7 @@
         "socket.io-client": "latest",
         "zustand": "latest",
         "react-use": "latest",
-        "@shadcn/ui": "latest",
-        "@radix-ui/react-dropdown-menu": "latest",
-        "lucide-react": "latest"
+        "usehooks-ts": "latest"
     },
     "devDependencies": {
         "typescript": "^5",
