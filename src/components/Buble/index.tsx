@@ -1,39 +1,66 @@
 'use client';
 
-import type { GroupedMessage, MessageQuoted, ID } from '@/types';
+import type { ID, BubleProps } from '@/types';
 import { hour } from '@/services/getTime';
-import { useState, useCallback, MouseEvent, TouchEvent } from 'react';
-import { useManageQuoted } from '@/lib/useManageQuoted';
+import {
+    useState,
+    useRef,
+    useEffect,
+    useCallback,
+    MouseEvent,
+    TouchEvent
+} from 'react';
+import { useOnClickOutside } from 'usehooks-ts';
+import Dropdown from '@/components/Menu/dropDown';
 
 export default function BubleMessage({
     profileName,
     key,
     buble,
     isFromMe
-}: {
-    profileName: string;
-    key: number;
-    buble: GroupedMessage;
-    isFromMe: boolean;
-}) {
+}: BubleProps) {
     const timestamp = useCallback(hour, []);
     const truncateFiltration = (text: string): string => {
         return text.length > 200 ? text.slice(0, 200) + '...' : text;
     };
-    const { add } = useManageQuoted();
+
     const [isPressed, setIsPressed] = useState<boolean>(false);
     const [pressTimeout, setPressTimeout] = useState<NodeJS.Timeout | null>(
         null
     );
     const [opacity, setOpacity] = useState<string>('opacity-100');
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [positionTop, setPositionTop] = useState<string>('0');
 
-    const handleReply = () => {
-        add({
-            message_text: buble.message_text,
-            message_id: buble.message_id,
-            from_name: profileName
-        });
-    };
+    const bubleRef = useRef<HTMLDivElement>(null);
+    const menuRef = useRef<HTMLDivElement>(null);
+
+    useOnClickOutside(menuRef, () => setIsOpen(false));
+
+    const calculatePosition = useCallback(() => {
+        if (bubleRef.current && menuRef.current) {
+            const spaceRemaining =
+                window.innerHeight -
+                bubleRef.current.getBoundingClientRect().bottom;
+            const contentHeight = menuRef.current.clientHeight;
+
+            const topPosition =
+                spaceRemaining > contentHeight
+                    ? null
+                    : -(contentHeight - spaceRemaining);
+
+            setPositionTop(String(topPosition));
+            const xPosition: 'left' | 'right' = isFromMe ? 'right' : 'left';
+            menuRef.current.style[xPosition] = '0';
+        }
+    }, []);
+
+    useEffect(() => {
+        if (isOpen) {
+            calculatePosition();
+        }
+    }, [isOpen, calculatePosition]);
+
     const HandleScroll = (e: MouseEvent<HTMLDivElement>, id: string) => {
         e.preventDefault();
         const el: HTMLElement | null = document.getElementById(id);
@@ -52,7 +79,7 @@ export default function BubleMessage({
     };
 
     const handleLongPress = useCallback((): void => {
-        handleReply();
+        setIsOpen(true);
         setOpacity('opacity-50');
     }, []);
 
@@ -104,10 +131,18 @@ export default function BubleMessage({
             onTouchEnd={handleTouchEnd}
             key={key}
             id={buble.message_id}
+            ref={bubleRef}
             className={`${opacity} w-fit h-fit transition-transform ${
                 isFromMe ? 'bg-slate-900' : 'bg-zinc-900'
-            } rounded-lg p-1 text-base text-zinc-300 min-w-[5rem] flex flex-col max-w-full`}
+            } rounded-lg p-1 text-base text-zinc-300 min-w-[5rem] flex flex-col max-w-full relative`}
         >
+            <Dropdown
+                ref={menuRef}
+                isOpen={isOpen}
+                positionTop={positionTop}
+                buble={buble}
+                profileName={profileName}
+            />
             {buble?.message_quoted && (
                 <div
                     onClick={e =>

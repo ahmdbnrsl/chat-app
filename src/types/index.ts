@@ -216,6 +216,20 @@ export type AuthInputProps = {
     onChanging?: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
+export type BubleProps = {
+    profileName: string;
+    key: number;
+    buble: GroupedMessage;
+    isFromMe: boolean;
+};
+
+export type DropdownProps = {
+    isOpen: boolean;
+    positionTop: string;
+    buble: GroupedMessage;
+    profileName: string;
+};
+
 // STATE TYPES
 
 export interface MessageQuotedState {
