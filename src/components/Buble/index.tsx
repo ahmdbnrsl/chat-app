@@ -124,7 +124,7 @@ export default function BubleMessage({
 
     return (
         <div
-            className='min-w-[5rem] relative w-fit h-fit max-w-full'
+            className='relative w-fit h-fit max-w-full'
             key={key}
             id={buble.message_id}
         >
@@ -142,7 +142,7 @@ export default function BubleMessage({
                 onTouchStart={handleTouchStart}
                 onTouchEnd={handleTouchEnd}
                 ref={bubleRef}
-                className={`${opacity} w-fit h-fit transition-transform ${
+                className={`${opacity} min-w-[5rem]  w-fit h-fit transition-transform ${
                     isFromMe ? 'bg-slate-900' : 'bg-zinc-900'
                 } rounded-lg p-1 text-base text-zinc-300 flex flex-col max-w-full`}
             >
