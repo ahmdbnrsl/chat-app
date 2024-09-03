@@ -1,11 +1,8 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import Image from 'next/image';
-import Avatar from 'react-avatar';
-import BubleMessage from '@/components/Buble';
-import type { DateGroup, SenderGroup, GroupedMessage, User } from '@/types';
-import { useManageQuoted } from '@/lib/useManageQuoted';
+import type { DateGroup, SenderGroup, User } from '@/types';
+import BublesGroup from './BublesGroup';
 
 export default function ListMessages({
     listMessage,
@@ -17,14 +14,6 @@ export default function ListMessages({
     const { data: session, status }: { data: any; status: string } =
         useSession();
     const { user_id, pp, name: userName } = session.user;
-    const { add } = useManageQuoted();
-    const handleReply = (buble: GroupedMessage, fromName: string) => {
-        add({
-            message_text: buble.message_text,
-            message_id: buble.message_id,
-            from_name: fromName
-        });
-    };
     return (
         <div className='w-full flex flex-col justify-end gap-3 px-6 pb-7 pt-16'>
             {listMessage.map((date: DateGroup, dateIndex: number) => (
@@ -46,60 +35,13 @@ export default function ListMessages({
                                 : senderInfo.name;
 
                             return (
-                                <div
+                                <BublesGroup
                                     key={messageIndex}
-                                    className={`w-full flex flex-col md:flex-row py-2 gap-2.5 ${
-                                        isFromMe &&
-                                        'items-end md:flex-row-reverse md:justify-start md:items-start'
-                                    }`}
-                                >
-                                    <div className='w-fit h-fit rounded-full bg-zinc-900/[0.5]'>
-                                        {profilePicture !== 'empety' ? (
-                                            <Image
-                                                alt='User profile'
-                                                src={profilePicture}
-                                                height={35}
-                                                width={35}
-                                                className='rounded-full border border-zinc-700'
-                                                loading='lazy'
-                                            />
-                                        ) : (
-                                            <Avatar
-                                                name={profileName}
-                                                size='35'
-                                                round={true}
-                                            />
-                                        )}
-                                    </div>
-                                    <div
-                                        className={`w-full md:w-fit flex flex-col gap-2 ${
-                                            isFromMe && 'items-end'
-                                        }`}
-                                    >
-                                        <h1 className='text-zinc-300 font-medium text-base'>
-                                            {isFromMe ? 'You' : profileName}
-                                        </h1>
-                                        {message.messages.map(
-                                            (
-                                                buble: GroupedMessage,
-                                                bubleIndex: number
-                                            ) => (
-                                                <BubleMessage
-                                                    onClicking={() =>
-                                                        handleReply(
-                                                            buble,
-                                                            profileName
-                                                        )
-                                                    }
-                                                    buble={buble}
-                                                    key={bubleIndex}
-                                                    isFromMe={isFromMe}
-                                                />
-                                            )
-                                        )}
-                                    </div>
-                                    <div className='w-[35px] hidden md:flex'></div>
-                                </div>
+                                    profileName={profileName}
+                                    profilePicture={profilePicture}
+                                    message={message}
+                                    isFromMe={isFromMe}
+                                />
                             );
                         }
                     )}

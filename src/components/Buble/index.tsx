@@ -2,15 +2,16 @@
 
 import type { GroupedMessage, MessageQuoted, ID } from '@/types';
 import { hour } from '@/services/getTime';
-import { useCallback, MouseEvent } from 'react';
+import { useState, useCallback, MouseEvent, TouchEvent } from 'react';
+import { useManageQuoted } from '@/lib/useManageQuoted';
 
 export default function BubleMessage({
-    onClicking,
+    profileName,
     key,
     buble,
     isFromMe
 }: {
-    onClicking: () => void;
+    profileName: string;
     key: number;
     buble: GroupedMessage;
     isFromMe: boolean;
@@ -18,6 +19,19 @@ export default function BubleMessage({
     const timestamp = useCallback(hour, []);
     const truncateFiltration = (text: string): string => {
         return text.length > 200 ? text.slice(0, 200) + '...' : text;
+    };
+    const { add } = useManageQuoted();
+    const [isPressed, setIsPressed] = useState<boolean>(false);
+    const [pressTimeout, setPressTimeout] = useState<NodeJS.Timeout | null>(
+        null
+    );
+
+    const handleReply = () => {
+        add({
+            message_text: buble.message_text,
+            message_id: buble.message_id,
+            from_name: profileName
+        });
     };
     const HandleScroll = (e: MouseEvent<HTMLDivElement>, id: string) => {
         e.preventDefault();
@@ -27,17 +41,18 @@ export default function BubleMessage({
                 block: 'center',
                 behavior: 'smooth'
             });
-            el.style.transform = 'scale(1.02)';
-            el.style.border = '1px solid #d4d4d8';
+            el.style.transform = 'scale(1.01)';
+            el.style.border = '0.5px solid #52525b';
             setTimeout(() => {
                 el.style.transform = 'scale(1)';
                 el.style.border = 'none';
             }, 1500);
         }
     };
+
     return (
         <div
-            onClick={onClicking}
+            onClick={handleReply}
             key={key}
             id={buble.message_id}
             className={`w-fit h-fit transition-transform ${
