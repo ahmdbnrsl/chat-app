@@ -64,7 +64,10 @@ export default function RootLayout({
                     content='#09090b'
                 />
             </head>
-            <body className={`${poppins.className} bg-zinc-950`}>
+            <body
+                translate='no'
+                className={`${poppins.className} bg-zinc-950 select-none`}
+            >
                 <SessionWrap>{children}</SessionWrap>
             </body>
         </html>

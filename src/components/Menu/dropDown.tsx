@@ -3,6 +3,8 @@
 import { forwardRef } from 'react';
 import { useManageQuoted } from '@/lib/useManageQuoted';
 import type { DropdownProps } from '@/types';
+import { FaArrowLeft } from 'react-icons/fa6';
+import { MdContentCopy, MdDeleteOutline } from 'react-icons/md';
 
 const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
     ({ isOpen, positionTop, buble, profileName }, ref) => {
@@ -19,7 +21,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                 <div
                     ref={ref}
                     style={{ top: positionTop + 'px' }}
-                    className='absolute z-10 mt-2 w-56 rounded-md bg-zinc-900 shadow-lg focus:outline-none'
+                    className='absolute z-10 mt-2 w-56 rounded-md bg-zinc-900 shadow-xl shadow-zinc-950 focus:outline-none !opacity-100'
                 >
                     <div
                         className='py-1'
@@ -32,19 +34,19 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                             role='menuitem'
                             onClick={handleReply}
                         >
-                            Reply
+                            <FaArrowLeft /> Reply
                         </button>
                         <button
                             className='w-full text-left px-4 py-2 text-sm text-zinc-400 hover:bg-zinc-950/[0.4] hover:text-zinc-300'
                             role='menuitem'
                         >
-                            Copy
+                            <MdContentCopy /> Copy
                         </button>
                         <button
                             className='w-full text-left px-4 py-2 text-sm text-red-700 hover:bg-zinc-950/[0.4] hover:text-red-500'
                             role='menuitem'
                         >
-                            Delete
+                            <MdDeleteOutline /> Delete
                         </button>
                     </div>
                 </div>
