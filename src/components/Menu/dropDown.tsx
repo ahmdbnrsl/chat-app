@@ -4,8 +4,8 @@ import { forwardRef } from 'react';
 import { useManageQuoted } from '@/lib/useManageQuoted';
 import type { DropdownProps } from '@/types';
 
-const Dropdown = forwardRef(
-    ({ isOpen, positionTop, buble, profileName }: DropdownProps, ref) => {
+const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
+    ({ isOpen, positionTop, buble, profileName }, ref) => {
         const { add } = useManageQuoted();
         const handleReply = () => {
             add({
