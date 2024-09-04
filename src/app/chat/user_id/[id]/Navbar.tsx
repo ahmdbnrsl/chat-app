@@ -4,12 +4,20 @@ import Link from 'next/link';
 import Avatar from 'react-avatar';
 import SearchInput from '@/components/Inputs/search';
 import type { User } from '@/types';
+import { useManageSearchMessage } from '@/lib/zustand';
+import { ChangeEvent } from 'react';
 
 export default function NavbarChat({
     senderInfo
 }: {
     senderInfo: User | null | undefined;
 }) {
+    const { setSearchMessValue, reset } = useManageSearchMessage();
+    const handleSearchMessage = (e: ChangeEvent<HTMLInputElement>) => {
+        let val = e.target.value;
+        if (val.length > 0) setSearchMessValue(val);
+        if (val.length === 0) reset();
+    };
     return (
         <nav className='sticky top-0 z-20 bg-zinc-950 w-full py-4 px-6 flex flex-col md:flex-row gap-3 border-b border-zinc-800 items-center'>
             <div className='flex justify-between w-full items-center'>
@@ -57,7 +65,10 @@ export default function NavbarChat({
                     </div>
                 </div>
             </div>
-            <SearchInput placeHolder='Search message' />
+            <SearchInput
+                onChanging={handleSearchMessage}
+                placeHolder='Search message'
+            />
         </nav>
     );
 }

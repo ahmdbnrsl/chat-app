@@ -1,7 +1,7 @@
 'use client';
 
 import { forwardRef, useState } from 'react';
-import { useManageQuoted } from '@/lib/useManageQuoted';
+import { useManageQuoted } from '@/lib/zustand';
 import type { DropdownProps } from '@/types';
 import { FaArrowLeft } from 'react-icons/fa6';
 import { MdContentCopy, MdDeleteOutline } from 'react-icons/md';
@@ -50,7 +50,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                             <FaArrowLeft /> Reply
                         </DropDownBtn>
                         <DropDownBtn onClicking={handleCopy}>
-                            <MdContentCopy /> Copy
+                            <MdContentCopy /> {isCopied ? 'Copied' : 'Copy'}
                         </DropDownBtn>
                         {isFromMe && (
                             <DropDownBtn

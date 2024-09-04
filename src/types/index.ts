@@ -244,3 +244,9 @@ export interface MessageQuotedState {
     add: (isQuoted: MessageQuoted) => void;
     reset: () => void;
 }
+
+export interface SearchMessageState {
+    searchMessValue: string;
+    setSearchMessValue: (mess: string) => void;
+    reset: () => void;
+}

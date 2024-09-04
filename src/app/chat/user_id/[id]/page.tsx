@@ -21,7 +21,7 @@ import type {
     GroupedMessage
 } from '@/types';
 import { date, hour } from '@/services/getTime';
-import { useManageQuoted } from '@/lib/useManageQuoted';
+import { useManageQuoted } from '@/lib/zustand';
 
 const socketURL: string = process.env.NEXT_PUBLIC_SOCKET_URL || '';
 const socket: Socket = io(socketURL);

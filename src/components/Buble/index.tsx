@@ -12,6 +12,8 @@ import {
 } from 'react';
 import { useOnClickOutside } from 'usehooks-ts';
 import Dropdown from '@/components/Menu/dropDown';
+import { useManageSearchMessage } from '@/lib/zustand';
+import { useDebounce } from 'usehooks-ts';
 
 export default function BubleMessage({
     profileName,
@@ -23,6 +25,8 @@ export default function BubleMessage({
     const truncateFiltration = (text: string): string => {
         return text.length > 200 ? text.slice(0, 200) + '...' : text;
     };
+    const { searchMessValue } = useManageSearchMessage();
+    const debouncedSearchTerm = useDebounce(searchMessValue, 300);
 
     const [isPressed, setIsPressed] = useState<boolean>(false);
     const [pressTimeout, setPressTimeout] = useState<NodeJS.Timeout | null>(
@@ -76,6 +80,30 @@ export default function BubleMessage({
                 el.style.border = 'none';
             }, 1500);
         }
+    };
+
+    const getHighlightedText = (text: string, highlight: string) => {
+        if (!highlight.trim()) {
+            return text;
+        }
+        const regex = new RegExp(`(${highlight})`, 'gi');
+        const parts = text.split(regex);
+        return (
+            <>
+                {parts.map((part, index) =>
+                    regex.test(part) ? (
+                        <span
+                            key={index}
+                            className='bg-zinc-300 text-zinc-900'
+                        >
+                            {part}
+                        </span>
+                    ) : (
+                        part
+                    )
+                )}
+            </>
+        );
     };
 
     const handleLongPress = useCallback((): void => {
@@ -179,7 +207,10 @@ export default function BubleMessage({
                         className='mt-1 px-2 h-full whitespace-pre-wrap text-base font-inherit'
                         style={{ fontFamily: 'inherit' }}
                     >
-                        {buble.message_text}
+                        {getHighlightedText(
+                            message.message_text as ID,
+                            debouncedSearchTerm as ID
+                        )}
                     </pre>
                 </div>
                 <p className='px-2 mb-1 mt-1 w-full text-end text-xs font-normal text-zinc-500'>

@@ -3,7 +3,7 @@
 import CircleButton from '@/components/Buttons/circle';
 import { useRef, useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { FetcherService as sendMessage } from '@/services/fetcherService';
-import { useManageQuoted } from '@/lib/useManageQuoted';
+import { useManageQuoted } from '@/lib/zustand';
 import type { M } from '@/types';
 import { IoMdClose } from 'react-icons/io';
 
