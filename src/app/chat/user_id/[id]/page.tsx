@@ -11,7 +11,15 @@ import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useSession } from 'next-auth/react';
 import { FetcherService } from '@/services/fetcherService';
 import { io, Socket } from 'socket.io-client';
-import type { M, DateGroup, Message, User, ID, SenderGroup } from '@/types';
+import type {
+    M,
+    DateGroup,
+    Message,
+    User,
+    ID,
+    SenderGroup,
+    GroupedMessage
+} from '@/types';
 import { date, hour } from '@/services/getTime';
 import { useManageQuoted } from '@/lib/useManageQuoted';
 
@@ -141,7 +149,38 @@ export default function ChatPage({
 
         const handleMessageDeleted = (deletedMessageId: string): void => {
             if (!deletedMessageId) return;
-            console.log(listMessage);
+
+            setListMessage(
+                (prevData: DateGroup[] | null | undefined): DateGroup[] => {
+                    if (!prevData) return [];
+                    const updatedData: DateGroup[] = prevData.map(
+                        (dateGroup: DateGroup) => {
+                            const updatedMessages: SenderGroup[] =
+                                dateGroup.messages
+                                    .map((senderGroup: SenderGroup) => ({
+                                        ...(senderGroup as SenderGroup),
+                                        messages: senderGroup.messages.filter(
+                                            (message: GroupedMessage) =>
+                                                message._id !== deletedMessageId
+                                        )
+                                    }))
+                                    .filter(
+                                        (senderGroup: SenderGroup) =>
+                                            senderGroup.messages.length > 0
+                                    );
+
+                            return {
+                                ...(dateGroup as DateGroup),
+                                messages: updatedMessages
+                            };
+                        }
+                    );
+
+                    return updatedData.filter(
+                        (dateGroup: DateGroup) => dateGroup.messages.length > 0
+                    );
+                }
+            );
         };
 
         socket.on('connect', () => console.info('live chat opened'));

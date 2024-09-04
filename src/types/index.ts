@@ -228,6 +228,7 @@ export type DropdownProps = {
     positionTop: string;
     buble: GroupedMessage;
     profileName: string;
+    isFromMe: boolean;
 };
 
 // STATE TYPES

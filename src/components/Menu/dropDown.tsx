@@ -1,20 +1,33 @@
 'use client';
 
-import { forwardRef } from 'react';
+import { forwardRef, useState } from 'react';
 import { useManageQuoted } from '@/lib/useManageQuoted';
 import type { DropdownProps } from '@/types';
 import { FaArrowLeft } from 'react-icons/fa6';
 import { MdContentCopy, MdDeleteOutline } from 'react-icons/md';
+import { FetcherService as deleteMessage } from '@/services/fetcherService';
 
 const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
-    ({ isOpen, positionTop, buble, profileName }, ref) => {
+    ({ isOpen, positionTop, buble, profileName, isFromMe }, ref) => {
         const { add } = useManageQuoted();
+        const [load, setLoad] = useState<boolean>(false);
+        const [isCopied, setIsCopied] = useState<boolean>(false);
         const handleReply = () => {
             add({
                 message_text: buble.message_text,
                 message_id: buble.message_id,
                 from_name: profileName
             });
+        };
+        const handleDelete = async () => {
+            setLoad(true);
+            let deleted = await deleteMessage({ message_id: buble.message_id });
+            setLoad(false);
+        };
+        const handleCopy = () => {
+            window.clipboard.writeText(buble.message_text);
+            setIsCopied(true);
+            setTimeout(() => setIsCopied(false), 500);
         };
         if (isOpen) {
             return (
@@ -37,17 +50,23 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                             <FaArrowLeft /> Reply
                         </button>
                         <button
+                            onClick={handleCopy}
                             className='flex gap-2 w-full text-left px-4 py-2 text-sm text-zinc-400 hover:bg-zinc-950/[0.4] hover:text-zinc-300'
                             role='menuitem'
                         >
                             <MdContentCopy /> Copy
                         </button>
-                        <button
-                            className='flex gap-2 w-full text-left px-4 py-2 text-sm text-red-700 hover:bg-zinc-950/[0.4] hover:text-red-500'
-                            role='menuitem'
-                        >
-                            <MdDeleteOutline /> Delete
-                        </button>
+                        {isFromMe && (
+                            <button
+                                disabled={load}
+                                onClick={handleDelete}
+                                className='flex gap-2 w-full text-left px-4 py-2 text-sm text-red-700 hover:bg-zinc-950/[0.4] hover:text-red-500'
+                                role='menuitem'
+                            >
+                                <MdDeleteOutline />{' '}
+                                {load ? 'Deleting...' : 'Delete'}
+                            </button>
+                        )}
                     </div>
                 </div>
             );

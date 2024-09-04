@@ -134,6 +134,7 @@ export default function BubleMessage({
                 positionTop={positionTop}
                 buble={buble}
                 profileName={profileName}
+                isFromMe={isFromMe}
             />
             <div
                 onMouseDown={handleMouseDown}
