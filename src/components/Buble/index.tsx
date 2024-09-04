@@ -13,7 +13,6 @@ import {
 import { useOnClickOutside } from 'usehooks-ts';
 import Dropdown from '@/components/Menu/dropDown';
 import { useManageSearchMessage } from '@/lib/zustand';
-import { useDebounce } from 'usehooks-ts';
 
 export default function BubleMessage({
     profileName,
@@ -26,7 +25,6 @@ export default function BubleMessage({
         return text.length > 200 ? text.slice(0, 200) + '...' : text;
     };
     const { searchMessValue } = useManageSearchMessage();
-    const debouncedSearchTerm = useDebounce(searchMessValue, 300);
 
     const [isPressed, setIsPressed] = useState<boolean>(false);
     const [pressTimeout, setPressTimeout] = useState<NodeJS.Timeout | null>(
@@ -209,7 +207,7 @@ export default function BubleMessage({
                     >
                         {getHighlightedText(
                             message.message_text as ID,
-                            debouncedSearchTerm as ID
+                            searchMessValue as ID
                         )}
                     </pre>
                 </div>
