@@ -21,7 +21,10 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
         };
         const handleDelete = async () => {
             setLoad(true);
-            let deleted = await deleteMessage({ message_id: buble.message_id });
+            let deleted = await deleteMessage(
+                { message_id: buble.message_id },
+                { path: 'delete_message', method: 'DELETE' }
+            );
             setLoad(false);
         };
         const handleCopy = () => {
