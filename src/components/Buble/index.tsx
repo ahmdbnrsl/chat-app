@@ -206,7 +206,7 @@ export default function BubleMessage({
                         style={{ fontFamily: 'inherit' }}
                     >
                         {getHighlightedText(
-                            message.message_text as ID,
+                            buble?.message_text as ID,
                             searchMessValue as ID
                         )}
                     </pre>
