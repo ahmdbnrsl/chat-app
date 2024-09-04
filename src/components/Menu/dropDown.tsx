@@ -6,6 +6,7 @@ import type { DropdownProps } from '@/types';
 import { FaArrowLeft } from 'react-icons/fa6';
 import { MdContentCopy, MdDeleteOutline } from 'react-icons/md';
 import { FetcherService as deleteMessage } from '@/services/fetcherService';
+import DropDownBtn from '@/components/Buttons/dropdownBtn';
 
 const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
     ({ isOpen, positionTop, buble, profileName, isFromMe }, ref) => {
@@ -28,7 +29,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
             setLoad(false);
         };
         const handleCopy = () => {
-            window.clipboard.writeText(buble.message_text);
+            window.navigator.clipboard.writeText(buble.message_text);
             setIsCopied(true);
             setTimeout(() => setIsCopied(false), 500);
         };
@@ -45,30 +46,20 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
                         aria-orientation='vertical'
                         aria-labelledby='options-menu'
                     >
-                        <button
-                            className='flex gap-2 w-full text-left px-4 py-2 text-sm text-zinc-400 hover:bg-zinc-950/[0.4] hover:text-zinc-300'
-                            role='menuitem'
-                            onClick={handleReply}
-                        >
+                        <DropDownBtn onClicking={handleReply}>
                             <FaArrowLeft /> Reply
-                        </button>
-                        <button
-                            onClick={handleCopy}
-                            className='flex gap-2 w-full text-left px-4 py-2 text-sm text-zinc-400 hover:bg-zinc-950/[0.4] hover:text-zinc-300'
-                            role='menuitem'
-                        >
+                        </DropDownBtn>
+                        <DropDownBtn onClicking={handleCopy}>
                             <MdContentCopy /> Copy
-                        </button>
+                        </DropDownBtn>
                         {isFromMe && (
-                            <button
-                                disabled={load}
-                                onClick={handleDelete}
-                                className='flex gap-2 w-full text-left px-4 py-2 text-sm text-red-700 hover:bg-zinc-950/[0.4] hover:text-red-500'
-                                role='menuitem'
+                            <DropDownBtn
+                                onClicking={handleDelete}
+                                isDisabled={load}
                             >
-                                <MdDeleteOutline />{' '}
+                                <MdDeleteOutline />
                                 {load ? 'Deleting...' : 'Delete'}
-                            </button>
+                            </DropDownBtn>
                         )}
                     </div>
                 </div>

@@ -231,6 +231,12 @@ export type DropdownProps = {
     isFromMe: boolean;
 };
 
+export type DropDownBtnProps = {
+    onClicking: () => void;
+    children: React.ReactNode;
+    isDisabled?: boolean;
+};
+
 // STATE TYPES
 
 export interface MessageQuotedState {
