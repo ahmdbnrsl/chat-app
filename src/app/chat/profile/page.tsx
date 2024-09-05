@@ -8,6 +8,9 @@ import { useState } from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import Loading from '@/components/loading';
 import AuthButton from '@/components/Buttons/auth';
+import { FaWhatsapp } from 'react-icons/fa6';
+import { MdOutlineDateRange } from 'react-icons/md';
+import { AiOutlineGlobal } from 'react-icons/ai';
 
 export default function ProfileInfoPage({ searchParams }: any) {
     const callbackUrl = searchParams.callbackUrl || '/chat';
@@ -51,44 +54,57 @@ export default function ProfileInfoPage({ searchParams }: any) {
                 </Link>
             </div>
             <div className='w-full flex flex-col items-center'>
-                {session?.user?.pp && session?.user?.pp === 'empety' ? (
-                    <Avatar
-                        name={session?.user?.name}
-                        size='125'
-                        round={true}
-                    />
-                ) : (
-                    <Image
-                        src={session?.user?.pp}
-                        alt='profile photo'
-                        width={125}
-                        height={125}
-                        loading='lazy'
-                        className='rounded-full border border-zinc-700'
-                    />
-                )}
-                <h1 className='mt-3 text-xl sm:text-2xl md:text-3xl text-zinc-300 text-center font-bold'>
-                    {session?.user?.name ? (
-                        session?.user?.name
+                <div className='flex gap-2 items-center'>
+                    {session?.user?.pp && session?.user?.pp === 'empety' ? (
+                        <Avatar
+                            name={session?.user?.name}
+                            size='125'
+                            round={true}
+                        />
                     ) : (
-                        <div className='px-6 py-3 rounded bg-zinc-800'></div>
+                        <Image
+                            src={session?.user?.pp}
+                            alt='profile photo'
+                            width={125}
+                            height={125}
+                            loading='lazy'
+                            className='rounded-full border border-zinc-700'
+                        />
                     )}
-                </h1>
-                <p className='text-xs sm:text-sm md:text-base text-zinc-400 font-normal'>
-                    {session?.user?.wa_number ? (
-                        '+' + session?.user?.wa_number
-                    ) : (
-                        <div className='mt-2 px-5 py-1 rounded bg-zinc-800'></div>
-                    )}
-                </p>
-                <p className='text-xs sm:text-sm text-zinc-500 font-normal flex gap-2'>
-                    Created at :{' '}
-                    {session?.user?.created_at ? (
-                        getTimestamp(session?.user?.created_at)
-                    ) : (
-                        <div className='px-5 py-1 rounded bg-zinc-800'></div>
-                    )}
-                </p>
+                    <div className='flex flex-col p-3 rounded-xl bg-zinc-950/[0.4]'>
+                        <h1 className='text-2xl text-zinc-300 text-center font-semibold'>
+                            {session?.user?.name ? (
+                                session?.user?.name
+                            ) : (
+                                <div className='px-6 py-3 rounded bg-zinc-800'></div>
+                            )}
+                        </h1>
+                        <p className='mt-3 text-sm text-zinc-500 font-normal flex gap-2 items-center'>
+                            <FaWhatsapp />
+                            {session?.user?.wa_number ? (
+                                '+' + session?.user?.wa_number
+                            ) : (
+                                <div className='px-5 py-1 rounded bg-zinc-800'></div>
+                            )}
+                        </p>
+                        <p className='text-sm text-zinc-500 font-normal flex gap-2 items-center'>
+                            <MdOutlineDateRange />
+                            {session?.user?.created_at ? (
+                                getTimestamp(session?.user?.created_at)
+                            ) : (
+                                <div className='px-5 py-1 rounded bg-zinc-800'></div>
+                            )}
+                        </p>
+                        <p className='mt-3 text-sm text-zinc-500 font-normal flex gap-2 items-center'>
+                            <AiOutlineGlobal />
+                            {session?.user?.user_id ? (
+                                '+' + session?.user?.user_id
+                            ) : (
+                                <div className='px-5 py-1 rounded bg-zinc-800'></div>
+                            )}
+                        </p>
+                    </div>
+                </div>
                 <AuthButton
                     onDisabling={load}
                     onClicking={HandleLogout}
