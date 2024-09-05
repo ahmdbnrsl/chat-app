@@ -28,8 +28,8 @@ export default function EditLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <main className='transition-all w-full min-h-screen bg-zinc-900 md:bg-zinc-950 md:bg-ornament md:bg-[length:500px]'>
-            <section className='w-full min-h-screen md:p-5 flex flex-col md:justify-center md:items-center'>
+        <main className='transition-all w-full min-h-screen bg-zinc-900 sm:bg-zinc-950 sm:bg-ornament sm:bg-[length:500px]'>
+            <section className='w-full min-h-screen sm:p-5 flex flex-col sm:justify-center sm:items-center'>
                 {children}
             </section>
         </main>

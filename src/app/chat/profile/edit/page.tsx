@@ -188,7 +188,7 @@ export default function EditFormPage({ searchParams }: any) {
         }
     };
     return (
-        <div className='w-full md:max-w-md bg-zinc-900 md:rounded-xl md:shadow md:shadow-xl md:shadow-zinc-950 flex flex-col md:border-2 md:border-zinc-800'>
+        <div className='w-full sm:max-w-md bg-zinc-900 sm:rounded-xl sm:shadow sm:shadow-xl sm:shadow-zinc-950 flex flex-col sm:border-2 sm:border-zinc-800'>
             <div className='w-full p-4 flex mt-2'>
                 <Link
                     href={`/chat/profile?callbackUrl=${callbackUrl}`}
