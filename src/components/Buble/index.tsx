@@ -143,7 +143,7 @@ export default function BubleMessage({
                 onTouchStart={handleTouchStart}
                 onTouchEnd={handleTouchEnd}
                 ref={bubleRef}
-                className={`${opacity} min-w-[5rem]  w-fit h-fit transition-transform ${
+                className={`${opacity} min-w-[5rem]  w-fit h-fit transition-transform transition-opacity ${
                     isFromMe ? 'bg-slate-900' : 'bg-zinc-900'
                 } rounded-lg p-1 text-base text-zinc-300 flex flex-col max-w-full`}
             >

@@ -68,6 +68,7 @@ export default function NavbarChat({
             <SearchInput
                 onChanging={handleSearchMessage}
                 placeHolder='Search message'
+                isSearchMessage={true}
             />
         </nav>
     );
