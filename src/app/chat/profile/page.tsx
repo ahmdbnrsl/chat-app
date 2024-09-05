@@ -35,7 +35,7 @@ export default function ProfileInfoPage({ searchParams }: any) {
         }, 2000);
     };
     return (
-        <div className='w-full sm:max-w-md bg-zinc-900 sm:rounded-xl sm:shadow sm:shadow-xl sm:shadow-zinc-950 flex flex-col sm:border-2 sm:border-zinc-800'>
+        <div className='w-full sm:max-w-md bg-zinc-900 sm:rounded-xl sm:shadow sm:shadow-xl sm:shadow-zinc-950 flex flex-col sm:border-2 sm:border-zinc-800 p-4'>
             <div className='w-full flex justify-between gap-2'>
                 <Link
                     href={callbackUrl}
