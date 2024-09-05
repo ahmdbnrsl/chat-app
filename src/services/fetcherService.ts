@@ -6,14 +6,16 @@ export const FetcherService = async (
     fetchOptions: FetchOptions
 ): Promise<ResultFetcher | false> => {
     try {
-        bodyOptions.secret = process.env.NEXT_PUBLIC_SECRET;
         let options: RequestInit = {
             method: fetchOptions.method,
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: 'Bearer ' + process.env.NEXT_PUBLIC_BEARER
             },
-            body: JSON.stringify(bodyOptions),
+            body: JSON.stringify({
+                ...bodyOptions,
+                secret: process.env.NEXT_PUBLIC_SECRET
+            }),
             cache: fetchOptions?.cache || 'no-store'
         };
         if (fetchOptions?.cache && fetchOptions?.tag) {
