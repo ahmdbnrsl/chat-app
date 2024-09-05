@@ -20,14 +20,14 @@ export default function NavbarChat({
     };
     return (
         <nav className='sticky top-0 z-20 bg-zinc-950 w-full py-4 px-6 flex flex-col md:flex-row gap-3 border-b border-zinc-800 items-center'>
-            <div className='flex justify-between w-full items-center'>
-                <div className='flex items-center gap-3'>
-                    <Link
-                        href='/chat'
-                        className='text-lg sm:text-xl md:text-2xl text-zinc-300 px-2 mr-3 cursor-pointer'
-                    >
-                        ⟨
-                    </Link>
+            <div className='flex items-center w-full gap-3 justify-between md:justify-start'>
+                <Link
+                    href='/chat'
+                    className='text-lg sm:text-xl md:text-2xl text-zinc-500 px-2 mr-3 cursor-pointer'
+                >
+                    ⟨
+                </Link>
+                <div className='flex gap-3 items-center'>
                     <button
                         className={`text-zinc-300 font-medium text-lg sm:text-xl md:text-2xl outline-0 ${
                             !senderInfo
@@ -54,15 +54,13 @@ export default function NavbarChat({
                             )
                         ) : null}
                     </button>
-                    <div className='flex flex-col'>
-                        <h1 className='text-zinc-200 text-lg sm:text-xl font-semibold tracking-normal'>
-                            {senderInfo ? (
-                                senderInfo?.name
-                            ) : (
-                                <div className='px-9 py-2.5 rounded-lg bg-zinc-800'></div>
-                            )}
-                        </h1>
-                    </div>
+                    <h1 className='text-zinc-200 text-lg sm:text-xl font-medium tracking-normal'>
+                        {senderInfo ? (
+                            senderInfo?.name
+                        ) : (
+                            <div className='px-9 py-2.5 rounded-lg bg-zinc-800'></div>
+                        )}
+                    </h1>
                 </div>
             </div>
             <SearchInput

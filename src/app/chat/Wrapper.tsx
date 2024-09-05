@@ -44,7 +44,7 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
                         </h1>
                         <button
                             onClick={Redirect}
-                            className='text-zinc-300 font-medium text-lg sm:text-xl md:text-2xl outline-0 bg-transparent border-0 rounded-full flex py-1 pl-1 bg-zinc-900 hover:bg-zinc-800 pr-4 transition-colors gap-2 items-center cursor-pointer'
+                            className='text-zinc-300 font-medium text-lg sm:text-xl md:text-2xl outline-0 bg-transparent border-0 rounded-full flex p-1 bg-zinc-900 hover:bg-zinc-800 transition-colors gap-2 items-center cursor-pointer'
                         >
                             {session?.user?.pp &&
                             session?.user?.pp !== 'empety' ? (
@@ -63,11 +63,6 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
                                     round={true}
                                 />
                             )}
-                            <div className='flex flex-col'>
-                                <h1 className='text-base font-normal text-zinc-400'>
-                                    Profile
-                                </h1>
-                            </div>
                         </button>
                     </div>
                     <SearchInput placeHolder='Search by name' />

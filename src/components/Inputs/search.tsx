@@ -14,7 +14,11 @@ export default function SearchInput({
     isSearchMessage?: boolean;
 }) {
     return (
-        <div className='mt-2 md:mt-0 w-full flex justify-center items-center bg-zinc-900 rounded-lg overflow-hidden'>
+        <div
+            className={`mt-2 ${
+                isSearchMessage && 'md:mt-0'
+            } w-full flex justify-center items-center bg-zinc-900 rounded-lg overflow-hidden`}
+        >
             <div className='px-3 -mb-[0.2rem] text-zinc-500 text-xl sm:text-2xl'>
                 <IoSearch />
             </div>
