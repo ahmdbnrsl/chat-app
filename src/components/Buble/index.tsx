@@ -13,6 +13,7 @@ import {
 import { useOnClickOutside } from 'usehooks-ts';
 import Dropdown from '@/components/Menu/dropDown';
 import { useManageSearchMessage } from '@/lib/zustand';
+import { getHighlightedText } from '@/components/Highlight/text';
 
 export default function BubleMessage({
     profileName,
@@ -25,7 +26,6 @@ export default function BubleMessage({
         return text.length > 200 ? text.slice(0, 200) + '...' : text;
     };
     const { searchMessValue } = useManageSearchMessage();
-
     const [isPressed, setIsPressed] = useState<boolean>(false);
     const [pressTimeout, setPressTimeout] = useState<NodeJS.Timeout | null>(
         null
@@ -72,36 +72,10 @@ export default function BubleMessage({
                 behavior: 'smooth'
             });
             el.style.transform = 'scale(1.01)';
-            el.style.border = '0.5px solid #52525b';
             setTimeout(() => {
                 el.style.transform = 'scale(1)';
-                el.style.border = 'none';
             }, 1500);
         }
-    };
-
-    const getHighlightedText = (text: string, highlight: string) => {
-        if (!highlight.trim()) {
-            return text;
-        }
-        const regex = new RegExp(`(${highlight})`, 'gi');
-        const parts = text.split(regex);
-        return (
-            <>
-                {parts.map((part, index) =>
-                    regex.test(part) ? (
-                        <span
-                            key={index}
-                            className='bg-zinc-300 text-zinc-900'
-                        >
-                            {part}
-                        </span>
-                    ) : (
-                        part
-                    )
-                )}
-            </>
-        );
     };
 
     const handleLongPress = useCallback((): void => {
