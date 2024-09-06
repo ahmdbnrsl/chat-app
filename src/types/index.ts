@@ -1,4 +1,4 @@
-import { Document } from 'mongoose';
+import { Document, Schema, Model } from 'mongoose';
 import { MouseEvent, ChangeEvent } from 'react';
 
 export interface MessageQuoted {
@@ -249,4 +249,19 @@ export interface SearchMessageState {
     searchMessValue: string;
     setSearchMessValue: (mess: string) => void;
     reset: () => void;
+}
+
+//models type
+
+export interface TypeSchemas {
+    UserSchema: Schema<User>;
+    OTPSchema: Schema<OTP>;
+    MessageQuotedSchema: Schema<MessageQuoted>;
+    MessageSchema: Schema<Message>;
+}
+
+export interface TypeModels {
+    users: Model<User>;
+    otps: Model<OTP>;
+    messages: Model<Message>;
 }
