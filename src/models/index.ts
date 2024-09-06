@@ -44,4 +44,5 @@ class Models {
     }
 }
 
-export const { users, otps, messages } = new Models();
+const { users, otps, messages } = new Models();
+export { users, otps, messages };
