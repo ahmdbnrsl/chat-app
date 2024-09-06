@@ -54,21 +54,13 @@ export default function ProfileInfoPage({ searchParams }: any) {
             </div>
             <div className='w-full flex flex-col items-center mt-3 mb-2'>
                 <div className='flex flex-col gap-3 items-center w-full'>
-                    <div className='w-full rounded-xl overflow-hidden flex justify-center items-center p-3 relative h-44'>
-                        <Image
-                            className='object-cover opacity-40'
-                            alt='banner'
-                            width={750}
-                            height={375}
-                            loading='lazy'
-                            src='/ornament_bg/banner.jpg'
-                        />
+                    <div className='w-full rounded-xl overflow-hidden flex justify-center items-center bg-zinc-950/[0.2] bg-banner bg-cover bg-center bg-no-repeat h-44 p-3'>
                         <Image
                             src={
                                 session?.user?.pp &&
                                 session?.user?.pp === 'empety'
-                                    ? session?.user?.pp
-                                    : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+                                    ? 'https://img.freepik.com/free-vector/mans-face-flat-style_90220-2877.jpg?t=st=1725583890~exp=1725587490~hmac=4e3f30256635b4d9975caef2b198dc3b0fd38137ab22244ec9c4f9da282e0be1&w=740'
+                                    : session?.user?.pp
                             }
                             alt='profile photo'
                             width={140}
@@ -78,7 +70,7 @@ export default function ProfileInfoPage({ searchParams }: any) {
                         />
                     </div>
                     <div className='w-full flex flex-col p-3 rounded-xl bg-zinc-950/[0.2] items-start'>
-                        <h1 className='w-full text-center pb-1 border-b-2 border-zinc-900 text-2xl text-zinc-300 text-center font-semibold'>
+                        <h1 className='w-full text-center pb-1 border-b-2 border-zinc-800 text-2xl text-zinc-300 text-center font-semibold'>
                             {session?.user?.name ? (
                                 session?.user?.name
                             ) : (

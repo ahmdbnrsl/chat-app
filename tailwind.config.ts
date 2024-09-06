@@ -9,7 +9,8 @@ const config: Config = {
     theme: {
         extend: {
             backgroundImage: {
-                ornament: 'url(/ornament_bg/ornament_auth.png)'
+                ornament: 'url(/ornament_bg/ornament_auth.png)',
+                profile_banner: 'url(/ornament_bg/banner.jpg)'
             },
             borderRadius: {
                 lg: 'var(--radius)',
