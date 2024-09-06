@@ -54,25 +54,25 @@ export default function ProfileInfoPage({ searchParams }: any) {
                 </Link>
             </div>
             <div className='w-full flex flex-col items-center mt-3 mb-2'>
-                <div className='flex gap-2 items-center'>
+                <div className='flex flex-col gap-3 items-center'>
                     {session?.user?.pp && session?.user?.pp === 'empety' ? (
                         <Avatar
                             name={session?.user?.name}
-                            size='125'
+                            size='140'
                             round={true}
                         />
                     ) : (
                         <Image
                             src={session?.user?.pp}
                             alt='profile photo'
-                            width={125}
-                            height={125}
+                            width={140}
+                            height={140}
                             loading='lazy'
                             className='rounded-full border border-zinc-700'
                         />
                     )}
-                    <div className='flex flex-col p-3 rounded-xl bg-zinc-950/[0.2] items-start'>
-                        <h1 className='text-2xl text-zinc-300 text-center font-semibold'>
+                    <div className='w-full flex flex-col p-3 rounded-xl bg-zinc-950/[0.2] items-start'>
+                        <h1 className='w-full text-center pb-1 border-b-2 border-zinc-900 text-2xl text-zinc-300 text-center font-semibold'>
                             {session?.user?.name ? (
                                 session?.user?.name
                             ) : (
