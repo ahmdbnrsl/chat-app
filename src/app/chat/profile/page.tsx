@@ -1,6 +1,5 @@
 'use client';
 
-import Avatar from 'react-avatar';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaPen, FaArrowLeft } from 'react-icons/fa6';
@@ -54,23 +53,30 @@ export default function ProfileInfoPage({ searchParams }: any) {
                 </Link>
             </div>
             <div className='w-full flex flex-col items-center mt-3 mb-2'>
-                <div className='flex flex-col gap-3 items-center'>
-                    {session?.user?.pp && session?.user?.pp === 'empety' ? (
-                        <Avatar
-                            name={session?.user?.name}
-                            size='140'
-                            round={true}
-                        />
-                    ) : (
+                <div className='flex flex-col gap-3 items-center w-full'>
+                    <div className='w-full rounded-xl overflow-hidden flex justify-center items-center p-3 relative h-44'>
                         <Image
-                            src={session?.user?.pp}
+                            className='object-cover opacity-40'
+                            alt='banner'
+                            width={750}
+                            height={375}
+                            loading='lazy'
+                            src='/ornament_bg/banner.jpg'
+                        />
+                        <Image
+                            src={
+                                session?.user?.pp &&
+                                session?.user?.pp === 'empety'
+                                    ? session?.user?.pp
+                                    : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+                            }
                             alt='profile photo'
                             width={140}
                             height={140}
                             loading='lazy'
-                            className='rounded-full border border-zinc-700'
+                            className='absolute rounded-full border border-zinc-700'
                         />
-                    )}
+                    </div>
                     <div className='w-full flex flex-col p-3 rounded-xl bg-zinc-950/[0.2] items-start'>
                         <h1 className='w-full text-center pb-1 border-b-2 border-zinc-900 text-2xl text-zinc-300 text-center font-semibold'>
                             {session?.user?.name ? (
