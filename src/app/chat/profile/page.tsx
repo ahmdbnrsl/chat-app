@@ -76,7 +76,7 @@ export default function ProfileInfoPage({ searchParams }: any) {
                             {session?.user?.name ? (
                                 session?.user?.name
                             ) : (
-                                <div className='px-6 py-3 rounded bg-zinc-800'></div>
+                                <div className='px-10 py-3 rounded bg-zinc-800'></div>
                             )}
                         </h1>
                         <p className='mt-3 text-xs text-zinc-500 font-normal flex gap-2 items-center'>
@@ -84,23 +84,23 @@ export default function ProfileInfoPage({ searchParams }: any) {
                             {session?.user?.wa_number ? (
                                 '+' + session?.user?.wa_number
                             ) : (
-                                <div className='px-5 py-1 rounded bg-zinc-800'></div>
+                                <div className='px-10 py-1 rounded bg-zinc-800'></div>
                             )}
                         </p>
-                        <p className='mt-1 text-sm text-zinc-500 font-normal flex gap-2 items-center'>
+                        <p className='mt-1 text-xs text-zinc-500 font-normal flex gap-2 items-center'>
                             <MdOutlineDateRange className='text-lg' />
                             {session?.user?.created_at ? (
                                 getTimestamp(session?.user?.created_at)
                             ) : (
-                                <div className='px-5 py-1 rounded bg-zinc-800'></div>
+                                <div className='px-10 py-1 rounded bg-zinc-800'></div>
                             )}
                         </p>
-                        <p className='mt-1 text-sm text-zinc-500 font-normal flex gap-2 items-center'>
+                        <p className='mt-1 text-xs text-zinc-500 font-normal flex gap-2 items-center'>
                             <AiOutlineGlobal className='text-lg' />
                             {session?.user?.user_id ? (
                                 session?.user?.user_id
                             ) : (
-                                <div className='px-5 py-1 rounded bg-zinc-800'></div>
+                                <div className='px-10 py-1 rounded bg-zinc-800'></div>
                             )}
                         </p>
                     </div>
