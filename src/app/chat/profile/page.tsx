@@ -54,7 +54,7 @@ export default function ProfileInfoPage({ searchParams }: any) {
             </div>
             <div className='w-full flex flex-col items-center mt-3 mb-2'>
                 <div className='flex flex-col gap-3 items-center w-full'>
-                    <div className='w-full rounded-xl overflow-hidden flex justify-center items-center bg-zinc-950/[0.2] bg-banner bg-cover bg-center bg-no-repeat h-44 p-3'>
+                    <div className='w-full rounded-xl overflow-hidden flex justify-center items-center bg-zinc-950/[0.2] bg-profile_banner bg-cover bg-center bg-no-repeat h-44 p-3'>
                         <Image
                             src={
                                 session?.user?.pp &&
