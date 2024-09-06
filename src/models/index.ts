@@ -14,10 +14,27 @@ class Models {
     }
 
     get users(): Model<User> {
-        if (mongoose.models.users) {
-            return mongoose.model<User>('users');
-        }
-        const UserSchema: Schema<User> = new Schema({
+        return (
+            mongoose.models.users ||
+            mongoose.model<User>('users', this.UserSchema)
+        );
+    }
+
+    get otps(): Model<OTP> {
+        return (
+            mongoose.models.otps || mongoose.model<OTP>('otps', this.OTPSchema)
+        );
+    }
+
+    get messages(): Model<Message> {
+        return (
+            mongoose.models.messages ||
+            mongoose.model<Message>('messages', this.MessageSchema)
+        );
+    }
+
+    private get UserSchema(): Schema<User> {
+        return new Schema({
             user_id: { type: String, required: true },
             wa_number: { type: String, required: true },
             name: { type: String, required: true },
@@ -26,33 +43,25 @@ class Models {
             role: { type: String, required: true },
             pp: { type: String, required: true }
         });
-        return mongoose.model<User>('users', UserSchema);
     }
 
-    get otps(): Model<OTP> {
-        if (mongoose.models.otps) {
-            return mongoose.model<OTP>('otps');
-        }
-        const OTPSchema: Schema<OTP> = new Schema({
+    private get OTPSchema(): Schema<OTP> {
+        return new Schema({
             wa_number: { type: String, required: true },
             otp_code: { type: String, required: true },
             created_at: { type: String, required: true },
             expired_at: { type: String, required: true }
         });
-        return mongoose.model<OTP>('otps', OTPSchema);
     }
 
-    get messages(): Model<Message> {
-        if (mongoose.models.messages) {
-            return mongoose.model<Message>('messages');
-        }
+    private get MessageSchema(): Schema<Message> {
         const MessageQuotedSchema: Schema<MessageQuoted> = new Schema({
             message_text: { type: String, required: false },
             from_name: { type: String, required: false },
             message_id: { type: String, required: false }
         });
 
-        const MessageSchema: Schema<Message> = new Schema({
+        return new Schema({
             message_id: { type: String, required: true },
             sender_id: { type: String, required: true },
             receiver_id: { type: String, required: true },
@@ -60,7 +69,6 @@ class Models {
             message_timestamp: { type: String, required: true },
             message_quoted: { type: MessageQuotedSchema, required: false }
         });
-        return mongoose.model<Message>('messages', MessageSchema);
     }
 }
 
