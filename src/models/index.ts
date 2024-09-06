@@ -19,19 +19,20 @@ const Schemas: TypeSchemas = {
         expired_at: { type: String, required: true }
     }),
 
-    MessageQuotedSchema: new Schema({
-        message_text: { type: String, required: false },
-        from_name: { type: String, required: false },
-        message_id: { type: String, required: false }
-    }),
-
     MessageSchema: new Schema({
         message_id: { type: String, required: true },
         sender_id: { type: String, required: true },
         receiver_id: { type: String, required: true },
         message_text: { type: String, required: true },
         message_timestamp: { type: String, required: true },
-        message_quoted: { type: Schemas.MessageQuotedSchema, required: false }
+        message_quoted: {
+            type: new Schema({
+                message_text: { type: String, required: false },
+                from_name: { type: String, required: false },
+                message_id: { type: String, required: false }
+            }),
+            required: false
+        }
     })
 };
 

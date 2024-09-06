@@ -256,7 +256,6 @@ export interface SearchMessageState {
 export interface TypeSchemas {
     UserSchema: Schema<User>;
     OTPSchema: Schema<OTP>;
-    MessageQuotedSchema: Schema<MessageQuoted>;
     MessageSchema: Schema<Message>;
 }
 
