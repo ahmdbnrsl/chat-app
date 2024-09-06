@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 import type { User, OTP, Message, MessageQuoted } from '@/types';
 
-class Models {
+export class Models {
     get users(): Model<User> {
         const UserSchema: Schema<User> = new Schema({
             user_id: { type: String, required: true },
@@ -43,5 +43,3 @@ class Models {
         return mongoose.model<Message>('messages', MessageSchema);
     }
 }
-
-export default Models;

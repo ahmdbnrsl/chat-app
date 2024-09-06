@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import Models from '@/models';
+import { Models } from '@/mongoose';
 // import { messages } from '@/models/messages';
 // import { users } from '@/models/users';
 import { Message, User, SenderMessage, M } from '@/types';
