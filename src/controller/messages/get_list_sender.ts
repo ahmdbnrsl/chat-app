@@ -1,9 +1,11 @@
 import mongoose from 'mongoose';
-import { messages } from '@/models/messages';
-import { users } from '@/models/users';
+import Models from '@/models';
+// import { messages } from '@/models/messages';
+// import { users } from '@/models/users';
 import { Message, User, SenderMessage, M } from '@/types';
 
 const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
+const { messages, users } = new Models();
 
 export const getListSender = async (
     user_id: string
