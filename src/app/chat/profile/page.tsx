@@ -53,7 +53,7 @@ export default function ProfileInfoPage({ searchParams }: any) {
                     <FaPen />
                 </Link>
             </div>
-            <div className='w-full flex flex-col items-center'>
+            <div className='w-full flex flex-col items-center mt-3 mb-2'>
                 <div className='flex gap-2 items-center'>
                     {session?.user?.pp && session?.user?.pp === 'empety' ? (
                         <Avatar
@@ -71,7 +71,7 @@ export default function ProfileInfoPage({ searchParams }: any) {
                             className='rounded-full border border-zinc-700'
                         />
                     )}
-                    <div className='flex flex-col p-3 rounded-xl bg-zinc-950/[0.4]'>
+                    <div className='flex flex-col p-3 rounded-xl bg-zinc-950/[0.2] items-start'>
                         <h1 className='text-2xl text-zinc-300 text-center font-semibold'>
                             {session?.user?.name ? (
                                 session?.user?.name
@@ -79,26 +79,26 @@ export default function ProfileInfoPage({ searchParams }: any) {
                                 <div className='px-6 py-3 rounded bg-zinc-800'></div>
                             )}
                         </h1>
-                        <p className='mt-3 text-sm text-zinc-500 font-normal flex gap-2 items-center'>
-                            <FaWhatsapp />
+                        <p className='mt-3 text-xs text-zinc-500 font-normal flex gap-2 items-center'>
+                            <FaWhatsapp className='text-lg' />
                             {session?.user?.wa_number ? (
                                 '+' + session?.user?.wa_number
                             ) : (
                                 <div className='px-5 py-1 rounded bg-zinc-800'></div>
                             )}
                         </p>
-                        <p className='text-sm text-zinc-500 font-normal flex gap-2 items-center'>
-                            <MdOutlineDateRange />
+                        <p className='mt-1 text-sm text-zinc-500 font-normal flex gap-2 items-center'>
+                            <MdOutlineDateRange className='text-lg' />
                             {session?.user?.created_at ? (
                                 getTimestamp(session?.user?.created_at)
                             ) : (
                                 <div className='px-5 py-1 rounded bg-zinc-800'></div>
                             )}
                         </p>
-                        <p className='mt-3 text-sm text-zinc-500 font-normal flex gap-2 items-center'>
-                            <AiOutlineGlobal />
+                        <p className='mt-1 text-sm text-zinc-500 font-normal flex gap-2 items-center'>
+                            <AiOutlineGlobal className='text-lg' />
                             {session?.user?.user_id ? (
-                                '+' + session?.user?.user_id
+                                session?.user?.user_id
                             ) : (
                                 <div className='px-5 py-1 rounded bg-zinc-800'></div>
                             )}
