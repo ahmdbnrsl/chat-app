@@ -44,13 +44,13 @@ export default function ProfileInfoPage({ searchParams }: any) {
                         <div className='w-full flex justify-between gap-2'>
                             <Link
                                 href={callbackUrl}
-                                className='text-zinc-300 outline-0 bg-zinc-800/[0.75] rounded-lg p-2 hover:bg-zinc-800/[0.40] text-base sm:text-lg md:text-xl cursor-pointer'
+                                className='text-zinc-300 outline-0 hover:bg-zinc-800/[0.75] rounded-lg p-2 bg-zinc-800/[0.40] text-base sm:text-lg md:text-xl cursor-pointer'
                             >
                                 <FaArrowLeft />
                             </Link>
                             <Link
                                 href={`/chat/profile/edit?callbackUrl=${callbackUrl}`}
-                                className='text-zinc-300 outline-0 bg-zinc-800/[0.75] rounded-lg p-2 hover:bg-zinc-800/[0.40] text-base sm:text-lg md:text-xl cursor-pointer'
+                                className='text-zinc-300 outline-0 hover:bg-zinc-800/[0.75] rounded-lg p-2 bg-zinc-800/[0.40] text-base sm:text-lg md:text-xl cursor-pointer'
                             >
                                 <FaPen />
                             </Link>
@@ -66,7 +66,7 @@ export default function ProfileInfoPage({ searchParams }: any) {
                             width={140}
                             height={140}
                             loading='lazy'
-                            className='absolute rounded-full border border-zinc-700'
+                            className='rounded-full border border-zinc-700'
                         />
                     </div>
                     <div className='w-full flex flex-col p-3 rounded-xl bg-zinc-950/[0.2] items-start'>
