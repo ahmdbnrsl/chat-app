@@ -38,23 +38,23 @@ export default function ProfileInfoPage({ searchParams }: any) {
     };
     return (
         <div className='w-full sm:max-w-md bg-zinc-900 sm:rounded-xl sm:shadow sm:shadow-xl sm:shadow-zinc-950 flex flex-col sm:border-2 sm:border-zinc-800 p-4'>
-            <div className='w-full flex justify-between gap-2'>
-                <Link
-                    href={callbackUrl}
-                    className='text-zinc-400 outline-0 bg-zinc-800/[0.75] rounded-lg p-2 hover:bg-zinc-800/[0.40] text-base sm:text-lg md:text-xl cursor-pointer'
-                >
-                    <FaArrowLeft />
-                </Link>
-                <Link
-                    href={`/chat/profile/edit?callbackUrl=${callbackUrl}`}
-                    className='text-zinc-400 outline-0 bg-zinc-800/[0.75] rounded-lg p-2 hover:bg-zinc-800/[0.40] text-base sm:text-lg md:text-xl cursor-pointer'
-                >
-                    <FaPen />
-                </Link>
-            </div>
-            <div className='w-full flex flex-col items-center mt-3 mb-2'>
+            <div className='w-full flex flex-col items-center mb-2'>
                 <div className='flex flex-col gap-3 items-center w-full'>
                     <div className='w-full rounded-xl overflow-hidden flex justify-center items-center bg-zinc-950/[0.2] bg-profile_banner bg-cover bg-center bg-no-repeat h-44 p-3'>
+                        <div className='w-full flex justify-between gap-2'>
+                            <Link
+                                href={callbackUrl}
+                                className='text-zinc-300 outline-0 bg-zinc-800/[0.75] rounded-lg p-2 hover:bg-zinc-800/[0.40] text-base sm:text-lg md:text-xl cursor-pointer'
+                            >
+                                <FaArrowLeft />
+                            </Link>
+                            <Link
+                                href={`/chat/profile/edit?callbackUrl=${callbackUrl}`}
+                                className='text-zinc-300 outline-0 bg-zinc-800/[0.75] rounded-lg p-2 hover:bg-zinc-800/[0.40] text-base sm:text-lg md:text-xl cursor-pointer'
+                            >
+                                <FaPen />
+                            </Link>
+                        </div>
                         <Image
                             src={
                                 session?.user?.pp &&
@@ -77,7 +77,7 @@ export default function ProfileInfoPage({ searchParams }: any) {
                                 <div className='px-10 py-3 rounded bg-zinc-800'></div>
                             )}
                         </h1>
-                        <p className='mt-3 text-xs text-zinc-500 font-normal flex gap-2 items-center'>
+                        <p className='mt-3 text-xs text-zinc-400 font-normal flex gap-2 items-center'>
                             <FaWhatsapp className='text-lg' />
                             {session?.user?.wa_number ? (
                                 '+' + session?.user?.wa_number
@@ -85,7 +85,7 @@ export default function ProfileInfoPage({ searchParams }: any) {
                                 <div className='px-10 py-1 rounded bg-zinc-800'></div>
                             )}
                         </p>
-                        <p className='mt-1 text-xs text-zinc-500 font-normal flex gap-2 items-center'>
+                        <p className='mt-1 text-xs text-zinc-400 font-normal flex gap-2 items-center'>
                             <MdOutlineDateRange className='text-lg' />
                             {session?.user?.created_at ? (
                                 getTimestamp(session?.user?.created_at)
@@ -93,7 +93,7 @@ export default function ProfileInfoPage({ searchParams }: any) {
                                 <div className='px-10 py-1 rounded bg-zinc-800'></div>
                             )}
                         </p>
-                        <p className='mt-1 text-xs text-zinc-500 font-normal flex gap-2 items-center'>
+                        <p className='mt-1 text-xs text-zinc-400 font-normal flex gap-2 items-center'>
                             <AiOutlineGlobal className='text-lg' />
                             {session?.user?.user_id ? (
                                 session?.user?.user_id
