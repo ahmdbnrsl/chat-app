@@ -17,7 +17,11 @@ export default function ListMessages({
     return (
         <div className='w-full flex flex-col justify-end gap-3 px-6 pb-7 pt-16'>
             {listMessage.map((date: DateGroup, dateIndex: number) => (
-                <div key={dateIndex}>
+                <div
+                    className='scroll-mt-28'
+                    key={dateIndex}
+                    id={date.date.replaceAll(' ', '')}
+                >
                     <div className='w-full flex justify-center py-4'>
                         <div className='px-4 py-1 bg-zinc-900/[0.5] rounded-lg text-sm text-zinc-400'>
                             {date.date}
