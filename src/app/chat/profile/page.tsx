@@ -40,7 +40,7 @@ export default function ProfileInfoPage({ searchParams }: any) {
         <div className='w-full sm:max-w-md bg-zinc-900 sm:rounded-xl sm:shadow sm:shadow-xl sm:shadow-zinc-950 flex flex-col sm:border-2 sm:border-zinc-800 p-4'>
             <div className='w-full flex flex-col items-center mb-2'>
                 <div className='flex flex-col gap-3 items-center w-full'>
-                    <div className='w-full rounded-xl overflow-hidden flex justify-center items-center bg-zinc-950/[0.2] bg-profile_banner bg-cover bg-center bg-no-repeat h-44 p-3 flex-col'>
+                    <div className='w-full rounded-xl overflow-hidden flex justify-center items-center bg-zinc-950/[0.2] bg-profile_banner bg-cover bg-center bg-no-repeat p-3 flex-col'>
                         <div className='w-full flex justify-between gap-2'>
                             <Link
                                 href={callbackUrl}
