@@ -25,9 +25,11 @@ export default function SearchInput({
         }).format(date);
 
         const id: string = formattedDate.replaceAll(' ', '');
-        const el: HTMLDivElement | null = document.getElementById(id);
+        const el: HTMLDivElement | null = document.getElementById(
+            id
+        ) as HTMLDivElement;
         el &&
-            el.scrollIntoView({
+            el?.scrollIntoView({
                 block: 'start',
                 behavior: 'smooth'
             });
