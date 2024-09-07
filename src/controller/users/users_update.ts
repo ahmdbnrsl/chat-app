@@ -15,7 +15,7 @@ export const editUser = async ({
         await mongoose.connect(URI);
         const existingUser: User | null = await users.findOne({ user_id });
         if (existingUser) {
-            const updateUser: UpdateResult<Document> = await users.updateOne(
+            const updateUser: UpdateResult<Document> = (await users.updateOne(
                 { user_id },
                 {
                     $set: {
@@ -25,7 +25,7 @@ export const editUser = async ({
                     }
                 },
                 { new: true }
-            );
+            )) as UpdateResult<Document>;
             if (updateUser?.acknowledged) {
                 return {
                     status: true,
