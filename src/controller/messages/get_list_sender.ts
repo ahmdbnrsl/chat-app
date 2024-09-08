@@ -63,7 +63,9 @@ export const getListSender = async (
                         ]
                     });
                     const unReadedMessageLength: number = message.filter(
-                        (mess: Message) => mess.is_readed === false
+                        (mess: Message) =>
+                            mess.is_readed === false &&
+                            mess.sender_id === user?.user_id
                     ).length;
                     const latestMessage: Message = message.reduce(
                         (prev: Message, current: Message) =>

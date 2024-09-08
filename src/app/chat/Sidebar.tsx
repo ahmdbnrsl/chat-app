@@ -33,22 +33,29 @@ export default function SidebarChat({
                         }`}
                     >
                         <div className='w-8/12 flex gap-3 items-center'>
-                            {sender?.pp && sender?.pp !== 'empety' ? (
-                                <Image
-                                    alt='User profile'
-                                    src={sender?.pp}
-                                    height={50}
-                                    width={50}
-                                    className='rounded-full border border-zinc-700'
-                                    loading='lazy'
-                                />
-                            ) : (
-                                <Avatar
-                                    name={sender?.name}
-                                    size='50'
-                                    round={true}
-                                />
-                            )}
+                            <div className='w-[50px] h-[50px] relative flex items-end justify-end'>
+                                {sender?.pp && sender?.pp !== 'empety' ? (
+                                    <Image
+                                        alt='User profile'
+                                        src={sender?.pp}
+                                        height={50}
+                                        width={50}
+                                        className='rounded-full border border-zinc-700'
+                                        loading='lazy'
+                                    />
+                                ) : (
+                                    <Avatar
+                                        name={sender?.name}
+                                        size='50'
+                                        round={true}
+                                    />
+                                )}
+                                {sender?.unReadedMessageLength > 0 && (
+                                    <div className='text-base text-zinc-950 h-[15px] w-fit min-w-[15px] absolute bg-zinc-300 rounded-full'>
+                                        {sender?.unReadedMessageLength}
+                                    </div>
+                                )}
+                            </div>
                             <div className='flex flex-col'>
                                 <h1 className='text-base sm:text-lg text-zinc-300 font-normal'>
                                     {sender?.name}
