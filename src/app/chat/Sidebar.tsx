@@ -52,7 +52,7 @@ export default function SidebarChat({
                                     />
                                 )}
                                 {sender?.unReadedMessageLength > 0 && (
-                                    <div className='text-sm text-zinc-950 py-[0.28rem] px-[0.5rem] flex items-center justify-center w-fit absolute bg-zinc-300 rounded-full'>
+                                    <div className='text-sm text-zinc-950 py-[0.24rem] px-[0.5rem] flex items-center justify-center w-fit absolute bg-zinc-300 rounded-full'>
                                         {sender?.unReadedMessageLength}
                                     </div>
                                 )}
@@ -61,7 +61,7 @@ export default function SidebarChat({
                                 <h1 className='text-base sm:text-lg text-zinc-300 font-normal'>
                                     {sender?.name}
                                 </h1>
-                                <p className='w-[15ch] sm:w-[25ch] md:w-[50ch] xl:w-[15ch] text-xs sm:text-sm text-zinc-400 truncate flex items-center gap-2'>
+                                <div className='flex items-center gap-2'>
                                     {sender?.fromMe && (
                                         <BiCheckDouble
                                             className={`text-base ${
@@ -71,8 +71,10 @@ export default function SidebarChat({
                                             }`}
                                         />
                                     )}
-                                    {sender?.latestMessageText}
-                                </p>
+                                    <p className='w-[15ch] sm:w-[25ch] md:w-[50ch] xl:w-[15ch] text-xs sm:text-sm text-zinc-400 truncate'>
+                                        {sender?.latestMessageText}
+                                    </p>
+                                </div>
                             </div>
                         </div>
                         <div className='w-1/4 flex flex-col justify-center items-end'>
