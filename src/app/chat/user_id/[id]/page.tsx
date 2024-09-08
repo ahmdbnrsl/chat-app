@@ -129,6 +129,7 @@ export default function ChatPage({
                                 message_id: newData.message_id,
                                 message_timestamp: newData.message_timestamp,
                                 message_quoted: newData?.message_quoted,
+                                is_readed: newData?.is_readed,
                                 _id: newData._id as ID
                             };
                         } else {
@@ -137,6 +138,7 @@ export default function ChatPage({
                                 message_id: newData.message_id,
                                 message_timestamp: newData.message_timestamp,
                                 message_quoted: newData?.message_quoted,
+                                is_readed: newData?.is_readed,
                                 _id: newData._id as ID
                             });
                         }

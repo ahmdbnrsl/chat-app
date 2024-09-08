@@ -42,7 +42,8 @@ export default function FormMessagge({
             sender_id: userId,
             receiver_id: paramsId,
             message_text: ev.message.value,
-            message_timestamp: Date.now().toString()
+            message_timestamp: Date.now().toString(),
+            is_readed: false
         };
         if (quotedInfo) messageOptions.message_quoted = quotedInfo;
         const send = await sendMessage(messageOptions, {

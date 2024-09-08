@@ -13,6 +13,8 @@ export interface Message extends Document {
     receiver_id: string;
     message_text: string;
     message_timestamp: string;
+    is_readed: boolean;
+    read_at?: string;
     message_quoted?: MessageQuoted;
 }
 
@@ -41,6 +43,7 @@ export interface SenderMessage {
     latestMessageText: string;
     latestMessageTimestamp: string;
     id_user: string;
+    unReadedMessageLength: number;
 }
 
 export interface GroupedMessage {
@@ -48,6 +51,8 @@ export interface GroupedMessage {
     message_id: string;
     message_timestamp: string;
     _id: string;
+    is_readed: boolean;
+    read_at?: string;
     message_quoted?: MessageQuoted;
 }
 
@@ -78,6 +83,7 @@ export interface M {
         receiver_id: string | undefined;
         message_text: string;
         message_timestamp: string;
+        is_readed: boolean;
         message_quoted?: MessageQuoted;
         message_id?: string;
         secret?: string;
