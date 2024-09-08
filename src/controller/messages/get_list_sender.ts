@@ -84,6 +84,7 @@ export const getListSender = async (
                         latestMessageTimestamp:
                             latestMessage?.message_timestamp,
                         id_user: user?.user_id,
+                        is_readed: latestMessage?.is_readed,
                         unReadedMessageLength
                     };
                 }

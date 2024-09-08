@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import type { M, SenderMessage } from '@/types';
 import { date, hour } from '@/services/getTime';
 import { useCallback } from 'react';
+import { BiCheckDouble } from 'react-icons/bi';
 
 export default function SidebarChat({
     listSender
@@ -51,7 +52,7 @@ export default function SidebarChat({
                                     />
                                 )}
                                 {sender?.unReadedMessageLength > 0 && (
-                                    <div className='text-base text-zinc-950 h-[15px] p-2 flex items-center justify-center w-fit min-w-[15px] absolute bg-zinc-300 rounded-full'>
+                                    <div className='text-sm text-zinc-950 py-[0.7rem] px-[1rem] flex items-center justify-center w-fit absolute bg-zinc-300 rounded-full'>
                                         {sender?.unReadedMessageLength}
                                     </div>
                                 )}
@@ -60,8 +61,16 @@ export default function SidebarChat({
                                 <h1 className='text-base sm:text-lg text-zinc-300 font-normal'>
                                     {sender?.name}
                                 </h1>
-                                <p className='w-[15ch] sm:w-[25ch] md:w-[50ch] xl:w-[15ch] text-xs sm:text-sm text-zinc-400 truncate'>
-                                    {sender?.fromMe ? 'You : ' : ''}
+                                <p className='w-[15ch] sm:w-[25ch] md:w-[50ch] xl:w-[15ch] text-xs sm:text-sm text-zinc-400 truncate flex items-center gap-2'>
+                                    {sender?.fromMe && (
+                                        <BiCheckDouble
+                                            className={`${
+                                                sender?.is_readed
+                                                    ? 'text-sky-400'
+                                                    : 'text-zinc-400'
+                                            }`}
+                                        />
+                                    )}
                                     {sender?.latestMessageText}
                                 </p>
                             </div>
