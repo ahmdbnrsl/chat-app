@@ -51,7 +51,7 @@ export default function SidebarChat({
                                     />
                                 )}
                                 {sender?.unReadedMessageLength > 0 && (
-                                    <div className='text-base text-zinc-950 h-[15px] w-fit min-w-[15px] absolute bg-zinc-300 rounded-full'>
+                                    <div className='text-base text-zinc-950 h-[15px] p-2 flex items-center justify-center w-fit min-w-[15px] absolute bg-zinc-300 rounded-full'>
                                         {sender?.unReadedMessageLength}
                                     </div>
                                 )}
