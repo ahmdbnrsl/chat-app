@@ -52,7 +52,7 @@ export default function SidebarChat({
                                     />
                                 )}
                                 {sender?.unReadedMessageLength > 0 && (
-                                    <div className='text-sm text-zinc-950 py-[0.35rem] px-[0.5rem] flex items-center justify-center w-fit absolute bg-zinc-300 rounded-full'>
+                                    <div className='text-sm text-zinc-950 py-[0.28rem] px-[0.5rem] flex items-center justify-center w-fit absolute bg-zinc-300 rounded-full'>
                                         {sender?.unReadedMessageLength}
                                     </div>
                                 )}

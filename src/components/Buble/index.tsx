@@ -186,7 +186,7 @@ export default function BubleMessage({
                         )}
                     </pre>
                 </div>
-                <p className='px-2 mb-1 mt-1 w-full text-end text-xs font-normal text-zinc-500 flex items-center'>
+                <p className='px-2 mb-1 mt-1 w-full text-end text-xs font-normal text-zinc-500 flex items-center justify-end gap-2'>
                     {timestamp(buble.message_timestamp)}
                     {isFromMe && (
                         <BiCheckDouble
