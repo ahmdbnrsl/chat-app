@@ -14,6 +14,7 @@ import { useOnClickOutside } from 'usehooks-ts';
 import Dropdown from '@/components/Menu/dropDown';
 import { useManageSearchMessage } from '@/lib/zustand';
 import { getHighlightedText } from '@/components/Highlight/text';
+import { BiCheckDouble } from 'react-icons/bi';
 
 export default function BubleMessage({
     profileName,
