@@ -52,7 +52,7 @@ export default function SidebarChat({
                                     />
                                 )}
                                 {sender?.unReadedMessageLength > 0 && (
-                                    <div className='text-sm text-zinc-950 py-[0.7rem] px-[1rem] flex items-center justify-center w-fit absolute bg-zinc-300 rounded-full'>
+                                    <div className='text-sm text-zinc-950 py-[0.35rem] px-[0.5rem] flex items-center justify-center w-fit absolute bg-zinc-300 rounded-full'>
                                         {sender?.unReadedMessageLength}
                                     </div>
                                 )}
@@ -64,7 +64,7 @@ export default function SidebarChat({
                                 <p className='w-[15ch] sm:w-[25ch] md:w-[50ch] xl:w-[15ch] text-xs sm:text-sm text-zinc-400 truncate flex items-center gap-2'>
                                     {sender?.fromMe && (
                                         <BiCheckDouble
-                                            className={`${
+                                            className={`text-base ${
                                                 sender?.is_readed
                                                     ? 'text-sky-400'
                                                     : 'text-zinc-400'
