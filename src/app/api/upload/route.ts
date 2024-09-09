@@ -12,17 +12,20 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        const formData = new FormData();
+        /*  const formData = new FormData();
         const buffer = Buffer.from(await file.arrayBuffer());
         const fileName = file.name || 'upload.jpg';
         formData.append('file', buffer, {
             filename: fileName,
             contentType: file.type
-        });
+        });*/
+
+        const body = new FormData();
+        body.append('file', file, file.name);
 
         const uploadResponse = await fetch('https://telegra.ph/upload', {
             method: 'POST',
-            body: file //formData as unknown as BodyInit
+            body: body //formData as unknown as BodyInit
         });
 
         const uploadResult = await uploadResponse.json();
