@@ -130,7 +130,7 @@ export default function ChatPage({
                                     group =>
                                         group.sender_id === newData.sender_id
                                 );
-                        dateGroup.reverse();
+                        dateGroup.messages.reverse();
                         if (!senderGroup) {
                             senderGroup = {
                                 sender_id: newData.sender_id,
