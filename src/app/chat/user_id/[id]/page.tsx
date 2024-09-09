@@ -114,7 +114,7 @@ export default function ChatPage({
                             year: 'numeric'
                         });
 
-                        let dateGroup: DateGroup = prevData.find(
+                        let dateGroup: DateGroup | undefined = prevData.find(
                             group => group.date === newMessageDate
                         );
 
