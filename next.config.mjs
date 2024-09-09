@@ -6,7 +6,9 @@ const nextConfig = {
             'pixabay.com',
             'cdn.pixabay.com',
             'img.freepik.com',
-            'freepik.com'
+            'freepik.com',
+            'cloudinary.com',
+            'res.cloudinary.com'
         ]
     }
 };
