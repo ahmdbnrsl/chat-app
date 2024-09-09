@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
         });
 
         const uploadResult = await uploadResponse.json();
-        if (uploadResponse.ok && uploadResult[0].src) {
+        if (uploadResponse.ok && uploadResult[0]?.src) {
             return NextResponse.json({
                 success: true,
                 fileUrl: `https://telegra.ph${uploadResult[0]?.src}`
