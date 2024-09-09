@@ -24,7 +24,8 @@
         "zustand": "latest",
         "react-use": "latest",
         "usehooks-ts": "latest",
-        "form-data": "latest"
+        "form-data": "latest",
+        "cloudinary": "latest"
     },
     "devDependencies": {
         "typescript": "^5",

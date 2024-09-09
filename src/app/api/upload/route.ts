@@ -1,5 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server';
-//import FormData from 'form-data';
+import cloudinary from '@/lib/cloudinary';
+import { v4 as uuidv4 } from 'uuid';
 
 export async function POST(req: NextRequest) {
     try {
@@ -12,36 +13,20 @@ export async function POST(req: NextRequest) {
             );
         }
 
-        /*  const formData = new FormData();
-        const buffer = Buffer.from(await file.arrayBuffer());
-        const fileName = file.name || 'upload.jpg';
-        formData.append('file', buffer, {
-            filename: fileName,
-            contentType: file.type
-        });*/
+        const base64File = await file.arrayBuffer();
+        const fileBuffer = Buffer.from(base64File).toString('base64');
+        const uploadResponse = await cloudinary.uploader.upload(
+            `data:${file.type};base64,${fileBuffer}`,
+            {
+                folder: 'uploads',
+                public_id: uuidv4()
+            }
+        );
 
-        const body = new FormData();
-        body.append('file', file);
-
-        const uploadResponse = await fetch('https://telegra.ph/upload', {
-            method: 'POST',
-            body: body //formData as unknown as BodyInit
+        return NextResponse.json({
+            success: true,
+            fileUrl: uploadResponse.secure_url
         });
-
-        const uploadResult = await uploadResponse.json();
-
-        if (uploadResponse.ok && uploadResult[0]?.src) {
-            return NextResponse.json({
-                success: true,
-                fileUrl: `https://telegra.ph${uploadResult[0]?.src}`
-            });
-        } else {
-            console.error(uploadResult);
-            return NextResponse.json(
-                { error: 'Failed to upload image' },
-                { status: uploadResponse.status }
-            );
-        }
     } catch (error) {
         console.error(error);
         return NextResponse.json(
