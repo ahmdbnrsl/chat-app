@@ -2,7 +2,7 @@
 
 import { useSession } from 'next-auth/react';
 import { useEffect, useState, useCallback } from 'react';
-import { FetcherService as getListSender } from '@/services/fetcherService';
+import { FetcherService } from '@/services/fetcherService';
 import type { SenderMessage } from '@/types';
 import { io } from 'socket.io-client';
 import { Message } from '@/types';
@@ -22,7 +22,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
     const fetchListSender = useCallback(async (): Promise<void> => {
         if (!session?.user?.user_id) return;
-        const res = await getListSender(
+        const res = await FetcherService(
             { user_id: session?.user.user_id },
             {
                 path: 'get_list_sender',

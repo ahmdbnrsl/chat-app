@@ -124,9 +124,12 @@ export default function ChatPage({
                         }
 
                         let senderGroup: SenderGroup | undefined =
-                            dateGroup.messages.find(
-                                group => group.sender_id === newData.sender_id
-                            );
+                            dateGroup.messages
+                                .reverse()
+                                .find(
+                                    group =>
+                                        group.sender_id === newData.sender_id
+                                );
                         if (!senderGroup) {
                             senderGroup = {
                                 sender_id: newData.sender_id,
