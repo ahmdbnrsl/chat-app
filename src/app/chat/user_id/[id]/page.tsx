@@ -72,11 +72,23 @@ export default function ChatPage({
         }
     }, [session?.user?.user_id, params.id]);
 
+    const readMessages = useCallback(async (): Promise<void> => {
+        if (!session?.user?.user_id || !params.id) return;
+        const res = await FetcherService(
+            { sender_id: params.id, receiver_id: session.user.user_id },
+            {
+                path: 'read_message',
+                method: 'PATCH'
+            }
+        );
+    }, [session?.user?.user_id, params.id]);
+
     useEffect(() => {
         if (!session?.user?.user_id || !params.id) return;
 
         fetchSenderInfo();
         fetchMessages();
+        readMessages();
 
         const handleMessageUpdated = (newData: Message): void => {
             if (!newData) return;
@@ -146,6 +158,7 @@ export default function ChatPage({
                         return updatedData;
                     }
                 );
+                readMessages();
             }
         };
 

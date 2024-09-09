@@ -93,6 +93,11 @@ export interface M {
         message_id: string;
         secret?: string;
     };
+    ReadMessage: {
+        sender_id: string;
+        receiver_id: string;
+        secret?: string;
+    };
     ListMessage: {
         status: boolean;
         message: string;
@@ -202,6 +207,7 @@ export type BodyOptions =
     | M['SendMessage']
     | M['DeleteMessage']
     | M['GetListSender']
+    | M['ReadMessage']
     | O['SendOTPCode'];
 
 // COMPONENTS PROPS TYPES
