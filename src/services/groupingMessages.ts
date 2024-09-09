@@ -8,7 +8,7 @@ import type {
 
 export function groupMessagesByDateAndSender(messages: Message[]): DateGroup[] {
     const grouped: {
-        [key: string]: { sender_id: string; messages: GroupedMessage[] }[];
+        [key: string]: { sender_id: string; messages: Message[] }[];
     } = {};
 
     messages.forEach((message: Message, index: number) => {
