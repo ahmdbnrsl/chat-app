@@ -23,7 +23,8 @@
         "socket.io-client": "latest",
         "zustand": "latest",
         "react-use": "latest",
-        "usehooks-ts": "latest"
+        "usehooks-ts": "latest",
+        "form-data": "latest"
     },
     "devDependencies": {
         "typescript": "^5",
