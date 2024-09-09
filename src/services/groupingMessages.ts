@@ -1,10 +1,4 @@
-import type {
-    Message,
-    GroupedMessage,
-    DateGroup,
-    ID,
-    SenderGroup
-} from '@/types';
+import type { Message, DateGroup, ID } from '@/types';
 
 export function groupMessagesByDateAndSender(messages: Message[]): DateGroup[] {
     const grouped: {
@@ -38,17 +32,19 @@ export function groupMessagesByDateAndSender(messages: Message[]): DateGroup[] {
 
     return Object.keys(grouped).map((date: string) => ({
         date,
-        messages: grouped[date].map((group: SenderGroup) => ({
-            sender_id: group.sender_id,
-            messages: group.messages.map((mess: GroupedMessage) => ({
-                message_text: mess.message_text,
-                message_id: mess.message_id,
-                message_timestamp: mess.message_timestamp,
-                message_quoted: mess?.message_quoted,
-                is_readed: mess.is_readed,
-                read_at: mess?.read_at,
-                _id: mess._id
-            }))
-        }))
+        messages: grouped[date].map(
+            (group: { sender_id: string; messages: Message[] }) => ({
+                sender_id: group.sender_id,
+                messages: group.messages.map((mess: Message) => ({
+                    message_text: mess.message_text,
+                    message_id: mess.message_id,
+                    message_timestamp: mess.message_timestamp,
+                    message_quoted: mess?.message_quoted,
+                    is_readed: mess.is_readed,
+                    read_at: mess?.read_at,
+                    _id: mess._id as ID
+                }))
+            })
+        )
     }));
 }
