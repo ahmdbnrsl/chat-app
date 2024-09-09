@@ -104,10 +104,9 @@ export default function ChatPage({
             ) {
                 setListMessage(
                     (prevData: DateGroup[] | null | undefined): DateGroup[] => {
-                        const updatedData: DateGroup[] = [
-                            ...(prevData as DateGroup[])
-                        ];
-                        const messageDate: string = new Date(
+                        if (!prevData) return [];
+
+                        const newMessageDate = new Date(
                             parseInt(newData.message_timestamp)
                         ).toLocaleDateString('en-US', {
                             day: 'numeric',
@@ -115,57 +114,75 @@ export default function ChatPage({
                             year: 'numeric'
                         });
 
-                        let dateGroup: DateGroup | undefined = updatedData.find(
-                            group => group.date === messageDate
+                        let dateGroup: DateGroup = prevData.find(
+                            group => group.date === newMessageDate
                         );
-                        if (!dateGroup) {
-                            dateGroup = { date: messageDate, messages: [] };
-                            updatedData.push(dateGroup);
-                        }
 
-                        let senderGroup: SenderGroup | undefined =
-                            dateGroup.messages
-                                .reverse()
-                                .find(
-                                    group =>
-                                        group.sender_id === newData.sender_id
-                                );
-                        dateGroup.messages.reverse();
-                        if (!senderGroup) {
-                            senderGroup = {
-                                sender_id: newData.sender_id,
+                        if (!dateGroup) {
+                            dateGroup = {
+                                date: newMessageDate,
                                 messages: []
                             };
-                            dateGroup.messages.push(senderGroup);
+                            prevData = [...prevData, dateGroup];
                         }
 
-                        const existingMessageIndex: number =
-                            senderGroup.messages.findIndex(
-                                msg => msg.message_id === newData.message_id
-                            );
-                        if (existingMessageIndex > -1) {
-                            senderGroup.messages[existingMessageIndex] = {
-                                message_text: newData.message_text,
-                                message_id: newData.message_id,
-                                message_timestamp: newData.message_timestamp,
-                                message_quoted: newData?.message_quoted,
-                                is_readed: newData?.is_readed,
-                                read_at: newData?.read_at,
-                                _id: newData._id as ID
-                            };
-                        } else {
-                            senderGroup.messages.push({
-                                message_text: newData.message_text,
-                                message_id: newData.message_id,
-                                message_timestamp: newData.message_timestamp,
-                                message_quoted: newData?.message_quoted,
-                                is_readed: newData?.is_readed,
-                                read_at: newData?.read_at,
-                                _id: newData._id as ID
+                        const messagesInDateGroup = dateGroup.messages;
+
+                        const lastSenderGroup =
+                            messagesInDateGroup.length > 0
+                                ? messagesInDateGroup[
+                                      messagesInDateGroup.length - 1
+                                  ]
+                                : null;
+
+                        if (
+                            !lastSenderGroup ||
+                            lastSenderGroup.sender_id !== newData.sender_id
+                        ) {
+                            messagesInDateGroup.push({
+                                sender_id: newData.sender_id,
+                                messages: [
+                                    {
+                                        message_text: newData.message_text,
+                                        message_id: newData.message_id,
+                                        message_timestamp:
+                                            newData.message_timestamp,
+                                        message_quoted: newData?.message_quoted,
+                                        is_readed: newData?.is_readed,
+                                        read_at: newData?.read_at,
+                                        _id: newData._id as ID
+                                    }
+                                ]
                             });
+                        } else {
+                            lastSenderGroup.messages = [
+                                ...lastSenderGroup.messages,
+                                {
+                                    message_text: newData.message_text,
+                                    message_id: newData.message_id,
+                                    message_timestamp:
+                                        newData.message_timestamp,
+                                    message_quoted: newData?.message_quoted,
+                                    is_readed: newData?.is_readed,
+                                    read_at: newData?.read_at,
+                                    _id: newData._id as ID
+                                }
+                            ];
                         }
 
-                        return updatedData;
+                        dateGroup.messages.forEach(group => {
+                            group.messages.sort(
+                                (a, b) =>
+                                    Number(a.message_timestamp) -
+                                    Number(b.message_timestamp)
+                            );
+                        });
+
+                        return prevData.sort(
+                            (a, b) =>
+                                new Date(a.date).getTime() -
+                                new Date(b.date).getTime()
+                        );
                     }
                 );
                 readMessages();
