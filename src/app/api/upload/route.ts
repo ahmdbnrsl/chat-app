@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
         });*/
 
         const body = new FormData();
-        body.append('file', file, file.name);
+        body.append('file', file);
 
         const uploadResponse = await fetch('https://telegra.ph/upload', {
             method: 'POST',
