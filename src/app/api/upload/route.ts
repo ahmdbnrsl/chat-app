@@ -28,12 +28,14 @@ export async function POST(req: NextRequest) {
                 fileUrl: `https://telegra.ph${uploadResult[0].src}`
             });
         } else {
+            console.error(uploadResult);
             return NextResponse.json(
-                { error: 'Failed to upload the file' },
-                { status: 500 }
+                { error: 'Failed to upload image' },
+                { status: uploadResponse?.status }
             );
         }
     } catch (error) {
+        console.error(error);
         return NextResponse.json(
             { error: (error as Error).message },
             { status: 500 }

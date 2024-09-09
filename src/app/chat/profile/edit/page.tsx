@@ -108,7 +108,7 @@ export default function EditFormPage({ searchParams }: any) {
                         } else {
                             setErr({
                                 status: true,
-                                message: `Upload failed: unsupported image or bad connection ${result?.error}`
+                                message: `Upload failed: unsupported image or bad connection`
                             });
                             e.target.disabled = false;
                             setLoading(false);
