@@ -36,7 +36,7 @@ export function groupMessagesByDateAndSender(messages: Message[]): DateGroup[] {
         }
     });
 
-    return Object.keys(grouped).map((date: DateGroup) => ({
+    return Object.keys(grouped).map((date: string) => ({
         date,
         messages: grouped[date].map((group: SenderGroup) => ({
             sender_id: group.sender_id,
