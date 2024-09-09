@@ -5,7 +5,7 @@ import type { M } from '@/types';
 export async function DELETE(req: NextRequest) {
     const body: M['DeleteMessage'] = await req.json();
     const { secret, message_id } = body;
-    if (secret !== process.env.NEXT_PUBLIC_SECRET) {
+    if (secret !== process.env.SECRET_TOKEN) {
         return NextResponse.json(
             {
                 status: false,

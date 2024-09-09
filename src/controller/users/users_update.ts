@@ -3,7 +3,7 @@ import { users } from '@/models/users';
 import type { UpdateResult } from 'mongodb';
 import type { User, U } from '@/types';
 
-const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
+const URI: string = process.env.MONGODB_URI || '';
 
 export const editUser = async ({
     new_name,

@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
     const body: M['GetListSender'] = await req.json();
     const { user_id, secret } = body;
 
-    if (secret !== process.env.NEXT_PUBLIC_SECRET) {
+    if (secret !== process.env.SECRET_TOKEN) {
         return NextResponse.json(
             {
                 status: false,

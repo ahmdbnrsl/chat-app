@@ -4,7 +4,7 @@ import { otps } from '@/models/otps';
 import { users } from '@/models/users';
 import type { User, OTP, O } from '@/types';
 
-const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
+const URI: string = process.env.MONGODB_URI || '';
 
 export const storeOTP = async ({
     wa_number,

@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { messages } from '@/models/messages';
 import type { Message, M } from '@/types';
 
-const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
+const URI: string = process.env.MONGODB_URI || '';
 
 export const getListMessage = async ({
     sender_id,

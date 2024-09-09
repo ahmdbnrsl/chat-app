@@ -5,7 +5,7 @@ import type { U } from '@/types';
 export async function PUT(req: NextRequest) {
     const body: U['EditUser'] = await req.json();
     const { secret } = body;
-    if (secret !== process.env.NEXT_PUBLIC_SECRET) {
+    if (secret !== process.env.SECRET_TOKEN) {
         return NextResponse.json(
             {
                 status: false,

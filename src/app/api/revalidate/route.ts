@@ -5,7 +5,7 @@ import type { RevalidateBodyRequest } from '@/types';
 export async function POST(req: NextRequest) {
     const body: RevalidateBodyRequest = await req.json();
     const { secret, tag } = body;
-    if (secret !== process.env.NEXT_PUBLIC_SECRET) {
+    if (secret !== process.env.SECRET_TOKEN) {
         return NextResponse.json(
             {
                 status: false,

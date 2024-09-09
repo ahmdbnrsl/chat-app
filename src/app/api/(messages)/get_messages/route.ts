@@ -6,7 +6,7 @@ import { groupMessagesByDateAndSender } from '@/services/groupingMessages';
 export async function POST(req: NextRequest) {
     const body: M['GetListMessage'] = await req.json();
     const { secret } = body;
-    if (secret !== process.env.NEXT_PUBLIC_SECRET) {
+    if (secret !== process.env.SECRET_TOKEN) {
         return NextResponse.json(
             {
                 status: false,

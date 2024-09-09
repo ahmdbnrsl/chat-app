@@ -15,7 +15,7 @@ function generateOTP(): string {
 export async function POST(req: NextRequest) {
     const body: O['SendOTPCode'] = await req.json();
     const { wa_number, created_at, expired_at, secret } = body;
-    if (secret !== process.env.NEXT_PUBLIC_SECRET) {
+    if (secret !== process.env.SECRET_TOKEN) {
         return NextResponse.json(
             {
                 status: false,
@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        secret: process.env.NEXT_PUBLIC_SECRET,
+                        secret: process.env.SECRET_TOKEN,
                         number: wa_number,
                         mess,
                         rep: 'do not share this to anyone',

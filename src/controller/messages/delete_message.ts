@@ -3,7 +3,7 @@ import { messages } from '@/models/messages';
 import type { DeleteResult } from 'mongodb';
 import type { Message } from '@/types';
 
-const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
+const URI: string = process.env.MONGODB_URI || '';
 
 export const deleteMessage = async (
     message_id: string

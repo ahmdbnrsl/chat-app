@@ -3,12 +3,12 @@ import { NextResponse, NextRequest } from 'next/server';
 import { users } from '@/models/users';
 import type { U, User } from '@/types';
 
-const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
+const URI: string = process.env.MONGODB_URI || '';
 
 export async function POST(req: NextRequest) {
     const body: U['GetUserInfo'] = await req.json();
     const { secret, user_id, wa_number } = body;
-    if (secret !== process.env.NEXT_PUBLIC_SECRET) {
+    if (secret !== process.env.SECRET_TOKEN) {
         return NextResponse.json(
             {
                 status: false,

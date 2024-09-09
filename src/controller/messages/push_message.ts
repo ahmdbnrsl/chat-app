@@ -4,7 +4,7 @@ import { messages } from '@/models/messages';
 import { users } from '@/models/users';
 import type { User, Message, M } from '@/types';
 
-const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
+const URI: string = process.env.MONGODB_URI || '';
 
 export const pushMessage = async (
     messageOptions: M['SendMessage']

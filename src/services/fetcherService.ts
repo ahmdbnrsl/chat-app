@@ -10,11 +10,11 @@ export const FetcherService = async (
             method: fetchOptions.method,
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: 'Bearer ' + process.env.NEXT_PUBLIC_BEARER
+                Authorization: 'Bearer ' + process.env.BEARER_TOKEN
             },
             body: JSON.stringify({
                 ...bodyOptions,
-                secret: process.env.NEXT_PUBLIC_SECRET
+                secret: process.env.SECRET_TOKEN
             }),
             cache: fetchOptions?.cache || 'no-store'
         };

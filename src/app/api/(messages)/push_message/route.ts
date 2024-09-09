@@ -5,7 +5,7 @@ import { pushMessage } from '@/controller/messages/push_message';
 export async function POST(req: NextRequest) {
     const body: M['SendMessage'] = await req.json();
     const { secret } = body;
-    if (secret !== process.env.NEXT_PUBLIC_SECRET) {
+    if (secret !== process.env.SECRET_TOKEN) {
         return NextResponse.json(
             {
                 status: false,

@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 import { users } from '@/models/users';
 import type { User, U } from '@/types';
 
-const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
+const URI: string = process.env.MONGODB_URI || '';
 
 export const storeUser = async ({
     wa_number,
@@ -26,7 +26,7 @@ export const storeUser = async ({
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    secret: process.env.NEXT_PUBLIC_SECRET,
+                    secret: process.env.SECRET_TOKEN,
                     num: wa_number
                 }),
                 cache: 'no-store'

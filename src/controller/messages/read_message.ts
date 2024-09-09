@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import type { UpdateResult } from 'mongodb';
 import type { Message, M } from '@/types';
 
-const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
+const URI: string = process.env.MONGODB_URI || '';
 
 export const readMessage = async (
     paramOptions: M['ReadMessage']

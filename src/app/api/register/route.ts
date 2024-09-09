@@ -5,7 +5,7 @@ import { storeUser } from '@/controller/users/user_register';
 export async function POST(req: NextRequest) {
     const body: U['Signup'] = await req.json();
     const { secret } = body;
-    if (secret !== process.env.NEXT_PUBLIC_SECRET) {
+    if (secret !== process.env.SECRET_TOKEN) {
         return NextResponse.json(
             {
                 status: false,

@@ -30,7 +30,7 @@ export default function withAuthandValid(
         const match = pathName.match(/^\/chat\/user_id\/([^\/]+)$/);
         const token = await getToken({
             req,
-            secret: process.env.NEXT_PUBLIC_SECRET
+            secret: process.env.SECRET_TOKEN
         });
 
         if (!token && !authPage.includes(pathName)) {
@@ -59,12 +59,11 @@ export default function withAuthandValid(
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        Authorization:
-                            'Bearer ' + process.env.NEXT_PUBLIC_BEARER
+                        Authorization: 'Bearer ' + process.env.BEARER_TOKEN
                     },
                     body: JSON.stringify({
                         user_id,
-                        secret: process.env.NEXT_PUBLIC_SECRET
+                        secret: process.env.SECRET_TOKEN
                     }),
                     cache: 'no-store'
                 };
@@ -93,7 +92,7 @@ export default function withAuthandValid(
             }
 
             const token = authHeader.split(' ')[1];
-            const isValidToken = token === process.env.NEXT_PUBLIC_BEARER;
+            const isValidToken = token === process.env.BEARER_TOKEN;
 
             if (!isValidToken) {
                 return new NextResponse('Unauthorized', { status: 401 });

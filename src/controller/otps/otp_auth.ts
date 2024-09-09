@@ -5,7 +5,7 @@ import { compare } from 'bcrypt';
 import { otps } from '@/models/otps';
 import { users } from '@/models/users';
 
-const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
+const URI: string = process.env.MONGODB_URI || '';
 
 export const authOTP = async ({
     wa_number,

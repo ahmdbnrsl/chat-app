@@ -3,7 +3,7 @@ import { messages } from '@/models/messages';
 import { users } from '@/models/users';
 import { Message, User, SenderMessage, M } from '@/types';
 
-const URI: string = process.env.NEXT_PUBLIC_MONGODB_URI || '';
+const URI: string = process.env.MONGODB_URI || '';
 
 export const getListSender = async (
     user_id: string
