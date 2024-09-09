@@ -75,7 +75,11 @@ export default function ChatPage({
     const readMessages = useCallback(async (): Promise<void> => {
         if (!session?.user?.user_id || !params.id) return;
         const res = await FetcherService(
-            { sender_id: params.id, receiver_id: session.user.user_id },
+            {
+                sender_id: params.id,
+                receiver_id: session.user.user_id,
+                read_at: Date.now().toString()
+            },
             {
                 path: 'read_message',
                 method: 'PATCH'
@@ -142,6 +146,7 @@ export default function ChatPage({
                                 message_timestamp: newData.message_timestamp,
                                 message_quoted: newData?.message_quoted,
                                 is_readed: newData?.is_readed,
+                                read_at: newData?.read_at,
                                 _id: newData._id as ID
                             };
                         } else {
@@ -151,6 +156,7 @@ export default function ChatPage({
                                 message_timestamp: newData.message_timestamp,
                                 message_quoted: newData?.message_quoted,
                                 is_readed: newData?.is_readed,
+                                read_at: newData?.read_at,
                                 _id: newData._id as ID
                             });
                         }

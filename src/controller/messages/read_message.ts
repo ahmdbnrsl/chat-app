@@ -10,7 +10,7 @@ export const readMessage = async (
 ): Promise<{ status: boolean; message: string } | false> => {
     try {
         await mongoose.connect(URI);
-        const { sender_id, receiver_id } = paramOptions;
+        const { sender_id, receiver_id, read_at } = paramOptions;
         const readedMessage = (await messages.updateMany(
             {
                 sender_id,
@@ -18,7 +18,8 @@ export const readMessage = async (
                 is_readed: false
             },
             {
-                is_readed: true
+                is_readed: true,
+                read_at
             }
         )) as UpdateResult<Message>;
         if (readedMessage.acknowledged) {

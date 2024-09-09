@@ -4,7 +4,7 @@ import type { M } from '@/types';
 
 export async function PATCH(req: NextRequest) {
     const body: M['ReadMessage'] = await req.json();
-    const { secret, sender_id, receiver_id } = body;
+    const { secret, sender_id, receiver_id, read_at } = body;
     if (secret !== process.env.SECRET_TOKEN) {
         return NextResponse.json(
             {
@@ -16,7 +16,7 @@ export async function PATCH(req: NextRequest) {
     }
     try {
         const result: { status: boolean; message: string } | false =
-            await readMessage({ sender_id, receiver_id });
+            await readMessage({ sender_id, receiver_id, read_at });
         if (result) {
             if (result?.status) {
                 return NextResponse.json({

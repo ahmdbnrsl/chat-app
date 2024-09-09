@@ -96,6 +96,7 @@ export interface M {
     ReadMessage: {
         sender_id: string;
         receiver_id: string;
+        read_at: string;
         secret?: string;
     };
     ListMessage: {
