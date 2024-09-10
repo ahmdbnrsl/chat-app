@@ -4,7 +4,7 @@ import Loading from '@/components/loading';
 import Avatar from 'react-avatar';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import type { M, SenderMessage, ID } from '@/types';
 import { date, hour } from '@/services/getTime';
 import { useCallback } from 'react';
@@ -21,7 +21,6 @@ export default function SidebarChat({
     const getDate = useCallback(date, []);
     const getHour = useCallback(hour, []);
     const pathName: string = usePathname();
-    const { push } = useRouter();
     const IdSender: string = pathName.split('/').slice(-1)[0];
     return (
         <div className='w-full flex flex-col gap-3 p-6 flex-grow'>
@@ -31,10 +30,10 @@ export default function SidebarChat({
                 </div>
             ) : listSender?.length !== 0 ? (
                 listSender?.map((sender: SenderMessage, index: number) => (
-                    <button
-                        onClick={() => push(`/chat/user_id/${sender?.id_user}`)}
+                    <Link
+                        href={`/chat/user_id/${sender?.id_user}`}
                         key={index}
-                        className={`outline-0 border-0 w-full rounded-xl transition-colors hover:bg-zinc-900/[0.85] flex justify-between items-center p-3 cursor-pointer ${
+                        className={`w-full rounded-xl transition-colors hover:bg-zinc-900/[0.85] flex justify-between items-center p-3 cursor-pointer ${
                             IdSender === sender?.id_user && 'bg-zinc-900/[0.85]'
                         }`}
                     >
@@ -96,7 +95,7 @@ export default function SidebarChat({
                                     : getDate(sender?.latestMessageTimestamp)}
                             </p>
                         </div>
-                    </button>
+                    </Link>
                 ))
             ) : (
                 <div className='w-full flex justify-center gap-1.5 items-center text-lg font-medium text-zinc-500'>
