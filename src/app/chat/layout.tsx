@@ -69,21 +69,20 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                 sender.latestMessageId === newData.message_id
                         );
                         if (findNewMessage) {
-                            (findNewMessage.fromMe =
-                                newData?.sender_id !== session?.user?.user_id),
-                                (findNewMessage.latestMessageText =
-                                    newData?.message_text),
-                                (findNewMessage.latestMessageTimestamp =
-                                    newData?.message_timestamp),
-                                (findNewMessage.latestMessageIdOnDB =
-                                    newData?._id as ID),
-                                (findNewMessage.is_readed = newData?.is_readed),
-                                (findNewMessage.unReadedMessageLength =
-                                    newData?.sender_id !==
-                                    session?.user?.user_id
-                                        ? findNewMessage.unReadedMessageLength +
-                                          1
-                                        : findNewMessage.unReadedMessageLength);
+                            findNewMessage.fromMe =
+                                newData?.sender_id !== session?.user?.user_id;
+                            findNewMessage.latestMessageId = newData.message_id;
+                            findNewMessage.latestMessageText =
+                                newData?.message_text;
+                            findNewMessage.latestMessageTimestamp =
+                                newData?.message_timestamp;
+                            findNewMessage.latestMessageIdOnDB =
+                                newData?._id as ID;
+                            findNewMessage.is_readed = newData?.is_readed;
+                            findNewMessage.unReadedMessageLength =
+                                newData?.sender_id !== session?.user?.user_id
+                                    ? findNewMessage.unReadedMessageLength + 1
+                                    : findNewMessage.unReadedMessageLength;
                             return prevData as SenderMessage[];
                         } else {
                             const newSender =
@@ -102,6 +101,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                             fromMe:
                                                 newData?.sender_id !==
                                                 session?.user?.user_id,
+                                            latestMessageId: newData.message_id,
                                             latestMessageText:
                                                 newData.message_text,
                                             latestMessageTimestamp:
