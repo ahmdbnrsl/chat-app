@@ -74,7 +74,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 let findDeletedMessId: SenderMessage | undefined =
                     listSender.find(
                         (sender: SenderMessage) =>
-                            senders.latestMessageIdOnDB === deletedMessageId
+                            sender.latestMessageIdOnDB === deletedMessageId
                     );
                 if (findDeletedMessId) fetchListSender();
             }
