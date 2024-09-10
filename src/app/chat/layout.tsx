@@ -67,7 +67,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         ).find(
                             (sender: SenderMessage) =>
                                 sender.latestMessageIdOnDB ===
-                                newData._id.toString()
+                                (newData._id as ID).toString()
                         );
                         if (findNewMessage) {
                             (findNewMessage.fromMe =
