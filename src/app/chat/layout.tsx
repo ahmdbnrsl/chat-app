@@ -85,7 +85,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                     ? findNewMessage.unReadedMessageLength + 1
                                     : findNewMessage.unReadedMessageLength;
                             return prevData as SenderMessage[];
-                        } else if (!findNewMessage) {
+                        } else {
                             const newSender =
                                 newData.sender_id !== session?.user?.user_id
                                     ? newData.sender_id
@@ -160,7 +160,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             socket.off('data_deleted');
             socket.off('message_readed', handleReadMessage);
         };
-    }, [fetchListSender, session?.user?.user_id]);
+    }, [fetchListSender, session?.user?.user_id, fetchSenderInfo]);
 
     useEffect(() => {
         setWidth(window.innerWidth);

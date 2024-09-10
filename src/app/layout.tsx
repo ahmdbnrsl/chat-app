@@ -42,8 +42,7 @@ export const metadata: Metadata = {
             url: 'https://vbchat.vercel.app/og.png',
             alt: 'Twitter Card VB CHAT Image'
         }
-    },
-    themeColor: '#09090b'
+    }
 };
 
 const poppins = Poppins({

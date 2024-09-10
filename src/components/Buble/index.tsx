@@ -56,7 +56,7 @@ export default function BubleMessage({
             const xPosition: 'left' | 'right' = isFromMe ? 'right' : 'left';
             menuRef.current.style[xPosition] = '0';
         }
-    }, []);
+    }, [isFromMe]);
 
     useEffect(() => {
         if (isOpen) {

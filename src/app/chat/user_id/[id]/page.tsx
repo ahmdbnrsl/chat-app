@@ -70,7 +70,7 @@ export default function ChatPage({
             resetQuoted();
             window.scrollTo(0, document.body.scrollHeight);
         }
-    }, [session?.user?.user_id, params.id]);
+    }, [session?.user?.user_id, params.id, resetQuoted]);
 
     const readMessages = useCallback(async (): Promise<void> => {
         if (!session?.user?.user_id || !params.id) return;
@@ -234,7 +234,13 @@ export default function ChatPage({
             socket.off('data_updated', handleMessageUpdated);
             socket.off('data_deleted', handleMessageDeleted);
         };
-    }, [fetchSenderInfo, fetchMessages, session?.user?.user_id, params.id]);
+    }, [
+        fetchSenderInfo,
+        fetchMessages,
+        session?.user?.user_id,
+        params.id,
+        readMessages
+    ]);
 
     return (
         <main className='bg-zinc-950 w-full min-h-screen flex'>
