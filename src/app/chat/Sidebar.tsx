@@ -4,16 +4,19 @@ import Avatar from 'react-avatar';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import type { M, SenderMessage } from '@/types';
+import type { M, SenderMessage, ID } from '@/types';
 import { date, hour } from '@/services/getTime';
 import { useCallback } from 'react';
 import { BiCheckDouble } from 'react-icons/bi';
+import { useManageSearchSender } from '@/lib/zustand';
+import { getHighlightedText } from '@/components/Highlight/text';
 
 export default function SidebarChat({
     listSender
 }: {
     listSender: Array<SenderMessage> | null | undefined;
 }) {
+    const { searchSenderValue } = useManageSearchSender();
     const getDate = useCallback(date, []);
     const getHour = useCallback(hour, []);
     const pathName: string = usePathname();
@@ -52,14 +55,17 @@ export default function SidebarChat({
                                     />
                                 )}
                                 {sender?.unReadedMessageLength > 0 && (
-                                    <div className='text-xs text-zinc-950 py-[0.24rem] px-[0.5rem] flex items-center justify-center w-fit absolute bg-zinc-300 rounded-full border-2 border-zinc-950'>
+                                    <div className='text-xs text-zinc-950 py-[0.24rem] px-[0.5rem] flex items-center justify-center w-fit absolute bg-zinc-300 rounded-full border-4 border-zinc-950'>
                                         {sender?.unReadedMessageLength}
                                     </div>
                                 )}
                             </div>
                             <div className='flex flex-col'>
                                 <h1 className='text-base sm:text-lg text-zinc-300 font-normal'>
-                                    {sender?.name}
+                                    {getHighlightedText(
+                                        sender?.name as ID,
+                                        searchSenderValue as ID
+                                    )}
                                 </h1>
                                 <div className='flex items-center gap-2'>
                                     {sender?.fromMe && (

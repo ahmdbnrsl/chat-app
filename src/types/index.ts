@@ -268,3 +268,9 @@ export interface SearchMessageState {
     setSearchMessValue: (mess: string) => void;
     reset: () => void;
 }
+
+export interface SearchSenderState {
+    searchSenderValue: string;
+    setSearchSenderValue: (sender: string) => void;
+    clearSearchSender: () => void;
+}

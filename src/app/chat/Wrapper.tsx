@@ -4,6 +4,7 @@ import { useState, MouseEvent } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter, usePathname } from 'next/navigation';
 import { IoSearch } from 'react-icons/io5';
+import { useManageSearchSender } from '@/lib/zustand';
 import Link from 'next/link';
 import Avatar from 'react-avatar';
 import Image from 'next/image';
@@ -20,6 +21,13 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
 
     const showingModal = (): void => setShowModal(true);
     const hideModal = (): void => setShowModal(false);
+
+    const { setSearchSenderValue, clearSearchSender } = useManageSearchSender();
+    const handleSearchSender = (e: ChangeEvent<HTMLInputElement>) => {
+        let val = e.target.value;
+        if (val.length > 0) setSearchSenderValue(val);
+        if (val.length === 0) clearSearchSender();
+    };
 
     const Redirect = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
@@ -59,7 +67,10 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
                         )}
                     </button>
                 </div>
-                <SearchInput placeHolder='Search by name' />
+                <SearchInput
+                    placeHolder='Search by name'
+                    onChanging={handleSearchSender}
+                />
             </nav>
             {children}
             <div className='sticky bottom-0 bg-zinc-950 w-full py-4 px-6 flex flex-col items-center'>

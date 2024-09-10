@@ -2,7 +2,8 @@ import { create } from 'zustand';
 import type {
     MessageQuoted,
     MessageQuotedState,
-    SearchMessageState
+    SearchMessageState,
+    SearchSenderState
 } from '@/types';
 
 export const useManageQuoted = create<MessageQuotedState>(set => ({
@@ -15,4 +16,10 @@ export const useManageSearchMessage = create<SearchMessageState>(set => ({
     searchMessValue: '',
     setSearchMessValue: (mess: string) => set({ searchMessValue: mess }),
     reset: () => set({ searchMessValue: '' })
+}));
+
+export const useManageSearchSender = create<SearchSenderState>(set => ({
+    searchSenderValue: '',
+    setSearchSenderValue: (sender: string) => set({ searchMessValue: sender }),
+    clearSearchSender: () => set({ searchMessValue: '' })
 }));
