@@ -5,7 +5,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { FetcherService } from '@/services/fetcherService';
 import type { SenderMessage } from '@/types';
 import { io } from 'socket.io-client';
-import { Message, User } from '@/types';
+import { Message, User, ID } from '@/types';
 import { usePathname } from 'next/navigation';
 import SidebarChat from './Sidebar';
 import Wrapper from './Wrapper';
