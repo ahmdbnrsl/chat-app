@@ -85,6 +85,7 @@ export const getListSender = async (
                         latestMessageTimestamp:
                             latestMessage?.message_timestamp,
                         latestMessageSenderId: latestMessage?.sender_id,
+                        latestMessageReceiverId: latestMessage?.receiver_id,
                         latestMessageIdOnDB: latestMessage?._id as ID,
                         id_user: user?.user_id,
                         is_readed: latestMessage?.is_readed,

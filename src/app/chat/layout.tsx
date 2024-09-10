@@ -66,7 +66,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         const findNewMessage: SenderMessage | undefined = (
                             prevData as SenderMessage[]
                         ).find(
-                            ({ latestMessageId }) => latestMessageId === mess_id
+                            ({
+                                latestMessageSenderId,
+                                latestMessageReceiverId
+                            }) =>
+                                latestMessageSenderId === newData.sender_id &&
+                                latestMessageReceiverId === newData.receiver_id
                         );
                         console.log(findNewMessage);
                         console.log(mess_id);
