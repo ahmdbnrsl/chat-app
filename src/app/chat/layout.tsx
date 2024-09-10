@@ -70,14 +70,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                 latestMessageSenderId,
                                 latestMessageReceiverId
                             }) =>
-                                latestMessageSenderId === newData.sender_id &&
-                                latestMessageReceiverId === newData.receiver_id
+                                (latestMessageSenderId === newData.sender_id &&
+                                    latestMessageReceiverId ===
+                                        newData.receiver_id) ||
+                                (latestMessageSenderId ===
+                                    newData.receiver_id &&
+                                    latestMessageReceiverId ===
+                                        newData.sender_id)
                         );
                         console.log(findNewMessage);
                         console.log(mess_id);
                         if (findNewMessage) {
                             findNewMessage.fromMe =
-                                newData?.sender_id !== session?.user?.user_id;
+                                newData?.sender_id === session?.user?.user_id;
                             findNewMessage.latestMessageId = newData.message_id;
                             findNewMessage.latestMessageText =
                                 newData?.message_text;
