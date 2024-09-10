@@ -104,7 +104,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             fetchSenderInfo(newSender).then(
                                 (senderInfo: User | undefined) => {
                                     if (senderInfo)
-                                        (prevData as SenderMessage[]).push({
+                                        (prevData as SenderMessage[]).unshift({
                                             pp: senderInfo?.pp as ID,
                                             name: senderInfo?.name as ID,
                                             wa_number:
