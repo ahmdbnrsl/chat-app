@@ -63,7 +63,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     ): SenderMessage[] => {
                         if (!prevData) return [];
 
-                        const findNewMessageIndex: SenderMessage | undefined = (
+                        const findNewMessageIndex: number = (
                             prevData as SenderMessage[]
                         ).findIndex(
                             ({
