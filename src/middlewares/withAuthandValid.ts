@@ -80,6 +80,8 @@ export default function withAuthandValid(
                     user?.result?.user_id === token.user_id
                 ) {
                     return NextResponse.redirect(new URL('/chat', req.url));
+                } else {
+                    return NextResponse.next();
                 }
             }
         }
