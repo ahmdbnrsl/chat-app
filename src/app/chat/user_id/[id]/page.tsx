@@ -21,7 +21,7 @@ import type {
     GroupedMessage
 } from '@/types';
 import { date, hour } from '@/services/getTime';
-import { useManageQuoted, useUpdatedListMessage } from '@/lib/zustand';
+import { useManageQuoted } from '@/lib/zustand';
 
 const socketURL: string = process.env.NEXT_PUBLIC_SOCKET_URL || '';
 const socket: Socket = io(socketURL);
@@ -33,13 +33,9 @@ export default function ChatPage({
 }): JSX.Element {
     const { data: session, status }: { data: any; status: string } =
         useSession();
-    const {
-        listMessage,
-        setListMessage,
-        setNewUpdatedListMessage,
-        setNewDeletedListMessage,
-        clearListMessage
-    } = useUpdatedListMessage();
+    const [listMessage, setListMessage] = useState<
+        Array<DateGroup> | null | undefined
+    >(null);
     const [senderInfo, setSenderInfo] = useState<undefined | null | User>(null);
     const { reset: resetQuoted } = useManageQuoted();
 
@@ -74,7 +70,7 @@ export default function ChatPage({
             resetQuoted();
             window.scrollTo(0, document.body.scrollHeight);
         }
-    }, [session?.user?.user_id, params.id, resetQuoted, setListMessage]);
+    }, [session?.user?.user_id, params.id, resetQuoted]);
 
     const readMessages = useCallback(async (): Promise<void> => {
         if (!session?.user?.user_id || !params.id) return;
@@ -106,14 +102,116 @@ export default function ChatPage({
                 (newData.sender_id === params.id &&
                     newData.receiver_id === session.user.user_id)
             ) {
-                setNewUpdatedListMessage(newData);
+                setListMessage(
+                    (prevData: DateGroup[] | null | undefined): DateGroup[] => {
+                        if (!prevData) return [];
+                        const newMessageDate = new Date(
+                            parseInt(newData.message_timestamp)
+                        ).toLocaleDateString('en-US', {
+                            day: 'numeric',
+                            month: 'long',
+                            year: 'numeric'
+                        });
+                        let dateGroup: DateGroup | undefined = prevData.find(
+                            group => group.date === newMessageDate
+                        );
+                        if (!dateGroup) {
+                            dateGroup = {
+                                date: newMessageDate,
+                                messages: []
+                            };
+                            prevData = [...prevData, dateGroup];
+                        }
+                        const messagesInDateGroup = dateGroup.messages;
+                        const lastSenderGroup =
+                            messagesInDateGroup.length > 0
+                                ? messagesInDateGroup[
+                                      messagesInDateGroup.length - 1
+                                  ]
+                                : null;
+                        if (
+                            !lastSenderGroup ||
+                            lastSenderGroup.sender_id !== newData.sender_id
+                        ) {
+                            messagesInDateGroup.push({
+                                sender_id: newData.sender_id,
+                                messages: [
+                                    {
+                                        message_text: newData.message_text,
+                                        message_id: newData.message_id,
+                                        message_timestamp:
+                                            newData.message_timestamp,
+                                        message_quoted: newData?.message_quoted,
+                                        is_readed: newData?.is_readed,
+                                        read_at: newData?.read_at,
+                                        _id: newData._id as ID
+                                    }
+                                ]
+                            });
+                        } else {
+                            lastSenderGroup.messages = [
+                                ...lastSenderGroup.messages,
+                                {
+                                    message_text: newData.message_text,
+                                    message_id: newData.message_id,
+                                    message_timestamp:
+                                        newData.message_timestamp,
+                                    message_quoted: newData?.message_quoted,
+                                    is_readed: newData?.is_readed,
+                                    read_at: newData?.read_at,
+                                    _id: newData._id as ID
+                                }
+                            ];
+                        }
+                        dateGroup.messages.forEach(group => {
+                            group.messages.sort(
+                                (a, b) =>
+                                    Number(a.message_timestamp) -
+                                    Number(b.message_timestamp)
+                            );
+                        });
+                        return prevData.sort(
+                            (a, b) =>
+                                new Date(a.date).getTime() -
+                                new Date(b.date).getTime()
+                        );
+                    }
+                );
                 readMessages();
             }
         };
 
         const handleMessageDeleted = (deletedMessageId: string): void => {
             if (!deletedMessageId) return;
-            setNewDeletedListMessage(deletedMessageId);
+            setListMessage(
+                (prevData: DateGroup[] | null | undefined): DateGroup[] => {
+                    if (!prevData) return [];
+                    const updatedData: DateGroup[] = prevData.map(
+                        (dateGroup: DateGroup) => {
+                            const updatedMessages: SenderGroup[] =
+                                dateGroup.messages
+                                    .map((senderGroup: SenderGroup) => ({
+                                        ...(senderGroup as SenderGroup),
+                                        messages: senderGroup.messages.filter(
+                                            (message: GroupedMessage) =>
+                                                message._id !== deletedMessageId
+                                        )
+                                    }))
+                                    .filter(
+                                        (senderGroup: SenderGroup) =>
+                                            senderGroup.messages.length > 0
+                                    );
+                            return {
+                                ...(dateGroup as DateGroup),
+                                messages: updatedMessages
+                            };
+                        }
+                    );
+                    return updatedData.filter(
+                        (dateGroup: DateGroup) => dateGroup.messages.length > 0
+                    );
+                }
+            );
         };
 
         socket.on('connect', () => console.info('live chat opened'));
@@ -130,9 +228,7 @@ export default function ChatPage({
         fetchMessages,
         session?.user?.user_id,
         params.id,
-        readMessages,
-        setNewDeletedListMessage,
-        setNewUpdatedListMessage
+        readMessages
     ]);
 
     return (

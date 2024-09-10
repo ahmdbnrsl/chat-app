@@ -285,11 +285,3 @@ export interface SenderNewMessageState {
     ) => void;
     setReadMessageListSender: (readedMessageId: string) => void;
 }
-
-export interface UpdatedListMessageState {
-    listMessage: DateGroup[] | null | undefined;
-    setListMessage: (messages: DateGroup[]) => void;
-    setNewUpdatedListMessage: (newData: Message) => void;
-    setNewDeletedListMessage: (deletedMessageId: string) => void;
-    clearListMessage: () => void;
-}
