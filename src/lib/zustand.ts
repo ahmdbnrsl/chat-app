@@ -3,6 +3,7 @@ import type {
     MessageQuoted,
     SenderMessage,
     Message,
+    User,
     MessageQuotedState,
     SearchMessageState,
     SearchSenderState,

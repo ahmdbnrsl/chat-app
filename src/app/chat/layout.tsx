@@ -38,7 +38,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         );
         if (res && res?.status)
             setListSender((res?.result as Array<SenderMessage>)?.reverse());
-    }, [session?.user.user_id]);
+    }, [session?.user.user_id, setListSender]);
 
     const fetchSenderInfo = async (
         user_id: string
@@ -192,7 +192,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             socket.off('data_deleted');
             socket.off('message_readed', handleReadMessage);
         };
-    }, [fetchListSender, session?.user?.user_id, fetchSenderInfo]);
+    }, [
+        fetchListSender,
+        session?.user?.user_id,
+        fetchSenderInfo,
+        setReadMessageListSender,
+        setNewMessageListSender
+    ]);
 
     useEffect(() => {
         setWidth(window.innerWidth);
