@@ -19,7 +19,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     const [listSender, setListSender] = useState<
         Array<SenderMessage> | undefined | null
     >(null);
-    const [senderInfo, setSenderInfo] = useState<undefined | null | User>(null);
 
     const fetchListSender = useCallback(async (): Promise<void> => {
         if (!session?.user?.user_id) return;
@@ -35,13 +34,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     }, [session?.user.user_id]);
 
     const fetchSenderInfo = useCallback(
-        async (user_id: string): Promise<void> => {
+        async (user_id: string): Promise<User> => {
             if (!user_id) return;
             const res = await FetcherService(
                 { user_id },
                 { path: 'get_user_info', method: 'POST' }
             );
-            if (res && res?.status) setSenderInfo(res.result as User);
+            if (res && res?.status) return res.result as User;
+            return {};
         },
         []
     );
@@ -66,8 +66,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             prevData as SenderMessage[]
                         ).find(
                             (sender: SenderMessage) =>
-                                sender.latestMessageIdOnDB ===
-                                (newData._id as ID).toString()
+                                sender.latestMessageId === newData.message_id
                         );
                         if (findNewMessage) {
                             (findNewMessage.fromMe =
@@ -91,27 +90,32 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                 newData.sender_id !== session?.user?.user_id
                                     ? newData.sender_id
                                     : newData.receiver_id;
-                            fetchSenderInfo(newSender);
-                            (prevData as SenderMessage[]).push({
-                                pp: senderInfo?.pp as ID,
-                                name: senderInfo?.name as ID,
-                                wa_number: senderInfo?.wa_number as ID,
-                                fromMe:
-                                    newData?.sender_id !==
-                                    session?.user?.user_id,
-                                latestMessageText: newData.message_text,
-                                latestMessageTimestamp:
-                                    newData.message_timestamp,
-                                latestMessageSenderId: newData.sender_id,
-                                latestMessageIdOnDB: newData._id as ID,
-                                id_user: newSender,
-                                is_readed: newData.is_readed,
-                                unReadedMessageLength:
-                                    newData.sender_id !== session?.user?.user_id
-                                        ? 1
-                                        : 0
-                            });
-                            return prevData as SenderMessage[];
+                            return fetchSenderInfo(newSender).then(
+                                (senderInfo: User): SenderMessage[] => {
+                                    (prevData as SenderMessage[]).push({
+                                        pp: senderInfo?.pp as ID,
+                                        name: senderInfo?.name as ID,
+                                        wa_number: senderInfo?.wa_number as ID,
+                                        fromMe:
+                                            newData?.sender_id !==
+                                            session?.user?.user_id,
+                                        latestMessageText: newData.message_text,
+                                        latestMessageTimestamp:
+                                            newData.message_timestamp,
+                                        latestMessageSenderId:
+                                            newData.sender_id,
+                                        latestMessageIdOnDB: newData._id as ID,
+                                        id_user: newSender,
+                                        is_readed: newData.is_readed,
+                                        unReadedMessageLength:
+                                            newData.sender_id !==
+                                            session?.user?.user_id
+                                                ? 1
+                                                : 0
+                                    });
+                                    return prevData as SenderMessage[];
+                                }
+                            ) as SenderMessage[];
                         }
                     }
                 );

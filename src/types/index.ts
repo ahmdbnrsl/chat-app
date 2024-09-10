@@ -40,6 +40,7 @@ export interface SenderMessage {
     name: string;
     wa_number: string;
     fromMe: boolean;
+    latestMessageId: string;
     latestMessageText: string;
     latestMessageTimestamp: string;
     latestMessageSenderId: string;

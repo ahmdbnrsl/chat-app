@@ -80,6 +80,7 @@ export const getListSender = async (
                         name: user?.name,
                         wa_number: user?.wa_number,
                         fromMe: latestMessage?.sender_id !== user?.user_id,
+                        latestMessageId: latestMessage?.message_id,
                         latestMessageText: latestMessage?.message_text,
                         latestMessageTimestamp:
                             latestMessage?.message_timestamp,
