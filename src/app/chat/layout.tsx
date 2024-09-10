@@ -17,9 +17,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     const { data: session, status }: { data: any; status: string } =
         useSession();
     const [width, setWidth] = useState<number>(0);
-    /*const [listSender, setListSender] = useState<
-        Array<SenderMessage> | undefined | null
-    >(null);*/
     const {
         listSender,
         setListSender,
@@ -69,128 +66,33 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     session?.user?.user_id as string,
                     fetchSenderInfo
                 );
-                /* setListSender(
-                    (
-                        prevData: SenderMessage[] | undefined | null
-                    ): SenderMessage[] => {
-                        if (!prevData) return [];
+            }
+        };
 
-                        const findNewMessageIndex: number = (
-                            prevData as SenderMessage[]
-                        ).findIndex(
-                            ({
-                                latestMessageSenderId,
-                                latestMessageReceiverId
-                            }) =>
-                                (latestMessageSenderId === newData.sender_id &&
-                                    latestMessageReceiverId ===
-                                        newData.receiver_id) ||
-                                (latestMessageSenderId ===
-                                    newData.receiver_id &&
-                                    latestMessageReceiverId ===
-                                        newData.sender_id)
-                        );
-
-                        if (findNewMessageIndex > -1) {
-                            const findNewMessage: SenderMessage =
-                                prevData[findNewMessageIndex];
-                            findNewMessage.fromMe =
-                                newData?.sender_id === session?.user?.user_id;
-                            findNewMessage.latestMessageId = newData.message_id;
-                            findNewMessage.latestMessageText =
-                                newData?.message_text;
-                            findNewMessage.latestMessageTimestamp =
-                                newData?.message_timestamp;
-                            findNewMessage.latestMessageSenderId =
-                                newData?.sender_id;
-                            findNewMessage.latestMessageReceiverId =
-                                newData?.receiver_id;
-                            findNewMessage.latestMessageIdOnDB =
-                                newData?._id as ID;
-                            findNewMessage.is_readed = newData?.is_readed;
-                            findNewMessage.unReadedMessageLength =
-                                newData?.sender_id !== session?.user?.user_id
-                                    ? findNewMessage.unReadedMessageLength + 1
-                                    : findNewMessage.unReadedMessageLength;
-                            prevData.splice(findNewMessageIndex, 1);
-                            prevData.unshift(findNewMessage);
-                            return prevData as SenderMessage[];
-                        } else {
-                            const newSender =
-                                newData.sender_id !== session?.user?.user_id
-                                    ? newData.sender_id
-                                    : newData.receiver_id;
-
-                            fetchSenderInfo(newSender).then(
-                                (senderInfo: User | undefined) => {
-                                    if (senderInfo)
-                                        (prevData as SenderMessage[]).unshift({
-                                            pp: senderInfo?.pp as ID,
-                                            name: senderInfo?.name as ID,
-                                            wa_number:
-                                                senderInfo?.wa_number as ID,
-                                            fromMe:
-                                                newData?.sender_id !==
-                                                session?.user?.user_id,
-                                            latestMessageId: newData.message_id,
-                                            latestMessageText:
-                                                newData.message_text,
-                                            latestMessageTimestamp:
-                                                newData.message_timestamp,
-                                            latestMessageSenderId:
-                                                newData.sender_id,
-                                            latestMessageReceiverId:
-                                                newData.receiver_id,
-                                            latestMessageIdOnDB:
-                                                newData._id as ID,
-                                            id_user: newSender,
-                                            is_readed: newData.is_readed,
-                                            unReadedMessageLength:
-                                                newData.sender_id !==
-                                                session?.user?.user_id
-                                                    ? 1
-                                                    : 0
-                                        });
-                                }
-                            );
-                            return prevData as SenderMessage[];
-                        }
-                    }
-                );*/
+        const handleDataDeleted = (deletedMessageId: string) => {
+            if (listSender && listSender.length > 0) {
+                let findDeletedMessId: SenderMessage | undefined =
+                    listSender.find(
+                        (sender: SenderMessage) =>
+                            senders.latestMessageIdOnDB === deletedMessageId
+                    );
+                if (findDeletedMessId) fetchListSender();
             }
         };
 
         const handleReadMessage = (readedMessageId: string) => {
             setReadMessageListSender(readedMessageId);
-            /*setListSender(
-                (
-                    prevData: SenderMessage[] | undefined | null
-                ): SenderMessage[] => {
-                    if (!prevData) return [];
-                    let messageReaded: SenderMessage | undefined = (
-                        prevData as SenderMessage[]
-                    ).find(
-                        (sender: SenderMessage) =>
-                            sender.latestMessageIdOnDB === readedMessageId
-                    );
-                    if (messageReaded) {
-                        messageReaded.is_readed = true;
-                        messageReaded.unReadedMessageLength = 0;
-                    }
-                    return prevData as SenderMessage[];
-                }
-            );*/
         };
 
         socket.on('connect', () => console.info('live chat opened'));
         socket.on('data_updated', handleDataUpdated);
-        socket.on('data_deleted', () => fetchListSender());
+        socket.on('data_deleted', handleDataDeleted);
         socket.on('message_readed', handleReadMessage);
         socket.on('disconnect', () => console.info('live chat closed'));
 
         return () => {
             socket.off('data_updated', handleDataUpdated);
-            socket.off('data_deleted');
+            socket.off('data_deleted', handleDataDeleted);
             socket.off('message_readed', handleReadMessage);
         };
     }, [

@@ -21,7 +21,7 @@ import type {
     GroupedMessage
 } from '@/types';
 import { date, hour } from '@/services/getTime';
-import { useManageQuoted } from '@/lib/zustand';
+import { useManageQuoted, useUpdatedListMessage } from '@/lib/zustand';
 
 const socketURL: string = process.env.NEXT_PUBLIC_SOCKET_URL || '';
 const socket: Socket = io(socketURL);
@@ -33,9 +33,15 @@ export default function ChatPage({
 }): JSX.Element {
     const { data: session, status }: { data: any; status: string } =
         useSession();
-    const [listMessage, setListMessage] = useState<
+    /* const [listMessage, setListMessage] = useState<
         Array<DateGroup> | null | undefined
-    >(null);
+    >(null);*/
+    const {
+        listMessage,
+        setListMessage,
+        setNewUpdatedListMessage,
+        setNewDeletedListMessage
+    } = useUpdatedListMessage();
     const [senderInfo, setSenderInfo] = useState<undefined | null | User>(null);
     const { reset: resetQuoted } = useManageQuoted();
 
@@ -102,7 +108,8 @@ export default function ChatPage({
                 (newData.sender_id === params.id &&
                     newData.receiver_id === session.user.user_id)
             ) {
-                setListMessage(
+                setNewUpdatedListMessage(newData);
+                /*  setListMessage(
                     (prevData: DateGroup[] | null | undefined): DateGroup[] => {
                         if (!prevData) return [];
 
@@ -184,15 +191,15 @@ export default function ChatPage({
                                 new Date(b.date).getTime()
                         );
                     }
-                );
+                );*/
                 readMessages();
             }
         };
 
         const handleMessageDeleted = (deletedMessageId: string): void => {
             if (!deletedMessageId) return;
-
-            setListMessage(
+            setNewDeletedListMessage(deletedMessageId);
+            /* setListMessage(
                 (prevData: DateGroup[] | null | undefined): DateGroup[] => {
                     if (!prevData) return [];
                     const updatedData: DateGroup[] = prevData.map(
@@ -222,7 +229,7 @@ export default function ChatPage({
                         (dateGroup: DateGroup) => dateGroup.messages.length > 0
                     );
                 }
-            );
+            );*/
         };
 
         socket.on('connect', () => console.info('live chat opened'));
