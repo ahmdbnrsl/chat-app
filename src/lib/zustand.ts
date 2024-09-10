@@ -20,6 +20,7 @@ export const useManageSearchMessage = create<SearchMessageState>(set => ({
 
 export const useManageSearchSender = create<SearchSenderState>(set => ({
     searchSenderValue: '',
-    setSearchSenderValue: (sender: string) => set({ searchMessValue: sender }),
+    setSearchSenderValue: (sender: string) =>
+        set({ searchSenderValue: sender }),
     clearSearchSender: () => set({ searchMessValue: '' })
 }));
