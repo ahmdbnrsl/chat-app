@@ -40,17 +40,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             setListSender((res?.result as Array<SenderMessage>)?.reverse());
     }, [session?.user.user_id, setListSender]);
 
-    const fetchSenderInfo = async (
-        user_id: string
-    ): Promise<User | undefined> => {
-        if (!user_id) return;
-        const res = await FetcherService(
-            { user_id },
-            { path: 'get_user_info', method: 'POST' }
-        );
-        if (res && res?.status) return res.result as User;
-        return;
-    };
+    const fetchSenderInfo = useCallback(
+        async (user_id: string): Promise<User | undefined> => {
+            if (!user_id) return;
+            const res = await FetcherService(
+                { user_id },
+                { path: 'get_user_info', method: 'POST' }
+            );
+            if (res && res?.status) return res.result as User;
+            return;
+        },
+        []
+    );
 
     useEffect(() => {
         if (!session?.user?.user_id) return;

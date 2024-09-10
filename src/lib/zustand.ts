@@ -60,7 +60,7 @@ export const useUpdatedSenderNewMessage = create<SenderNewMessageState>(
                     findNewMessage.latestMessageSenderId = newData.sender_id;
                     findNewMessage.latestMessageReceiverId =
                         newData.receiver_id;
-                    findNewMessage.latestMessageIdOnDB = newData._id;
+                    findNewMessage.latestMessageIdOnDB = newData._id as string;
                     findNewMessage.is_readed = newData.is_readed;
                     findNewMessage.unReadedMessageLength =
                         newData.sender_id !== sessionUserId
@@ -90,7 +90,8 @@ export const useUpdatedSenderNewMessage = create<SenderNewMessageState>(
                                             newData.sender_id,
                                         latestMessageReceiverId:
                                             newData.receiver_id,
-                                        latestMessageIdOnDB: newData._id,
+                                        latestMessageIdOnDB:
+                                            newData._id as string,
                                         id_user: newSender,
                                         is_readed: newData.is_readed,
                                         unReadedMessageLength:
