@@ -35,7 +35,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
     const fetchSenderInfo = useCallback(
         async (user_id: string): Promise<User> => {
-            if (!user_id) return;
+            if (!user_id) return {};
             const res = await FetcherService(
                 { user_id },
                 { path: 'get_user_info', method: 'POST' }
