@@ -274,3 +274,14 @@ export interface SearchSenderState {
     setSearchSenderValue: (sender: string) => void;
     clearSearchSender: () => void;
 }
+
+export interface SenderNewMessageState {
+    listSender: SenderMessage[] | null | undefined;
+    setListSender: (senders: SenderMessage[]) => void;
+    setNewMessageListSender: (
+        newData: Message,
+        sessionUserId: string,
+        fetchSenderInfo: (user_id: string) => Promise<User | undefined>
+    ) => void;
+    setReadMessageListSender: (readedMessageId: string) => void;
+}

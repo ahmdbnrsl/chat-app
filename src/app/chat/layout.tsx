@@ -7,6 +7,7 @@ import type { SenderMessage } from '@/types';
 import { io } from 'socket.io-client';
 import { Message, User, ID } from '@/types';
 import { usePathname } from 'next/navigation';
+import { useUpdatedSenderNewMessage } from '@/lib/zustand';
 import SidebarChat from './Sidebar';
 import Wrapper from './Wrapper';
 const socketURL = process.env.NEXT_PUBLIC_SOCKET_URL || '';
@@ -16,9 +17,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     const { data: session, status }: { data: any; status: string } =
         useSession();
     const [width, setWidth] = useState<number>(0);
-    const [listSender, setListSender] = useState<
+    /*const [listSender, setListSender] = useState<
         Array<SenderMessage> | undefined | null
-    >(null);
+    >(null);*/
+    const {
+        listSender,
+        setListSender,
+        setNewMessageListSender,
+        setReadMessageListSender
+    } = useUpdatedSenderNewMessage();
 
     const fetchListSender = useCallback(async (): Promise<void> => {
         if (!session?.user?.user_id) return;
@@ -33,18 +40,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             setListSender((res?.result as Array<SenderMessage>)?.reverse());
     }, [session?.user.user_id]);
 
-    const fetchSenderInfo = useCallback(
-        async (user_id: string): Promise<User | undefined> => {
-            if (!user_id) return;
-            const res = await FetcherService(
-                { user_id },
-                { path: 'get_user_info', method: 'POST' }
-            );
-            if (res && res?.status) return res.result as User;
-            return;
-        },
-        []
-    );
+    const fetchSenderInfo = async (
+        user_id: string
+    ): Promise<User | undefined> => {
+        if (!user_id) return;
+        const res = await FetcherService(
+            { user_id },
+            { path: 'get_user_info', method: 'POST' }
+        );
+        if (res && res?.status) return res.result as User;
+        return;
+    };
 
     useEffect(() => {
         if (!session?.user?.user_id) return;
@@ -57,7 +63,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 newData.sender_id === session?.user.user_id ||
                 newData.receiver_id === session?.user?.user_id
             ) {
-                setListSender(
+                setNewMessageListSender(
+                    newData,
+                    session?.user?.user_id as string,
+                    fetchSenderInfo
+                );
+                /* setListSender(
                     (
                         prevData: SenderMessage[] | undefined | null
                     ): SenderMessage[] => {
@@ -144,12 +155,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                             return prevData as SenderMessage[];
                         }
                     }
-                );
+                );*/
             }
         };
 
         const handleReadMessage = (readedMessageId: string) => {
-            setListSender(
+            setReadMessageListSender(readedMessageId);
+            /*setListSender(
                 (
                     prevData: SenderMessage[] | undefined | null
                 ): SenderMessage[] => {
@@ -166,7 +178,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     }
                     return prevData as SenderMessage[];
                 }
-            );
+            );*/
         };
 
         socket.on('connect', () => console.info('live chat opened'));
