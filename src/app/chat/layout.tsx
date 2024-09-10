@@ -90,10 +90,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                 newData.sender_id !== session?.user?.user_id
                                     ? newData.sender_id
                                     : newData.receiver_id;
-                            return fetchSenderInfo(newSender).then(
-                                (
-                                    senderInfo: User | undefined
-                                ): SenderMessage[] => {
+
+                            fetchSenderInfo(newSender).then(
+                                (senderInfo: User | undefined) => {
                                     if (senderInfo)
                                         (prevData as SenderMessage[]).push({
                                             pp: senderInfo?.pp as ID,
@@ -119,9 +118,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                                     ? 1
                                                     : 0
                                         });
-                                    return prevData as SenderMessage[];
                                 }
-                            ) as SenderMessage[];
+                            );
+                            return prevData as SenderMessage[];
                         }
                     }
                 );
