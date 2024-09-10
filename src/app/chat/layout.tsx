@@ -61,13 +61,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     (
                         prevData: SenderMessage[] | undefined | null
                     ): SenderMessage[] => {
-                        if (!prevData) return;
-                        let findNewMessage: SenderMessage | undefined =
-                            prevData.find(
-                                (sender: SenderMessage) =>
-                                    sender.latestMessageIdOnDB ===
-                                    newData._id.toString()
-                            );
+                        if (!prevData) return [];
+                        let findNewMessage: SenderMessage | undefined = (
+                            prevData as SenderMessage[]
+                        ).find(
+                            (sender: SenderMessage) =>
+                                sender.latestMessageIdOnDB ===
+                                newData._id.toString()
+                        );
                         if (findNewMessage) {
                             (findNewMessage.fromMe =
                                 newData?.sender_id !== session?.user?.user_id),
@@ -91,7 +92,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                     ? newData.sender_id
                                     : newData.receiver_id;
                             fetchSenderInfo(newSender);
-                            prevData.push({
+                            (prevData as SenderMessage[]).push({
                                 pp: senderInfo?.pp,
                                 name: senderInfo?.name,
                                 wa_number: senderInfo?.wa_number,
@@ -122,12 +123,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 (
                     prevData: SenderMessage[] | undefined | null
                 ): SenderMessage[] => {
-                    if (!prevData) return;
-                    let messageReaded: SenderMessage | undefined =
-                        prevData.find(
-                            (sender: SenderMessage) =>
-                                sender.latestMessageIdOnDB === readedMessageId
-                        );
+                    if (!prevData) return [];
+                    let messageReaded: SenderMessage | undefined = (
+                        prevData as SenderMessage[]
+                    ).find(
+                        (sender: SenderMessage) =>
+                            sender.latestMessageIdOnDB === readedMessageId
+                    );
                     if (messageReaded) {
                         messageReaded.is_readed = true;
                         messageReaded.unReadedMessageLength = 0;
