@@ -291,4 +291,5 @@ export interface UpdatedListMessageState {
     setListMessage: (messages: DateGroup[]) => void;
     setNewUpdatedListMessage: (newData: Message) => void;
     setNewDeletedListMessage: (deletedMessageId: string) => void;
+    clearListMessage: () => void;
 }

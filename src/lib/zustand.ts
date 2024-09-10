@@ -243,5 +243,6 @@ export const useUpdatedListMessage = create<UpdatedListMessageState>(set => ({
                     (dateGroup: DateGroup) => dateGroup.messages.length > 0
                 )
             };
-        })
+        }),
+    clearListMessage: () => set({ listMessage: null })
 }));

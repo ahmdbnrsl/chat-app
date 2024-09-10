@@ -40,7 +40,8 @@ export default function ChatPage({
         listMessage,
         setListMessage,
         setNewUpdatedListMessage,
-        setNewDeletedListMessage
+        setNewDeletedListMessage,
+        clearListMessage
     } = useUpdatedListMessage();
     const [senderInfo, setSenderInfo] = useState<undefined | null | User>(null);
     const { reset: resetQuoted } = useManageQuoted();
@@ -94,6 +95,7 @@ export default function ChatPage({
     }, [session?.user?.user_id, params.id]);
 
     useEffect(() => {
+        clearListMessage();
         if (!session?.user?.user_id || !params.id) return;
 
         fetchSenderInfo();
@@ -109,89 +111,6 @@ export default function ChatPage({
                     newData.receiver_id === session.user.user_id)
             ) {
                 setNewUpdatedListMessage(newData);
-                /*  setListMessage(
-                    (prevData: DateGroup[] | null | undefined): DateGroup[] => {
-                        if (!prevData) return [];
-
-                        const newMessageDate = new Date(
-                            parseInt(newData.message_timestamp)
-                        ).toLocaleDateString('en-US', {
-                            day: 'numeric',
-                            month: 'long',
-                            year: 'numeric'
-                        });
-
-                        let dateGroup: DateGroup | undefined = prevData.find(
-                            group => group.date === newMessageDate
-                        );
-
-                        if (!dateGroup) {
-                            dateGroup = {
-                                date: newMessageDate,
-                                messages: []
-                            };
-                            prevData = [...prevData, dateGroup];
-                        }
-
-                        const messagesInDateGroup = dateGroup.messages;
-
-                        const lastSenderGroup =
-                            messagesInDateGroup.length > 0
-                                ? messagesInDateGroup[
-                                      messagesInDateGroup.length - 1
-                                  ]
-                                : null;
-
-                        if (
-                            !lastSenderGroup ||
-                            lastSenderGroup.sender_id !== newData.sender_id
-                        ) {
-                            messagesInDateGroup.push({
-                                sender_id: newData.sender_id,
-                                messages: [
-                                    {
-                                        message_text: newData.message_text,
-                                        message_id: newData.message_id,
-                                        message_timestamp:
-                                            newData.message_timestamp,
-                                        message_quoted: newData?.message_quoted,
-                                        is_readed: newData?.is_readed,
-                                        read_at: newData?.read_at,
-                                        _id: newData._id as ID
-                                    }
-                                ]
-                            });
-                        } else {
-                            lastSenderGroup.messages = [
-                                ...lastSenderGroup.messages,
-                                {
-                                    message_text: newData.message_text,
-                                    message_id: newData.message_id,
-                                    message_timestamp:
-                                        newData.message_timestamp,
-                                    message_quoted: newData?.message_quoted,
-                                    is_readed: newData?.is_readed,
-                                    read_at: newData?.read_at,
-                                    _id: newData._id as ID
-                                }
-                            ];
-                        }
-
-                        dateGroup.messages.forEach(group => {
-                            group.messages.sort(
-                                (a, b) =>
-                                    Number(a.message_timestamp) -
-                                    Number(b.message_timestamp)
-                            );
-                        });
-
-                        return prevData.sort(
-                            (a, b) =>
-                                new Date(a.date).getTime() -
-                                new Date(b.date).getTime()
-                        );
-                    }
-                );*/
                 readMessages();
             }
         };
@@ -199,37 +118,6 @@ export default function ChatPage({
         const handleMessageDeleted = (deletedMessageId: string): void => {
             if (!deletedMessageId) return;
             setNewDeletedListMessage(deletedMessageId);
-            /* setListMessage(
-                (prevData: DateGroup[] | null | undefined): DateGroup[] => {
-                    if (!prevData) return [];
-                    const updatedData: DateGroup[] = prevData.map(
-                        (dateGroup: DateGroup) => {
-                            const updatedMessages: SenderGroup[] =
-                                dateGroup.messages
-                                    .map((senderGroup: SenderGroup) => ({
-                                        ...(senderGroup as SenderGroup),
-                                        messages: senderGroup.messages.filter(
-                                            (message: GroupedMessage) =>
-                                                message._id !== deletedMessageId
-                                        )
-                                    }))
-                                    .filter(
-                                        (senderGroup: SenderGroup) =>
-                                            senderGroup.messages.length > 0
-                                    );
-
-                            return {
-                                ...(dateGroup as DateGroup),
-                                messages: updatedMessages
-                            };
-                        }
-                    );
-
-                    return updatedData.filter(
-                        (dateGroup: DateGroup) => dateGroup.messages.length > 0
-                    );
-                }
-            );*/
         };
 
         socket.on('connect', () => console.info('live chat opened'));
@@ -248,7 +136,8 @@ export default function ChatPage({
         params.id,
         readMessages,
         setNewDeletedListMessage,
-        setNewUpdatedListMessage
+        setNewUpdatedListMessage,
+        clearListMessage
     ]);
 
     return (
