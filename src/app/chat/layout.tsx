@@ -83,6 +83,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                 newData?.message_text;
                             findNewMessage.latestMessageTimestamp =
                                 newData?.message_timestamp;
+                            findNewMessage.latestMessageSenderId =
+                                newData?.sender_id;
+                            findNewMessage.latestMessageReceiverId =
+                                newData?.receiver_id;
                             findNewMessage.latestMessageIdOnDB =
                                 newData?._id as ID;
                             findNewMessage.is_readed = newData?.is_readed;
@@ -115,6 +119,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                                 newData.message_timestamp,
                                             latestMessageSenderId:
                                                 newData.sender_id,
+                                            latestMessageReceiverId:
+                                                newData.receiver_id,
                                             latestMessageIdOnDB:
                                                 newData._id as ID,
                                             id_user: newSender,
