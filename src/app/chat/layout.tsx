@@ -85,7 +85,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                         ? findNewMessage.unReadedMessageLength +
                                           1
                                         : findNewMessage.unReadedMessageLength);
-                            return prevData as SenderMessage;
+                            return prevData as SenderMessage[];
                         } else {
                             const newSender =
                                 newData.sender_id !== session?.user?.user_id
@@ -111,7 +111,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                         ? 1
                                         : 0
                             });
-                            return prevData as SenderMessage;
+                            return prevData as SenderMessage[];
                         }
                     }
                 );
