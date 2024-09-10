@@ -120,7 +120,7 @@ export const useUpdatedSenderNewMessage = create<SenderNewMessageState>(
                     messageReaded.is_readed = true;
                     messageReaded.unReadedMessageLength = 0;
                 }
-                return prevData as SenderMessage[];
+                return { listSender: prevData as SenderMessage[] };
             })
     })
 );
