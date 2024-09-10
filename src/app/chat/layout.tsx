@@ -93,19 +93,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                     : newData.receiver_id;
                             fetchSenderInfo(newSender);
                             (prevData as SenderMessage[]).push({
-                                pp: senderInfo?.pp,
-                                name: senderInfo?.name,
-                                wa_number: senderInfo?.wa_number,
+                                pp: senderInfo?.pp as ID,
+                                name: senderInfo?.name as ID,
+                                wa_number: senderInfo?.wa_number as ID,
                                 fromMe:
                                     newData?.sender_id !==
                                     session?.user?.user_id,
-                                latestMessageText: newData?.message_text,
+                                latestMessageText: newData.message_text,
                                 latestMessageTimestamp:
-                                    newData?.message_timestamp,
-                                latestMessageSenderId: newData?.sender_id,
-                                latestMessageIdOnDB: newData?._id as ID,
+                                    newData.message_timestamp,
+                                latestMessageSenderId: newData.sender_id,
+                                latestMessageIdOnDB: newData._id as ID,
                                 id_user: newSender,
-                                is_readed: newData?.is_readed,
+                                is_readed: newData.is_readed,
                                 unReadedMessageLength:
                                     newData.sender_id !== session?.user?.user_id
                                         ? 1
