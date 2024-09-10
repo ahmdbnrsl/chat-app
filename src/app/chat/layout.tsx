@@ -62,13 +62,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         prevData: SenderMessage[] | undefined | null
                     ): SenderMessage[] => {
                         if (!prevData) return [];
-                        let findNewMessage: SenderMessage | undefined = (
+                        const mess_id = newData.message_id;
+                        const findNewMessage: SenderMessage | undefined = (
                             prevData as SenderMessage[]
                         ).find(
-                            (sender: SenderMessage) =>
-                                sender.latestMessageId === newData.message_id
+                            ({ latestMessageId }) => latestMessageId === mess_id
                         );
                         console.log(findNewMessage);
+                        console.log(mess_id);
                         if (findNewMessage) {
                             findNewMessage.fromMe =
                                 newData?.sender_id !== session?.user?.user_id;
