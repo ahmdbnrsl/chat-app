@@ -33,9 +33,6 @@ export default function ChatPage({
 }): JSX.Element {
     const { data: session, status }: { data: any; status: string } =
         useSession();
-    /* const [listMessage, setListMessage] = useState<
-        Array<DateGroup> | null | undefined
-    >(null);*/
     const {
         listMessage,
         setListMessage,
@@ -95,7 +92,6 @@ export default function ChatPage({
     }, [session?.user?.user_id, params.id]);
 
     useEffect(() => {
-        clearListMessage();
         if (!session?.user?.user_id || !params.id) return;
 
         fetchSenderInfo();
@@ -136,8 +132,7 @@ export default function ChatPage({
         params.id,
         readMessages,
         setNewDeletedListMessage,
-        setNewUpdatedListMessage,
-        clearListMessage
+        setNewUpdatedListMessage
     ]);
 
     return (
