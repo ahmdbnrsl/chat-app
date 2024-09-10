@@ -62,10 +62,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                         prevData: SenderMessage[] | undefined | null
                     ): SenderMessage[] => {
                         if (!prevData) return [];
-                        const mess_id = newData.message_id;
-                        const findNewMessage: SenderMessage | undefined = (
+
+                        const findNewMessageIndex: SenderMessage | undefined = (
                             prevData as SenderMessage[]
-                        ).find(
+                        ).findIndex(
                             ({
                                 latestMessageSenderId,
                                 latestMessageReceiverId
@@ -78,9 +78,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                     latestMessageReceiverId ===
                                         newData.sender_id)
                         );
-                        console.log(findNewMessage);
-                        console.log(mess_id);
-                        if (findNewMessage) {
+
+                        if (findNewMessageIndex > -1) {
+                            const findNewMessage: SenderMessage =
+                                prevData[findNewMessageIndex];
                             findNewMessage.fromMe =
                                 newData?.sender_id === session?.user?.user_id;
                             findNewMessage.latestMessageId = newData.message_id;
@@ -99,6 +100,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                                 newData?.sender_id !== session?.user?.user_id
                                     ? findNewMessage.unReadedMessageLength + 1
                                     : findNewMessage.unReadedMessageLength;
+                            prevData.splice(findNewMessageIndex, 1);
+                            prevData.unshift(findNewMessage);
                             return prevData as SenderMessage[];
                         } else {
                             const newSender =
