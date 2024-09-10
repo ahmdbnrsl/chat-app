@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { messages } from '@/models/messages';
 import { users } from '@/models/users';
-import { Message, User, SenderMessage, M } from '@/types';
+import { Message, User, SenderMessage, M, ID } from '@/types';
 
 const URI: string = process.env.MONGODB_URI || '';
 
@@ -83,6 +83,8 @@ export const getListSender = async (
                         latestMessageText: latestMessage?.message_text,
                         latestMessageTimestamp:
                             latestMessage?.message_timestamp,
+                        latestMessageSenderId: latestMessage?.sender_id,
+                        latestMessageIdOnDB: latestMessage?._id as ID,
                         id_user: user?.user_id,
                         is_readed: latestMessage?.is_readed,
                         unReadedMessageLength

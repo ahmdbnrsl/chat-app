@@ -52,7 +52,7 @@ export default function SidebarChat({
                                     />
                                 )}
                                 {sender?.unReadedMessageLength > 0 && (
-                                    <div className='text-xs text-zinc-950 py-[0.24rem] px-[0.5rem] flex items-center justify-center w-fit absolute bg-zinc-300 rounded-full'>
+                                    <div className='text-xs text-zinc-950 py-[0.24rem] px-[0.5rem] flex items-center justify-center w-fit absolute bg-zinc-300 rounded-full border-2 border-zinc-950'>
                                         {sender?.unReadedMessageLength}
                                     </div>
                                 )}
@@ -78,7 +78,7 @@ export default function SidebarChat({
                             </div>
                         </div>
                         <div className='w-1/4 flex flex-col justify-center items-end'>
-                            <p className='text-xs sm:text-sm font-normal text-zinc-500'>
+                            <p className='text-xs font-normal text-zinc-500'>
                                 +{sender?.wa_number}
                             </p>
                             <p className='text-xs font-normal text-zinc-500'>

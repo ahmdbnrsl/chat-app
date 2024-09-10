@@ -42,6 +42,8 @@ export interface SenderMessage {
     fromMe: boolean;
     latestMessageText: string;
     latestMessageTimestamp: string;
+    latestMessageSenderId: string;
+    latestMessageIdOnDB: string;
     id_user: string;
     is_readed: boolean;
     unReadedMessageLength: number;
