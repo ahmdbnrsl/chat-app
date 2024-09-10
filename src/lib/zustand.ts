@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import type {
     MessageQuoted,
     SenderMessage,
+    Message,
     MessageQuotedState,
     SearchMessageState,
     SearchSenderState,
