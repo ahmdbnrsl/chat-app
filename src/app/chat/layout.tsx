@@ -100,7 +100,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         session?.user?.user_id,
         fetchSenderInfo,
         setReadMessageListSender,
-        setNewMessageListSender
+        setNewMessageListSender,
+        listSender
     ]);
 
     useEffect(() => {

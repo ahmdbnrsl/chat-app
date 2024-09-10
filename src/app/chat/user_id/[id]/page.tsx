@@ -76,7 +76,7 @@ export default function ChatPage({
             resetQuoted();
             window.scrollTo(0, document.body.scrollHeight);
         }
-    }, [session?.user?.user_id, params.id, resetQuoted]);
+    }, [session?.user?.user_id, params.id, resetQuoted, setListMessage]);
 
     const readMessages = useCallback(async (): Promise<void> => {
         if (!session?.user?.user_id || !params.id) return;
@@ -246,7 +246,9 @@ export default function ChatPage({
         fetchMessages,
         session?.user?.user_id,
         params.id,
-        readMessages
+        readMessages,
+        setNewDeletedListMessage,
+        setNewUpdatedListMessage
     ]);
 
     return (

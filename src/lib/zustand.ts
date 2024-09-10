@@ -134,7 +134,7 @@ export const useUpdatedSenderNewMessage = create<SenderNewMessageState>(
 export const useUpdatedListMessage = create<UpdatedListMessageState>(set => ({
     listMessage: null,
     setListMessage: (messages: DateGroup[]) => set({ listMessage: messages }),
-    setNewUpdatedListMessage: (newData: DateGroup) =>
+    setNewUpdatedListMessage: (newData: Message) =>
         set(state => {
             let prevData = state?.listMessage as DateGroup[];
 
