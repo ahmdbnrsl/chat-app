@@ -85,7 +85,9 @@ export default function withAuthandValid(
                         return NextResponse.redirect(new URL('/chat', req.url));
                     }
                     console.log('Validation success');
-                    return NextResponse.next();
+                    return NextResponse.rewrite(
+                        new URL(`/chat/user_id/${user_id}`, req.url)
+                    );
                 } catch (error) {
                     console.error(error);
                     return NextResponse.redirect(new URL('/chat', req.url));
