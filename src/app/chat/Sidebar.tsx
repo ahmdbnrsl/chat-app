@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import type { M, SenderMessage, ID } from '@/types';
 import { date, hour } from '@/services/getTime';
-import { useCallback } from 'react';
+import { useCallback, MouseEvent } from 'react';
 import { BiCheckDouble } from 'react-icons/bi';
 import { useManageSearchSender } from '@/lib/zustand';
 import { getHighlightedText } from '@/components/Highlight/text';
@@ -21,6 +21,7 @@ export default function SidebarChat() {
     const IdSender: string = pathName.split('/').slice(-1)[0];
     const { push } = useRouter();
     const { listSender } = useUpdatedSenderNewMessage();
+
     return (
         <div className='w-full flex flex-col gap-3 p-6 flex-grow'>
             {!listSender ? (
@@ -30,7 +31,12 @@ export default function SidebarChat() {
             ) : listSender?.length !== 0 ? (
                 listSender?.map((sender: SenderMessage, index: number) => (
                     <Link
-                        target='_parent'
+                        onClick={() => {
+                            setTimeout(
+                                () => push(`/chat/user_id/${sender?.id_user}`),
+                                2000
+                            );
+                        }}
                         href={`/chat/user_id/${sender?.id_user}`}
                         key={index}
                         className={`w-full rounded-xl transition-colors hover:bg-zinc-900/[0.85] flex justify-between items-center p-3 cursor-pointer ${
