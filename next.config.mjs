@@ -8,7 +8,8 @@ const nextConfig = {
             'img.freepik.com',
             'freepik.com',
             'cloudinary.com',
-            'res.cloudinary.com'
+            'res.cloudinary.com',
+            'uxwing.com'
         ]
     }
 };

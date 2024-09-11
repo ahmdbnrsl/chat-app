@@ -120,7 +120,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     }
 
     if (width < 1280) {
-        if (pathName.startsWith('/chat/user_id')) {
+        if (
+            pathName.startsWith('/chat/user_id') ||
+            pathName.startsWith('/chat/ai')
+        ) {
             return <>{children}</>;
         }
         return (

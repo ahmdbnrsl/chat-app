@@ -4,6 +4,7 @@ import Loading from '@/components/loading';
 import Avatar from 'react-avatar';
 import Link from 'next/link';
 import Image from 'next/image';
+import AIChat from '@/components/AiChat';
 import { usePathname, useRouter } from 'next/navigation';
 import type { M, SenderMessage, ID } from '@/types';
 import { date, hour } from '@/services/getTime';
@@ -24,6 +25,7 @@ export default function SidebarChat() {
 
     return (
         <div className='w-full flex flex-col gap-3 p-6 flex-grow'>
+            <AIChat />
             {!listSender ? (
                 <div className='w-full flex justify-center gap-1.5 items-center text-lg font-medium text-zinc-500'>
                     <Loading /> Loading your chats...
