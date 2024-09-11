@@ -84,16 +84,6 @@ export default function withAuthandValid(
                     ) {
                         return NextResponse.redirect(new URL('/chat', req.url));
                     }
-                    if (
-                        user &&
-                        user?.status &&
-                        user?.result?.user_id === user_id
-                    ) {
-                        console.log('Validation success');
-                        return NextResponse.rewrite(
-                            new URL(`/chat/user_id/${user_id}`, req.url)
-                        );
-                    }
                 } catch (error) {
                     console.error(error);
                     return NextResponse.redirect(new URL('/chat', req.url));
