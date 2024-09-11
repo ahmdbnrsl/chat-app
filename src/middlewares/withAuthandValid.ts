@@ -54,6 +54,7 @@ export default function withAuthandValid(
                 }
             }
             if (match) {
+                console.log('Checking user id...');
                 const user_id = match[1];
                 const options: RequestInit = {
                     method: 'POST',
@@ -74,15 +75,16 @@ export default function withAuthandValid(
                 const user = await checkExistingUser.json();
                 if (!checkExistingUser?.ok) {
                     return NextResponse.redirect(new URL('/chat', req.url));
-                } else if (
+                }
+                if (
                     user &&
                     user?.status &&
                     user?.result?.user_id === token.user_id
                 ) {
                     return NextResponse.redirect(new URL('/chat', req.url));
-                } else {
-                    return NextResponse.next();
                 }
+                console.log('Validation success');
+                return NextResponse.next();
             }
         }
 
