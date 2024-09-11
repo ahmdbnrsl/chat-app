@@ -54,37 +54,44 @@ export default function withAuthandValid(
                 }
             }
             if (match) {
-                console.log('Checking user id...');
-                const user_id = match[1];
-                const options: RequestInit = {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: 'Bearer ' + process.env.BEARER_TOKEN
-                    },
-                    body: JSON.stringify({
-                        user_id,
-                        secret: process.env.SECRET_TOKEN
-                    }),
-                    cache: 'no-store'
-                };
-                const checkExistingUser: Response = await fetch(
-                    process.env.NEXT_PUBLIC_SELF_URL + '/api/get_user_info',
-                    options
-                );
-                const user = await checkExistingUser.json();
-                if (!checkExistingUser?.ok) {
+                try {
+                    console.log('Checking user id...');
+                    const user_id = match[1];
+                    const options: RequestInit = {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: 'Bearer ' + process.env.BEARER_TOKEN
+                        },
+                        body: JSON.stringify({
+                            user_id,
+                            secret: process.env.SECRET_TOKEN
+                        }),
+                        cache: 'no-store'
+                    };
+                    const checkExistingUser: Response = await fetch(
+                        process.env.NEXT_PUBLIC_SELF_URL + '/api/get_user_info',
+                        options
+                    );
+                    const user = await checkExistingUser.json();
+                    if (!checkExistingUser?.ok) {
+                        return NextResponse.redirect(new URL('/chat', req.url));
+                    }
+                    if (
+                        user &&
+                        user?.status &&
+                        user?.result?.user_id === token.user_id
+                    ) {
+                        return NextResponse.redirect(new URL('/chat', req.url));
+                    }
+                    console.log('Validation success');
+                    return NextResponse.next();
+                } catch (error) {
+                    console.error(error);
                     return NextResponse.redirect(new URL('/chat', req.url));
+                } finally {
+                    console.log('Validation closed');
                 }
-                if (
-                    user &&
-                    user?.status &&
-                    user?.result?.user_id === token.user_id
-                ) {
-                    return NextResponse.redirect(new URL('/chat', req.url));
-                }
-                console.log('Validation success');
-                return NextResponse.next();
             }
         }
 
