@@ -126,7 +126,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         return (
             <main className='bg-zinc-950 w-full h-screen flex'>
                 <Wrapper>
-                    <SidebarChat listSender={listSender} />
+                    <SidebarChat />
                 </Wrapper>
             </main>
         );
@@ -135,7 +135,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     return (
         <main className='bg-zinc-950 w-full h-screen flex'>
             <Wrapper>
-                <SidebarChat listSender={listSender} />
+                <SidebarChat />
             </Wrapper>
             <section className='hidden w-full xl:flex flex-col h-screen xl:w-4/6 bg-zinc-950 bg-fixed justify-center items-center'>
                 {children}

@@ -11,18 +11,16 @@ import { useCallback } from 'react';
 import { BiCheckDouble } from 'react-icons/bi';
 import { useManageSearchSender } from '@/lib/zustand';
 import { getHighlightedText } from '@/components/Highlight/text';
+import { useUpdatedSenderNewMessage } from '@/lib/zustand';
 
-export default function SidebarChat({
-    listSender
-}: {
-    listSender: Array<SenderMessage> | null | undefined;
-}) {
+export default function SidebarChat() {
     const { searchSenderValue } = useManageSearchSender();
     const getDate = useCallback(date, []);
     const getHour = useCallback(hour, []);
     const pathName: string = usePathname();
     const IdSender: string = pathName.split('/').slice(-1)[0];
     const { push } = useRouter();
+    const { listSender } = useUpdatedSenderNewMessage();
     return (
         <div className='w-full flex flex-col gap-3 p-6 flex-grow'>
             {!listSender ? (
@@ -32,7 +30,7 @@ export default function SidebarChat({
             ) : listSender?.length !== 0 ? (
                 listSender?.map((sender: SenderMessage, index: number) => (
                     <Link
-                        onClick={() => push(`/chat/user_id/${sender?.id_user}`)}
+                        target='_parent'
                         href={`/chat/user_id/${sender?.id_user}`}
                         key={index}
                         className={`w-full rounded-xl transition-colors hover:bg-zinc-900/[0.85] flex justify-between items-center p-3 cursor-pointer ${
