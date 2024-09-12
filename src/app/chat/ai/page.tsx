@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import LoadingMessage from '@/components/loading';
+import CodeWithHighlight from '@/components/Highlight/code';
 import { useDebounceValue } from 'usehooks-ts';
 import { useEffect, ChangeEvent, useState } from 'react';
 import { BsStars } from 'react-icons/bs';
@@ -26,7 +27,7 @@ export default function AiChats() {
 
     return (
         <main className='bg-zinc-950 w-full min-h-screen flex'>
-            <section className='w-full flex flex-col h-screen bg-ornament bg-fixed bg-zinc-950 overflow-y-auto p-10'>
+            <section className='w-full flex flex-col h-screen bg-ornament bg-fixed bg-zinc-950 overflow-y-auto p-10 justify-center items-center'>
                 <div className='w-full flex flex-col justify-center items-center flex-grow bg-zinc-950 max-w-xl'>
                     <Image
                         src='https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/google-gemini-icon.png'
@@ -48,9 +49,7 @@ export default function AiChats() {
                     </form>
                     {result && (
                         <div className='mt-4 w-full rounded-xl bg-slate-950 border-2 border-slate-900 p-5'>
-                            <p className='text-base text-zinc-400 font-normal'>
-                                {result}
-                            </p>
+                            <CodeWithHighlight>{result}</CodeWithHighlight>
                         </div>
                     )}
                 </div>
