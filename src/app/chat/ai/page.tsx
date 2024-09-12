@@ -27,8 +27,8 @@ export default function AiChats() {
 
     return (
         <main className='bg-zinc-950 w-full min-h-screen flex'>
-            <section className='w-full flex flex-col h-screen bg-ornament bg-fixed bg-zinc-950 overflow-y-auto p-10 justify-center items-center'>
-                <div className='w-full flex flex-col items-center flex-grow bg-zinc-950 max-w-2xl'>
+            <section className='w-full flex flex-col h-screen bg-ornament bg-fixed bg-zinc-950 overflow-y-auto py-10 justify-center items-center'>
+                <div className='w-full flex flex-col items-center flex-grow bg-zinc-950'>
                     <Image
                         src='https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/google-gemini-icon.png'
                         width={100}
@@ -40,7 +40,7 @@ export default function AiChats() {
                     <h1 className='mt-2 flex items-center gap-2 sm:gap-3 text-lg sm:text-xl md:text-2xl text-indigo-400 font-bold text-center'>
                         VB AI <BsStars className='ml-2' />
                     </h1>
-                    <form className='mt-3 w-full'>
+                    <form className='mt-3 w-full max-w-2xl p-6'>
                         <textarea
                             onChange={handleRequestToGroq}
                             placeholder='Ask something'
@@ -48,7 +48,7 @@ export default function AiChats() {
                         ></textarea>
                     </form>
                     {result && (
-                        <div className='mt-4 w-full rounded-2xl bg-slate-950 border-2 border-slate-900 p-5'>
+                        <div className='p-2 mt-4 w-full rounded-2xl bg-slate-950 border-2 border-slate-900 p-5'>
                             <CodeWithHighlight>{result}</CodeWithHighlight>
                         </div>
                     )}
