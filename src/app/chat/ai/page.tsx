@@ -23,7 +23,7 @@ export default function AiChats() {
                     <form className='mt-3 w-full max-w-xl'>
                         <textarea
                             placeholder='Ask something'
-                            className='w-full bg-transparent text-base border-b-4 border-indigo-400 placeholder:text-zinc-500 placeholder:text-sm outline-0 h-36 resize-none'
+                            className='w-full bg-transparent text-base border-b-2 border-indigo-400 placeholder:text-zinc-500 placeholder:text-sm outline-0 h-20 resize-none'
                         ></textarea>
                     </form>
                 </div>
