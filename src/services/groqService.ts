@@ -13,5 +13,5 @@ export async function requestChatCompletions(content: string): Promise<string> {
         ],
         model: 'llama3-70b-8192'
     });
-    return result.choices[0]?.message?.content || '';
+    return (await result.choices[0]?.message?.content) || '';
 }
