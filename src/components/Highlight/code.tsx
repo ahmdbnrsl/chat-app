@@ -6,6 +6,41 @@ import { nightOwl } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const CodeWithHighlight = ({ children }: { children: string }) => {
     const codeBlockRegex = /```([a-z]*)\n([\s\S]*?)```/g;
+    const boldTextRegex = /\*\*(.*?)\*\*/g;
+    const monospaceTextRegex = /`(.*?)`/g;
+
+    const formatText = (text: string) => {
+        const boldFormatted = text.split(boldTextRegex).map((part, i) =>
+            i % 2 === 1 ? (
+                <span
+                    className='text-lg font-bold'
+                    key={i}
+                >
+                    {part}
+                </span>
+            ) : (
+                part
+            )
+        );
+
+        return boldFormatted.map((item: any, i: number) =>
+            typeof item === 'string'
+                ? item.split(monospaceTextRegex).map((subPart, j) =>
+                      j % 2 === 1 ? (
+                          <span
+                              className='font-medium'
+                              key={j}
+                              style={{ fontFamily: 'monospace' }}
+                          >
+                              {subPart}
+                          </span>
+                      ) : (
+                          subPart
+                      )
+                  )
+                : item
+        );
+    };
 
     const processedContent = children
         .split(codeBlockRegex)
@@ -26,7 +61,7 @@ const CodeWithHighlight = ({ children }: { children: string }) => {
                     </SyntaxHighlighter>
                 );
             } else {
-                return <span key={index}>{block}</span>;
+                return <span key={index}>{formatText(block)}</span>;
             }
         });
 

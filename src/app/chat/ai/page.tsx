@@ -28,7 +28,7 @@ export default function AiChats() {
     return (
         <main className='bg-zinc-950 w-full min-h-screen flex'>
             <section className='w-full flex flex-col h-screen bg-ornament bg-fixed bg-zinc-950 overflow-y-auto p-10 justify-center items-center'>
-                <div className='w-full flex flex-col justify-center items-center flex-grow bg-zinc-950 max-w-xl'>
+                <div className='w-full flex flex-col items-center flex-grow bg-zinc-950 max-w-2xl'>
                     <Image
                         src='https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/google-gemini-icon.png'
                         width={100}
@@ -48,7 +48,7 @@ export default function AiChats() {
                         ></textarea>
                     </form>
                     {result && (
-                        <div className='mt-4 w-full rounded-xl bg-slate-950 border-2 border-slate-900 p-5'>
+                        <div className='mt-4 w-full rounded-2xl bg-slate-950 border-2 border-slate-900 p-5'>
                             <CodeWithHighlight>{result}</CodeWithHighlight>
                         </div>
                     )}
