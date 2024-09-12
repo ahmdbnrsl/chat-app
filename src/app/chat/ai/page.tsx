@@ -6,7 +6,7 @@ import StartButton from '@/components/Buttons/start';
 import { BsStars } from 'react-icons/bs';
 
 export default function AiChats() {
-    const listMessage = [];
+    const listMessage: string[] = [];
     return (
         <main className='bg-zinc-950 w-full min-h-screen flex'>
             {!listMessage ? (
