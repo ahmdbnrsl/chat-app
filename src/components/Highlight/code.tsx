@@ -11,8 +11,11 @@ const CodeWithHighlight = ({ children }: { children: string }) => {
         .split(codeBlockRegex)
         .map((block, index) => {
             if (index % 3 === 2) {
+                const matches = children.match(codeBlockRegex);
                 const language =
-                    children?.match(codeBlockRegex)[index - 1] || 'javascript';
+                    matches && matches[index - 1]
+                        ? matches[index - 1]
+                        : 'javascript';
                 return (
                     <SyntaxHighlighter
                         language={language}
