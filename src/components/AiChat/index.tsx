@@ -8,9 +8,9 @@ export default function AIChat() {
     return (
         <Link
             href='/chat/ai'
-            className='w-full rounded-xl transition-colors bg-slate-900/[0.25] flex justify-between items-center p-3 cursor-pointer mb-2'
+            className='w-full rounded-xl transition-colors bg-slate-900/[0.45] flex justify-center items-center p-3 cursor-pointer mb-2'
         >
-            <div className='w-8/12 flex gap-3 items-center'>
+            <div className='w-full flex gap-3 items-center justify-start'>
                 <div className='w-[50px] h-[50px] relative flex items-end justify-end'>
                     <Image
                         alt='User profile'
@@ -31,9 +31,6 @@ export default function AIChat() {
                         </p>
                     </div>
                 </div>
-            </div>
-            <div className='w-1/4 flex flex-col justify-center items-end'>
-                <p className='text-xs font-normal text-zinc-500'>20/08/2021</p>
             </div>
         </Link>
     );

@@ -267,7 +267,7 @@ export default function ChatPage({
                                     round={true}
                                 />
                             )}
-                            <h1 className='flex items-center gap-2 sm:gap-3 text-lg sm:text-xl md:text-2xl text-zinc-300 font-bold text-center'>
+                            <h1 className='flex items-center gap-2 sm:gap-3 text-lg sm:text-xl md:text-2xl text-zinc-300 font-bold text-center mt-2'>
                                 {senderInfo?.name}
                             </h1>
                             <p className='text-zinc-500 font-medium text-sm sm:text-base text-center'>

@@ -25,7 +25,8 @@
         "react-use": "latest",
         "usehooks-ts": "latest",
         "form-data": "latest",
-        "cloudinary": "latest"
+        "cloudinary": "latest",
+        "groq-sdk": "latest"
     },
     "devDependencies": {
         "typescript": "^5",

@@ -4,11 +4,11 @@ export default function StartButton({
     onClicking
 }: {
     children: React.ReactNode;
-    onClicking: () => void;
+    onClicking?: () => void;
 }) {
     return (
         <button
-            onClick={onClicking}
+            onClick={onClicking || (() => {})}
             type='button'
             className='bg-zinc-200 rounded-full py-1.5 px-6 outline-0 text-zinc-950 text-center cursor-pointer hover:scale-[1.025] transition-transform'
         >
