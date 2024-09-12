@@ -7,8 +7,8 @@ import { useEffect, ChangeEvent, useState } from 'react';
 import { BsStars } from 'react-icons/bs';
 import { requestChatCompletions } from '@/services/groqService';
 
-export default function AiChats({ defaultValue = '' }) {
-    const [debouncedValue, setValue] = useDebounceValue(defaultValue, 1500);
+export default function AiChats() {
+    const [debouncedValue, setValue] = useDebounceValue('', 1500);
     const [result, setResult] = useState<string>('');
 
     useEffect(() => {
