@@ -29,7 +29,7 @@ export default function AiChats() {
     return (
         <main className='bg-zinc-950 w-full min-h-screen flex overflow-y-auto'>
             <section className='w-full flex flex-col h-screen overflow-y-auto bg-fixed py-10 justify-center items-center'>
-                <div className='w-full flex flex-col items-center min-h-screen px-6'>
+                <div className='w-full flex flex-col items-center min-h-screen px-6 max-w-4xl'>
                     <Image
                         src='https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/google-gemini-icon.png'
                         width={100}
@@ -41,14 +41,15 @@ export default function AiChats() {
                     <h1 className='mt-2 flex items-center gap-2 sm:gap-3 text-lg sm:text-xl md:text-2xl text-indigo-400 font-bold text-center'>
                         VB AI <BsStars className='ml-2' />
                     </h1>
-                    <div className='w-full max-w-2xl text-base p-6 bg-zinc-900/[0.5] rounded-xl text-indigo-300'>
+                    <div className='w-full text-base p-6 bg-zinc-900/[0.5] rounded-xl text-indigo-300'>
                         <p className='h-full'>
-                            Enter prompt below, the prompt will auto generated
-                            every 1.5 second, Happy using, if an error please
-                            try again.
+                            Welcome to VB AI, VB AI is NLP based by model of
+                            llama3-70b-8192. Enter prompt below, the prompt will
+                            auto generated every 1.5 second, Happy using, if an
+                            error please try again.
                         </p>
                     </div>
-                    <form className='mt-2 w-full max-w-2xl'>
+                    <form className='mt-2 w-full'>
                         <textarea
                             onChange={handleRequestToGroq}
                             placeholder='Ask something'
@@ -56,11 +57,13 @@ export default function AiChats() {
                         ></textarea>
                     </form>
                     {result && (
-                        <div className='p-2 mt-4 rounded-2xl bg-transparent p-6 w-fit max-w-full flex flex-col gap-3'>
+                        <div className='p-2 mt-4 rounded-2xl bg-transparent p-6 w-full flex flex-col gap-3'>
                             <div className='w-full flex justify-end'>
                                 <CopyButton text={result} />
                             </div>
-                            <CodeWithHighlight>{result}</CodeWithHighlight>
+                            <div className='w-fit max-w-full my-2'>
+                                <CodeWithHighlight>{result}</CodeWithHighlight>
+                            </div>
                         </div>
                     )}
                 </div>
