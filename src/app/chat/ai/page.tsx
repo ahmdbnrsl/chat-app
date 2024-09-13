@@ -57,7 +57,7 @@ export default function AiChats() {
                         ></textarea>
                     </form>
                     {result && (
-                        <div className='p-2 mt-4 rounded-2xl bg-transparent py-6 w-full flex flex-col gap-3'>
+                        <div className='p-2 mt-4 rounded-2xl bg-transparent p-6 rounded-xl bg-zinc-900/[0.5] w-full flex flex-col gap-3 items-center'>
                             <div className='w-full flex justify-end'>
                                 <CopyButton text={result} />
                             </div>
