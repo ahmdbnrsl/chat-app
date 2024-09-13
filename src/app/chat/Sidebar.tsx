@@ -94,7 +94,7 @@ export default function SidebarChat() {
                         </div>
                         <div className='w-1/4 flex flex-col justify-center items-end'>
                             <p
-                                className={`text-xs font-normal ${
+                                className={`text-sm font-medium ${
                                     sender?.status === 'online'
                                         ? 'text-sky-400'
                                         : 'text-zinc-500'
