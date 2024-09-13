@@ -216,6 +216,7 @@ export default function ChatPage({
 
         const handleUserStatus = (userId: string) => {
             setSenderInfo((prevData: User | null | undefined): User => {
+                if (!prevData) return {} as User;
                 if (userId !== (prevData._id as string))
                     return prevData as User;
                 prevData.status === 'online'
