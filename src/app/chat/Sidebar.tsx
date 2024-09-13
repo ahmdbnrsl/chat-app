@@ -93,8 +93,14 @@ export default function SidebarChat() {
                             </div>
                         </div>
                         <div className='w-1/4 flex flex-col justify-center items-end'>
-                            <p className='text-xs font-normal text-zinc-500'>
-                                +{sender?.wa_number}
+                            <p
+                                className={`text-xs font-normal ${
+                                    sender?.status === 'online'
+                                        ? 'text-sky-400'
+                                        : 'text-zinc-500'
+                                }`}
+                            >
+                                {sender?.status}
                             </p>
                             <p className='text-xs font-normal text-zinc-500'>
                                 {getDate(sender?.latestMessageTimestamp) ===

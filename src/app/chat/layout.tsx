@@ -21,7 +21,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         listSender,
         setListSender,
         setNewMessageListSender,
-        setReadMessageListSender
+        setReadMessageListSender,
+        setOnlineOffline
     } = useUpdatedSenderNewMessage();
 
     const fetchListSender = useCallback(async (): Promise<void> => {
@@ -84,16 +85,26 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             setReadMessageListSender(readedMessageId);
         };
 
-        socket.on('connect', () => console.info('live chat opened'));
+        const handleUserStatus = (userId: string) => {
+            setOnlineOffline(userId);
+        };
+
+        socket.on('connect', () =>
+            socket.emit('user_online', session?.user?.user_id)
+        );
         socket.on('data_updated', handleDataUpdated);
         socket.on('data_deleted', handleDataDeleted);
         socket.on('message_readed', handleReadMessage);
-        socket.on('disconnect', () => console.info('live chat closed'));
+        socket.on('user_status', handleUserStatus);
+        socket.on('disconnect', () =>
+            socket.emit('user_offline', session?.user?.user_id)
+        );
 
         return () => {
             socket.off('data_updated', handleDataUpdated);
             socket.off('data_deleted', handleDataDeleted);
             socket.off('message_readed', handleReadMessage);
+            socket.off('user_status', handleUserStatus);
         };
     }, [
         fetchListSender,

@@ -87,6 +87,8 @@ export const getListSender = async (
                         latestMessageSenderId: latestMessage?.sender_id,
                         latestMessageReceiverId: latestMessage?.receiver_id,
                         latestMessageIdOnDB: latestMessage?._id as ID,
+                        status: user?.status,
+                        userId: user?._id as ID,
                         id_user: user?.user_id,
                         is_readed: latestMessage?.is_readed,
                         unReadedMessageLength

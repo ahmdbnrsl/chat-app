@@ -26,6 +26,7 @@ export interface User extends Document {
     update_at: string;
     role: string;
     pp: string;
+    status: string;
 }
 
 export interface OTP extends Document {
@@ -46,6 +47,8 @@ export interface SenderMessage {
     latestMessageSenderId: string;
     latestMessageReceiverId: string;
     latestMessageIdOnDB: string;
+    status: string;
+    userId: string;
     id_user: string;
     is_readed: boolean;
     unReadedMessageLength: number;
@@ -284,4 +287,5 @@ export interface SenderNewMessageState {
         fetchSenderInfo: (user_id: string) => Promise<User | undefined>
     ) => void;
     setReadMessageListSender: (readedMessageId: string) => void;
+    setOnlineOffline: (userId: string) => void;
 }

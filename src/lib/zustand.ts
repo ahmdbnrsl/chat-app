@@ -94,6 +94,8 @@ export const useUpdatedSenderNewMessage = create<SenderNewMessageState>(
                                             newData.receiver_id,
                                         latestMessageIdOnDB:
                                             newData._id as string,
+                                        status: senderInfo.status,
+                                        userId: senderInfo._id as string,
                                         id_user: newSender,
                                         is_readed: newData.is_readed,
                                         unReadedMessageLength:
@@ -121,6 +123,19 @@ export const useUpdatedSenderNewMessage = create<SenderNewMessageState>(
                 if (messageReaded) {
                     messageReaded.is_readed = true;
                     messageReaded.unReadedMessageLength = 0;
+                }
+                return { listSender: prevData as SenderMessage[] };
+            }),
+        setOnlineOffline: (userId: string) =>
+            set(state => {
+                const prevData = state?.listSender as SenderMessage[];
+                let userStatus: SenderMessage | undefined = (
+                    prevData as SenderMessage[]
+                ).find((sender: SenderMessage) => sender.userId === userId);
+                if (userStatus) {
+                    userStatus.status === 'online'
+                        ? (userStatus.status = 'offline')
+                        : (userStatus.status = 'online');
                 }
                 return { listSender: prevData as SenderMessage[] };
             })
