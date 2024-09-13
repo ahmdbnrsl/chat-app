@@ -36,16 +36,20 @@ export default function AiChats() {
                         height={100}
                         alt='user profile'
                         loading='lazy'
-                        className='rounded-full'
+                        className='rounded-full mt-3'
                     />
                     <h1 className='mt-2 flex items-center gap-2 sm:gap-3 text-lg sm:text-xl md:text-2xl text-indigo-400 font-bold text-center'>
                         VB AI <BsStars className='ml-2' />
                     </h1>
+                    <p className='w-full max-w-2xl text-base p-6 bg-zinc-900/[0.5] rounded-xl text-indigo-300'>
+                        Enter prompt below, the prompt will auto generated every
+                        1.5 second, Happy using, if an error please try again.
+                    </p>
                     <form className='mt-3 w-full max-w-2xl p-6'>
                         <textarea
                             onChange={handleRequestToGroq}
                             placeholder='Ask something'
-                            className='w-full bg-transparent text-base border-b-2 border-indigo-400 placeholder:text-zinc-500 placeholder:text-sm outline-0 h-12 resize-none text-indigo-300 font-medium'
+                            className='w-full bg-transparent text-base bg-zinc-900/[0.5] border-2 border-zinc-900/[0.5] hover:border-zinc-900/[0.8] placeholder:text-zinc-500 placeholder:text-sm outline-0 h-12 resize-none text-indigo-300 font-medium rounded-xl'
                         ></textarea>
                     </form>
                     {result && (

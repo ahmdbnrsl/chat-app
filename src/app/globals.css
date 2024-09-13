@@ -7,10 +7,10 @@
         @apply w-1.5;
     }
     ::-webkit-scrollbar-track {
-        @apply bg-zinc-900 rounded-full;
+        @apply bg-zinc-950 rounded-full;
     }
     ::-webkit-scrollbar-thumb {
-        @apply bg-zinc-300 rounded-full;
+        @apply bg-zinc-800 rounded-full;
     }
     * {
         @apply selection:text-zinc-900 selection:bg-zinc-300;
@@ -20,8 +20,7 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-
-        --radius: 0.5rem
+    :root {
+        --radius: 0.5rem;
     }
 }
