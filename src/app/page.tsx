@@ -15,7 +15,7 @@ export default function Home() {
             </h1>
             <Link
                 href={session?.user ? '/chat' : '/login'}
-                className='w-fit rounded-full bg-zinc-200 text-base px-5 w-full max-w-md py-1 outline-0 text-zinc-950'
+                className='w-fit rounded-full bg-zinc-200 text-lg px-5 w-full max-w-md py-1 outline-0 text-zinc-950 font-medium text-center'
             >
                 {session?.user ? 'Start Chat' : 'Login'}
             </Link>
