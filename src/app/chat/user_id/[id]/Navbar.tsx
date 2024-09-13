@@ -54,7 +54,7 @@ export default function NavbarChat({
                             )
                         ) : null}
                     </button>
-                    <div className='flex flex-col gap-1.5 justify-center'>
+                    <div className='flex flex-col justify-center'>
                         <h1 className='text-zinc-200 text-lg sm:text-xl font-medium tracking-normal'>
                             {senderInfo ? (
                                 senderInfo?.name
@@ -67,7 +67,7 @@ export default function NavbarChat({
                                 senderInfo?.status === 'online'
                                     ? 'text-sky-400'
                                     : 'text-zinc-400'
-                            } text-base font-medium tracking-normal`}
+                            } text-sm font-medium tracking-normal`}
                         >
                             {senderInfo ? (
                                 senderInfo?.status

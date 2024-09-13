@@ -111,6 +111,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         fetchSenderInfo,
         setReadMessageListSender,
         setNewMessageListSender,
+        setOnlineOffline,
         listSender
     ]);
 
