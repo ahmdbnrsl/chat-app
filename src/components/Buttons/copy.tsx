@@ -16,7 +16,7 @@ export default function CopyButton({ text }: { text: string }) {
             {isCopied ? (
                 <button
                     ref={checkRef}
-                    className='px-3 py-1 text-lg hover:bg-zinc-900 transition-colors rounded outline-0 text-zinc-300'
+                    className='px-3 py-1 text-lg hover:bg-zinc-900 transition-colors rounded outline-0 text-zinc-300 cursor-pointer'
                 >
                     <FaCheck />
                 </button>
@@ -26,7 +26,7 @@ export default function CopyButton({ text }: { text: string }) {
                         window.navigator.clipboard.writeText(text);
                         setIsCopied(true);
                     }}
-                    className='px-3 py-1 text-lg hover:bg-zinc-900 transition-colors rounded outline-0 text-zinc-300'
+                    className='cursor-pointer px-3 py-1 text-lg hover:bg-zinc-900 transition-colors rounded outline-0 text-zinc-300'
                 >
                     <MdContentCopy />
                 </button>
