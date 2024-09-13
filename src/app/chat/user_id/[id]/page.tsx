@@ -214,9 +214,21 @@ export default function ChatPage({
             );
         };
 
+        const handleUserStatus = (userId: string) => {
+            setSenderInfo((prevData: User | null | undefined): User => {
+                if (userId !== (prevData._id as string))
+                    return prevData as User;
+                prevData.status === 'online'
+                    ? (prevData.status = 'offline')
+                    : (prevData.status = 'online');
+                return prevData as User;
+            });
+        };
+
         socket.on('connect', () => console.info('live chat opened'));
         socket.on('data_updated', handleMessageUpdated);
         socket.on('data_deleted', handleMessageDeleted);
+        socket.on('user_status', handleUserStatus);
         socket.on('disconnect', () => console.info('live chat closed'));
 
         return () => {

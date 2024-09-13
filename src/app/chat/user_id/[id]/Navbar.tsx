@@ -54,13 +54,28 @@ export default function NavbarChat({
                             )
                         ) : null}
                     </button>
-                    <h1 className='text-zinc-200 text-lg sm:text-xl font-medium tracking-normal'>
-                        {senderInfo ? (
-                            senderInfo?.name
-                        ) : (
-                            <div className='px-9 py-2.5 rounded-lg bg-zinc-800'></div>
-                        )}
-                    </h1>
+                    <div className='flex flex-col gap-1.5 justify-center'>
+                        <h1 className='text-zinc-200 text-lg sm:text-xl font-medium tracking-normal'>
+                            {senderInfo ? (
+                                senderInfo?.name
+                            ) : (
+                                <div className='px-9 py-2.5 rounded-lg bg-zinc-800'></div>
+                            )}
+                        </h1>
+                        <p
+                            className={`${
+                                senderInfo?.status === 'online'
+                                    ? 'text-sky-400'
+                                    : 'text-zinc-400'
+                            } text-base font-medium tracking-normal`}
+                        >
+                            {senderInfo ? (
+                                senderInfo?.status
+                            ) : (
+                                <div className='px-9 py-1 rounded-lg bg-zinc-800'></div>
+                            )}
+                        </p>
+                    </div>
                 </div>
             </div>
             <SearchInput
