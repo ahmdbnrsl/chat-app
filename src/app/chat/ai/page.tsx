@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import LoadingMessage from '@/components/loading';
 import CodeWithHighlight from '@/components/Highlight/code';
+import CopyButton from '@/components/Buttons/copy';
 import { useDebounceValue } from 'usehooks-ts';
 import { useEffect, ChangeEvent, useState } from 'react';
 import { BsStars } from 'react-icons/bs';
@@ -26,8 +27,8 @@ export default function AiChats() {
     };
 
     return (
-        <main className='bg-zinc-950 w-full min-h-screen flex'>
-            <section className='w-full flex flex-col h-screen bg-ornament bg-fixed bg-zinc-950 overflow-y-auto py-10 justify-center items-center'>
+        <main className='bg-zinc-950 w-full h-screen flex overflow-y-auto'>
+            <section className='w-full flex flex-col min-h-screen bg-ornament bg-fixed bg-zinc-950 py-10 justify-center items-center'>
                 <div className='w-full flex flex-col items-center flex-grow bg-zinc-950'>
                     <Image
                         src='https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/google-gemini-icon.png'
@@ -44,11 +45,14 @@ export default function AiChats() {
                         <textarea
                             onChange={handleRequestToGroq}
                             placeholder='Ask something'
-                            className='w-full bg-transparent text-base border-b-2 border-indigo-400 placeholder:text-zinc-500 placeholder:text-sm outline-0 h-16 resize-none text-indigo-300'
+                            className='w-full bg-transparent text-base border-b-2 border-indigo-400 placeholder:text-zinc-500 placeholder:text-sm outline-0 h-12 resize-none text-indigo-300 font-medium'
                         ></textarea>
                     </form>
                     {result && (
-                        <div className='p-2 mt-4 w-full rounded-2xl bg-slate-950 border-2 border-slate-900 p-5'>
+                        <div className='p-2 mt-4 rounded-2xl bg-transparent p-6 w-fit max-w-full'>
+                            <div className='w-full flex justify-end'>
+                                <CopyButton text={result} />
+                            </div>
                             <CodeWithHighlight>{result}</CodeWithHighlight>
                         </div>
                     )}

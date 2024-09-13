@@ -66,12 +66,14 @@ const CodeWithHighlight = ({ children }: { children: string }) => {
         });
 
     return (
-        <pre
-            className='text-base text-zinc-400 font-normal whitespace-pre-wrap'
-            style={{ fontFamily: 'inherit' }}
-        >
-            {processedContent}
-        </pre>
+        <div>
+            <pre
+                className='text-sm text-zinc-400 font-normal whitespace-pre-wrap h-full'
+                style={{ fontFamily: 'inherit' }}
+            >
+                {processedContent}
+            </pre>
+        </div>
     );
 };
 
