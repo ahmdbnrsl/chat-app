@@ -11,7 +11,6 @@ import { useUpdatedSenderNewMessage } from '@/lib/zustand';
 import SidebarChat from './Sidebar';
 import Wrapper from './Wrapper';
 const socketURL = process.env.NEXT_PUBLIC_SOCKET_URL || '';
-const socket = io(socketURL);
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     const { data: session, status }: { data: any; status: string } =
@@ -89,16 +88,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             setOnlineOffline(userId);
         };
 
-        socket.on('connect', () =>
-            socket.emit('user_online', session?.user?.user_id)
-        );
+        const socket = io(socketURL, {
+            query: { user_id: session?.user?.user_id || '' }
+        });
+
+        socket.on('connect', () => console.info('online'));
         socket.on('data_updated', handleDataUpdated);
         socket.on('data_deleted', handleDataDeleted);
         socket.on('message_readed', handleReadMessage);
         socket.on('user_status', handleUserStatus);
-        socket.on('disconnect', () =>
-            socket.emit('user_offline', session?.user?.user_id)
-        );
+        socket.on('disconnect', () => console.info('offline'));
 
         return () => {
             socket.off('data_updated', handleDataUpdated);
