@@ -8,7 +8,7 @@ export default function Home() {
     return (
         <div
             onClick={() => console.log('Hello World!')}
-            className='h-screen w-screen bg-zinc-950 p-6 flex flex-col justify-center items-center gap-3'
+            className='h-screen w-screen bg-zinc-950 bg-ornament bg-no-repeat bg-cover bg-center p-6 flex flex-col justify-center items-center gap-3'
         >
             <h1 className='text-zinc-300 text-4xl font-bold font-serif'>
                 VB CHAT
