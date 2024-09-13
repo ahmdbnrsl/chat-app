@@ -16,14 +16,17 @@ export default function CopyButton({ text }: { text: string }) {
             {isCopied ? (
                 <button
                     ref={checkRef}
-                    className='px-3 py-1 text-lg bg-zinc-900 rounded outline-0 text-zinc-300'
+                    className='px-3 py-1 text-lg hover:bg-zinc-900 transition-colors rounded outline-0 text-zinc-300'
                 >
                     <FaCheck />
                 </button>
             ) : (
                 <button
-                    onClick={() => window.navigator.clipboard.writeText(text)}
-                    className='px-3 py-1 text-lg bg-zinc-900 rounded outline-0 text-zinc-300'
+                    onClick={() => {
+                        window.navigator.clipboard.writeText(text);
+                        setIsCopied(true);
+                    }}
+                    className='px-3 py-1 text-lg hover:bg-zinc-900 transition-colors rounded outline-0 text-zinc-300'
                 >
                     <MdContentCopy />
                 </button>
