@@ -27,9 +27,9 @@ export default function AiChats() {
     };
 
     return (
-        <main className='bg-zinc-950 w-full h-screen flex overflow-y-auto'>
-            <section className='w-full flex flex-col min-h-screen bg-fixed py-10 justify-center items-center'>
-                <div className='w-full flex flex-col items-center'>
+        <main className='bg-zinc-950 w-full min-h-screen flex overflow-y-auto'>
+            <section className='w-full flex flex-col h-screen overflow-y-auto bg-fixed py-10 justify-center items-center'>
+                <div className='w-full flex flex-col items-center min-h-screen'>
                     <Image
                         src='https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/google-gemini-icon.png'
                         width={100}
