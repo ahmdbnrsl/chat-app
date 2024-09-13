@@ -14,6 +14,5 @@ export default withAuthandValid(mainMiddleware, [
     '/signup',
     '/chat/profile',
     '/chat/profile/edit',
-    '/chat/user_id',
     '/chat/ai'
 ]);
