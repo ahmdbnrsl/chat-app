@@ -68,7 +68,7 @@ const CodeWithHighlight = ({ children }: { children: string }) => {
     return (
         <div>
             <pre
-                className='text-sm text-zinc-400 font-normal whitespace-pre-wrap h-full'
+                className='text-base text-indigo-300 font-normal whitespace-pre-wrap h-full'
                 style={{ fontFamily: 'inherit' }}
             >
                 {processedContent}
