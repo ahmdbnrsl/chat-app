@@ -29,7 +29,7 @@ export default function AiChats() {
     return (
         <main className='bg-zinc-950 w-full min-h-screen flex overflow-y-auto'>
             <section className='w-full flex flex-col h-screen overflow-y-auto bg-fixed py-10 justify-center items-center'>
-                <div className='w-full flex flex-col items-center min-h-screen'>
+                <div className='w-full flex flex-col items-center min-h-screen px-6'>
                     <Image
                         src='https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/google-gemini-icon.png'
                         width={100}
@@ -48,11 +48,11 @@ export default function AiChats() {
                             try again.
                         </p>
                     </div>
-                    <form className='mt-2 w-full max-w-2xl p-6'>
+                    <form className='mt-2 w-full max-w-2xl'>
                         <textarea
                             onChange={handleRequestToGroq}
                             placeholder='Ask something'
-                            className='p-6 w-full bg-transparent text-base bg-zinc-900/[0.5] border-2 border-zinc-900/[0.5] hover:border-zinc-900/[0.8] placeholder:text-zinc-500 placeholder:text-sm outline-0 h-12 resize-none text-indigo-300 font-medium rounded-xl'
+                            className='py-4 px-6 w-full h-auto bg-transparent text-base bg-zinc-900/[0.5] border-2 border-zinc-900/[0.5] hover:border-zinc-900/[0.8] placeholder:text-zinc-500 outline-0 resize-none text-indigo-300 font-medium rounded-xl'
                         ></textarea>
                     </form>
                     {result && (
