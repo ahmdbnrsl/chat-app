@@ -92,7 +92,13 @@ export default function SidebarChat() {
                             </div>
                         </div>
                         <div className='w-1/4 flex flex-col justify-center items-end'>
-                            <p className='text-xs font-normal text-zinc-500'>
+                            <p
+                                className={`text-xs font-normal ${
+                                    sender?.unReadedMessageLength > 0
+                                        ? 'text-sky-400'
+                                        : 'text-zinc-500'
+                                }`}
+                            >
                                 {getDate(sender?.latestMessageTimestamp) ===
                                 getDate(Date.now().toString())
                                     ? getHour(sender?.latestMessageTimestamp)
