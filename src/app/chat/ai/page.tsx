@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import LoadingMessage from '@/components/loading';
 import CodeWithHighlight from '@/components/Highlight/code';
 import CopyButton from '@/components/Buttons/copy';
@@ -8,6 +9,7 @@ import { useDebounceValue } from 'usehooks-ts';
 import { useEffect, ChangeEvent, useState } from 'react';
 import { BsStars } from 'react-icons/bs';
 import { requestChatCompletions } from '@/services/groqService';
+import { FaArrowLeft } from 'react-icons/fa6';
 
 export default function AiChats() {
     const [debouncedValue, setValue] = useDebounceValue('', 1500);
@@ -29,7 +31,15 @@ export default function AiChats() {
     return (
         <main className='bg-zinc-950 w-full min-h-screen flex overflow-y-auto'>
             <section className='w-full flex flex-col h-screen overflow-y-auto bg-fixed py-10 justify-center items-center'>
-                <div className='w-full flex flex-col items-center min-h-screen px-6 max-w-4xl'>
+                <div className='w-full flex flex-col items-center min-h-screen px-6 max-w-4xl relative'>
+                    <div className='w-full absolute flex justify-start'>
+                        <Link
+                            href='/chat'
+                            className='text-indigo-300 text-lg'
+                        >
+                            <FaArrowLeft />
+                        </Link>
+                    </div>
                     <Image
                         src='https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/google-gemini-icon.png'
                         width={100}

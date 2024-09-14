@@ -2,12 +2,11 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaPen, FaArrowLeft } from 'react-icons/fa6';
+import { FaPen, FaArrowLeft, FaWhatsapp } from 'react-icons/fa6';
 import { useState } from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import Loading from '@/components/loading';
 import AuthButton from '@/components/Buttons/auth';
-import { FaWhatsapp } from 'react-icons/fa6';
 import { MdOutlineDateRange } from 'react-icons/md';
 import { AiOutlineGlobal } from 'react-icons/ai';
 
