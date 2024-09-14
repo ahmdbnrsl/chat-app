@@ -105,9 +105,11 @@ export default function SidebarChat() {
                                     : getDate(sender?.latestMessageTimestamp)}
                             </p>
                             {sender?.unReadedMessageLength > 0 && (
-                                <p className='mt-1 text-xs text-zinc-950 px-[0.5rem] flex items-center justify-center text-center min-w-[1.3rem] h-[1.315rem] w-fit bg-sky-400 rounded-full'>
-                                    {sender?.unReadedMessageLength}
-                                </p>
+                                <div className='mt-1 text-xs text-zinc-950 px-[0.5rem] flex items-center justify-center text-center min-w-[1.3rem] h-[1.32rem] w-fit bg-sky-400 rounded-full'>
+                                    <p className='-mb-1'>
+                                        {sender?.unReadedMessageLength}
+                                    </p>
+                                </div>
                             )}
                         </div>
                     </Link>
