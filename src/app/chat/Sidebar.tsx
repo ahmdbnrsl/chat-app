@@ -63,11 +63,10 @@ export default function SidebarChat() {
                                         round={true}
                                     />
                                 )}
-                                {sender?.unReadedMessageLength > 0 && (
-                                    <div className='text-xs text-zinc-950 py-[0.24rem] px-[0.5rem] flex items-center justify-center w-fit absolute bg-zinc-300 rounded-full border-4 border-zinc-950'>
-                                        {sender?.unReadedMessageLength}
-                                    </div>
-                                )}
+                                {sender?.status &&
+                                    sender?.status === 'online' && (
+                                        <div className='w-4 h-4 absolute bg-sky-400 rounded-full border-4 border-zinc-950'></div>
+                                    )}
                             </div>
                             <div className='flex flex-col'>
                                 <h1 className='text-base sm:text-lg text-zinc-300 font-normal'>
@@ -93,21 +92,17 @@ export default function SidebarChat() {
                             </div>
                         </div>
                         <div className='w-1/4 flex flex-col justify-center items-end'>
-                            <p
-                                className={`text-sm font-medium ${
-                                    sender?.status === 'online'
-                                        ? 'text-sky-400'
-                                        : 'text-zinc-500'
-                                }`}
-                            >
-                                {sender?.status}
-                            </p>
                             <p className='text-xs font-normal text-zinc-500'>
                                 {getDate(sender?.latestMessageTimestamp) ===
                                 getDate(Date.now().toString())
                                     ? getHour(sender?.latestMessageTimestamp)
                                     : getDate(sender?.latestMessageTimestamp)}
                             </p>
+                            {sender?.unReadedMessageLength > 0 && (
+                                <div className='text-xs text-zinc-950 py-[0.24rem] px-[0.5rem] flex items-center justify-center min-w-[1.3rem] h-[1.3rem] w-fit absolute bg-sky-400 rounded-full'>
+                                    {sender?.unReadedMessageLength}
+                                </div>
+                            )}
                         </div>
                     </Link>
                 ))
