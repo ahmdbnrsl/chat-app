@@ -65,7 +65,7 @@ export default function SidebarChat() {
                                 )}
                                 {sender?.status &&
                                     sender?.status === 'online' && (
-                                        <div className='w-4 h-4 absolute bg-sky-400 rounded-full border-4 border-zinc-950'></div>
+                                        <div className='w-6 h-6 absolute bg-sky-400 rounded-full border-4 border-zinc-950'></div>
                                     )}
                             </div>
                             <div className='flex flex-col'>
@@ -105,7 +105,7 @@ export default function SidebarChat() {
                                     : getDate(sender?.latestMessageTimestamp)}
                             </p>
                             {sender?.unReadedMessageLength > 0 && (
-                                <div className='text-xs text-zinc-950 py-[0.24rem] px-[0.5rem] flex items-center justify-center min-w-[1.3rem] h-[1.3rem] w-fit bg-sky-400 rounded-full'>
+                                <div className='text-xs text-zinc-950 px-[0.5rem] flex items-center justify-center min-w-[1.28rem] h-[1.3rem] w-fit bg-sky-400 rounded-full'>
                                     {sender?.unReadedMessageLength}
                                 </div>
                             )}
