@@ -32,7 +32,7 @@ export default function AiChats() {
         <main className='bg-zinc-950 w-full min-h-screen flex overflow-y-auto'>
             <section className='w-full flex flex-col h-screen overflow-y-auto bg-fixed py-10 justify-center items-center'>
                 <div className='w-full flex flex-col items-center min-h-screen px-6 max-w-4xl relative'>
-                    <div className='w-full absolute flex justify-start'>
+                    <div className='w-full absolute flex justify-start p-6'>
                         <Link
                             href='/chat'
                             className='text-indigo-300 text-lg'
