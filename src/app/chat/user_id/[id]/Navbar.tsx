@@ -20,7 +20,7 @@ export default function NavbarChat({
     };
     return (
         <nav className='sticky top-0 z-20 bg-zinc-950 w-full py-4 px-6 flex flex-col md:flex-row gap-3 border-b border-zinc-800 items-center'>
-            <div className='flex items-center w-full gap-3 justify-between md:justify-start'>
+            <div className='flex items-center w-full gap-3 justify-start'>
                 <Link
                     href='/chat'
                     className='text-lg sm:text-xl md:text-2xl text-zinc-500 px-2 mr-3 cursor-pointer'
