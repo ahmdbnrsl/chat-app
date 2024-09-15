@@ -31,3 +31,33 @@ export async function sendCustomMess({
         option
     ).then((res: any): boolean => (res.status == 200 ? true : false));
 }
+
+export async function sendCarrouselMess({
+    number,
+    text,
+    quoted,
+    cards
+}: {
+    number: string;
+    text: string;
+    quoted: string;
+    cards: Array<object>;
+}): Promise<boolean> {
+    const option = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            secret: process.env.SECRET_TOKEN,
+            number,
+            text,
+            quoted,
+            cards: JSON.stringify(cards)
+        })
+    };
+    return await fetch(
+        process.env.NEXT_PUBLIC_BASE_URL + '/carrousel',
+        option
+    ).then((res: any): boolean => (res.status == 200 ? true : false));
+}

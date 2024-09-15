@@ -1,6 +1,5 @@
 'use client';
 import { FaWhatsapp } from 'react-icons/fa6';
-import { CiPaperplane } from 'react-icons/ci';
 import { sendCustomMess } from '@/services/sendWaMessage';
 import { useState } from 'react';
 
@@ -161,12 +160,7 @@ export default function SendCustommessage() {
                             className='send-btn'
                             disabled={isDisable}
                         >
-                            {loading ? 'Sending...' : 'Submit'}{' '}
-                            <CiPaperplane
-                                className={`ml-1 ${
-                                    loading ? 'hidden' : 'inline-flex'
-                                }`}
-                            />
+                            {loading ? 'Sending...' : 'Submit'}
                         </button>
                     </div>
                 </form>
