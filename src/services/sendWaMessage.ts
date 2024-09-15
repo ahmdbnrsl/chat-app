@@ -61,3 +61,40 @@ export async function sendCarrouselMess({
         option
     ).then((res: any): boolean => (res.status == 200 ? true : false));
 }
+
+export async function getListGroup(): Promise<
+    Array<{ id: string; name: string }> | false
+> {
+    const option: RequestInit = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            secret: process.env.SECRET_TOKEN
+        }),
+        next: {
+            revalidate: 90
+        }
+    };
+    try {
+        const response: Response = await fetch(
+            process.env.NEXT_PUBLIC_BASE_URL + '/chats',
+            option
+        );
+        const list: { result: string } = await response.json();
+        const newList: Array<[string, object]> = JSON.parse(list?.result);
+        const result: Array<{ id: string; name: string }> = newList?.map(
+            (item: any): { id: string; name: string } => {
+                return {
+                    id: item?.[0],
+                    name: item?.[1]?.subject
+                };
+            }
+        );
+
+        return result;
+    } catch (e) {
+        return false;
+    }
+}
