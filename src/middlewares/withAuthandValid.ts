@@ -6,7 +6,12 @@ import {
 } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 
-const onlyAdminPage: Array<string> = ['/dashboard'];
+const onlyAdminPage: Array<string> = [
+    '/dashboard',
+    '/dashboard/listgroup',
+    '/dashboard/sendcustommessage',
+    '/dashboard/sendcarrousel'
+];
 const authPage: Array<string> = ['/login', '/signup'];
 const APIRequireBearer: Array<string> = [
     '/api/register',
@@ -18,7 +23,8 @@ const APIRequireBearer: Array<string> = [
     '/api/push_message',
     '/api/delete_message',
     '/api/revalidate',
-    '/api/read_message'
+    '/api/read_message',
+    '/api/get_all_user'
 ];
 
 export default function withAuthandValid(

@@ -15,6 +15,57 @@
     * {
         @apply selection:text-zinc-900 selection:bg-zinc-300;
     }
+    .sections {
+        @apply w-full scroll-mt-20 pb-20;
+    }
+    .content-box {
+        @apply text-lg mt-6 px-7 sm:px-10 md:px-12 lg:px-8 flex flex-col gap-12;
+    }
+    .sub-content-box {
+        @apply w-full flex flex-col sm:flex-row sm:justify-between gap-4;
+    }
+    .content-head {
+        @apply text-sm text-zinc-500 font-semibold tracking-widest w-full sm:w-1/4;
+    }
+    .content-detail {
+        @apply flex flex-col gap-1 w-full sm:w-9/12;
+    }
+    .content-title {
+        @apply flex items-center text-lg font-medium tracking-normal text-zinc-200;
+    }
+    .content-subtitle {
+        @apply text-lg font-medium tracking-normal text-zinc-500;
+    }
+    .content-desc {
+        @apply mt-3 text-base text-zinc-400 tracking-wider leading-relaxed font-normal lg:text-sm;
+    }
+    .sending-loading-box {
+        @apply absolute -inset-x-0 -inset-y-0 flex-col justify-center items-center gap-1.5 z-10;
+    }
+    .sending-error-box {
+        @apply absolute -inset-x-0 -inset-y-0 flex-col justify-center items-center gap-1.5 z-[11] px-7 sm:px-10 md:px-12;
+    }
+    .sending-loading-content {
+        @apply h-3 rounded-full bg-zinc-200;
+    }
+    .send-head {
+        @apply text-zinc-200 font-medium flex items-center;
+    }
+    .send-sub-head {
+        @apply text-base sm:text-lg lg:text-base tracking-wider text-zinc-400 mt-3 w-full max-w-[46ch];
+    }
+    .send-form {
+        @apply w-full flex flex-col gap-5;
+    }
+    .send-input-group {
+        @apply flex flex-col gap-5;
+    }
+    .send-input {
+        @apply cursor-text w-full tracking-wider w-full bg-zinc-600/[0.15] text-zinc-200 px-5 py-2 rounded-lg border-2 border-zinc-800 text-base font-medium outline-0 placeholder:font-normal placeholder:tracking-wider placeholder:text-zinc-500 focus:border-zinc-700 active:border-zinc-700;
+    }
+    .send-btn {
+        @apply flex items-center justify-center w-full bg-zinc-200 text-zinc-900 px-5 py-2 text-base font-medium rounded-lg cursor-pointer;
+    }
 }
 
 @tailwind utilities;

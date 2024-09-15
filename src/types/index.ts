@@ -147,6 +147,11 @@ export interface U {
         message: string;
         result?: User;
     };
+    UsersInfo: {
+        status: boolean;
+        message: string;
+        result?: User[];
+    };
 }
 
 export interface O {
@@ -199,7 +204,8 @@ export interface ResultFetcher {
         | Array<SenderMessage>
         | User
         | OTP
-        | Array<DateGroup>;
+        | Array<DateGroup>
+        | User[];
 }
 
 export interface RevalidateBodyRequest {
