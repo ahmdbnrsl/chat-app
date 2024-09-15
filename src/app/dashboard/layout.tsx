@@ -11,7 +11,7 @@ export default function DashboardLayout({
         { path: '/dashboard/listgroup', name: 'List Group' }
     ];
     return (
-        <main className='w-full min-h-screen bg-zinc-950 flex justify-center'>
+        <main className='w-full min-h-screen bg-zinc-950 flex flex-col items-center'>
             <nav className='w-full p-6 flex flex-wrap gap-3 max-w-4xl'>
                 {dashboardRoute.map(
                     (item: { path: string; name: string }, i: number) => (
