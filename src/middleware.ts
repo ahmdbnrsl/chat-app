@@ -10,6 +10,9 @@ export function mainMiddleware(request: NextRequest) {
 export default withAuthandValid(mainMiddleware, [
     '/chat',
     '/dashboard',
+    '/dashboard/listgroup',
+    '/dashboard/sendcustommessage',
+    '/dashboard/sendcarrousel',
     '/login',
     '/signup',
     '/chat/profile',
