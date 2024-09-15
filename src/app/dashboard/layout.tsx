@@ -11,8 +11,8 @@ export default function DashboardLayout({
         { path: '/dashboard/listgroup', name: 'List Group' }
     ];
     return (
-        <main className='w-full min-h-screen bg-zinc-950'>
-            <nav className='w-full p-3 flex flex-wrap gap-3'>
+        <main className='w-full min-h-screen bg-zinc-950 flex justify-center'>
+            <nav className='w-full p-6 flex flex-wrap gap-3 max-w-4xl'>
                 {dashboardRoute.map(
                     (item: { path: string; name: string }, i: number) => (
                         <Link
@@ -25,7 +25,7 @@ export default function DashboardLayout({
                     )
                 )}
             </nav>
-            <section className='p-6 w-full flex flex-col items-center'>
+            <section className='p-6 w-full flex flex-col items-center max-w-4xl'>
                 {children}
             </section>
         </main>
