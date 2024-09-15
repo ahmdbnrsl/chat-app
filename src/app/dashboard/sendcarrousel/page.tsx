@@ -1,7 +1,6 @@
 'use client';
 import { FaWhatsapp } from 'react-icons/fa6';
-import { CiPaperplane } from 'react-icons/ci';
-import { Fetch2 } from '@/services/fetcher';
+import { sendCarrouselMess } from '@/services/sendWaMessage';
 import { useState } from 'react';
 
 function Cards({
@@ -15,7 +14,6 @@ function Cards({
     btn: any;
     setBtn: any;
 }) {
-    //const [btn, setBtn] = useState<number>(1);
     const HandleTouch = (e: any) => {
         e.preventDefault();
         setBtn(btn + 1);
@@ -27,7 +25,7 @@ function Cards({
             </p>
             <input
                 className={`send-input cardImage${items}${index}`}
-                placeholder='Image Url (Telegraph)'
+                placeholder='Image Url'
                 type='text'
                 name={`cardImage${items}${index}`}
             />
@@ -72,7 +70,7 @@ function Cards({
     );
 }
 
-export default function Form2() {
+export default function CarrouselMessage() {
     const [loading, setLoading] = useState<boolean>(false);
     const [opacity, setOpacity] = useState<string>('opacity-100');
     const [isDisable, setIsDisable] = useState<boolean>(false);
@@ -88,7 +86,7 @@ export default function Form2() {
             setOpacity('opacity-50');
             setIsDisable(true);
             try {
-                const fetching: boolean = await Fetch2({
+                const fetching: boolean = await sendCarrouselMess({
                     number: e.target.phone.value,
                     text: e.target.message.value,
 
@@ -221,7 +219,7 @@ export default function Form2() {
                             className='send-btn'
                             onClick={HandleClick}
                         >
-                            Add cards
+                            Add cards +
                         </button>
                     </div>
                     <div className='send-input-group'>
@@ -236,12 +234,7 @@ export default function Form2() {
                             className='send-btn'
                             disabled={isDisable}
                         >
-                            {loading ? 'Sending...' : 'Submit'}{' '}
-                            <CiPaperplane
-                                className={`ml-1 ${
-                                    loading ? 'hidden' : 'inline-flex'
-                                }`}
-                            />
+                            {loading ? 'Sending...' : 'Submit'}
                         </button>
                     </div>
                 </form>
