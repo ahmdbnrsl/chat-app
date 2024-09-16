@@ -8,7 +8,7 @@ import { type Socket } from 'socket.io-client';
 import { Message, User, ID } from '@/types';
 import { usePathname } from 'next/navigation';
 import { useUpdatedSenderNewMessage } from '@/lib/zustand';
-import { initializeSocket } from '@/lib/socketService';
+import { initializeSocket } from '@/services/socketService';
 import SidebarChat from './Sidebar';
 import Wrapper from './Wrapper';
 

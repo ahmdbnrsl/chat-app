@@ -11,7 +11,7 @@ import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useSession } from 'next-auth/react';
 import { FetcherService } from '@/services/fetcherService';
 import { type Socket } from 'socket.io-client';
-import { getSocket, initializeSocket } from '@/lib/socketService';
+import { getSocket, initializeSocket } from '@/services/socketService';
 import type {
     M,
     DateGroup,
