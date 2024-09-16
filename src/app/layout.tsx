@@ -68,6 +68,9 @@ export default function RootLayout({
                 className={`${poppins.className} bg-zinc-950 select-none`}
             >
                 <SessionWrap>{children}</SessionWrap>
+                <footer className='w-full bg-zinc-950 py-0.5 px-3 flex justify-center text-xs font-medium text-zinc-300'>
+                    © 2024 | Ahmad Beni Rusli
+                </footer>
             </body>
         </html>
     );

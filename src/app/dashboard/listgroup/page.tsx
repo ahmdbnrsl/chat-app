@@ -2,6 +2,7 @@
 
 import { getListGroup } from '@/services/sendWaMessage';
 import { useState, useEffect, useCallback } from 'react';
+import Loading from '@/components/loading';
 
 export default function ListGroup() {
     const [listGc, setListGc] = useState<
@@ -18,7 +19,11 @@ export default function ListGroup() {
     return (
         <div className='mt-5 sections scroll-mt-14 relative mb-0 py-0'>
             <div className='content-box transition-all flex flex-wrap gap-2'>
-                {listGc &&
+                {!listGc ? (
+                    <div className='w-full flex justify-center gap-1.5 items-center text-lg font-medium text-zinc-500'>
+                        <Loading /> Loading list group...
+                    </div>
+                ) : listGc?.length > 0 ? (
                     listGc.map(
                         (item: { id: string; name: string }, index: number) => (
                             <div
@@ -40,7 +45,12 @@ export default function ListGroup() {
                                 </div>
                             </div>
                         )
-                    )}
+                    )
+                ) : (
+                    <div className='w-full flex justify-center gap-1.5 items-center text-lg font-medium text-zinc-500'>
+                        No group found
+                    </div>
+                )}
             </div>
         </div>
     );

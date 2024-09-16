@@ -5,6 +5,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { date, hour } from '@/services/getTime';
 import Image from 'next/image';
 import Avatar from 'react-avatar';
+import Loading from '@/components/loading';
 import { type User } from '@/types';
 
 export default function Users() {
@@ -25,7 +26,11 @@ export default function Users() {
     return (
         <div className='mt-5 sections scroll-mt-14 relative mb-0 py-0'>
             <div className='content-box transition-all w-full flex flex-col gap-3'>
-                {listUser &&
+                {!listUser ? (
+                    <div className='w-full flex justify-center gap-1.5 items-center text-lg font-medium text-zinc-500'>
+                        <Loading /> Loading Users...
+                    </div>
+                ) : listUser?.length > 0 ? (
                     listUser.map((user: User, index: number) => (
                         <div
                             key={index}
@@ -76,7 +81,12 @@ export default function Users() {
                                 </p>
                             </div>
                         </div>
-                    ))}
+                    ))
+                ) : (
+                    <div className='w-full flex justify-center gap-1.5 items-center text-lg font-medium text-zinc-500'>
+                        No users found
+                    </div>
+                )}
             </div>
         </div>
     );
