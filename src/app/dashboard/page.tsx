@@ -9,6 +9,7 @@ import { type User } from '@/types';
 
 export default function Users() {
     const [listUser, setListUser] = useState<User[] | null>(null);
+
     const fetchAllUser = useCallback(async () => {
         const users = await getAllUser(
             {},
@@ -23,7 +24,7 @@ export default function Users() {
     }, [fetchAllUser]);
     return (
         <div className='mt-5 sections scroll-mt-14 relative mb-0 py-0'>
-            <div className='content-box transition-all flex flex-wrap gap-2'>
+            <div className='content-box transition-all w-full flex flex-col gap-3'>
                 {listUser &&
                     listUser.map((user: User, index: number) => (
                         <div
