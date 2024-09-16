@@ -24,7 +24,6 @@ import { date, hour } from '@/services/getTime';
 import { useManageQuoted } from '@/lib/zustand';
 
 const socketURL: string = process.env.NEXT_PUBLIC_SOCKET_URL || '';
-const socket: Socket = io(socketURL);
 
 export default function ChatPage({
     params
@@ -225,6 +224,10 @@ export default function ChatPage({
                 return prevData as User;
             });
         };
+
+        const socket: Socket = io(socketURL, {
+            query: { user_id: session?.user?.user_id || '' }
+        });
 
         socket.on('connect', () => console.info('live chat opened'));
         socket.on('data_updated', handleMessageUpdated);

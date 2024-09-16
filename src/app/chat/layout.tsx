@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react';
 import { useEffect, useState, useCallback } from 'react';
 import { FetcherService } from '@/services/fetcherService';
 import type { SenderMessage } from '@/types';
-import { io } from 'socket.io-client';
+import { io, Socket } from 'socket.io-client';
 import { Message, User, ID } from '@/types';
 import { usePathname } from 'next/navigation';
 import { useUpdatedSenderNewMessage } from '@/lib/zustand';
@@ -88,7 +88,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             setOnlineOffline(userId);
         };
 
-        const socket = io(socketURL, {
+        const socket: Socket = io(socketURL, {
             query: { user_id: session?.user?.user_id || '' }
         });
 
