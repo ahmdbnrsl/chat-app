@@ -17,7 +17,7 @@ export default function Users() {
             { path: 'get_all_user', method: 'POST' }
         );
         if (users && users?.status) setListUser(users?.result as User[]);
-    }, [getAllUser]);
+    }, []);
     const getDate = useCallback(date, []);
     const getHour = useCallback(hour, []);
     useEffect(() => {
