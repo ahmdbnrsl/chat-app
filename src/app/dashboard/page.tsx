@@ -29,7 +29,7 @@ export default function Users() {
                     listUser.map((user: User, index: number) => (
                         <div
                             key={index}
-                            className='w-full sm:w-auto p-2 rounded bg-zinc-600/[0.15] flex flex-col gap-2'
+                            className='w-full rounded-xl transition-colors hover:bg-zinc-900/[0.85] flex justify-between items-center p-3'
                         >
                             <div className='w-8/12 flex gap-3 items-center'>
                                 <div className='w-[50px] h-[50px] relative flex items-end justify-end'>
