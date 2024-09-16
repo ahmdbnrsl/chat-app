@@ -93,13 +93,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         socket?.on('mess.insert.on.layout', handleNewMessage);
         socket?.on('mess.delete.on.layout', handleMessageDeleted);
         socket?.on('mess.update.on.layout', handleReadMessage);
-        socket?.on('user_status', handleUserStatus);
+        socket?.on('user.status.on.layout', handleUserStatus);
 
         return () => {
             socket?.off('mess.insert.on.layout', handleNewMessage);
             socket?.off('mess.delete.on.layout', handleMessageDeleted);
             socket?.off('mess.update.on.layout', handleReadMessage);
-            socket?.off('user_status', handleUserStatus);
+            socket?.off('user.status.on.layout', handleUserStatus);
         };
     }, [
         fetchListSender,
@@ -108,8 +108,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         setReadMessageListSender,
         setNewMessageListSender,
         setOnlineOffline,
-        listSender,
-        initializeSocket
+        listSender
     ]);
 
     useEffect(() => {

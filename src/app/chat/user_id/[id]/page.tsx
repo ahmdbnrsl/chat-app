@@ -229,20 +229,19 @@ export default function ChatPage({
 
         socket?.on('mess.insert.on.page', handleMessageInserted);
         socket?.on('mess.delete.on.page', handleMessageDeleted);
-        socket?.on('user_status', handleUserStatus);
+        socket?.on('user.status.on.page', handleUserStatus);
 
         return () => {
             socket?.off('mess.insert.on.page', handleMessageInserted);
             socket?.off('mess.delete.on.page', handleMessageDeleted);
-            socket?.off('user_status', handleUserStatus);
+            socket?.off('user.status.on.page', handleUserStatus);
         };
     }, [
         fetchSenderInfo,
         fetchMessages,
         session?.user?.user_id,
         params.id,
-        readMessages,
-        getSocket
+        readMessages
     ]);
 
     return (
