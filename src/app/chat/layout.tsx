@@ -4,13 +4,13 @@ import { useSession } from 'next-auth/react';
 import { useEffect, useState, useCallback } from 'react';
 import { FetcherService } from '@/services/fetcherService';
 import type { SenderMessage } from '@/types';
-import { io, Socket } from 'socket.io-client';
+import { type Socket } from 'socket.io-client';
 import { Message, User, ID } from '@/types';
 import { usePathname } from 'next/navigation';
 import { useUpdatedSenderNewMessage } from '@/lib/zustand';
+import { initializeSocket } from '@/lib/socketService';
 import SidebarChat from './Sidebar';
 import Wrapper from './Wrapper';
-const socketURL = process.env.NEXT_PUBLIC_SOCKET_URL || '';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     const { data: session, status }: { data: any; status: string } =
@@ -55,7 +55,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
         fetchListSender();
 
-        const handleDataUpdated = (newData: Message) => {
+        const handleNewMessage = (newData: Message) => {
             if (!newData) return;
             if (
                 newData.sender_id === session?.user.user_id ||
@@ -69,7 +69,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             }
         };
 
-        const handleDataDeleted = (deletedMessageId: string) => {
+        const handleMessageDeleted = (deletedMessageId: string) => {
             if (listSender && listSender.length > 0) {
                 let findDeletedMessId: SenderMessage | undefined =
                     listSender.find(
@@ -88,22 +88,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             setOnlineOffline(userId);
         };
 
-        const socket: Socket = io(socketURL, {
-            query: { user_id: session?.user?.user_id || '' }
-        });
+        const socket = initializeSocket(session?.user?.user_id || '') as Socket;
 
-        socket.on('connect', () => console.info('online'));
-        socket.on('data_updated', handleDataUpdated);
-        socket.on('data_deleted', handleDataDeleted);
-        socket.on('message_readed', handleReadMessage);
-        socket.on('user_status', handleUserStatus);
-        socket.on('disconnect', () => console.info('offline'));
+        socket?.on('mess.insert.on.layout', handleNewMessage);
+        socket?.on('mess.delete.on.layout', handleMessageDeleted);
+        socket?.on('mess.update.on.layout', handleReadMessage);
+        socket?.on('user_status', handleUserStatus);
 
         return () => {
-            socket.off('data_updated', handleDataUpdated);
-            socket.off('data_deleted', handleDataDeleted);
-            socket.off('message_readed', handleReadMessage);
-            socket.off('user_status', handleUserStatus);
+            socket?.off('mess.insert.on.layout', handleNewMessage);
+            socket?.off('mess.delete.on.layout', handleMessageDeleted);
+            socket?.off('mess.update.on.layout', handleReadMessage);
+            socket?.off('user_status', handleUserStatus);
         };
     }, [
         fetchListSender,
@@ -112,7 +108,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         setReadMessageListSender,
         setNewMessageListSender,
         setOnlineOffline,
-        listSender
+        listSender,
+        initializeSocket
     ]);
 
     useEffect(() => {

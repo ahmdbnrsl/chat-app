@@ -27,7 +27,7 @@ export default function AIChat() {
                     </h1>
                     <div className='flex items-center gap-2'>
                         <p className='w-[15ch] sm:w-[25ch] md:w-[50ch] xl:w-[15ch] text-xs sm:text-sm text-zinc-400 truncate'>
-                            this is response from ai
+                            Ask something to AI
                         </p>
                     </div>
                 </div>

@@ -10,7 +10,8 @@ import Image from 'next/image';
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useSession } from 'next-auth/react';
 import { FetcherService } from '@/services/fetcherService';
-import { io, Socket } from 'socket.io-client';
+import { type Socket } from 'socket.io-client';
+import { getSocket, initializeSocket } from '@/lib/socketService';
 import type {
     M,
     DateGroup,
@@ -22,8 +23,6 @@ import type {
 } from '@/types';
 import { date, hour } from '@/services/getTime';
 import { useManageQuoted } from '@/lib/zustand';
-
-const socketURL: string = process.env.NEXT_PUBLIC_SOCKET_URL || '';
 
 export default function ChatPage({
     params
@@ -93,7 +92,7 @@ export default function ChatPage({
         fetchMessages();
         readMessages();
 
-        const handleMessageUpdated = (newData: Message): void => {
+        const handleMessageInserted = (newData: Message): void => {
             if (!newData) return;
             if (
                 (newData.sender_id === session.user.user_id &&
@@ -225,26 +224,25 @@ export default function ChatPage({
             });
         };
 
-        const socket: Socket = io(socketURL, {
-            query: { user_id: session?.user?.user_id || '' }
-        });
+        const socket = (getSocket() ||
+            initializeSocket(session?.user?.user_id || '')) as Socket;
 
-        socket.on('connect', () => console.info('live chat opened'));
-        socket.on('data_updated', handleMessageUpdated);
-        socket.on('data_deleted', handleMessageDeleted);
-        socket.on('user_status', handleUserStatus);
-        socket.on('disconnect', () => console.info('live chat closed'));
+        socket?.on('mess.insert.on.page', handleMessageInserted);
+        socket?.on('mess.delete.on.page', handleMessageDeleted);
+        socket?.on('user_status', handleUserStatus);
 
         return () => {
-            socket.off('data_updated', handleMessageUpdated);
-            socket.off('data_deleted', handleMessageDeleted);
+            socket?.off('mess.insert.on.page', handleMessageInserted);
+            socket?.off('mess.delete.on.page', handleMessageDeleted);
+            socket?.off('user_status', handleUserStatus);
         };
     }, [
         fetchSenderInfo,
         fetchMessages,
         session?.user?.user_id,
         params.id,
-        readMessages
+        readMessages,
+        getSocket
     ]);
 
     return (
