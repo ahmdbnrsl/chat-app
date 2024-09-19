@@ -52,7 +52,7 @@ This is a real-time chat application built using **Next.js 14**, **Socket.IO**, 
 
 ### Build for Production
 
-To create a production build:
+To create a Production build:
 ```bash
 next build
 next start
