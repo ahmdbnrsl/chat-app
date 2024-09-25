@@ -36,6 +36,14 @@ export async function POST(req: NextRequest) {
                     { status: 400 }
                 );
             }
+        } else {
+            return NextResponse.json(
+                {
+                    status: false,
+                    message: 'Something Error!'
+                },
+                { status: 500 }
+            );
         }
     } catch (error) {
         return NextResponse.json(

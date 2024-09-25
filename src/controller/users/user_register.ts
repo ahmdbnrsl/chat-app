@@ -55,21 +55,27 @@ export const storeUser = async ({
                         message: 'Success Sign Up'
                     };
                 } else {
+                    console.error(
+                        'Error on controller user register at line 58'
+                    );
                     return {
                         status: false,
                         message: `${wa_number} is not registered on WhatsApp`
                     };
                 }
             } else {
+                console.error('Error on controller user register at line 65');
                 return false;
             }
         } else {
+            console.error('Error on controller user register at line 69');
             return {
                 status: false,
                 message: 'Whatsapp number is already registered'
             };
         }
     } catch (error) {
+        console.error(error);
         return false;
     } finally {
         await mongoose.connection.close();
