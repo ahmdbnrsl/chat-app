@@ -4,13 +4,15 @@ export async function sendCustomMess({
     mess,
     rep,
     quoted,
-    buttons
+    buttons,
+    messParams
 }: {
     number: string;
     mess: string;
     rep: string;
     quoted: string;
     buttons: Array<object>;
+    messParams: string;
 }): Promise<boolean> {
     const option = {
         method: 'POST',
@@ -23,7 +25,8 @@ export async function sendCustomMess({
             mess,
             rep,
             quoted,
-            buttons: JSON.stringify(buttons)
+            buttons: JSON.stringify(buttons),
+            messParams
         })
     };
     return await fetch(

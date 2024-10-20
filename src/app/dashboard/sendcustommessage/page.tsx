@@ -41,7 +41,8 @@ export default function SendCustommessage() {
                                     ) as HTMLTextAreaElement
                                 )?.value
                             };
-                        })
+                        }),
+                    messParams: e.target.messParams.value || '1'
                 });
                 if (fetching) {
                     setLoading(false);
@@ -116,6 +117,12 @@ export default function SendCustommessage() {
                         placeholder='quoted text...'
                         className='h-24 send-input w-full resize-none'
                     ></textarea>
+                    <input
+                        name='messParams'
+                        placeholder='message params repeat...'
+                        type='text'
+                        className='send-input w-full'
+                    />
                     <div className='send-input-group'>
                         {Array(btn)
                             ?.fill(0)
