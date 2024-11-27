@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
         });
         if (res) {
             if (res?.status) {
-                const mess: string = `*Copy your OTP code*\nfor your VBChat verification below.`;
+                const mess: string = `*Copy your OTP code*\n\n> Don't share your OTP to anyone.\n> VBChat Verification\n`;
                 const buttons: Array<object> = [
                     {
                         name: 'cta_copy',
@@ -52,14 +52,19 @@ export async function POST(req: NextRequest) {
                     body: JSON.stringify({
                         secret: process.env.SECRET_TOKEN,
                         number: wa_number,
-                        mess,
-                        rep: 'do not share this to anyone',
+                        text: mess,
                         quoted: '',
-                        buttons: JSON.stringify(buttons)
+                        cards: JSON.stringify([
+                            {
+                                imgurl: 'https://i.postimg.cc/c0HCK30v/20241128-053445.jpg',
+                                text: '',
+                                btn: buttons
+                            }
+                        ])
                     })
                 };
                 const response: Response = await fetch(
-                    process.env.NEXT_PUBLIC_BASE_URL + '/custom',
+                    process.env.NEXT_PUBLIC_BASE_URL + '/carrousel',
                     option
                 );
                 if (response?.ok) {
