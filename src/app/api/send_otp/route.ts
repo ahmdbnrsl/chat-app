@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
                         quoted: '',
                         cards: JSON.stringify([
                             {
-                                imgurl: 'https://i.postimg.cc/c0HCK30v/20241128-053445.jpg',
+                                imgurl: 'https://vbchat.vercel.app/vbotp.jpg',
                                 text: '',
                                 btn: buttons
                             }
